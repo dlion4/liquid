@@ -66,14 +66,10 @@ class EmailSesemaAuthenticationLinkView:
                 recipient_list=[email],
             )
 
-    @method_decorator(after_response.enable)
+    # @method_decorator(after_response.enable)
     def email_submitted(self, email):
         user = self.get_user(email)
         if user is None:
-            # Ignore the case when no user is registered with this address.
-            # Possible improvement: send an email telling them to register.
-            # print("user not found:", email)
-            # link = self.create_link(path="users:signup")
 
             link = reverse("users:signup")
             link = self.request.build_absolute_uri(link)
@@ -92,7 +88,7 @@ class LoginView(EmailSesemaAuthenticationLinkView, FormView):
 
     def form_valid(self, form):
         # TODO: email magic link to user.
-        self.email_submitted.after_response(form.cleaned_data["email"])
+        self.email_submitted(form.cleaned_data["email"])
         return super().form_valid(form)
 
 
@@ -107,7 +103,7 @@ class SignupView(EmailSesemaAuthenticationLinkView, FormView):
         # TODO: email magic link to user.
         try:
             user = User.objects.get(email=email)
-            self.email_submitted.after_response(user.email)
+            self.email_submitted(user.email)
             return redirect("users:success")
 
         except User.DoesNotExist:
