@@ -15,10 +15,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=synck
+      - POSTGRES_DB=liquid
       - POSTGRES_HOST=localhost
       - POSTGRES_USER=debug
       - POSTGRES_PASSWORD=debug
+      - DATABASE_URL=postgres://kwasa:1234@localhost:5432/amiribd
 
 volumes:
   postgres_data:
