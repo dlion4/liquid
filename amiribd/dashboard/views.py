@@ -14,8 +14,10 @@ class WelcomeView(DashboardGuard, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["profile"] = self.request.user.profile_user
+        context["profile"] = self._get_user().profile_user
         return context
 
 
 welcome = WelcomeView.as_view()
+
+

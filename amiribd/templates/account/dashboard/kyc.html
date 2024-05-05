@@ -1,0 +1,51 @@
+{% extends "account/dashboard/base.html" %}
+{% load static i18n %}
+{% block title %}
+  {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+
+  <div class="nk-content nk-content-lg nk-content-fluid">
+    <div class="container-xl wide-lg">
+      <div class="nk-content-inner">
+        <div class="nk-content-body">
+
+          <div class="kyc-app wide-sm m-auto">
+            <div class="nk-block-head nk-block-head-lg wide-xs mx-auto">
+              <div class="nk-block-head-content text-center">
+                <h2 class="nk-block-title fw-normal">Begin your ID-Verification</h2>
+                <div class="nk-block-des">
+                  <p>To comply with regulation each participant will have to go through indentity verification (KYC/AML) to prevent fraud causes.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {% comment %}  {% endcomment %}
+
+            <div class="nk-block">
+                <div class="card card-bordered">
+                    <div class="nk-kycfm">
+
+                        {% block kycform %}
+                        
+                        {% endblock kycform %}
+                      
+                      </form>
+                    </div>
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content %}
+
+
+ 

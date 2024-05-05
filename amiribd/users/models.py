@@ -9,6 +9,8 @@ from django.db.models import Value
 from .managers import UserManager
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.validators import RegexValidator
+from django.utils.timezone import now
 
 
 class ConcatFiels(models.Func):
@@ -42,6 +44,7 @@ class User(AbstractUser):
             ("SUSPENDED", "suspended"),
         ),
     )
+    date_joined = models.DateField(auto_now_add=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -78,6 +81,16 @@ class Profile(models.Model):
         output_field=models.TextField(),
         db_persist=True,
     )
+    kyc_completed = models.BooleanField(default=False)
+    kyc_completed_at = models.DateTimeField(null=True, blank=True)
+    phone_regex = RegexValidator(
+        regex=r"^[0-9]\d{8,14}$",
+        message="Phone number must start with a digit and be 9 to 15 digits in total.",
+    )
+    phone_number = models.CharField(
+        max_length=20, null=True, blank=True, validators=[phone_regex]
+    )
+    date_of_birth = models.CharField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} Profile"
@@ -88,3 +101,48 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile_user.save()
+
+
+class Address(models.Model):
+    profile = models.OneToOneField(
+        Profile, on_delete=models.CASCADE, related_name="profile_address"
+    )
+    addr_line1 = models.CharField(max_length=255)
+    addr_line2 = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    zip_code = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.profile.user.username} Address"
+
+
+class DocumentType(models.TextChoices):
+    NI = "NI", "National Id"
+    PT = "PT", "Passport"
+    DL = "DL", "Driving Licence"
+
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/profiles/kyc/<year>/<month>/<day>/<username>/<filename>
+
+    return "profiles/kyc/{0}/{1}/{2}/{3}/{4}/{5}".format(
+        now().year,
+        now().month,
+        now().day,
+        instance.profile.user.username,
+        instance.profile.pk,
+        filename,
+    )
+
+
+class Document(models.Model):
+    profile = models.OneToOneField(
+        Profile, on_delete=models.CASCADE, related_name="profile_document"
+    )
+    document_type = models.CharField(max_length=2, default=DocumentType.NI)
+    document = models.ImageField(upload_to=user_directory_path)
+
+    def __str__(self):
+        return f"{self.profile.user.username} Verification Document"

@@ -18,3 +18,4 @@ django-extensions
 dj-database-url
 gunicorn
 django-debug-toolbar
+pytest

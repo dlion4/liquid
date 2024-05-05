@@ -38,6 +38,13 @@ urlpatterns = [
             namespace="dashboard",
         ),
     ),
+    path(
+        "kyc/dashboard/",
+        include(
+            "amiribd.dashboard.kyc.urls",
+            namespace="kyc",
+        ),
+    ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

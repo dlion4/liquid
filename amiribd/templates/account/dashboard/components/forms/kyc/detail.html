@@ -1,0 +1,96 @@
+{% extends "account/dashboard/kyc.html" %}
+
+{% block kycform %}
+
+  <form action="{% url 'kyc:detail' %}" method="post">
+    {% csrf_token %}
+    <div class="nk-kycfm-head">
+      <div class="nk-kycfm-count">01</div>
+      <div class="nk-kycfm-title">
+        <h5 class="title">Personal Details</h5>
+        <p class="sub-title">Your simple personal information required for identification</p>
+      </div>
+    </div>
+    <div class="nk-kycfm-content">
+      <div class="nk-kycfm-note">
+        <em class="icon ni ni-info-fill" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right"></em>
+        <p>Please type carefully and fill out the form with your personal details. Your can’t edit these details once you submitted the form.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.first_name.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.first_name}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.last_name.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.last_name}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.email_address.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.email_address}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.phone_number.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.phone_number}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.date_of_birth.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.date_of_birth}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.public_username.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.public_username}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nk-kycfm-footer">
+      <div class="pt-2">
+        <button type="submit" class="btn btn-lg btn-primary">Proceed next...</button>
+      </div>
+    </div>
+
+  </form>
+{% endblock kycform %}

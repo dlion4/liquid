@@ -1,6 +1,9 @@
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class AccountStatusMiddleware(MiddlewareMixin):
@@ -8,30 +11,40 @@ class AccountStatusMiddleware(MiddlewareMixin):
         self.get_response = get_response
 
     def __call__(self, request):
-        response = self.get_response(request)
         if request.path.startswith("/dashboard/"):
+            return self.handle_dashboard_request(request)
+        return self.get_response(request)
 
-            if not request.user.is_authenticated:
-                return HttpResponsePermanentRedirect(reverse("users:login"))
+    def handle_dashboard_request(self, request):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("users:login"))
 
-            print("Middleware running inside dashboard")
-            account = request.user
-            # Redirect based on account status
-            print(account.status)
-            target_path = None
+        account = request.user
+        target_path = self.get_redirect_path(account)
+
+        if (
+            target_path
+            and request.path != target_path
+            and target_path not in ["/dashboard/kyc/"]
+        ):
+            return HttpResponseRedirect(target_path)
+
+        return self.get_response(request)
+
+    def get_redirect_path(self, account):
+        try:
             if account.status == "COMPLETED":
-                if account.verified:
-                    target_path = reverse("dashboard:home")
-                else:
-                    target_path = reverse("dashboard:welcome")
+                return (
+                    reverse("dashboard:home")
+                    if account.verified
+                    else reverse("dashboard:welcome")
+                )
             elif account.status == "PENDING":
-                target_path = reverse("dashboard:welcome")
+                return reverse("dashboard:welcome")
             elif account.status == "BLOCKED":
-                target_path = reverse("dashboard:blocked")
+                return reverse("dashboard:blocked")
             elif account.status == "SUSPENDED":
-                target_path = reverse("dashboard:suspended")
-
-            # Check if the current path is already the target path to prevent redirect loops
-            if target_path and request.path != target_path:
-                return HttpResponsePermanentRedirect(target_path)
-        return response
+                return reverse("dashboard:suspended")
+        except AttributeError as e:
+            logger.error(f"Error accessing user account properties: {e}")
+        return None

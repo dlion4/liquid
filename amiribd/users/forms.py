@@ -4,7 +4,7 @@ from django.contrib.auth import forms as admin_forms
 from django.forms import EmailField
 from django.utils.translation import gettext_lazy as _
 from django import forms
-from .models import User
+from .models import User, Profile, Address, Document
 
 
 class UserAdminChangeForm(admin_forms.UserChangeForm):
@@ -69,3 +69,136 @@ class EmailSignupForm(forms.Form):
             }
         )
     )
+
+
+class ProfileDetailForm(forms.ModelForm):
+
+    email_address = forms.EmailField(
+        disabled=True,
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control form-control-lg",
+                "placeholder": "Email Address",
+            }
+        ),
+    )
+    public_username = forms.CharField(
+        disabled=True,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg",
+                "placeholder": "Public Username",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Profile
+        fields = (
+            "first_name",
+            "last_name",
+            "email_address",
+            "date_of_birth",
+            "phone_number",
+            "public_username",
+        )
+
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "First Name",
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "Last Name",
+                }
+            ),
+            "phone_number": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "Phone Number",
+                }
+            ),
+            "date_of_birth": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg date-picker-alt",
+                    "placeholder": "2000-04-01",
+                }
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(ProfileDetailForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields["email_address"].initial = user.email
+            self.fields["public_username"].initial = user.username
+
+
+class ProfileAddressForm(forms.ModelForm):
+    addr_line2 = forms.CharField(
+        required=False,
+        label="Address Line 2",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg",
+                "placeholder": "Address Line 2",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Address
+        fields = [
+            "addr_line1",
+            "addr_line2",
+            "city",
+            "state",
+            "country",
+            "zip_code",
+        ]
+        labels = {
+            "addr_line1": "Address Line 1",
+            "country": "Nationality",
+        }
+        widgets = {
+            "addr_line1": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "Address line 1",
+                }
+            ),
+            "city": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "City",
+                }
+            ),
+            "state": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "State",
+                }
+            ),
+            "country": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "Country",
+                }
+            ),
+            "zip_code": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-lg",
+                    "placeholder": "zip_code",
+                }
+            ),
+        }
+
+
+class ProfileVerificationDocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ["document_type", "document"]
