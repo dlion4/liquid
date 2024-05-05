@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  django: &django
+    build:
+      context: .
+    ports:
+      - "8200:8200"
+
+    command: ["sh", "./compose/start.sh"]
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=synck
+      - POSTGRES_HOST=localhost
+      - POSTGRES_USER=debug
+      - POSTGRES_PASSWORD=debug
+
+volumes:
+  postgres_data:
