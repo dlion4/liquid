@@ -19,6 +19,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "127.0.0.1",
     "liquid-r737.onrender.com",
+    ".vercel.app",
 ]  # noqa: S104
 
 # CACHES
