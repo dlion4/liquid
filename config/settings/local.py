@@ -14,7 +14,12 @@ SECRET_KEY = env(
     default="3z49ze0GhFfZQz1m1uSWcPvQryaxx5aeLgPOdnQrZuOtvhNIBa4KRb5rzExXl52p",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]  # noqa: S104
+ALLOWED_HOSTS = [
+    "localhost",
+    "0.0.0.0",
+    "127.0.0.1",
+    "liquid-r737.onrender.com",
+]  # noqa: S104
 
 # CACHES
 # ------------------------------------------------------------------------------
