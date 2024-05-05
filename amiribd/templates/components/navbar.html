@@ -1,0 +1,94 @@
+{% load static %}
+
+<header>
+  <div class="{% if request.resolver_path.view_name == 'home' %}uk-section{% else %} uk-background-cover uk-background-top-center {% endif %}" style="background-image: url({% static 'img/in-wave-background-1.png' %})">
+    <nav class="uk-navbar-container uk-navbar-transparent" data-uk-sticky="show-on-up: true; top: 80; animation: uk-animation-fade">
+      <div class="uk-container" data-uk-navbar="data-uk-navbar">
+        <div class="uk-navbar-left uk-width-expand uk-flex uk-flex-between">
+          <a class="uk-navbar-item uk-logo" href="{% url 'home' %}">
+            <img src="{% static 'img/user/header-logo-6ohuZh.svg' %}" alt="logo" width="134" height="23"/>
+          </a>
+          <ul class="uk-navbar-nav uk-visible@m">
+            <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
+              <a href="{% url 'investment' %}">Investment</a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
+              <a href="{% url 'about' %}">About Us</a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
+              <a href="{% url 'learn' %}">Education</a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'posts:posts' %} uk-active {% endif %}">
+              <a href="{% url 'posts:posts' %}">News</a>
+            </li>
+            <li>
+              <a href="#">Resources<span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-2" data-uk-grid="data-uk-grid">
+                  <div>
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li class="{% if request.resolver_match.view_name == 'help' %} uk-active {% endif %}">
+                        <a href="{% url 'help' %}">Help Center</a>
+                      </li>
+                      <li class="{% if request.resolver_match.view_name == 'customers' %} uk-active {% endif %}">
+                        <a href="{% url 'customers' %}">Customers</a>
+                      </li>
+                      <li class="{% if request.resolver_match.view_name == 'guide' %} uk-active {% endif %}">
+                        <a href="{% url 'guide' %}">Guide</a>
+                      </li>
+                      <li class="{% if request.resolver_match.view_name == 'career' %} uk-active {% endif %}">
+                        <a href="{% url 'career' %}">Career
+                        </a>
+                      </li>
+                      <li class="{% if request.resolver_match.view_name == 'policies' %} uk-active {% endif %}">
+                        <a href="{% url 'policies' %}">Policies<i class="fas fa-gavel fa-sm"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                      <li>
+                        <a class="uk-disabled" href="#">Do you have any question about our platform. Get your guestion unswered in minutes and start earning!</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="uk-navbar-right uk-width-auto">
+          <div class="uk-navbar-item">
+            <div class="in-optional-nav">
+              <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-button-small uk-border-pill" style="margin-left: 10px !important">Sign up</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="uk-container">
+      <div class="uk-grid">
+        <div class="uk-width-1-1">
+          <div class="uk-card uk-card-secondary uk-card-small uk-card-body uk-border-rounded">
+            <div class="uk-grid uk-text-small" data-uk-grid="data-uk-grid">
+              <div class="uk-width-3-4@m uk-visible@m">
+                <p>
+                  Trading involves substantial risk and may result in the loss of your invested/greater that your invested capital, respectively.
+                </p>
+              </div>
+              <div class="uk-width-expand@m uk-text-center uk-text-right@m">
+                <a class="uk-margin-right" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">
+                  <i class="fas fa-comment-alt uk-margin-small-right"></i>Live Chat</a>
+                <a href="#">
+                  <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a>
+              </div>
+            </div>
+          </div>
+
+          {% block breadcrumb %}{% endblock breadcrumb %}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

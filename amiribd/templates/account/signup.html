@@ -1,0 +1,37 @@
+{% extends "allauth/layouts/base.html" %}
+{% load static %}
+{% block title %}
+  {{ block.super }}
+  User Registration
+{% endblock title %}
+
+{% block header %}
+  Register for an account
+{% endblock header %}
+
+{% block content %}
+  <form class="uk-grid uk-form" action="{% url 'users:signup' %}" method="post">
+    {% csrf_token %}
+    <div class="uk-margin-small uk-width-1-1 uk-inline">
+      <span class="uk-form-icon uk-form-icon-flip fas fa-user fa-sm"></span>
+      {{form.username}}
+    </div>
+    <div class="uk-margin-small uk-width-1-1 uk-inline">
+      <span class="uk-form-icon uk-form-icon-flip fas fa-envelope fa-sm"></span>
+      {{form.email}}
+    </div>
+
+    <div class="uk-margin-small uk-width-auto uk-text-small">
+      <label><input class="uk-checkbox" type="checkbox">
+        Remember me</label>
+    </div>
+    <div class="uk-margin-small uk-width-expand uk-text-small">
+      <label class="uk-align-right">
+        <a class="uk-link-reset" href="#">Forgot password?</a>
+      </label>
+    </div>
+    <div class="uk-margin-small uk-width-1-1">
+      <button class="uk-button uk-width-1-1 uk-button-primary uk-border-rounded uk-float-left" type="submit" name="submit">Sign in</button>
+    </div>
+  </form>
+{% endblock content %}

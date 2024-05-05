@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found{% endblock title %}
+{% block content %}
+
+  <div class="uk-section">
+    <div class="uk-container">
+      <div class="uk-grid uk-flex uk-flex-center">
+        <div class="uk-width-3-4@m">
+          <h1>Page not found</h1>
+          <p>
+            {% if exception %}
+              {{ exception }}
+            {% else %}
+              This is not the page you were looking for.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

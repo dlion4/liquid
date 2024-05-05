@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!--navbar-->
+{% block navbar %}
+
+  {{ block.super }}
+
+  {% include "components/navbar.html" %}
+
+{% endblock navbar %}
+
+<!--footer-->
+{% block footer %}
+  {% include "components/footer.html" %}
+{% endblock footer %}

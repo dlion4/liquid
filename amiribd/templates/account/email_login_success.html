@@ -1,0 +1,25 @@
+{% extends "allauth/layouts/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {{ block.super }}
+  Email sent
+{% endblock title %}
+
+{% block header %}
+  Login link sent
+{% endblock header %}
+{% block content %}
+
+  <div class="uk-grid uk-form ">
+    <div class="uk-margin-small uk-width-1-1 uk-inline uk-text-center">
+      <p class="uk-text-center ">Please check your email for the login link.</p>
+    </div>
+    <div class="uk-margin-small uk-width-expand uk-text-small">
+      <a href="{% url 'users:login' %}" class="uk-button uk-button-primary uk-border-rounded uk-float-left" style="width:100%">back to login</a>
+    </div>
+
+  </div>
+
+{% endblock content %}

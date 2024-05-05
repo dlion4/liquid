@@ -1,0 +1,34 @@
+-r production.txt
+
+Werkzeug[watchdog]  #ttps://github.com/pallets/werkzeug
+ipdb  ## https://github.com/gotcha/ipdb
+psycopg2-binary  # https://github.com/psycopg/psycopg
+
+# Testing
+# ------------------------------------------------------------------------------
+mypy  #https://github.com/python/mypy
+django-stubs[compatible-mypy]  #https://github.com/typeddjango/django-stubs
+pytest  #https://github.com/pytest-dev/pytest
+pytest-sugar  #https://github.com/Frozenball/pytest-sugar
+
+# Documentation
+# ------------------------------------------------------------------------------
+sphinx  #https://github.com/sphinx-doc/sphinx
+sphinx-autobuild  # # https://github.com/GaretJax/sphinx-autobuild
+
+# Code quality
+# ------------------------------------------------------------------------------
+ruff  # https://github.com/astral-sh/ruff
+coverage  # https://github.com/nedbat/coveragepy
+djlint   # https://github.com/Riverside-Healthcare/djLint
+pre-commit  # https://github.com/pre-commit/pre-commit
+
+# Django
+# ------------------------------------------------------------------------------
+factory-boy  # https://github.com/FactoryBoy/factory_boy
+
+django-debug-toolbar  # https://github.com/jazzband/django-debug-toolbar
+django-extensions  # https://github.com/django-extensions/django-extensions
+django-coverage-plugin  # https://github.com/nedbat/django_coverage_plugin
+pytest-django  # https://github.com/pytest-dev/pytest-django
+django-debug-toolbar
