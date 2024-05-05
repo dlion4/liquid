@@ -26,4 +26,8 @@ if compress_enabled; then
   # NOTE this command will fail if django-compressor is disabled
   python /app/manage.py compress
 fi
-exec /usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:8200 --chdir=/app
+python manage.py makemigrations --no-input
+
+python manage.py migrate --no-input
+
+python manage.py runserver 0.0.0.0:8200
