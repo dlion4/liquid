@@ -31,6 +31,13 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     # ...
     path("sesame/login/", LoginView.as_view(), name="sesame-login"),
+    path(
+        "dashboard/",
+        include(
+            "amiribd.dashboard.urls",
+            namespace="dashboard",
+        ),
+    ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

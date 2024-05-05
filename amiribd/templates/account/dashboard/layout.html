@@ -1,0 +1,58 @@
+{% load static i18n compress%}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>
+      {% block title %}
+        Amiri Dashboard
+      {% endblock title %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="investment app"/>
+    <meta name="author" content="kwasa"/>
+    {% block css %}
+      <link rel="shortcut icon" href="{% static 'dashboard/images/favicon.png' %}">
+      <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
+      <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
+    {% endblock css %}
+
+  </head>
+
+  <body class="nk-body npc-invest bg-lighter ">
+
+    {% block body %}
+
+      <div class="nk-app-root">
+        <div class="nk-wrap ">
+            {% block navbar %}{% endblock navbar %}
+            {% comment %}  {% endcomment %}
+          {% block content %}{% endblock content %}
+          {% comment %}  {% endcomment %}
+          {% block footer %}{% endblock footer %}
+        </div>
+      </div>
+
+
+
+    {% block modals %}
+    {% endblock modals %}
+
+    {% comment %}  {% endcomment %}
+    {% endblock body %}
+
+    <a class="pmo-st pmo-dark" target="_blank" href="">
+      <div class="pmo-st-img"><img src="{% static 'dashboard/images/landing/promo-investorm-4.png' %}" alt="Investorm"></div>
+      <div class="pmo-st-text">Looking for Advanced<br>Investment Platform?
+      </div>
+    </a>
+    <script src="{% static 'dashboard/assets/js/bundle.js' %}?ver=3.2.3"></script>
+    <script src="{% static 'dashboard/assets/js/scripts.js' %}?ver=3.2.3"></script>
+    <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
+    <script src="{% static 'dashboard/assets/js/charts/chart-invest.js' %}?ver=3.2.3"></script>
+  </body>
+
+</html>

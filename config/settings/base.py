@@ -90,6 +90,8 @@ LOCAL_APPS = [
     # Your stuff: custom apps go here
     "amiribd.liquid",
     "amiribd.posts",
+    # dashboard
+    "amiribd.dashboard",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -112,7 +114,7 @@ AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "home"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
+LOGIN_URL = "users:login"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -153,6 +155,8 @@ MIDDLEWARE = [
     "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
+    # account status middleware
+    "amiribd.dashboard.middleware.AccountStatusMiddleware",
 ]
 
 CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
@@ -321,3 +325,8 @@ LOGIN_BY_CODE_ENABLED = True
 
 # SESAME CONFIGURATIONS
 SESAME_MAX_AGE = 300  # 300 seconds = 5 minutes
+
+
+# MENTENANCE MODE
+
+MAINTENANCE_MODE = False

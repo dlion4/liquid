@@ -14,7 +14,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import login, logout
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from .guard import AuthenticationGuard
 import after_response
 
 
@@ -81,7 +81,7 @@ class EmailSesemaAuthenticationLinkView:
             self.send_email(user, link)
 
 
-class LoginView(EmailSesemaAuthenticationLinkView, FormView):
+class LoginView(EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormView):
     form_class = EmailLoginForm
     template_name = "account/login.html"
     success_url = reverse_lazy("users:success")
@@ -92,7 +92,7 @@ class LoginView(EmailSesemaAuthenticationLinkView, FormView):
         return super().form_valid(form)
 
 
-class SignupView(EmailSesemaAuthenticationLinkView, FormView):
+class SignupView(EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormView):
     form_class = EmailSignupForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("home")
@@ -115,7 +115,7 @@ class SignupView(EmailSesemaAuthenticationLinkView, FormView):
             return super().form_valid(form)
 
 
-class SuccessAuthenticationView(TemplateView):
+class SuccessAuthenticationView(AuthenticationGuard, TemplateView):
 
     template_name = "account/email_login_success.html"
 
@@ -126,7 +126,9 @@ class LogoutView(View):
         return redirect("home")
 
 
-class ReferralSignupView(SignupView):
+class ReferralSignupView(
+    EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormView
+):
     form_class = EmailSignupForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("home")

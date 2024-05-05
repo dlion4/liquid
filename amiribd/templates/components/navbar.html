@@ -62,7 +62,7 @@
           <div class="uk-navbar-item">
             {% if request.user.is_authenticated %}
               <div class="in-optional-nav">
-                <a role="button" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
+                <a role="button" href="{% url 'dashboard:home' %}" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
                   <span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a>
 
               </div>
