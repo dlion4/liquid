@@ -20,6 +20,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "liquid-r737.onrender.com",
     ".vercel.app",
+    "liquid-investment-c119b5140660.herokuapp.com",
 ]  # noqa: S104
 
 # CACHES
