@@ -1,4 +1,3 @@
-
 from typing import ClassVar
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -22,8 +21,11 @@ class User(AbstractUser):
     first_name = None  # type: ignore[assignment]
     last_name = None  # type: ignore[assignment]
     email = EmailField(_("email address"), unique=True)
-    username = None  # type: ignore[assignment]
-
+    username = CharField(
+        _("username"), max_length=255, unique=False, blank=True, null=True
+    )
+    verified = models.BooleanField(default=False)
+    registration_completed = models.BooleanField(default=False)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -38,16 +40,15 @@ class User(AbstractUser):
         """
         return reverse("users:detail", kwargs={"pk": self.id})
 
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = self.email.split("@")[0]
+        super(User, self).save(*args, **kwargs)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-
+    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
 
     def __str__(self):
-        return f'{self.user.username} Profile'
-
-
-
-
-
+        return f"{self.user.username} Profile"

@@ -47,6 +47,7 @@
                 <li>
                   <a href="{% url 'career' %}">Careers</a>
                 </li>
+
               </ul>
             </div>
             <div>
@@ -138,9 +139,7 @@
       <div class="uk-grid">
         <div class="uk-width-3-4@m uk-visible@m">
           <ul class="uk-subnav uk-subnav-divider">
-            <li>
-              <a href="#">Regulations</a>
-            </li>
+
             <li>
               <a href="{% url 'policies' %}">Legal documents</a>
             </li>
@@ -150,12 +149,19 @@
             <li>
               <a href="{% url 'policies' %}">Privacy</a>
             </li>
-            <li>
-              <a href="#">Public relations</a>
-            </li>
+
             <li>
               <a href="{% url 'career' %}">Careers</a>
             </li>
+
+            {% if user.is_authenticated %}
+              <li>
+                <form action="{% url 'users:logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="" style="border:none; outline:none; background:transparent; font-size:14px;color: #8fadc2; cursor:pointer">Logout</button>
+                </form>
+              </li>
+            {% endif %}
           </ul>
         </div>
         <div class="uk-width-expand@m uk-text-right@m">
