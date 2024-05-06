@@ -1,17 +1,18 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .guard import DashboardGuard
+from amiribd.users.actions import build_signup_referral_link
 
 
 # Create your views here.
 class DashboardViewMixin(TemplateView):
     template_name = ""
 
-    
-
     def get_context_data(self, **kwargs):
+        profile = self._get_user().profile_user
         context = super().get_context_data(**kwargs)
-        context["profile"] = self._get_user().profile_user
+        context["profile"] = profile
+        context["link"] = build_signup_referral_link(self.request, profile)
         return context
 
 

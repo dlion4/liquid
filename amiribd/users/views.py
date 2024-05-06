@@ -1,3 +1,4 @@
+from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
@@ -16,9 +17,13 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from .guard import AuthenticationGuard
 import after_response
+from django.conf import settings
+from django.http import HttpResponseRedirect
 
 
 class EmailSesemaAuthenticationLinkView:
+
+    signup_url = reverse_lazy(settings.SIGNUP_URL)
 
     def get_user(self, email):
         """Find the user with this email address."""
@@ -129,19 +134,47 @@ class LogoutView(View):
 
 
 class ReferralSignupView(
-    EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormView
+    EmailSesemaAuthenticationLinkView, AuthenticationGuard, TemplateView
 ):
     form_class = EmailSignupForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("home")
 
-    def get(self, request, *args, **kwargs):
-        # get the referral code from the url
-        referral_code = request.GET.get("referral_code")
-        # check if the referral code is valid
-        if not referral_code:
-            # proceed with normal registration
+    def get_referrer(self, *args, **kwargs):
+        return (
+            Profile.objects.get(referral_code=referral_code).user
+            if (referral_code := kwargs.get("referral_code"))
+            else None
+        )
 
-            return redirect("home")
-        # attached the registerred user to a inviter
-        return render(request, self.template_name)
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form_class()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            username = form.cleaned_data["username"]
+            # TODO: email magic link to user.
+            try:
+                user = User.objects.get(email=email)
+                self.email_submitted(user.email)
+                return redirect("users:success")
+
+            except User.DoesNotExist:
+                user = User.objects.create_user(email=email, username=username)
+                user.save()
+                # create profile after successful user creation
+                profile = Profile.objects.get(user=user)
+                # save the referred by field
+                profile.referred_by = self.get_referrer(*args, **kwargs)
+                profile.save()
+                # redirect to home page after login
+                # login the user without having to send him/her email
+                login(self.request, user, backend="sesame.backends.ModelBackend")
+                return redirect(self.success_url)
+
+        context = {"form": form}
+        return render(request, self.template_name, context)

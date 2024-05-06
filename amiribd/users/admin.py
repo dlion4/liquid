@@ -53,6 +53,7 @@ class UserAdmin(auth_admin.UserAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
         "user",
+        "referred_by",
         "image",
         "first_name",
         "last_name",

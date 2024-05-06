@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.validators import RegexValidator
 from django.utils.timezone import now
+from .actions import generate_referral_code
 
 
 class ConcatFiels(models.Func):
@@ -95,18 +96,29 @@ class Profile(models.Model):
     )
     date_of_birth = models.DateField(null=True, blank=True)
     initials = models.CharField(max_length=2, blank=True, null=True, default="AB")
+    referral_code = models.CharField(max_length=59, blank=True, null=True)
+    referred_by = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="profile_referred_by",
+    )
 
     def __str__(self):
         return f"{self.user.username} Profile"
 
     def generate_initials(self):
-        names = self.full_name.split()
-        initials = [name[0].upper() for name in names]
-        return "".join(initials[:2])
+        if self.full_name:
+            names = self.full_name.split()
+            initials = [name[0].upper() for name in names]
+            return "".join(initials[:2])
+        return None
 
     def save(self, *args, **kwargs):
-        self.initials = self.generate_initials()
+        self.referral_code = generate_referral_code(self.pk)
         super(Profile, self).save(*args, **kwargs)
+        self.initials = self.generate_initials()
 
 
 @receiver(post_save, sender=User)

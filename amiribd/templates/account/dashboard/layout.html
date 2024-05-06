@@ -18,7 +18,8 @@
       <link rel="shortcut icon" href="{% static 'dashboard/images/favicon.png' %}">
       <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
       <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
-    {% endblock css %}
+      {% endblock css %}
+      <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
 
   </head>
 
@@ -28,7 +29,7 @@
 
       <div class="nk-app-root">
         <div class="nk-wrap ">
-            {% block navbar %}{% endblock navbar %}
+          {% block navbar %}{% endblock navbar %}
             {% comment %}  {% endcomment %}
           {% block content %}{% endblock content %}
           {% comment %}  {% endcomment %}

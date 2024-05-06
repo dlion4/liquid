@@ -45,6 +45,14 @@ urlpatterns = [
             namespace="kyc",
         ),
     ),
+    # Htmx actions and related views
+    path(
+        "htmx/",
+        include(
+            "amiribd.htmx.urls",
+            namespace="htmx",
+        ),
+    ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
