@@ -30,15 +30,15 @@
               <span class="nk-menu-text">Overview</span></a>
           </li>
           <li class="nk-menu-item">
-            <a href="" class="nk-menu-link">
+            <a href="/plan" class="nk-menu-link">
               <span class="nk-menu-text">MY Plan</span></a>
           </li>
           <li class="nk-menu-item">
-            <a href="" class="nk-menu-link">
+            <a href="/invest" class="nk-menu-link">
               <span class="nk-menu-text">Invest</span></a>
           </li>
           <li class="nk-menu-item">
-            <a href="" class="nk-menu-link">
+            <a href="/profile" class="nk-menu-link">
               <span class="nk-menu-text">Profile</span></a>
           </li>
 
@@ -155,7 +155,7 @@
             </div>
           </li>
           <li class="hide-mb-sm">
-            <a href="#" class="nk-quick-nav-icon">
+            <a role="button" class="nk-quick-nav-icon" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
               <em class="icon ni ni-signout"></em>
             </a>
           </li>
@@ -224,7 +224,7 @@
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()">
+                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
                       <em class="icon ni ni-signout"></em>
                       <span>Sign out</span></a>
                   </li>
