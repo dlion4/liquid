@@ -19,11 +19,30 @@ from .guard import AuthenticationGuard
 import after_response
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 
 class EmailSesemaAuthenticationLinkView:
+    email_template = "account/snippets/email/login.html"
 
     signup_url = reverse_lazy(settings.SIGNUP_URL)
+
+    def send_html_message(self, context: dict):
+        html_message = render_to_string(self.email_template, context)
+        plain_message = strip_tags(html_message)
+
+        message = EmailMultiAlternatives(
+            subject="[Liquid Investment] LOGIN LINK",
+            body=plain_message,
+            from_email=None,
+            to=[context.get("email")],
+        )
+
+        message.attach_alternative(html_message, "text/html")
+
+        message.send()
 
     def get_user(self, email):
         """Find the user with this email address."""
@@ -42,34 +61,13 @@ class EmailSesemaAuthenticationLinkView:
 
     def send_email(self, user=None, link=None, email=None):
         """Send an email with this login link to this user."""
-        if user:
-            user.email_user(
-                subject="[Liquid Investment] Log in to our app",
-                message=f"""
-                    Hello,
+        context = {
+            "link": link,
+            "user": user,
+            "email": email,
+        }
 
-                    You requested that we send you a link to log in to our app:
-
-                        {link}
-
-                    Thank you for using django-sesame!
-                    """,
-            )
-        else:
-            send_mail(
-                subject="[Liquid Investment] Log in to our app",
-                message=f"""
-                    Hello,
-
-                    You requested that we send you a link to log in to our app:
-
-                        {link}
-
-                    Thank you for using django-sesame!
-                    """,
-                from_email="invest@liquidinvestment.com",
-                recipient_list=[email],
-            )
+        self.send_html_message(context)
 
     # @method_decorator(after_response.enable)
     def email_submitted(self, email):
@@ -78,7 +76,6 @@ class EmailSesemaAuthenticationLinkView:
 
             link = reverse("users:signup")
             link = self.request.build_absolute_uri(link)
-            print("user not found:", email)
             self.send_email(link=link, email=email)
 
         else:
