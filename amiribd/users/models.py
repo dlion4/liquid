@@ -143,6 +143,8 @@ class Document(models.Model):
     )
     document_type = models.CharField(max_length=2, default=DocumentType.NI)
     document = models.ImageField(upload_to=user_directory_path)
+    read_terms = models.BooleanField(default=False)
+    correct_information = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.profile.user.username} Verification Document"

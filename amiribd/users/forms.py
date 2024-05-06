@@ -83,7 +83,8 @@ class ProfileDetailForm(forms.ModelForm):
         ),
     )
     public_username = forms.CharField(
-        disabled=True,
+        disabled=False,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 "class": "form-control form-control-lg",
@@ -199,6 +200,19 @@ class ProfileAddressForm(forms.ModelForm):
 
 
 class ProfileVerificationDocumentForm(forms.ModelForm):
+    read_terms = forms.BooleanField(
+        label="""I Have Read The<a href="">Terms Of Condition </a> And <a href="">Privacy Policy</a>""",
+        widget=forms.CheckboxInput(
+            attrs={"id": "tc-agree", "class": "custom-control-input"}
+        ),
+    )
+    correct_information = forms.BooleanField(
+        label="All The Personal Information I Have Entered Is Correct.",
+        widget=forms.CheckboxInput(
+            attrs={"id": "info-assure", "class": "custom-control-input"}
+        ),
+    )
+
     class Meta:
         model = Document
-        fields = ["document_type", "document"]
+        fields = ["document_type", "document", "read_terms", "correct_information"]
