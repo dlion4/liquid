@@ -25,6 +25,13 @@
             </div>
             <div class="form-control-group">
               {{form.first_name}}
+              {% if form.first_name.errors %}
+                <ul class="errorlist">
+                  {% for error in form.first_name.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -36,6 +43,13 @@
             </div>
             <div class="form-control-group">
               {{form.last_name}}
+              {% if form.last_name.errors %}
+                <ul class="errorlist">
+                  {% for error in form.last_name.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -47,6 +61,7 @@
             </div>
             <div class="form-control-group">
               {{form.email_address}}
+
             </div>
           </div>
         </div>
@@ -58,6 +73,13 @@
             </div>
             <div class="form-control-group">
               {{form.phone_number}}
+              {% if form.phone_number.errors %}
+                <ul class="errorlist">
+                  {% for error in form.phone_number.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -69,6 +91,13 @@
             </div>
             <div class="form-control-group">
               {{form.date_of_birth}}
+              {% if form.date_of_birth.errors %}
+                <ul class="errorlist">
+                  {% for error in form.date_of_birth.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -80,6 +109,13 @@
             </div>
             <div class="form-control-group">
               {{form.public_username}}
+              {% if form.public_username.errors %}
+                <ul class="errorlist">
+                  {% for error in form.public_username.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>

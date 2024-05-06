@@ -1,0 +1,36 @@
+{% extends "account/dashboard/base.html" %}
+
+{% block content %}
+
+  <div class="nk-content nk-content-lg nk-content-fluid">
+    <div class="container-xl wide-lg">
+      <div class="nk-content-inner">
+        <div class="nk-content-body">
+            {% comment %} head {% endcomment %}
+            {% include "account/dashboard/components/dashboard/overview/head.html" %}
+
+            <div class="nk-block">
+                <div class="nk-news card card-bordered">
+                  <div class="card-inner">
+                    <div class="nk-news-list">
+                      <a class="nk-news-item" href="#">
+                        <div class="nk-news-icon">
+                          <em class="icon ni ni-card-view"></em>
+                        </div>
+                        <div class="nk-news-text">
+                          <p>Your account is active and you can start earning?
+                            <span>
+                              A overview of our is now available on YouTube</span></p>
+                          <em class="icon ni ni-external"></em>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

@@ -26,6 +26,13 @@
             </div>
             <div class="form-control-group">
               {{form.addr_line1}}
+              {% if form.addr_line1.errors %}
+                <ul class="errorlist">
+                  {% for error in form.addr_line1.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -36,6 +43,13 @@
             </div>
             <div class="form-control-group">
               {{form.addr_line2}}
+              {% if form.addr_line2.errors %}
+                <ul class="errorlist">
+                  {% for error in form.addr_line2.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -47,6 +61,13 @@
             </div>
             <div class="form-control-group">
               {{form.city}}
+              {% if form.city.errors %}
+                <ul class="errorlist">
+                  {% for error in form.city.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -58,6 +79,13 @@
             </div>
             <div class="form-control-group">
               {{form.state}}
+              {% if form.state.errors %}
+                <ul class="errorlist">
+                  {% for error in form.state.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -69,6 +97,13 @@
             </div>
             <div class="form-control-group">
               {{form.country}}
+              {% if form.country.errors %}
+                <ul class="errorlist">
+                  {% for error in form.country.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -80,6 +115,13 @@
             </div>
             <div class="form-control-group">
               {{form.zip_code}}
+              {% if form.zip_code.errors %}
+                <ul class="errorlist">
+                  {% for error in form.zip_code.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           </div>
         </div>

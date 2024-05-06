@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 import logging
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ class AccountStatusMiddleware(MiddlewareMixin):
         try:
             if account.status == "COMPLETED":
                 return (
-                    reverse("dashboard:home")
+                    reverse(settings.DASHBOARD_URL)
                     if account.verified
                     else reverse("dashboard:welcome")
                 )

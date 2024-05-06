@@ -65,10 +65,17 @@
       <div class="nk-kycfm-upload">
         <h6 class="title nk-kycfm-upload-title">Upload Here Your Copy</h6>
         <div class="row align-items-center">
-          <div class="col-sm-8 col-12">
+          <div class="col-12">
             <div class="nk-kycfm-upload-box">
-              <div class="upload-zone" style="position:relative">
+              <div class="upload-zone" style="width:100% !important; margin-top:22px !important;">
                 {{form.document}}
+                {% if form.document.errors %}
+                  <ul class="errorlist">
+                    {% for error in form.document.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               </div>
             </div>
           </div>

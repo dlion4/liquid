@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from .forms import EmailLoginForm, EmailSignupForm
 from django.shortcuts import render, redirect
-from amiribd.users.models import User
+from amiribd.users.models import User, Profile
 from allauth.account.views import LoginView as AuthLoginView
 from django.views.generic import FormView, View
 from django.contrib.auth import get_user_model
@@ -109,6 +109,8 @@ class SignupView(EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormVie
         except User.DoesNotExist:
             user = User.objects.create_user(email=email, username=username)
             user.save()
+            # create profile after successful user creation
+            # profle = Profile.objects.create(user=user)
             # login the user without having to send him/her email
             login(self.request, user, backend="sesame.backends.ModelBackend")
             # redirect to home page after login

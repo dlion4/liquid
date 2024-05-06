@@ -127,16 +127,10 @@ class ProfileDetailForm(forms.ModelForm):
                 attrs={
                     "class": "form-control form-control-lg date-picker-alt",
                     "placeholder": "2000-04-01",
+                    "data-date-format": "yyyy-mm-dd",
                 }
             ),
         }
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        super(ProfileDetailForm, self).__init__(*args, **kwargs)
-        if user:
-            self.fields["email_address"].initial = user.email
-            self.fields["public_username"].initial = user.username
 
 
 class ProfileAddressForm(forms.ModelForm):
@@ -216,3 +210,12 @@ class ProfileVerificationDocumentForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = ["document_type", "document", "read_terms", "correct_information"]
+        widgets = {
+            "document": forms.FileInput(
+                attrs={
+                    "class": "form-control",
+                    "style": "width:100%",
+                    "margin-top": "22px",
+                }
+            )
+        }

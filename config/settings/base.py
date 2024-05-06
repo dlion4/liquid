@@ -256,6 +256,9 @@ EMAIL_TIMEOUT = 5
 # ------------------------------------------------------------------------------
 # Django Admin URL.
 ADMIN_URL = "admin/"
+# ------------------------------------------------------------------------------
+# Django CLIENT Dashboard URL
+DASHBOARD_URL = env.str("DJANGO_DASHBOARD_URL", default="dashboard:home")
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [("""kwasa""", "kwasa@example.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers

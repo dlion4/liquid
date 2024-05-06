@@ -82,7 +82,10 @@ class Profile(models.Model):
         db_persist=True,
     )
     kyc_completed = models.BooleanField(default=False)
+    kyc_validated = models.BooleanField(default=False)
     kyc_completed_at = models.DateTimeField(null=True, blank=True)
+    is_address_set = models.BooleanField(default=False)
+    is_document_set = models.BooleanField(default=False)
     phone_regex = RegexValidator(
         regex=r"^[0-9]\d{8,14}$",
         message="Phone number must start with a digit and be 9 to 15 digits in total.",
@@ -90,17 +93,26 @@ class Profile(models.Model):
     phone_number = models.CharField(
         max_length=20, null=True, blank=True, validators=[phone_regex]
     )
-    date_of_birth = models.CharField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    initials = models.CharField(max_length=2, blank=True, null=True, default="AB")
 
     def __str__(self):
         return f"{self.user.username} Profile"
+
+    def generate_initials(self):
+        names = self.full_name.split()
+        initials = [name[0].upper() for name in names]
+        return "".join(initials[:2])
+
+    def save(self, *args, **kwargs):
+        self.initials = self.generate_initials()
+        super(Profile, self).save(*args, **kwargs)
 
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-    instance.profile_user.save()
 
 
 class Address(models.Model):
