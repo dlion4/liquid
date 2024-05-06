@@ -30,15 +30,15 @@
               <span class="nk-menu-text">Overview</span></a>
           </li>
           <li class="nk-menu-item">
-            <a href="schemes.html" class="nk-menu-link">
+            <a href="" class="nk-menu-link">
               <span class="nk-menu-text">MY Plan</span></a>
           </li>
           <li class="nk-menu-item">
-            <a href="invest.html" class="nk-menu-link">
+            <a href="" class="nk-menu-link">
               <span class="nk-menu-text">Invest</span></a>
           </li>
           <li class="nk-menu-item">
-            <a href="profile.html" class="nk-menu-link">
+            <a href="" class="nk-menu-link">
               <span class="nk-menu-text">Profile</span></a>
           </li>
 
@@ -183,7 +183,7 @@
                   <div class="user-info">
                     <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span></div>
                   <div class="user-action">
-                    <a class="btn btn-icon me-n2" href="profile-setting.html">
+                    <a class="btn btn-icon me-n2" href="">
                       <em class="icon ni ni-setting"></em>
                     </a>
                   </div>
@@ -205,17 +205,17 @@
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a href="profile.html">
+                    <a href="">
                       <em class="icon ni ni-user-alt"></em>
                       <span>View Profile</span></a>
                   </li>
                   <li>
-                    <a href="profile-setting.html">
+                    <a href="">
                       <em class="icon ni ni-setting-alt"></em>
                       <span>Account Setting</span></a>
                   </li>
                   <li>
-                    <a href="profile-activity.html">
+                    <a href="">
                       <em class="icon ni ni-activity-alt"></em>
                       <span>Login Activity</span></a>
                   </li>
@@ -224,7 +224,7 @@
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a href="#">
+                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()">
                       <em class="icon ni ni-signout"></em>
                       <span>Sign out</span></a>
                   </li>

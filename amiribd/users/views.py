@@ -128,6 +128,7 @@ class SuccessAuthenticationView(AuthenticationGuard, TemplateView):
 
 
 class LogoutView(View):
+    @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         logout(request)
         return redirect("home")
