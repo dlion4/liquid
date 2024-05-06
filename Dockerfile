@@ -15,7 +15,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 RUN python manage.py collectstatic --noinput
-RUN python manage.py compress
+# RUN python manage.py compress
 
 
 

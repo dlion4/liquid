@@ -83,6 +83,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "django_htmx",
     "after_response",
+    "nested_inline",
 ]
 
 LOCAL_APPS = [
@@ -92,6 +93,8 @@ LOCAL_APPS = [
     "amiribd.posts",
     # dashboard
     "amiribd.dashboard",
+    # investors
+    "amiribd.invest",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -115,7 +118,7 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "home"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = "users:login"
-SIGNUP_URL="users:signup"
+SIGNUP_URL = "users:signup"
 # PASSWORDS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers

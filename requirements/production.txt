@@ -19,3 +19,4 @@ dj-database-url
 gunicorn
 django-debug-toolbar
 pytest
+django-nested-inline
