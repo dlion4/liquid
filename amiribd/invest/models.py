@@ -1,20 +1,40 @@
 from django.db import models
 from amiribd.users.models import Profile
-from .types import PoolType, AccountType, PlanType, PlanStatus, TransactionType
+from .types import (
+    PoolTypeObjects,
+    AccountTypeObjects,
+    PlanTypeObjects,
+    PlanStatus,
+    AccountTypeObjects,
+)
 
 from django.db.models import OuterRef, Subquery, DecimalField
 from django.db.models.functions import Coalesce
 
 
+class PoolType(models.Model):
+    type = models.CharField(
+        max_length=10,
+        choices=PoolTypeObjects.choices,
+        default=PoolTypeObjects.INDIVIDUAL,
+    )
+    price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"{self.type} Pool"
+
+
 # Create your models here.
 class Pool(models.Model):
     profile = models.OneToOneField(
-        Profile, on_delete=models.CASCADE, related_name="account_profile"
+        Profile, on_delete=models.CASCADE, related_name="pool_account_profile"
     )
-    type = models.CharField(
-        max_length=25, default=PoolType.INDIVIDUAL, choices=PoolType.choices
+    type = models.ForeignKey(
+        PoolType,
+        on_delete=models.CASCADE,
+        related_name="pool_type",
+        verbose_name="pool_type",
     )
-    fee = models.DecimalField(max_digits=15, decimal_places=2, default=300.00)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -29,34 +49,56 @@ class PoolFeature(models.Model):
     feature = models.TextField(blank=True, null=True)
 
 
+class AccountType(models.Model):
+    type = models.CharField(
+        max_length=10,
+        choices=AccountTypeObjects.choices,
+        default=AccountTypeObjects.BASIC,
+    )
+    price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"{self.type} Account"
+
+
 class Account(models.Model):
     pool = models.ForeignKey(
         Pool, on_delete=models.CASCADE, related_name="account_pool"
     )
-    type = models.CharField(
-        max_length=10, choices=AccountType.choices, default=AccountType.BASIC
+    type = models.ForeignKey(
+        AccountType, on_delete=models.CASCADE, related_name="account_type"
     )
-    fee = models.DecimalField(max_digits=15, decimal_places=2, default=300.00)
+    fee = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    balance = models.DecimalField(max_digits=15, decimal_places=2, default=300.00)
+    balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"{self.type} Account"
+
+
+class PlanType(models.Model):
+    type = models.CharField(
+        max_length=15, choices=PlanTypeObjects.choices, default=PlanTypeObjects.BRONZE
+    )
+    price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"{self.type} Plan"
 
 
 class Plan(models.Model):
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="account_plan"
     )
-    plan = models.CharField(
-        max_length=15, choices=PlanType.choices, default=PlanType.BRONZE
+    type = models.ForeignKey(
+        PlanType, on_delete=models.CASCADE, related_name="plan_type"
     )
-    min_amount = models.DecimalField(max_digits=15, decimal_places=2, default=300.00)
-    max_amount = models.DecimalField(max_digits=15, decimal_places=2, default=300.00)
+    min_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    max_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     # Use GeneratedField for the fee column
     fee = models.DecimalField(max_digits=11, decimal_places=2, default=0.00)
-    percentage_return = models.FloatField(default=0.00)
+    percentage_return = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(
@@ -64,12 +106,12 @@ class Plan(models.Model):
     )
 
     def __str__(self):
-        return f"{self.plan} Plan"
+        return f"{self.type} Plan"
 
-    def save(self, *args, **kwargs):
-        # Override save method to set the GeneratedField value
-        self.fee = self._calculate_fee()
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     # Override save method to set the GeneratedField value
+    #     self.fee = self._calculate_fee()
+    #     super().save(*args, **kwargs)
 
     def _calculate_fee(self):
         # Subquery to fetch related Account's fee
@@ -78,19 +120,3 @@ class Plan(models.Model):
         )[:1]
         # Use Coalesce to handle cases where account_fee_subquery returns None
         return Coalesce(Subquery(account_fee_subquery), 0)
-
-
-class Transaction(models.Model):
-    account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, related_name="transaction_account"
-    )
-    type = models.CharField(max_length=22, choices=TransactionType.choices)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    amount = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
-    verified = models.BooleanField(default=False)
-    receipt_number = models.CharField(max_length=255, blank=True, null=True)
-    source = models.CharField(max_length=255, blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.type} Transaction"

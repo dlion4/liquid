@@ -1,0 +1,35 @@
+<div class="col-lg-7">
+  <form action="{% url 'dashboard:invest:invest' %}" method="post">
+    {% csrf_token %}
+    <div class="invest-field form-group">
+      <div class="form-group">
+        <label class="form-label"></label>
+        {{poolform}}
+      </div>
+    </div>
+
+    <div class="invest-field form-group">
+      <div class="form-group">
+        <label class="form-label"></label>
+        {{accountform}}
+      </div>
+    </div>
+
+    <div class="invest-field form-group">
+      <div class="form-group">
+        <label class="form-label"></label>
+        {{planform}}
+      </div>
+    </div>
+
+    <div class="invest-field form-group">
+      <div class="form-group">
+        {{ payoptions }}
+      </div>
+    </div>
+
+    <div class="text-center bg-lighter w-100">
+      <button type="submit" class="btn btn-lg btn-primary ttu w-100 text-center">Confirm &amp; proceed</button>
+    </div>
+  </form>
+</div>

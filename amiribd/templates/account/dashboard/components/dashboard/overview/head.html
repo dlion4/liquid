@@ -9,57 +9,78 @@
           <h2 class="nk-block-title fw-normal">{{profile.full_name|title}}</h2>
         </div>
         <div>
-          <a href="schemes.html" class="btn btn-white btn-light">My Plans
-            <em class="icon ni ni-arrow-long-right ms-2"></em>
-          </a>
+          {% if plans %}
+            <a href="" class="btn btn-white btn-light">My Plans
+              <em class="icon ni ni-arrow-long-right ms-2"></em>
+            </a>
+          {% endif %}
         </div>
       </div>
       <div class="nk-block-des">
         <p>At a glance summary of your investment account. Have fun!</p>
       </div>
     </div>
-    <div class="nk-block-head-content d-none d-md-block">
-      <div class="nk-slider nk-slider-s1">
-        <div class="slider-init" data-slick='{"dots": true, "arrows": false, "fade": true}'>
-          <div class="slider-item">
-            <div class="nk-iv-wg1">
-              <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
-              <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
-              <a href="#" class="nk-iv-wg1-link link link-light">
-                <em class="icon ni ni-trend-up"></em>
-                <span>Check Details</span></a>
-              <div class="nk-iv-wg1-progress">
-                <div class="progress-bar bg-primary" data-progress="80"></div>
+    <div class="nk-block-head-content">
+      {% if plans %}
+        <div class="nk-slider nk-slider-s1  d-none d-md-block">
+          <div class="slider-init" data-slick='{"dots": true, "arrows": false, "fade": true}'>
+            <div class="slider-item">
+              <div class="nk-iv-wg1">
+                <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
+                <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
+                <a href="#" class="nk-iv-wg1-link link link-light">
+                  <em class="icon ni ni-trend-up"></em>
+                  <span>Check Details</span></a>
+                <div class="nk-iv-wg1-progress">
+                  <div class="progress-bar bg-primary" data-progress="80"></div>
+                </div>
+              </div>
+            </div>
+            <div class="slider-item">
+              <div class="nk-iv-wg1">
+                <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
+                <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
+                <a href="#" class="nk-iv-wg1-link link link-light">
+                  <em class="icon ni ni-trend-up"></em>
+                  <span>Check Details</span></a>
+                <div class="nk-iv-wg1-progress">
+                  <div class="progress-bar bg-primary" data-progress="80"></div>
+                </div>
+              </div>
+            </div>
+            <div class="slider-item">
+              <div class="nk-iv-wg1">
+                <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
+                <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
+                <a href="#" class="nk-iv-wg1-link link link-light">
+                  <em class="icon ni ni-trend-up"></em>
+                  <span>Check Details</span></a>
+                <div class="nk-iv-wg1-progress">
+                  <div class="progress-bar bg-primary" data-progress="80"></div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="slider-item">
-            <div class="nk-iv-wg1">
-              <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
-              <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
-              <a href="#" class="nk-iv-wg1-link link link-light">
-                <em class="icon ni ni-trend-up"></em>
-                <span>Check Details</span></a>
-              <div class="nk-iv-wg1-progress">
-                <div class="progress-bar bg-primary" data-progress="80"></div>
-              </div>
-            </div>
-          </div>
-          <div class="slider-item">
-            <div class="nk-iv-wg1">
-              <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
-              <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
-              <a href="#" class="nk-iv-wg1-link link link-light">
-                <em class="icon ni ni-trend-up"></em>
-                <span>Check Details</span></a>
-              <div class="nk-iv-wg1-progress">
-                <div class="progress-bar bg-primary" data-progress="80"></div>
-              </div>
-            </div>
+          <div class="slider-dots"></div>
+        </div>
+      {% else %}
+        <div class="toggle-wrap nk-block-tools-toggle">
+          <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+            <em class="icon ni ni-more-v"></em>
+          </a>
+          <div class="toggle-expand-content" data-content="pageMenu">
+            <ul class="nk-block-tools gx-3 g-3">
+              <li class="order-md-last">
+                <a href="{% url 'dashboard:invest:invest' %}" class="btn btn-primary btn-lg">
+                  <span>Choose a plan To start earning</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="slider-dots"></div>
-      </div>
+      {% endif %}
     </div>
   </div>
 </div>
+
+<!-- Modal Content Code -->

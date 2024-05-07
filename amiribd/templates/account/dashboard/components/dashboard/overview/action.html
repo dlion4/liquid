@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <div class="nk-block">
   <div class="card card-bordered">
     <div class="nk-refwg">
@@ -10,56 +12,26 @@
             </div>
           </div>
           <div class="nk-refwg-action">
-            <button
-              type="button"
-              role="button"
-              hx-post="{% url 'htmx:generate_referral_code' profile.id %}"
-              hx-trigger="click"
-              hx-target="#referral-code"
-              hx-swap="innerHTML"
-              class="btn btn-primary"
-              hx-on::after-request="handleHtmxAfterRequest()"
-              id="generateBtn"
-            >
+            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" class="btn btn-primary" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn">
               Generate
             </button>
 
-            <button
-              class="btn btn-primary"
-              type="button"
-              disabled="disabled"
-              id="loadingBtn"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
+            <button class="btn btn-primary" type="button" disabled="disabled" id="loadingBtn">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Loading...
             </button>
           </div>
         </div>
         <div class="nk-refwg-url">
           <div class="form-control-wrap">
-            <div
-              class="form-clip clipboard-init"
-              data-clipboard-target="#refUrl"
-              data-success="Copied"
-              data-text="Copy Link"
-            >
+            <div class="form-clip clipboard-init" data-clipboard-target="#refUrl" data-success="Copied" data-text="Copy Link">
               <em class="clipboard-icon icon ni ni-copy"></em>
               <span class="clipboard-text">Copy Link</span>
             </div>
             <div class="form-icon">
               <em class="icon ni ni-link-alt"></em>
             </div>
-            <input
-              type="text"
-              class="form-control copy-text"
-              id="refUrl"
-              data-link="{{profile.referral_code}}"
-              value="{{link}}"
-            />
+            <input type="text" class="form-control copy-text" id="refUrl" data-link="{{profile.referral_code}}" value="{{link}}"/>
           </div>
         </div>
       </div>
@@ -68,17 +40,12 @@
           <div class="nk-refwg-name">
             <h6 class="title">
               My Referral
-              <em
-                class="icon ni ni-info"
-                data-bs-toggle="tooltip"
-                data-bs-placement="right"
-                title="Referral Informations"
-              ></em>
+              <em class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" title="Referral Informations"></em>
             </h6>
           </div>
           <div class="nk-refwg-info g-3">
             <div class="nk-refwg-sub">
-              <div class="title">394</div>
+              <div class="title">{{profile.referrals|intword}}</div>
               <div class="sub-text">Total Joined</div>
             </div>
             <div class="nk-refwg-sub">
@@ -87,11 +54,7 @@
             </div>
           </div>
           <div class="nk-refwg-more dropdown mt-n1 me-n1">
-            <a
-              href="#"
-              class="btn btn-icon btn-trigger"
-              data-bs-toggle="dropdown"
-            >
+            <a href="#" class="btn btn-icon btn-trigger" data-bs-toggle="dropdown">
               <em class="icon ni ni-more-h"></em>
             </a>
             <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
@@ -138,7 +101,9 @@
   function handleHtmxAfterRequest() {
     loadingBtn.style.display = "none";
     generateBtn.style.display = "inline-block";
-    window.location.reload();
+    window
+      .location
+      .reload();
   }
 </script>
 

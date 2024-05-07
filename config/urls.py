@@ -45,6 +45,7 @@ urlpatterns = [
             namespace="kyc",
         ),
     ),
+    # path("monee/dashboard/invest/", include("amiribd.invest.urls", namespace="invest")),
     # Htmx actions and related views
     path(
         "htmx/",

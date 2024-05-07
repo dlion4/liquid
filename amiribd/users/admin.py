@@ -65,6 +65,7 @@ class ProfileAdmin(admin.ModelAdmin):
         "kyc_completed",
         "kyc_validated",
         "kyc_completed_at",
+        "referrals",
     )
     list_editable = [
         "is_document_set",

@@ -20,3 +20,4 @@ gunicorn
 django-debug-toolbar
 pytest
 django-nested-inline
+mypy

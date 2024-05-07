@@ -1,10 +1,13 @@
-from .models import PoolFeature, Account, Plan, Transaction
+from .models import PoolFeature, Account, Plan
+from amiribd.transactions.models import Transaction
 from nested_inline.admin import NestedStackedInline
+
 
 class TransactionInline(NestedStackedInline):
     model = Transaction
     extra = 1
     fk_name = "account"
+    readonly_fields = ["receipt_number"]
 
 
 class PlanInline(NestedStackedInline):

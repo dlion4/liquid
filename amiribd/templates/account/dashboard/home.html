@@ -1,5 +1,5 @@
 {% extends "account/dashboard/base.html" %}
-
+{% load static %}
 {% block content %}
 
 <div class="nk-content nk-content-lg nk-content-fluid">
@@ -18,12 +18,12 @@
                         <em class="icon ni ni-card-view"></em>
                       </div>
                       <div class="nk-news-text">
-                        <p>Your account is active and you can start earning?
-                          <span>
-                            A overview of our is now available on YouTube</span></p>
+                        <p>Your account is active and ready to earn
+                          <span>Have a look on how to start on Youtube</span></p>
                         <em class="icon ni ni-external"></em>
                       </div>
                     </a>
+                  
                   </div>
                 </div>
               </div>
@@ -41,3 +41,30 @@
 </div>
 
 {% endblock content %}
+
+
+
+{% block modals %}
+
+<div class="pmo-lv pmo-dark">
+  <a class="pmo-close" href="#">
+    <em class="ni ni-cross"></em>
+  </a>
+  <a class="pmo-wrap" target="_blank" href="https://softnio.com/get-early-access/">
+    <div class="pmo-text text-white">Looking for functional script for Investment Platform? Check out
+      <em class="ni ni-arrow-long-right"></em>
+    </div>
+  </a>
+</div>
+
+
+<a class="pmo-st pmo-dark" target="_blank" href="">
+  <div class="pmo-st-img"><img src="{% static 'dashboard/images/landing/promo-investorm-4.png' %}" alt="Investorm"></div>
+  <div class="pmo-st-text">Looking for Advanced<br>Investment Platform?
+  </div>
+</a>
+
+
+{% include "account/dashboard/components/dashboard/account/modals/setup.html" %}
+
+{% endblock modals %}

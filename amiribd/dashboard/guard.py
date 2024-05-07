@@ -16,9 +16,12 @@ class DashboardGuard(LoginRequiredMixin):
     def _get_user(self):
         return get_user(self.request)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = self._get_user().profile_user
+        return context
+
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect(settings.LOGIN_URL)
-        if request.user.profile_user and request.user.profile_user.kyc_completed:
-            return redirect(self.main_dashboard)
         return super().dispatch(request, *args, **kwargs)

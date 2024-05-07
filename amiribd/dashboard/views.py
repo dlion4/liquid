@@ -22,6 +22,14 @@ class DashboardView(DashboardViewMixin):
     def _get_user(self):
         return self.request.user
 
+    def _referrals(self):
+        return self._get_user().referrals.all().count()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["plans"] = None
+        return context
+
 
 dashboard = DashboardView.as_view()
 

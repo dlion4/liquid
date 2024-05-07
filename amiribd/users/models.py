@@ -12,6 +12,8 @@ from django.db.models.signals import post_save
 from django.core.validators import RegexValidator
 from django.utils.timezone import now
 from .actions import generate_referral_code
+from django.utils.functional import cached_property
+from django.db.models import QuerySet
 
 
 class ConcatFiels(models.Func):
@@ -59,6 +61,13 @@ class User(AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"pk": self.id})
+
+    @cached_property
+    def referrals_count(self):
+        return self.referrals().count()
+
+    def referrals(self) -> QuerySet["Profile"]:
+        return self.profile_referred_by.all()
 
     def save(self, *args, **kwargs):
         if not self.username:
@@ -108,12 +117,16 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.user.username} Profile"
 
-    def generate_initials(self):
+    def generate_initials(self) -> str | None:
         if self.full_name:
             names = self.full_name.split()
             initials = [name[0].upper() for name in names]
             return "".join(initials[:2])
         return None
+
+    @cached_property
+    def referrals(self) -> int:
+        return self.user.referrals_count
 
     def save(self, *args, **kwargs):
         self.referral_code = generate_referral_code(self.pk)
@@ -148,7 +161,7 @@ class DocumentType(models.TextChoices):
     DL = "DL", "Driving Licence"
 
 
-def user_directory_path(instance, filename):
+def user_directory_path(instance, filename) -> str:
     # file will be uploaded to MEDIA_ROOT/profiles/kyc/<year>/<month>/<day>/<username>/<filename>
 
     return "profiles/kyc/{0}/{1}/{2}/{3}/{4}/{5}".format(

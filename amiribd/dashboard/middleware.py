@@ -21,24 +21,22 @@ class AccountStatusMiddleware(MiddlewareMixin):
             return HttpResponseRedirect(reverse("users:login"))
 
         account = request.user
-        target_path = self.get_redirect_path(account)
+        target_path = self.get_redirect_path(request, account)
 
         if (
             target_path
             and request.path != target_path
-            and target_path not in ["/dashboard/kyc/"]
+            and target_path not in ["/dashboard/kyc/", "/dashboard/invest/"]
         ):
             return HttpResponseRedirect(target_path)
 
         return self.get_response(request)
 
-    def get_redirect_path(self, account):
+    def get_redirect_path(self, request, account):
         try:
             if account.status == "COMPLETED":
                 return (
-                    reverse(settings.DASHBOARD_URL)
-                    if account.verified
-                    else reverse("dashboard:welcome")
+                    request.path if account.verified else reverse("dashboard:welcome")
                 )
             elif account.status == "PENDING":
                 return reverse("dashboard:welcome")
