@@ -88,6 +88,9 @@ class Account(models.Model):
     def account_owner(self):
         return self.pool.profile.user
 
+    def __str__(self):
+        return self.type.type
+
 
 class PlanType(models.Model):
     type = models.CharField(

@@ -73,12 +73,12 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
                 instance.type.price
                 for instance in [poolInstance, accountInstance, planInstance]
             )
-            print(totalInvestment)
+            print(totalInvestment, "Total Investment")
             discountPrice = Decimal(Decimal("0.3") * Decimal(totalInvestment))
-            print(discountPrice)
+            print(discountPrice, "Discount Price")
             paymentChannel = payoptions.cleaned_data.get("channel")
 
-            print(paymentChannel)
+            print(paymentChannel, "Channel")
 
             transaction = Transaction.objects.create(
                 profile=poolInstance.profile,
@@ -89,7 +89,7 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
                 source="Account Registration",
             )
 
-            print(transaction.paid)
+            print(transaction.paid, "paid amount|Deposited")
 
             accountInstance.balance = Decimal(
                 Decimal(accountInstance.balance) + Decimal(transaction.paid)
@@ -97,12 +97,20 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
             accountInstance.save()
 
             # look for the referrer
+            print(accountInstance.balance, "Account Balance")
 
             profile = poolInstance.profile
 
             with contextlib.suppress(Exception):
                 if referrer := profile.referred_by:
-                    print(referrer)
+                    print(
+                        referrer,
+                        "User",
+                        referrer.profile_user,
+                        "Profile ser",
+                        profile,
+                        "Profile thats onbording",
+                    )
 
                     # update the referrer account by a percentage of the deposit
                     referrer_profile = referrer.profile_user
@@ -112,30 +120,27 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
                     interest_earned = Decimal(
                         Decimal("0.35") * Decimal(transaction.paid)
                     )
-                    print(interest_earned)
-                    
+                    print(interest_earned, "Interest to be earned")
+
                     transaction = Transaction.objects.create(
-                        profile=profile,
+                        profile=referrer_profile,
                         account=referrer_profile_account,
                         type="DEPOSIT",
                         amount=interest_earned,
                         discount=Decimal("0.00"),
                         source=f"Referral Earnings from {profile}",
                     )
-
-                    referrer_profile_account.balance = (
-                        interest_earned + referrer_profile_account.balance
-                    )
+                    transaction.save()
+                    referrer_profile_account.balance += transaction.paid
                     # now save the transaction
                     referrer_profile_account.save()
                     # referrer_profile_account.refresh_from_db()
 
-                    print(referrer_profile_account)
+                    print(
+                        referrer_profile_account.balance, "Account balance of refferer"
+                    )
 
                     # lets create a transaction record for this transaction
-
-
-                    transaction.save()
 
             return redirect(self.success_url)
 
