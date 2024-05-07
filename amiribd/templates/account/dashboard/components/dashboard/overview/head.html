@@ -10,7 +10,7 @@
         </div>
         <div>
           {% if plans %}
-            <a href="" class="btn btn-white btn-light">My Plans
+            <a href="{% url 'dashboard:invest:plans' %}" class="btn btn-white btn-light">My Plans
               <em class="icon ni ni-arrow-long-right ms-2"></em>
             </a>
           {% endif %}

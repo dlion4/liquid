@@ -189,19 +189,23 @@
                   </div>
                 </div>
               </div>
-              <div class="dropdown-inner user-account-info">
-                <h6 class="overline-title-alt">Account Balance</h6>
-                <div class="user-balance">1,494.23
-                  <small class="currency currency-usd">USD</small>
+              {% if plans %}
+                <div class="dropdown-inner user-account-info">
+                  <h6 class="overline-title-alt">Account Balance</h6>
+                  <div class="user-balance">{{available_amount}}
+                    <small class="currency currency-usd">KSHS</small>
+                  </div>
+                  <div class="user-balance-sub">Locked
+                    <span>{{locked_amount}}
+                      <span class="currency currency-usd">KSHS</span></span></div>
+                  {% if available_amount > 0.00 %}
+                    <a href="#" class="link">
+                      <span>Withdraw Balance</span>
+                      <em class="icon ni ni-wallet-out"></em>
+                    </a>
+                  {% endif %}
                 </div>
-                <div class="user-balance-sub">Locked
-                  <span>15,495.39
-                    <span class="currency currency-usd">USD</span></span></div>
-                <a href="#" class="link">
-                  <span>Withdraw Balance</span>
-                  <em class="icon ni ni-wallet-out"></em>
-                </a>
-              </div>
+              {% endif %}
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>

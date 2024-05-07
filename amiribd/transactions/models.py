@@ -42,6 +42,10 @@ class Transaction(models.Model):
     def __str__(self):
         return f"{self.type} Transaction"
 
+    @property
+    def invitor(self):
+        self.profile.referred_by
+
     def save(self, *args, **kwargs):
         self.receipt_number = generate_receipt_number()
         super().save(*args, **kwargs)

@@ -20,10 +20,10 @@
                 <div class="nk-block-head-content">
                   <ul class="nk-block-tools gx-3">
                     <li>
-                      <a href="#" class="btn btn-primary">
+                      <button {% if available_amount <= 0.00 %} disabled="disabled" {% endif %} class="btn btn-primary">
                         <span>Withdraw</span>
                         <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
-                      </a>
+                      </button>
                     </li>
                     <li>
                       <a href="#" class="btn btn-white btn-light">
@@ -57,7 +57,7 @@
           </div>
 
           {% include "account/dashboard/investment/components/schemes/stats.html" %}
-          
+
         </div>
 
       </div>

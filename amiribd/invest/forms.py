@@ -6,14 +6,9 @@ from amiribd.transactions.models import PaymentMethod
 
 class PoolRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
-        widget=forms.Select(
-            attrs={
-                "class": "select2 select2-container select2-container--default select2-container--below select2-container--focus"
-            }
-        ),
+        widget=forms.Select(attrs={"class": "form-control select"}),
         queryset=PoolType.objects.all(),
         required=True,
-        initial=PoolType.objects.first(),
         label="Pool Type",
         help_text="Select the type of pool you would like to create.",
     )
@@ -26,12 +21,8 @@ class PoolRegistrationForm(forms.ModelForm):
 class AccountRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         queryset=AccountType.objects.all(),
-        widget=forms.Select(
-            attrs={
-                "class": "select2 select2-container select2-container--default select2-container--below select2-container--focus"
-            }
-        ),
-        label="Account Seelction",
+        widget=forms.Select(attrs={"class": "form-control select"}),
+        label="Account Selection",
         help_text="Select an account type for your plan",
     )
 
@@ -45,11 +36,7 @@ class AccountRegistrationForm(forms.ModelForm):
 class PlanRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         queryset=PlanType.objects.all(),
-        widget=forms.Select(
-            attrs={
-                "class": "select2 select2-container select2-container--default select2-container--below select2-container--focus"
-            }
-        ),
+        widget=forms.Select(attrs={"class": "form-control select"}),
         label="Plan Seelction",
         help_text="Select a suitable plan that fits your pocket",
     )
@@ -60,4 +47,7 @@ class PlanRegistrationForm(forms.ModelForm):
 
 
 class PaymentOptionForm(forms.Form):
-    channel = forms.ModelChoiceField(queryset=PaymentMethod.objects.all())
+    channel = forms.ModelChoiceField(
+        queryset=PaymentMethod.objects.all(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )

@@ -8,11 +8,15 @@
           <div class="nk-refwg-title">
             <h5 class="title">Refer Us & Earn</h5>
             <div class="title-sub">
-              Use the bellow link to invite your friends.
+              {% if plans %}
+                Use the bellow link to invite your friends.
+              {% else %}
+                You need to be enrolled in atleast one plan to refer others
+              {% endif %}
             </div>
           </div>
           <div class="nk-refwg-action">
-            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" class="btn btn-primary" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn">
+            <button type="button" role="button" {% if plans %} hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" {% else %} disabled="disabled" {% endif %} class="btn btn-primary">
               Generate
             </button>
 
@@ -24,14 +28,14 @@
         </div>
         <div class="nk-refwg-url">
           <div class="form-control-wrap">
-            <div class="form-clip clipboard-init" data-clipboard-target="#refUrl" data-success="Copied" data-text="Copy Link">
+            <div class="form-clip clipboard-init" {% if plans %} data-clipboard-target="#refUrl" data-success="Copied" data-text="Copy Link" {% endif %}>
               <em class="clipboard-icon icon ni ni-copy"></em>
               <span class="clipboard-text">Copy Link</span>
             </div>
             <div class="form-icon">
               <em class="icon ni ni-link-alt"></em>
             </div>
-            <input type="text" class="form-control copy-text" id="refUrl" data-link="{{profile.referral_code}}" value="{{link}}"/>
+            <input type="text" class="form-control copy-text" {% if plans %} id="refUrl" data-link="{{profile.referral_code}}" value="{{link}}" {% else %} "" {% endif %}/>
           </div>
         </div>
       </div>

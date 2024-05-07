@@ -1,3 +1,4 @@
+import contextlib
 from typing import Any
 from django.shortcuts import redirect, render
 from django.views.generic import FormView, TemplateView
@@ -54,30 +55,29 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
             poolInstance.profile = self._get_user().profile_user
             poolInstance.save()
             poolForm.save()
-            poolInstance.refresh_from_db()
+            # poolInstance.refresh_from_db()
 
             accountInstance = accountForm.save(commit=False)
             accountInstance.pool = poolInstance
             accountInstance.save()
             accountForm.save()
-            accountInstance.refresh_from_db()
+            # accountInstance.refresh_from_db()
 
             planInstance = planForm.save(commit=False)
             planInstance.account = accountInstance
             planInstance.save()
             planForm.save()
-            planInstance.refresh_from_db()
+            # planInstance.refresh_from_db()
 
             totalInvestment = sum(
                 instance.type.price
                 for instance in [poolInstance, accountInstance, planInstance]
             )
-            amountTobePaid = Decimal("0.3") * totalInvestment
-            amountTobePaid = Decimal(amountTobePaid)
-
+            print(totalInvestment)
+            discountPrice = Decimal(Decimal("0.3") * Decimal(totalInvestment))
+            print(discountPrice)
             paymentChannel = payoptions.cleaned_data.get("channel")
 
-            print(amountTobePaid)
             print(paymentChannel)
 
             transaction = Transaction.objects.create(
@@ -85,18 +85,65 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
                 account=accountInstance,
                 type="DEPOSIT",
                 amount=totalInvestment,
-                discount=amountTobePaid,
+                discount=discountPrice,
                 source="Account Registration",
             )
 
-            print(transaction)
+            print(transaction.paid)
 
-            accountInstance.balance = transaction.paid
+            accountInstance.balance = Decimal(
+                Decimal(accountInstance.balance) + Decimal(transaction.paid)
+            )
             accountInstance.save()
+
+            # look for the referrer
+
+            profile = poolInstance.profile
+
+            with contextlib.suppress(Exception):
+                if referrer := profile.referred_by:
+                    print(referrer)
+
+                    # update the referrer account by a percentage of the deposit
+                    referrer_profile = referrer.profile_user
+                    referrer_profile_account = Account.objects.get(
+                        pool__profile=referrer_profile
+                    )
+                    interest_earned = Decimal(
+                        Decimal("0.35") * Decimal(transaction.paid)
+                    )
+                    print(interest_earned)
+                    
+                    transaction = Transaction.objects.create(
+                        profile=profile,
+                        account=referrer_profile_account,
+                        type="DEPOSIT",
+                        amount=interest_earned,
+                        discount=Decimal("0.00"),
+                        source=f"Referral Earnings from {profile}",
+                    )
+
+                    referrer_profile_account.balance = (
+                        interest_earned + referrer_profile_account.balance
+                    )
+                    # now save the transaction
+                    referrer_profile_account.save()
+                    # referrer_profile_account.refresh_from_db()
+
+                    print(referrer_profile_account)
+
+                    # lets create a transaction record for this transaction
+
+
+                    transaction.save()
 
             return redirect(self.success_url)
 
-        print(form.errors for form in [poolForm, accountForm, planForm, payoptions])
+        for form in [poolForm, accountForm, planForm, payoptions]:
+            if form.errors:
+                for choice in form.fields["type"].choices:
+                    print(choice)
+                print(form.errors)
 
         return render(
             request,
@@ -113,7 +160,7 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
 invest = InvestmentRegistrationView.as_view()
 
 
-class InvestmentPlanView(DashboardGuard, TemplateView):
+class InvestmentPlanView(DashboardGuard, DashboardViewMixin):
     template_name = "account/dashboard/investment/plans.html"
     queryset = Account
 
@@ -121,41 +168,6 @@ class InvestmentPlanView(DashboardGuard, TemplateView):
         if not Pool.objects.filter(profile=self._get_user().profile_user).exists():
             return redirect("dashboard:invest:invest")
         return super().dispatch(request, *args, **kwargs)
-
-    # @method_decorator(
-    #     cache_page(60), name="dispatch"
-    # )  # Cache for 1 minute, adjust as needed
-    def get_account_total(self, **kwargs):
-        balance = self.queryset.objects.get(
-            pool__profile=self._get_user().profile_user
-        ).balance
-
-        # print(balance)
-        return balance
-
-    def get_account_locked_amount(self, **kwargs):
-        transaction = Transaction.objects.get(
-            profile=self._get_user().profile_user,
-            type="DEPOSIT",
-            source="Account Registration",
-        )
-        return transaction.paid
-        # return Decimal(
-        #     Decimal(self.get_account_total(**kwargs)) - Decimal(transaction.paid)
-        # )
-
-    def get_account_available_amount(self, **kwargs):
-        return Decimal(
-            Decimal(self.get_account_total(**kwargs))
-            - Decimal(self.get_account_locked_amount(**kwargs))
-        )
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["balance"] = self.get_account_total(**kwargs)
-        context["locked_amount"] = self.get_account_locked_amount(**kwargs)
-        context["available_amount"] = self.get_account_available_amount(**kwargs)
-        return context
 
 
 plans = InvestmentPlanView.as_view()

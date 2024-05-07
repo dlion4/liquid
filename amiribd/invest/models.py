@@ -17,6 +17,7 @@ class PoolType(models.Model):
         max_length=10,
         choices=PoolTypeObjects.choices,
         default=PoolTypeObjects.INDIVIDUAL,
+        unique=True,
     )
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
 
@@ -41,6 +42,14 @@ class Pool(models.Model):
     def __str__(self):
         return f"{self.type} Pool"
 
+    @property
+    def owner(self):
+        return self.profile.user
+
+    @property
+    def account(self):
+        return self.account_pool.type
+
 
 class PoolFeature(models.Model):
     pool = models.OneToOneField(
@@ -52,8 +61,8 @@ class PoolFeature(models.Model):
 class AccountType(models.Model):
     type = models.CharField(
         max_length=10,
-        choices=AccountTypeObjects.choices,
-        default=AccountTypeObjects.BASIC,
+        choices=(("Basic", "Basic"), ("Standard", "Standard")),
+        default="Basic",
     )
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
 
@@ -62,19 +71,22 @@ class AccountType(models.Model):
 
 
 class Account(models.Model):
-    pool = models.ForeignKey(
+    pool = models.OneToOneField(
         Pool, on_delete=models.CASCADE, related_name="account_pool"
     )
     type = models.ForeignKey(
-        AccountType, on_delete=models.CASCADE, related_name="account_type"
+        AccountType,
+        on_delete=models.CASCADE,
+        related_name="account_type",
+        verbose_name="account_type",
     )
-    fee = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
 
-    def __str__(self):
-        return f"{self.type} Account"
+    @property
+    def account_owner(self):
+        return self.pool.profile.user
 
 
 class PlanType(models.Model):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pool, PoolType, PlanType, AccountType
+from .models import Pool, PoolType, PlanType, AccountType, Account
 from nested_inline.admin import NestedModelAdmin
 from .inlines import AccountInline, PoolFeatureInline, Plan
 
@@ -10,6 +10,7 @@ from .inlines import AccountInline, PoolFeatureInline, Plan
 class PoolAdmin(NestedModelAdmin):
     list_display = [
         "profile",
+        "account",
         "type",
         "created_at",
         "updated_at",
@@ -45,4 +46,16 @@ class AccountTypeAdmin(admin.ModelAdmin):
     list_display = [
         "type",
         "price",
+    ]
+
+
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = [
+        "account_owner",
+        "pool",
+        "type",
+        "created_at",
+        "updated_at",
+        "balance",
     ]
