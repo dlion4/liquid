@@ -84,6 +84,7 @@ THIRD_PARTY_APPS = [
     "django_htmx",
     "after_response",
     "nested_inline",
+    # "django.contrib.gis",
 ]
 
 LOCAL_APPS = [
@@ -338,3 +339,8 @@ SESAME_MAX_AGE = 300  # 300 seconds = 5 minutes
 # MENTENANCE MODE
 
 MAINTENANCE_MODE = False
+
+
+import platform
+import environ
+import os

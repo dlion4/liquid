@@ -29,13 +29,15 @@
         <div class="nk-refwg-url">
           <div class="form-control-wrap">
             <div class="form-clip clipboard-init" {% if plans %} data-clipboard-target="#refUrl" data-success="Copied" data-text="Copy Link" {% endif %}>
-              <em class="clipboard-icon icon ni ni-copy"></em>
-              <span class="clipboard-text">Copy Link</span>
+              {% if plans %}
+                <em class="clipboard-icon icon ni ni-copy"></em>
+                <span class="clipboard-text">Copy Link</span>
+              {% endif %}
             </div>
             <div class="form-icon">
               <em class="icon ni ni-link-alt"></em>
             </div>
-            <input type="text" class="form-control copy-text" {% if plans %} id="refUrl" data-link="{{profile.referral_code}}" value="{{link}}" {% else %} "" {% endif %}/>
+            <input type="text" class="form-control copy-text" {% if plans %} id="refUrl" data-link="{{profile.referral_code}}" value="{{link}}" {% else %} {% endif %}/>
           </div>
         </div>
       </div>
@@ -53,7 +55,8 @@
               <div class="sub-text">Total Joined</div>
             </div>
             <div class="nk-refwg-sub">
-              <div class="title">548.49</div>
+              <div class="title">{{referral_earnings|floatformat:2|intcomma}}
+                KES</div>
               <div class="sub-text">Referral Earn</div>
             </div>
           </div>

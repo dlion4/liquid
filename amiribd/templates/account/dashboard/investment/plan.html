@@ -1,0 +1,301 @@
+{% extends "account/dashboard/base.html" %}
+{% load static humanize dashboard_tags %}
+{% block content %}
+
+  <div class="nk-content nk-content-lg nk-content-fluid">
+    <div class="container-xl wide-lg">
+      <div class="nk-content-inner">
+        <div class="nk-content-body">
+          <div class="nk-block-head">
+            <div class="nk-block-head-content">
+              <div class="nk-block-head-sub">
+                <a href="{% url 'dashboard:invest:plans' %}" class="text-soft back-to">
+                  <em class="icon ni ni-arrow-left"></em>
+                  <span>My Investment</span>
+                </a>
+              </div>
+              <div class="nk-block-between-md g-4">
+                <div class="nk-block-head-content">
+                  <h2 class="nk-block-title fw-normal">{{plan.type.type|title}}
+                    - Daily
+                    {{plan.percentage_return}}% Interest Return</h2>
+                  <div class="nk-block-des">
+                    <p>INV-498238
+                      {% if plan.status == "RUNNING" %}
+                        <span class="badge bg-outline bg-primary">{{plan.get_status_display}}</span>
+                      {% else %}
+                        <span class="badge bg-outline bg-danger">{{plan.get_status_display}}</span>
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+                <div class="nk-block-head-content">
+                  <ul class="nk-block-tools gx-3">
+                    <li class="order-md-last">
+                      {% if plan.status == "RUNNING" %}
+                        <a href="#" class="btn btn-danger">
+                          <em class="icon ni ni-cross"></em>
+                          <span>Cancel this plan</span>
+                        </a>
+                      {% endif %}
+                    </li>
+                    <li>
+                      {% if plan.status == "STOPPED" %}
+                        <a href="#" class="btn btn-icon btn-light">
+                          <em class="icon ni ni-reload"></em>
+                        </a>
+                      {% endif %}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="nk-block">
+            <div class="card card-bordered">
+              <div class="card-inner">
+                <div class="row gy-gs">
+                  <div class="col-md-6">
+                    <div class="nk-iv-wg3">
+                      <div class="nk-iv-wg3-group flex-lg-nowrap gx-4">
+                        <div class="nk-iv-wg3-sub">
+                          <div class="nk-iv-wg3-amount">
+                            <div class="number">{{plan.type.price|floatformat:2|intcomma}}
+                              KES</div>
+                          </div>
+                          <div class="nk-iv-wg3-subtitle">Invested Amount</div>
+                        </div>
+                        <div class="nk-iv-wg3-sub">
+                          <span class="nk-iv-wg3-plus text-soft">
+                            <em class="icon ni ni-plus"></em>
+                          </span>
+                          <div class="nk-iv-wg3-amount">
+                            <div class="number">{{plan.interest_return}}
+                              <span class="number-up">{{plan.percentage_return}}
+                                %</span></div>
+                          </div>
+                          <div class="nk-iv-wg3-subtitle">Profit Earned</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-4 offset-lg-2">
+                    <div class="nk-iv-wg3 ps-md-3">
+                      <div class="nk-iv-wg3-group flex-lg-nowrap gx-4">
+                        <div class="nk-iv-wg3-sub">
+                          <div class="nk-iv-wg3-amount">
+                            <div class="number">{{plan.account.withdrawable_investment|floatformat:2|intcomma}}
+                              KES
+                              <span class="number-down">{{plan.account.obtain_total_investment|floatformat:2|intcomma}}
+                                <em class="icon ni ni-info-fill" data-bs-toggle="tooltip" data-bs-placement="right" title="Invested amount"></em></span></div>
+                          </div>
+                          <div class="nk-iv-wg3-subtitle">Total Withdrawable</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="schemeDetails" class="nk-iv-scheme-details">
+                <ul class="nk-iv-wg3-list">
+                  <li>
+                    <div class="sub-text">Term</div>
+                    <div class="lead-text">Unlimited</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Term start at</div>
+                    <div class="lead-text">{{plan.created_at}}</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Term end at</div>
+                    <div class="lead-text">-</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Daily interest</div>
+                    <div class="lead-text">{{plan.percentage_return}}%</div>
+                  </li>
+                </ul>
+                <ul class="nk-iv-wg3-list">
+                  <li>
+                    <div class="sub-text">Ordered date</div>
+                    <div class="lead-text">{{plan.updated_at}}</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Approved date</div>
+                    <div class="lead-text">{{plan.updated_at}}</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Payment method</div>
+                    <div class="lead-text">{{plan.payment_method}}</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Paid
+                      <small>(fee include)</small>
+                    </div>
+                    <div class="lead-text">
+                      <span class="currency currency-usd">KES</span>
+                      {{plan.account.obtain_total_investment|floatformat:2|intcomma}}
+                    </div>
+                  </li>
+                </ul>
+                <ul class="nk-iv-wg3-list">
+                  <li>
+                    <div class="sub-text">Captial invested</div>
+                    <div class="lead-text">
+                      <span class="currency currency-usd">KES</span>
+                      {{plan.type.price|floatformat:2|intcomma}}
+                      KES</div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Daily profit</div>
+                    <div class="lead-text">
+                      <span class="currency currency-usd">KES</span>
+                      {{plan.interest_return|floatformat:2|intcomma}}
+                    </div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Net profit</div>
+                    <div class="lead-text">
+                      <span class="currency currency-usd">KES</span>
+                      {{plan.interest_return|floatformat:2|intcomma}}
+                    </div>
+                  </li>
+                  <li>
+                    <div class="sub-text">Total balance</div>
+                    <div class="lead-text">
+                      <span class="currency currency-usd">KES</span>
+                      {{plan.account.balance|floatformat:2|intcomma}}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="nk-block nk-block-lg">
+            <div class="nk-block-head">
+              <h5 class="nk-block-title">Earning Schemes</h5>
+            </div>
+            <div class="row g-gs">
+              <div class="col-lg-5">
+                <div class="card card-bordered h-100">
+                  <div class="card-inner justify-center text-center h-100">
+                    <div class="nk-iv-wg5">
+                      <div class="nk-iv-wg5-head">
+                        <h5 class="nk-iv-wg5-title">WhatsApp View</h5>
+                        <div class="nk-iv-wg5-subtitle">Earn so far
+                          <strong>0.00</strong>
+                          <span class="currency currency-usd">KES</span></div>
+                      </div>
+                      <div class="nk-iv-wg5-ck"><input type="text" class="knob-half" value="0.00" data-fgcolor="#6576ff" data-bgcolor="#d9e5f7" data-thickness=".07" data-width="240" data-height="125" data-displayinput="false">
+                        <div class="nk-iv-wg5-ck-result">
+                          <div class="text-lead">0.0%</div>
+                          <div class="text-sub">1 bob / per view</div>
+                        </div>
+                        <div class="nk-iv-wg5-ck-minmax">
+                          <span>0.00</span><span>100.00</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg col-sm-6">
+                <div class="card card-bordered h-100">
+                  <div class="card-inner justify-center text-center h-100">
+                    <div class="nk-iv-wg5">
+                      <div class="nk-iv-wg5-head">
+                        <h5 class="nk-iv-wg5-title">Referral Earnings</h5>
+                        <div class="nk-iv-wg5-subtitle">Earn so far
+                          <strong>{{referral_earnings}}</strong>
+                          <span class="currency currency-usd">KES</span></div>
+                      </div>
+                      <div class="nk-iv-wg5-ck sm"><input type="text" class="knob-half" value="0.0" data-fgcolor="#33d895" data-bgcolor="#d9e5f7" data-thickness=".07" data-width="240" data-height="125" data-displayinput="false">
+                        <div class="nk-iv-wg5-ck-result">
+                          <div class="text-lead sm">0.0%</div>
+                          <div class="text-sub">Income profit</div>
+                        </div>
+                        <div class="nk-iv-wg5-ck-minmax">
+                          <span>0.00</span><span>0.00</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg col-sm-6">
+                <div class="card card-bordered h-100">
+                  <div class="card-inner justify-center text-center h-100">
+                    <div class="nk-iv-wg5">
+                      <div class="nk-iv-wg5-head">
+                        <h5 class="nk-iv-wg5-title">Remote Tasks</h5>
+                        <div class="nk-iv-wg5-subtitle">Earn so far
+                          <strong>0.00</strong>
+                          <span class="currency currency-usd">KES</span></div>
+                      </div>
+                      <div class="nk-iv-wg5-ck sm"><input type="text" class="knob-half" value="0.0" data-fgcolor="#816bff" data-bgcolor="#d9e5f7" data-thickness=".07" data-width="240" data-height="125" data-displayinput="false">
+                        <div class="nk-iv-wg5-ck-result">
+                          <div class="text-lead sm">0</div>
+                          <div class="text-sub">Task Done</div>
+                        </div>
+                        <div class="nk-iv-wg5-ck-minmax">
+                          <span>0</span><span>0</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if transactions %}
+            <div class="nk-block nk-block-lg">
+              <div class="nk-block-head">
+                <h5 class="nk-block-title">Transactions</h5>
+              </div>
+              <div class="card card-bordered">
+                <table class="table table-iv-tnx">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="tb-col-type">
+                        <span class="overline-title">Type</span></th>
+                      <th class="tb-col-time tb-col-end">
+                        <span class="overline-title">Date</span></th>
+                      <th class="tb-col-time tb-col-end">
+                        <span class="overline-title">Source</span></th>
+                      <th class="tb-col-time tb-col-end">
+                        <span class="overline-title">Amount</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for transaction in transactions %}
+                      <tr>
+                        <td class="tb-col-type">
+                          <span class="sub-text">{{transaction.type}}</span>
+                        </td>
+                        <td class="tb-col-time tb-col-end">
+                          <span class="sub-text ">{{transaction.created_at}}</span>
+                        </td>
+                        <td class="tb-col-date tb-col-end">
+                          <span class="sub-text">{{transaction.source}}</span>
+                        </td>
+                        <td class="tb-col-time tb-col-end">
+                          {% if transaction.type == "DEPOSIT" %}
+                            <span class="lead-text text-success">{{transaction.paid|floatformat:2|intcomma}}
+                              KES</span>
+                          {% else %}
+                            <span class="lead-text text-danger">-
+                              {{transaction.paid|floatformat:2|intcomma}}
+                              KES</span>
+                          {% endif %}
+
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

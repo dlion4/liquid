@@ -33,10 +33,7 @@ class PlanInlineAdmin(admin.StackedInline):
 
 @admin.register(PlanType)
 class PlanTypeAdmin(admin.ModelAdmin):
-    list_display = [
-        "type",
-        "price",
-    ]
+    list_display = ["type", "price", "percentage_return"]
 
     inlines = [PlanInlineAdmin]
 
@@ -58,4 +55,24 @@ class AccountAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
         "balance",
+        "invite_profit",
+        "latest_invite_interest",
+    ]
+
+
+@admin.register(Plan)
+class PlanAdmin(admin.ModelAdmin):
+    list_display = [
+        "account",
+        "type",
+        "min_amount",
+        "max_amount",
+        "fee",
+        "slug",
+        "percentage_return",
+        "created_at",
+        "updated_at",
+        "status",
+        "plan_profile",
+        "payment_method",
     ]

@@ -58,6 +58,19 @@
 
           {% include "account/dashboard/investment/components/schemes/stats.html" %}
 
+          {% if active_plans %}
+            <div class="nk-block nk-block-lg">
+              <div class="nk-block-head-sm">
+                <div class="nk-block-head-content">
+                  <h5 class="nk-block-title">Active Plan
+                    <span class="count text-base">({{active_plans.count}})</span></h5>
+                </div>
+              </div>
+            </div>
+
+            {% include "account/dashboard/investment/components/schemes/active.html" %}
+          {% endif %}
+
         </div>
 
       </div>

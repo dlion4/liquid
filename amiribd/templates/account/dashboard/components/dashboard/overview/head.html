@@ -24,42 +24,21 @@
       {% if plans %}
         <div class="nk-slider nk-slider-s1  d-none d-md-block">
           <div class="slider-init" data-slick='{"dots": true, "arrows": false, "fade": true}'>
-            <div class="slider-item">
-              <div class="nk-iv-wg1">
-                <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
-                <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
-                <a href="#" class="nk-iv-wg1-link link link-light">
-                  <em class="icon ni ni-trend-up"></em>
-                  <span>Check Details</span></a>
-                <div class="nk-iv-wg1-progress">
-                  <div class="progress-bar bg-primary" data-progress="80"></div>
+            {% for plan in active_plans %}
+              <div class="slider-item">
+                <div class="nk-iv-wg1">
+                  <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
+                  <h6 class="nk-iv-wg1-info title">{{plan.type.get_type_display|title}}
+                    -{{plan.type.percentage_return}}% Return</h6>
+                  <a href="{{plan.get_absolute_url}}" class="nk-iv-wg1-link link link-light">
+                    <em class="icon ni ni-trend-up"></em>
+                    <span>Check Details</span></a>
+                  <div class="nk-iv-wg1-progress">
+                    <div class="progress-bar bg-primary" data-progress="80"></div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="slider-item">
-              <div class="nk-iv-wg1">
-                <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
-                <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
-                <a href="#" class="nk-iv-wg1-link link link-light">
-                  <em class="icon ni ni-trend-up"></em>
-                  <span>Check Details</span></a>
-                <div class="nk-iv-wg1-progress">
-                  <div class="progress-bar bg-primary" data-progress="80"></div>
-                </div>
-              </div>
-            </div>
-            <div class="slider-item">
-              <div class="nk-iv-wg1">
-                <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
-                <h6 class="nk-iv-wg1-info title">Silver - 4.76% for 21 Days</h6>
-                <a href="#" class="nk-iv-wg1-link link link-light">
-                  <em class="icon ni ni-trend-up"></em>
-                  <span>Check Details</span></a>
-                <div class="nk-iv-wg1-progress">
-                  <div class="progress-bar bg-primary" data-progress="80"></div>
-                </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
           <div class="slider-dots"></div>
         </div>

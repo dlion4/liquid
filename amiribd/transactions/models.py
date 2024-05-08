@@ -4,6 +4,7 @@ from .types import TransactionType
 import uuid
 from django.utils import timezone
 from amiribd.users.models import Profile
+from django.utils.functional import cached_property
 
 
 def generate_receipt_number():
@@ -46,6 +47,20 @@ class Transaction(models.Model):
     def invitor(self):
         self.profile.referred_by
 
+    @property
+    def _paid(self):
+        return self.paid
+
+    # @cached_property
+    # def __current_month_transaction(self):
+    #     return self.account.transactions.filter(
+    #         created_at__year=timezone.now().year,
+    #         created_at__month=timezone.now().month,
+    #     )
+
+    class Meta:
+        get_latest_by = ["created_at"]
+
     def save(self, *args, **kwargs):
         self.receipt_number = generate_receipt_number()
         super().save(*args, **kwargs)
@@ -56,4 +71,4 @@ class PaymentMethod(models.Model):
     icon = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.channel} Payment Method"
+        return f"{self.channel}"

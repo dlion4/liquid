@@ -1,6 +1,6 @@
 import contextlib
 from typing import Any
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse, reverse_lazy
 from django.conf import settings
@@ -10,26 +10,36 @@ from .forms import (
     PlanRegistrationForm,
     PaymentOptionForm,
 )
+from django.db import transaction
+
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
-from .models import Pool, Account
+from .models import Pool, Account, Plan
 from amiribd.dashboard.views import DashboardGuard, DashboardViewMixin
 from decimal import Decimal  # Import Decimal from the decimal module
-
+from django.utils.termcolors import colorize
 from amiribd.transactions.models import Transaction
 
 # Create your views here.
 
 
-class InvestmentRegistrationView(DashboardGuard, TemplateView):
+class InvestmentSetupView(DashboardGuard, TemplateView):
+    template_name = ""
+
+    def dispatch(self, request, *args, **kwargs):
+        if (
+            not Pool.objects.filter(profile=self._get_user().profile_user).exists()
+            and request.resolver_match.view_name != "dashboard:invest:invest"
+        ):
+            return redirect(reverse("dashboard:invest:invest"))
+        else:
+            return super().dispatch(request, *args, **kwargs)
+
+
+class InvestmentRegistrationView(InvestmentSetupView):
     form_class = PoolRegistrationForm
     template_name = "account/dashboard/investment/setup.html"
     success_url = reverse_lazy("dashboard:invest:plans")
-
-    def dispatch(self, request, *args, **kwargs):
-        if Pool.objects.filter(profile=self._get_user().profile_user).exists():
-            return redirect("dashboard:invest:plans")
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -42,6 +52,7 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
     # Simplified and optimized version of the post method
 
     # Simplified and optimized version of the post method
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         poolForm = self.form_class(request.POST)
         accountForm = AccountRegistrationForm(request.POST)
@@ -79,6 +90,9 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
             paymentChannel = payoptions.cleaned_data.get("channel")
 
             print(paymentChannel, "Channel")
+
+            planInstance.payment_method = paymentChannel.channel
+            planInstance.save()
 
             transaction = Transaction.objects.create(
                 profile=poolInstance.profile,
@@ -128,10 +142,11 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
                         type="DEPOSIT",
                         amount=interest_earned,
                         discount=Decimal("0.00"),
-                        source=f"Referral Earnings from {profile}",
+                        source="Referral Earnings",
                     )
                     transaction.save()
                     referrer_profile_account.balance += transaction.paid
+                    # referrer_profile_account.interest +=
                     # now save the transaction
                     referrer_profile_account.save()
                     # referrer_profile_account.refresh_from_db()
@@ -165,14 +180,40 @@ class InvestmentRegistrationView(DashboardGuard, TemplateView):
 invest = InvestmentRegistrationView.as_view()
 
 
-class InvestmentPlanView(DashboardGuard, DashboardViewMixin):
+class InvestmentSchemeView(InvestmentSetupView, DashboardViewMixin):
     template_name = "account/dashboard/investment/plans.html"
     queryset = Account
 
-    def dispatch(self, request, *args, **kwargs):
-        if not Pool.objects.filter(profile=self._get_user().profile_user).exists():
-            return redirect("dashboard:invest:invest")
-        return super().dispatch(request, *args, **kwargs)
+
+plans = InvestmentSchemeView.as_view()
 
 
-plans = InvestmentPlanView.as_view()
+class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
+    template_name = "account/dashboard/investment/plan.html"
+    queryset = Account
+    plan = Plan
+    tarnasaction = Transaction
+
+    def __transactions(self):
+        return Transaction.objects.filter(
+            profile=self._get_user().profile_user
+        ).order_by("-id")
+
+    def get_object(self):
+        plan = get_object_or_404(
+            self.plan,
+            account__pool__profile=self._get_user().profile_user,
+            slug=self.kwargs.get("plan_slug"),
+            pk=self.kwargs.get("plan_id"),
+        )
+
+        return plan
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["plan"] = self.get_object()
+        context["transactions"] = self.__transactions()
+        return context
+
+
+plan = InvestmentPlanView.as_view()

@@ -115,7 +115,7 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        return f"{self.user.username} Profile"
+        return f"{self.user.username}"
 
     def generate_initials(self) -> str | None:
         if self.full_name:

@@ -1,4 +1,5 @@
-{% load static %}
+{% load static humanize %}
+{% load dashboard_tags %}
 
 <div class="nk-block">
   <div class="row gy-gs">
@@ -13,9 +14,10 @@
             </div>
             <div class="nk-iv-wg2-text">
               <div class="nk-iv-wg2-amount">
-                105.94
+                {{available_amount|floatformat:2|intcomma}}
+                KES
                 <span class="change up">
-                  <span class="sign"></span>3.4%</span></div>
+                  <span class="sign"></span>{{account.percentage_profit}}%</span></div>
             </div>
           </div>
         </div>
@@ -26,13 +28,14 @@
         <div class="card-inner">
           <div class="nk-iv-wg2">
             <div class="nk-iv-wg2-title">
-              <h6 class="title">Total Invested
+              <h6 class="title">Total Amount
                 <em class="icon ni ni-info"></em>
               </h6>
             </div>
             <div class="nk-iv-wg2-text">
               <div class="nk-iv-wg2-amount">
-                509,850.90
+                {{balance|floatformat:2|intcomma}}
+
                 <span class="change up">
                   <span class="sign"></span>2.8%</span></div>
             </div>
@@ -51,7 +54,8 @@
             </div>
             <div class="nk-iv-wg2-text">
               <div class="nk-iv-wg2-amount">
-                50,600.48
+                {{available_amount|floatformat:2|intcomma}}
+
                 <span class="change down">
                   <span class="sign"></span>1.4%</span></div>
             </div>
@@ -72,19 +76,24 @@
               <h6 class="title">Balance in Account</h6>
             </div>
             <div class="nk-iv-wg2-text">
-              <div class="nk-iv-wg2-amount ui-v2">12,587.96</div>
+              <div class="nk-iv-wg2-amount ui-v2">{{balance|floatformat:2|intcomma}}
+                KES</div>
               <ul class="nk-iv-wg2-list">
                 <li>
-                  <span class="item-label">Available Funds</span><span class="item-value">105.94</span></li>
+                  <span class="item-label">Available Funds</span><span class="item-value">{{available_amount|floatformat:2|intcomma}}</span></li>
                 <li>
-                  <span class="item-label">Invested Funds</span><span class="item-value">12,582.02</span></li>
+                  <span class="item-label">Invested Funds</span><span class="item-value">{{locked_amount|floatformat:2|intcomma}}</span></li>
                 <li class="total">
-                  <span class="item-label">Total</span><span class="item-value">12,587.96</span></li>
+                  <span class="item-label">Total</span><span class="item-value">{{balance|floatformat:2|intcomma}}
+                  </span>
+                </li>
               </ul>
             </div>
             <div class="nk-iv-wg2-cta">
-              <a href="#" class="btn btn-primary btn-lg btn-block">Withdraw Funds</a>
-              <a href="#" class="btn btn-trans btn-block">Deposit Funds</a>
+              <button type="button" {% if available_amount > 0.00 %} {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+              <div class="cta-extra">Check out
+                <a href="#" class="link link-dark">WhatsApp Earnings</a>
+              </div>
             </div>
           </div>
         </div>
@@ -100,18 +109,20 @@
               </h6>
             </div>
             <div class="nk-iv-wg2-text">
-              <div class="nk-iv-wg2-amount ui-v2">1,457.23
+              <div class="nk-iv-wg2-amount ui-v2">{{monthly_profit|floatformat:2|intcomma}}
                 <span class="change up">
                   <span class="sign"></span>4.5%</span></div>
               <ul class="nk-iv-wg2-list">
                 <li>
-                  <span class="item-label">Profits</span><span class="item-value">1,045.21</span></li>
+                  <span class="item-label">Profits</span><span class="item-value">12%</span></li>
                 <li>
-                  <span class="item-label">Referrals</span><span class="item-value">212.02</span></li>
+                  <span class="item-label">Referrals</span><span class="item-value">{{referral_earnings|floatformat:2|intcomma}}
+                    KES</span></li>
                 <li>
-                  <span class="item-label">Rewards</span><span class="item-value">200.00</span></li>
+                  <span class="item-label">Rewards</span><span class="item-value">49%</span></li>
                 <li class="total">
-                  <span class="item-label">Total Profit</span><span class="item-value">1,457.23</span></li>
+                  <span class="item-label">Total Profit</span><span class="item-value">{{total_profit|floatformat:2|intcomma}}
+                    KES</span></li>
               </ul>
             </div>
             <div class="nk-iv-wg2-cta">
@@ -132,38 +143,28 @@
               <h6 class="title">My Investment</h6>
             </div>
             <div class="nk-iv-wg2-text">
-              <div class="nk-iv-wg2-amount ui-v2">319
-                <span class="sub">03</span>
+              <div class="nk-iv-wg2-amount ui-v2">{{plans.count|format_indexed_count}}
+                <span class="sub">{{active_plans.count|format_indexed_count}}</span>
                 Active</div>
-              <ul class="nk-iv-wg2-list">
-                <li>
-                  <span class="item-label">
-                    <a href="#">Silver</a>
-                    <small>- 4.76% for 21 Days</small>
-                  </span><span class="item-value">2,500.00</span>
-                </li>
-                <li>
-                  <span class="item-label">
-                    <a href="#">Silver</a>
-                    <small>- 4.76% for 21 Days</small>
-                  </span><span class="item-value">2,000.00</span>
-                </li>
-                <li>
-                  <span class="item-label">
-                    <a href="#">Dimond</a>
-                    <small>- 14.29% for 14 Days</small>
-                  </span><span class="item-value">8,000.00</span>
-                </li>
-                <li>
-                  <span class="item-label">
-                    <a href="#">Starter</a>
-                    <small>- 1.67% for 30 Days</small>
-                  </span><span class="item-value">335.00</span>
-                </li>
-              </ul>
+              {% if plans %}
+                <ul class="nk-iv-wg2-list">
+                  {% for plan in plans %}
+                    <li>
+                      <span class="item-label">
+                        <a href="#">{{plan.type|title}}</a>
+                        <small>-
+                          {% if plan.status == "RUNNING" %}{{plan.percentage_return}}% investment return{% else %}{{plan.get_status_display}}
+                          {% endif %}
+                        </small>
+                      </span><span class="item-value">{{plan.type.price|floatformat:2|intcomma}}
+                        KES</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
             <div class="nk-iv-wg2-cta">
-              <a href="#" class="btn btn-light btn-lg btn-block">See all Investment</a>
+              <a href="{% url 'dashboard:invest:plans' %}" class="btn btn-light btn-lg btn-block">See all Investment</a>
               <div class="cta-extra">Check out
                 <a href="#" class="link link-dark">Analytic Report</a>
               </div>
