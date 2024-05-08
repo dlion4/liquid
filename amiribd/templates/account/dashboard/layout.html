@@ -14,18 +14,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="investment app"/>
     <meta name="author" content="kwasa"/>
-    {% block css %}
+    {% compress css %}
       <link rel="shortcut icon" href="{% static 'dashboard/images/favicon.png' %}">
       <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
       <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
-      {% endblock css %}
-      <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
-<style>
+
+      <style>
   .errorlist{
     color:red!important;
   }
 
 </style>
+      {% endcompress css %}
+
+    
+
   </head>
 
   <body class="nk-body npc-invest bg-lighter ">
@@ -50,10 +53,19 @@
     {% comment %}  {% endcomment %}
     {% endblock body %}
 
-    <script src="{% static 'dashboard/assets/js/bundle.js' %}?ver=3.2.3"></script>
-    <script src="{% static 'dashboard/assets/js/scripts.js' %}?ver=3.2.3"></script>
-    <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
-    <script src="{% static 'dashboard/assets/js/charts/chart-invest.js' %}?ver=3.2.3"></script>
+    {% block javascript %}
+    {% compress js %}
+  
+        <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
+        <script src="{% static 'dashboard/assets/js/bundle.js' %}?ver=3.2.3"></script>
+        <script src="{% static 'dashboard/assets/js/scripts.js' %}?ver=3.2.3"></script>
+        <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
+        <script src="{% static 'dashboard/assets/js/charts/chart-invest.js' %}?ver=3.2.3"></script>
+  
+  
+        {% endcompress %}
+        {% endblock javascript %}
+
     
   </body>
 

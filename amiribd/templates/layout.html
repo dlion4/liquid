@@ -1,5 +1,6 @@
 
-{% load static i18n compress%}<!DOCTYPE html>
+{% load static i18n compress %}
+<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
@@ -13,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="investment app" />
   <meta name="author" content="kwasa" />
-  {% block css %}
+  {% compress css %}
   <!-- Your stuff: Third-party CSS libraries go here -->
   <!-- This file stores project-specific CSS -->
     <link rel="icon" href="{% static 'img/logo.svg' %}" />
@@ -28,26 +29,18 @@
   <link rel="preload" href="{% static 'css/style.css' %}" as="style">
   <link rel="preload" href="{% static 'css/toastr.min.css' %}" as="style">
 
-  
-  <link rel="preload" href="{% static 'js/vendors/uikit.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/vendors/htmx.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/vendors/toastr.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/utilities.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/config-theme.js' %}" as="script">
-
   <!-- stylesheet -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- uikit -->
-  <script src="{% static 'js/vendors/uikit.min.js' %}"></script>
-  <!-- favicon -->
+ 
   
+{% endcompress css %}
 
-
-{% endblock css %}
 <!-- Le javascript
     ================================================== -->
 {# Placed at the top of the document so pages load faster with defer #}
+{% compress js %}
 {% block javascript %}
+
 
 
 <!-- Bootstrap JS -->
@@ -58,13 +51,29 @@
 <!-- place project specific Javascript in this file -->
 
 
+  
+<link rel="preload" href="{% static 'js/vendors/uikit.min.js' %}" as="script">
+<link rel="preload" href="{% static 'js/vendors/htmx.min.js' %}" as="script">
+<link rel="preload" href="{% static 'js/vendors/toastr.min.js' %}" as="script">
+<link rel="preload" href="{% static 'js/utilities.min.js' %}" as="script">
+<link rel="preload" href="{% static 'js/config-theme.js' %}" as="script">
+
+ <!-- uikit -->
+ <script src="{% static 'js/vendors/uikit.min.js' %}"></script>
+ <!-- favicon -->
+
+
   <script defer src="{% static 'js/project.js' %}"></script>
   <script defer src="{% static 'js/bootstrap/5.2.3/js/bootstrap.min.js' %}"></script>
 
 
 
 
+
 {% endblock javascript %}
+{% endcompress js %}
+
+
 <!-- Start of LiveChat (www.livechat.com) code -->
 <script src="https://0af822eec10e4553ac761a541e256522.weavy.io/uikit-web/weavy.js"></script>    
 <script>
