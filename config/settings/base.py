@@ -85,6 +85,9 @@ THIRD_PARTY_APPS = [
     "after_response",
     "nested_inline",
     # "django.contrib.gis",
+    "rest_framework",  # utilities for rest apis
+    "rest_framework.authtoken",  # token authentication
+    "django_filters",  # for filtering rest endpoints
 ]
 
 LOCAL_APPS = [
@@ -158,17 +161,17 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     # cahcing
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
+    # "django.middleware.cache.UpdateCacheMiddleware",
+    # "django.middleware.common.CommonMiddleware",
+    # "django.middleware.cache.FetchFromCacheMiddleware",
     # account status middleware
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
 ]
 
-CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
-CACHE_MIDDLEWARE_SECONDS = (
-    60 * 60 * 60
-)  # The number of seconds each page should be cached.
+# CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
+# CACHE_MIDDLEWARE_SECONDS = (
+#     60 * 60 * 60
+# )  # The number of seconds each page should be cached.
 
 
 COMPRESS_ENABLED = True
@@ -222,6 +225,7 @@ TEMPLATES = [
                 "amiribd.users.context_processors.allauth_settings",
                 # liquid app processor
                 "amiribd.liquid.context_processors.liquid_site_data",
+                "amiribd.invest.context_processors.withdrawal_form_action",
             ],
         },
     },
@@ -344,3 +348,28 @@ MAINTENANCE_MODE = False
 import platform
 import environ
 import os
+
+# NINJA API
+
+NINJA_API_ENABLED = True
+
+# DJANGO RESTFRAMWORK SETEUP
+# -------------------------------------------------------
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": int(os.getenv("DJANGO_PAGINATION_LIMIT", 10)),
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}

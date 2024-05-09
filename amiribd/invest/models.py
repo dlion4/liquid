@@ -7,6 +7,7 @@ from .types import (
     PlanStatus,
     AccountTypeObjects,
 )
+from django.core.validators import RegexValidator
 from django.db.models import Sum
 from django.urls import reverse
 from django.utils.text import slugify
@@ -106,7 +107,6 @@ class Account(models.Model):
             )
         )
 
-        print("Invite Profit: ", __invite_profit)
         return Decimal("0.00") if None else __invite_profit
 
     @property
@@ -135,7 +135,6 @@ class Account(models.Model):
             .paid
         )
 
-        print(colorize("Latest Interest: ", fg="white"), __latest_invite_interest)
         return Decimal("0.00") if None else __latest_invite_interest
 
     @cached_property
@@ -179,14 +178,23 @@ class Plan(models.Model):
         max_length=20, choices=PlanStatus.choices, default=PlanStatus.RUNNING
     )
     payment_method = models.CharField(max_length=100, blank=True, null=True)
+    sku = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f"{self.type} Plan"
 
-    # def save(self, *args, **kwargs):
-    #     # Override save method to set the GeneratedField value
-    #     self.fee = self._calculate_fee()
-    #     super().save(*args, **kwargs)
+    def _generate_sku(self):
+        import random
+
+        random_part = "".join(
+            [str(random.randint(0, 9)) for _ in range(7)]
+        )  # Generate 7 random digits
+        return f"{self.pk}{random_part}"  # Combine PK and random digits to form an 8-character SKU
+
+    def save(self, *args, **kwargs):
+        if self.sku is None:
+            self.sku = self._generate_sku()
+        super().save(*args, **kwargs)
 
     def _calculate_fee(self):
         # Subquery to fetch related Account's fee
@@ -206,12 +214,71 @@ class Plan(models.Model):
 
     @property
     def interest_return(self):
-        amount = round(self.account.balance * Decimal(self.percentage_return) / 100, 2)
-        print("Interest Return: ", amount)
-        return amount
+        return round(self.account.balance * Decimal(self.percentage_return) / 100, 2)
 
     def get_absolute_url(self):
         return reverse(
             "dashboard:invest:plan",
             kwargs={"plan_slug": self.slug, "plan_id": self.pk},
         )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["account", "type"], name="unique_account_plan_type"
+            )
+        ]
+
+
+class AccountWithdrawalAction(models.Model):
+    account = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name="account_event_action"
+    )
+    action = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        choices=(
+            ("Withdrawal", "Withdrawal"),
+            ("Deposit", "Deposit"),
+        ),
+        default="Withdrawal",
+    )
+    status = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        choices=(
+            ("Initiated", "Initiated"),
+            ("Resolved", "Resolved"),
+            ("Cancelled", "Cancelled"),
+        ),
+        default="Initiated",
+    )
+    withdrawal_date = models.DateField(blank=True, null=True)
+    withdrawal_time = models.TimeField(blank=True, null=True)
+    amount = models.DecimalField(default=0.00, decimal_places=2, max_digits=15)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    channel = models.ForeignKey(
+        "transactions.PaymentMethod",
+        related_name="payment_channel_account_event",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    phone_regex = RegexValidator(
+        regex=r"^[0-9]\d{8,14}$",
+        message="Phone number must start with a digit and be 9 to 15 digits in total.",
+    )
+    payment_phone_number = models.CharField(
+        max_length=20, null=True, blank=True, validators=[phone_regex]
+    )
+    paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.account} - {self.action} - {self.status}"
+
+
+class AccountEventDeposit(models.Model):
+    pass

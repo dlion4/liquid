@@ -5,6 +5,9 @@ from django.views.generic import FormView, TemplateView
 from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from .forms import (
+    AccountEventWithdrawalForm,
+    AddPlanForm,
+    CancelPlanForm,
     PoolRegistrationForm,
     AccountRegistrationForm,
     PlanRegistrationForm,
@@ -184,6 +187,12 @@ class InvestmentSchemeView(InvestmentSetupView, DashboardViewMixin):
     template_name = "account/dashboard/investment/plans.html"
     queryset = Account
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["withdrawal_form"] = AccountEventWithdrawalForm()
+        context["add_plan_form"] = AddPlanForm()
+        return context
+
 
 plans = InvestmentSchemeView.as_view()
 
@@ -213,6 +222,8 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
         context = super().get_context_data(**kwargs)
         context["plan"] = self.get_object()
         context["transactions"] = self.__transactions()
+        context["withdrawal_form"] = AccountEventWithdrawalForm()
+        context["cancel_plan_form"] = CancelPlanForm()
         return context
 
 

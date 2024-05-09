@@ -1,15 +1,14 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
+
 from .guard import DashboardGuard
 from amiribd.users.actions import build_signup_referral_link
 from decimal import Decimal
 from amiribd.transactions.models import Transaction
-from typing import Any
 from django.db.models import QuerySet
 from amiribd.invest.models import Plan, Account
 from datetime import timedelta
 from django.utils import timezone
-from django.db.models import Q, F, Sum
+from django.db.models import Q, Sum
 
 
 # Create your views here.
@@ -31,54 +30,38 @@ class DashboardViewMixin(TemplateView):
                 Q(source__icontains="Referral Earnings")
             ).aggregate(total_paid=Sum("paid"))["total_paid"]
         except Exception as e:
-            print(f"Error calculating current date transactions: {e}")
             __referral_profit = Decimal("0.00")
 
-        print("Current Date Profit", __referral_profit)
 
         return __referral_profit if __referral_profit is not None else Decimal("0.00")
 
     def __current_date_transaction_profit(self):
+        return self.__extracted_from___current_month_transactions_2(1)
+
+    def __current_month_transactions(self):
+        return self.__extracted_from___current_month_transactions_2(30)
+
+    # TODO Rename this here and in `__current_date_transaction_profit` and `__current_month_transactions`
+    def __extracted_from___current_month_transactions_2(self, days):
         __current_date_profit: Decimal = Decimal("0.00")
         try:
-            __current_date = timezone.now() - timedelta(days=1)
+            __current_date = timezone.now() - timedelta(days=days)
             account = self.queryset.objects.get(
                 pool__profile=self._get_user().profile_user
             )
             __current_date_profit = account.transaction_account.filter(
-                Q(source__icontains="Referral Earnings")
-                & Q(created_at__gte=__current_date)
+                (
+                    Q(source__icontains="Referral Earnings")
+                    & Q(created_at__gte=__current_date)
+                )
             ).aggregate(total_paid=Sum("paid"))["total_paid"]
         except Exception as e:
-            print(f"Error calculating current date transactions: {e}")
             __current_date_profit = Decimal("0.00")
-
-        print("Current Date Profit", __current_date_profit)
-
         return (
             __current_date_profit
             if __current_date_profit is not None
             else Decimal("0.00")
         )
-
-    def __current_month_transactions(self):
-        __month_profit: Decimal = Decimal("0.00")
-        try:
-            last_month = timezone.now() - timedelta(days=30)
-            account = self.queryset.objects.get(
-                pool__profile=self._get_user().profile_user
-            )
-            __month_profit = account.transaction_account.filter(
-                Q(source__icontains="Referral Earnings") & Q(created_at__gte=last_month)
-            ).aggregate(total_paid=Sum("paid"))["total_paid"]
-            print(__month_profit)
-        except Exception as e:
-            print(f"Error calculating current month transactions: {e}")
-            __month_profit = Decimal("0.00")
-
-        print("Month Profit", __month_profit)
-
-        return __month_profit if __month_profit is not None else Decimal("0.00")
 
     def get_account_total(self, **kwargs):
         try:
@@ -115,6 +98,9 @@ class DashboardViewMixin(TemplateView):
     def _get_profile_active_plans(self, **kwargs):
         return self.get_profile_plans().filter(status="RUNNING")
 
+    def _get_profile_inactive_plans(self, **kwargs):
+        return self.get_profile_plans().filter(status="CANCELLED")
+
     def profile_account(self):
         return (
             Account.objects.filter(pool__profile=self._get_user().profile_user)
@@ -132,10 +118,12 @@ class DashboardViewMixin(TemplateView):
         context["available_amount"] = self.get_account_available_amount(**kwargs)
         context["plans"] = self.get_profile_plans(**kwargs)
         context["active_plans"] = self._get_profile_active_plans(**kwargs)
+        context["inactive_plans"] = self._get_profile_inactive_plans(**kwargs)
         context["account"] = self.profile_account()
         context["monthly_profit"] = self.__current_month_transactions()
         context["daily_profit"] = self.__current_date_transaction_profit()
         context["referral_earnings"] = self.__pure_referral_earnings()
+
         return context
 
 

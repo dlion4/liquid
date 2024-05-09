@@ -1,18 +1,103 @@
 {% extends "account/dashboard/layout.html" %}
 
-
 {% block navbar %}
 
-{% include  'account/dashboard/components/navbar.html' %}
+  {% include 'account/dashboard/components/navbar.html' %}
 
 {% endblock navbar %}
 
-
-{% block content %}
- 
-{% endblock content %}
-
+{% block content %}{% endblock content %}
 
 {% block footer %}
-{% include  'account/dashboard/components/footer.html' %}
+  {% include 'account/dashboard/components/footer.html' %}
 {% endblock footer %}
+
+{% block modals %}
+
+  <div class="modal fade" id="withdrawalPopupForm" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Withdrawal Form</h5>
+          <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross"></em>
+          </a>
+        </div>
+        <div class="modal-body">
+          {% include "account/dashboard/investment/components/schemes/withdrawal_form.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addPlanPopupForm" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add plan To Your Pool</h5>
+          <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross"></em>
+          </a>
+        </div>
+        <div class="modal-body">
+          {% include "account/dashboard/investment/components/schemes/add_plan_form.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById("updateEvent")
+    const swapArea = document.getElementById("id_available_amount")
+
+    function handleSubmit() {
+
+      const errorId = document.querySelector("span.errorlist")
+      const successId = document.querySelector("span.text-success")
+
+      if (errorId) {
+        submitBtn.setAttribute("disabled", "disabled")
+      }
+      if (successId) {
+        if (submitBtn.getAttribute("disabled")) {
+          submitBtn.removeAttribute("disabled")
+        }
+      }
+
+    }
+    swapArea.addEventListener('htmx:afterSwap', function (event) {
+      handleSubmit()
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(form);
+
+        fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Withdrawal Initiated Successfully!');
+            } else {
+              // Handle errors, display them on the form
+              console.error('Errors:', data);
+              alert('Failed to process withdrawal: ' + JSON.stringify(data));
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          })
+          . finally(window.location.reload());
+      });
+    });
+  </script>
+
+{% endblock modals %}

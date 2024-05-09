@@ -90,7 +90,7 @@
               </ul>
             </div>
             <div class="nk-iv-wg2-cta">
-              <button type="button" {% if available_amount > 0.00 %} {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+              <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
               <div class="cta-extra">Check out
                 <a href="#" class="link link-dark">WhatsApp Earnings</a>
               </div>

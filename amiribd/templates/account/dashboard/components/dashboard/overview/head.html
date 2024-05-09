@@ -24,17 +24,29 @@
       {% if plans %}
         <div class="nk-slider nk-slider-s1  d-none d-md-block">
           <div class="slider-init" data-slick='{"dots": true, "arrows": false, "fade": true}'>
-            {% for plan in active_plans %}
+            {% for plan in plans %}
               <div class="slider-item">
                 <div class="nk-iv-wg1">
-                  <div class="nk-iv-wg1-sub sub-text">My Active Plans</div>
+                  <div class="nk-iv-wg1-sub sub-text">My Plans
+
+                    {% if plan.status == "RUNNING" %}
+                      <span class="badge rounded-pill text-bg-primary">{{plan.get_status_display}}</span>
+                    {% else %}
+                      <span class="badge rounded-pill text-bg-secondary">{{plan.get_status_display}}</span>
+                    {% endif %}
+
+                  </div>
                   <h6 class="nk-iv-wg1-info title">{{plan.type.get_type_display|title}}
                     -{{plan.type.percentage_return}}% Return</h6>
                   <a href="{{plan.get_absolute_url}}" class="nk-iv-wg1-link link link-light">
                     <em class="icon ni ni-trend-up"></em>
                     <span>Check Details</span></a>
                   <div class="nk-iv-wg1-progress">
-                    <div class="progress-bar bg-primary" data-progress="80"></div>
+                    {% if plan.status == "RUNNING" %}
+                      <div class="progress-bar  bg-primary" data-progress="80"></div>
+                    {% else %}
+                      <div class="progress-bar bg-secondary" data-progress="80"></div>
+                    {% endif %}
                   </div>
                 </div>
               </div>

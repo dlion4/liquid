@@ -20,7 +20,7 @@
                     - Daily
                     {{plan.percentage_return}}% Interest Return</h2>
                   <div class="nk-block-des">
-                    <p>INV-498238
+                    <p>INV-{{plan.sku}}
                       {% if plan.status == "RUNNING" %}
                         <span class="badge bg-outline bg-primary">{{plan.get_status_display}}</span>
                       {% else %}
@@ -31,19 +31,34 @@
                 </div>
                 <div class="nk-block-head-content">
                   <ul class="nk-block-tools gx-3">
-                    <li class="order-md-last">
+                    <li>
                       {% if plan.status == "RUNNING" %}
-                        <a href="#" class="btn btn-danger">
-                          <em class="icon ni ni-cross"></em>
-                          <span>Cancel this plan</span>
-                        </a>
+                        <button {% if available_amount <= 0.00 %} disabled="disabled" {% else %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% endif %} class="btn btn-primary">
+                          <span>Withdraw</span>
+                          <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
+                        </button>
+                      {% elif plan.status == "CANCELLED" %}
+                        <button {% if available_amount <= 0.00 %} disabled="disabled" {% else %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalInactivePopup" {% endif %} class="btn btn-primary">
+                          <span>Withdraw</span>
+                          <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
+                        </button>
+
                       {% endif %}
                     </li>
+                    <li class="order-md-last">
+                      {% if plan.status == "RUNNING" %}
+                        <button data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deletePlanPopup" class="btn btn-danger">
+                          <em class="icon ni ni-cross"></em>
+                          <span>Cancel this plan</span>
+                        </button>
+                      {% endif %}
+                    </li>
+
                     <li>
-                      {% if plan.status == "STOPPED" %}
-                        <a href="#" class="btn btn-icon btn-light">
+                      {% if plan.status == "CANCELLED" %}
+                        <button onclick="window.location.reload()" class="btn btn-icon btn-light">
                           <em class="icon ni ni-reload"></em>
-                        </a>
+                        </button>
                       {% endif %}
                     </li>
                   </ul>
@@ -299,3 +314,250 @@
   </div>
 
 {% endblock content %}
+
+{% block modals %}
+
+  <div class="modal fade" id="withdrawalPopupForm" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Withdrawal Form</h5>
+          <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross"></em>
+          </a>
+        </div>
+        <div class="modal-body">
+          {% include "account/dashboard/investment/components/schemes/withdrawal_form.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById("updateEvent")
+    const swapArea = document.getElementById("id_available_amount")
+
+    function handleSubmit() {
+
+      const errorId = document.querySelector("span.errorlist")
+      const successId = document.querySelector("span.text-success")
+
+      if (errorId) {
+        submitBtn.setAttribute("disabled", "disabled")
+      }
+      if (successId) {
+        if (submitBtn.getAttribute("disabled")) {
+          submitBtn.removeAttribute("disabled")
+        }
+      }
+
+    }
+    swapArea.addEventListener('htmx:afterSwap', function (event) {
+      handleSubmit()
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(form);
+
+        fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Withdrawal Initiated Successfully!');
+            } else {
+              // Handle errors, display them on the form
+              console.error('Errors:', data);
+              alert('Failed to process withdrawal: ' + JSON.stringify(data));
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          })
+          . finally(window.location.reload());
+      });
+
+      const cancelPlanForm = document.getElementById("cancel-plan-form");
+
+      cancelPlanForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(cancelPlanForm);
+
+        fetch("/htmx/account/cancel-plan/", {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Plan Cancelled Successfully!');
+            } else {
+              // Handle errors, display them on the form
+              console.error('Errors:', data);
+              alert('Failed to process withdrawal: ' + JSON.stringify(data));
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          })
+          . finally(() => {
+            window
+              .location
+              .reload();
+          });
+
+      });
+
+    })
+  </script>
+
+  <div class="modal fade" id="deletePlanPopup" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div id="preview-event-header" class="modal-header fc-event-danger">
+          <h5 id="preview-event-title" class="modal-title">Your are about to cancel this plan</h5>
+          <a role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross"></em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <form action="#" method="post" id="cancel-plan-form">
+            <div class="row gy-3 py-1">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="form-label">Type
+                    <strong class="overline-title">{{plan.type}}</strong>
+                    to confirm cancellation</label>
+                  <div class="form-control-wrap">
+                    {{cancel_plan_form.plan}}
+                    <small id="plan-type-from-db"></small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12" id="preview-event-description-check">
+                <p id="preview-event-description">
+                  Cancelling this plan means you wont earn from it. Reactivate later.</p>
+              </div>
+            </div>
+            <ul class="d-flex justify-content-between gx-4 mt-3">
+              <li>
+                <button type="submit" class="btn btn-primary" id="cancel-plan-btn">Confirm cancellation</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="withdrawalInactivePopup" aria-modal="true" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body modal-body-lg text-center">
+          <div class="nk-modal py-4">
+            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
+            <h4 class="nk-modal-title">Inactive Plan</h4>
+            <div class="nk-modal-text mt-n2">
+              <p class="text-soft">Please not you cannot withdraw for a plan that is cancelled</p>
+            </div>
+            <ul class="d-flex justify-content-center gx-4 mt-4">
+              <li>
+                <button data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#reactivatePlanPopup" class="btn btn-success">Reactivate plan to proceed</button>
+              </li>
+              <li>
+                <button data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editEventPopup" class="btn btn-danger btn-dim">Cancel</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="reactivatePlanPopup" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div id="preview-event-header" class="modal-header fc-event-info">
+          <h5 id="preview-event-title" class="modal-title">Reactivate Plan
+            {{plan.type}}</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross"></em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <div class="row gy-3 py-1">
+            <div class="col-sm-6">
+              <h6 class="overline-title">Creation Date</h6>
+              <p id="preview-event-start">{{plan.created_at}}</p>
+            </div>
+
+            <div class="col-sm-10" id="preview-event-description-check">
+              <h6 class="overline-title">Reactivate Plan</h6>
+              <p id="preview-event-description">By reactivating you get acces to all your funds in this plan</p>
+            </div>
+          </div>
+          <ul class="d-flex justify-content-between gx-4 mt-3">
+            <li>
+              <button data-plan-pk="{{plan.id}}" data-user-pk="{{request.user.profile_user.pk}}" id="reactivate-plan" class="btn btn-primary">Reactivate Plan</button>
+            </li>
+            <li>
+              <button onclick="window.location.reload()" class="btn btn-danger btn-dim">Cancel</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const reactivateBtn = document.getElementById("reactivate-plan")
+
+    function handlePlanReactivation(e) {
+      e.preventDefault()
+      const planId = e
+        .target
+        .getAttribute("data-plan-pk")
+      const userId = e
+        .target
+        .getAttribute("data-user-pk")
+      // send the plan id to the user using a get request to retrive the pla id and the associated user
+      fetch(`/htmx/account/reactivate-plan/${planId}/${userId}/`, {method: "POST"})
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log(data)
+            alert('Plan Reactivated Successfully!');
+          } else {
+            // Handle errors, display them on the form
+            console.error('Errors:', data);
+            alert('Failed to process reactivation: ' + JSON.stringify(data));
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        })
+        . finally(() => {
+          window
+            .location
+            .reload();
+        });
+
+    }
+
+    reactivateBtn.addEventListener("click", (e) => {
+      handlePlanReactivation(e)
+    })
+  </script>
+
+{% endblock modals %}

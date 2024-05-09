@@ -21,3 +21,8 @@ django-debug-toolbar
 pytest
 django-nested-inline
 mypy
+isort
+django
+djangorestframework
+django-ninja
+django-filter
