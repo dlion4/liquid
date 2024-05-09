@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'account/dashboard/layout.html' %}
 
 {% load i18n %}
 {% load static %}
@@ -31,113 +31,66 @@
       }
     </style>
     <!-- section content begin -->
-    <div class="uk-section uk-padding-remove-vertical  uk-container uk-container-expand centered">
-      <div class="uk-grid">
-
-        <div class="uk-width-expand@m uk-flex uk-flex-middle">
-          <div class="uk-grid uk-flex-center">
-            <div class="uk-width-3-5@m">
-              <div class="uk-text-center in-padding-horizontal@s">
-                <a class="uk-logo" href="{% url 'home' %}">
-                  <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/user/header-logo-6ohuZh.svg' %}" alt="logo" width="134" height="23" data-uk-img="data-uk-img">
-                </a>
-                <p class="uk-text-lead uk-margin-small-top uk-margin-medium-bottom">{% block header %}{% endblock header %}</p>
-                <!-- login form begin -->
-                {% block content %}{% endblock content %}
-
-                <!-- login form end -->
-                {% if SOCIALACCOUNT_ENABLED %}
-                <p class="uk-heading-line">
-                  <span>or continue with</span></p>
-                <div class="uk-margin-medium-bottom">
-                  <a class="uk-button uk-button-primary uk-button-small uk-border-rounded color-google" href="#">
-                    <i class="fab fa-google uk-margin-small-right"></i>Google</a>
-                  <a class="uk-button uk-button-primary uk-button-small uk-border-rounded uk-margin-small-left color-facebook" href="#">
-                    <i class="fab fa-facebook-f uk-margin-small-right"></i>Facebook</a>
+    {% block content %}
+      <div class="nk-wrap nk-wrap-nosidebar">
+        <div class="nk-content">
+          <div class="nk-block nk-block-middle nk-auth-body wide-xs">
+            <div class="brand-logo pb-4 text-center"></div>
+            <div class="card card-bordered">
+              <div class="card-inner card-inner-lg">
+                <div class="nk-block-head">
+                  <div class="nk-block-head-content">
+                    {% if request.path == "/users/login/" %}
+                      <h4 class="nk-block-title">Sign-In</h4>
+                      <div class="nk-block-des">
+                        <p>Access the DashLite panel using your email.</p>
+                      </div>
+                    {% elif request.path == "/users/signup/" %}
+                      <h4 class="nk-block-title">Sign-Up</h4>
+                      <div class="nk-block-des">
+                        <p>Access the Liquid Money Maker Online.</p>
+                      </div>
+                    {% endif %}
+                  </div>
                 </div>
-                {% endif %}
-                <span class="uk-text-small">
+
+                {% block inner %}{% endblock inner %}
+
+                <div class="form-note-s2 text-center pt-4">
                   {% if request.path == '/users/login/' %}
-                    Don't have an account?
-                    <a href="{% url 'users:signup' %}">Register here</a>
+                    New on our platform?
+                    <a href="{% url 'users:signup' %}">Create an account</a>
                   {% elif request.path == '/users/signup/' %}
                     Already have an account?
-                    <a href="{% url 'users:login' %}">Login here</a>
+                    <a href="{% url 'users:login' %}">Login Now</a>
                   {% endif %}
-                </span>
-               
+                </div>
+                {% if SOCIALACCOUNT_ENABLED %}
+                  <div class="text-center pt-4 pb-3">
+                    <h6 class="overline-title overline-title-sap">
+                      <span>OR</span></h6>
+                  </div>
+                  <ul class="nav justify-center gx-4">
+                    <li class="nav-item">
+                      <a class="link link-primary fw-normal py-2 px-3" href="#">Facebook</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="link link-primary fw-normal py-2 px-3" href="#">Google</a>
+                    </li>
+                  </ul>
+
+                {% endif %}
               </div>
+
             </div>
           </div>
+          {% include "allauth/auth/footer.html" %}
         </div>
-
       </div>
-    </div>
-  </div>
-  <!-- section content end -->
-</main>
+
+    {% endblock content %}
+
+    <!-- login form end -->
+
+  </main>
 {% endblock body %}
-
-
-{% comment %} 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            {% block head_title %}
-            {% endblock head_title %}
-        </title>
-        {% block extra_head %}
-        {% endblock extra_head %}
-    </head>
-    <body>
-        {% block body %}
-            {% if messages %}
-                <div>
-                    <strong>{% trans "Messages:" %}</strong>
-                    <ul>
-                        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            <div>
-                <strong>{% trans "Menu:" %}</strong>
-                <ul>
-                    {% if user.is_authenticated %}
-                        {% url 'account_email' as email_url %}
-                        {% if email_url %}
-                            <li>
-                                <a href="{{ email_url }}">{% trans "Change Email" %}</a>
-                            </li>
-                        {% endif %}
-                        {% url 'account_logout' as logout_url %}
-                        {% if logout_url %}
-                            <li>
-                                <a href="{{ logout_url }}">{% trans "Sign Out" %}</a>
-                            </li>
-                        {% endif %}
-                    {% else %}
-                        {% url 'account_login' as login_url %}
-                        {% if login_url %}
-                            <li>
-                                <a href="{{ login_url }}">{% trans "Sign In" %}</a>
-                            </li>
-                        {% endif %}
-                        {% url 'account_signup' as signup_url %}
-                        {% if signup_url %}
-                            <li>
-                                <a href="{{ signup_url }}">{% trans "Sign Up" %}</a>
-                            </li>
-                        {% endif %}
-                    {% endif %}
-                </ul>
-            </div>
-            {% block content %}
-            {% endblock content %}
-        {% endblock body %}
-        {% block extra_body %}
-        {% endblock extra_body %}
-    </body>
-</html> {% endcomment %}

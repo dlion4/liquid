@@ -1,25 +1,33 @@
 {% extends "allauth/layouts/base.html" %}
+
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-  {{ block.super }}
-  Email sent
-{% endblock title %}
-
-{% block header %}
-  Login link sent
-{% endblock header %}
 {% block content %}
+  <div class="nk-wrap nk-wrap-nosidebar">
+    <div class="nk-content">
+      <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
 
-  <div class="uk-grid uk-form ">
-    <div class="uk-margin-small uk-width-1-1 uk-inline uk-text-center">
-      <p class="uk-text-center " style="width:100%; margin: auto;">Please check your email for the login link.</p>
-    </div>
-    <div class="uk-margin-small uk-width-expand uk-text-small">
-      <a href="{% url 'users:login' %}" class="uk-button uk-button-primary uk-border-rounded uk-float-left" style="width:100%">back to login</a>
-    </div>
+        <div class="card card-bordered">
+          <div class="card-inner card-inner-lg">
+            <div class="nk-block-head">
+              <div class="nk-block-head-content">
+                <h5 class="nk-block-title">Login Password Sent</h5>
+                <div class="nk-block-des">
+                  <p>We've emailed you a login code. Check your email and click the link to proceed.</p>
+                </div>
+              </div>
+            </div>
 
+            <div class="form-note-s2 text-center pt-4">
+              <div class="form-group">
+                <button onclick="window.location.href='{% url 'users:login' %}'" class="btn btn-lg btn-primary btn-block">Back to login</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 {% endblock content %}

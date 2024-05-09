@@ -1,4 +1,5 @@
 from typing import Any
+from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
@@ -18,7 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .guard import AuthenticationGuard
 import after_response
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
@@ -176,3 +177,27 @@ class ReferralSignupView(
 
         context = {"form": form}
         return render(request, self.template_name, context)
+
+
+class HtmxSetupView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
+
+
+class HandleHtmxEmailLookupView(HtmxSetupView):
+    def get(self, request, *args, **kwargs):
+
+        email = request.GET.get("email")
+        if user := User.objects.filter(email=email).first():
+            html_template = """
+                <small class='text-muted uk-text-success' id='email-lookup-result'>Email address found</small>
+            """
+            return HttpResponse(html_template)
+
+        html_template = """
+            <small class='text-muted uk-text-danger' data-bt-state='disabled' id='email-lookup-result'>No such email address found</small>
+        """
+
+        return HttpResponse(html_template)
