@@ -88,12 +88,16 @@ THIRD_PARTY_APPS = [
     "rest_framework",  # utilities for rest apis
     "rest_framework.authtoken",  # token authentication
     "django_filters",  # for filtering rest endpoints
+    "easyaudit",  # for recordign all the user events
+    "django_apscheduler",  # backup and othe rtask scheduling
+    "dbbackup",  # django-dbbackup
 ]
 
 LOCAL_APPS = [
     "amiribd.users",
     # Your stuff: custom apps go here
     "amiribd.liquid",
+    # posts
     "amiribd.posts",
     # dashboard
     "amiribd.dashboard",
@@ -101,9 +105,20 @@ LOCAL_APPS = [
     "amiribd.invest",
     # money
     "amiribd.transactions",
+    # profiles
+    "amiribd.profiles",
+    # tokens
+    "amiribd.tokens",
+    "amiribd.profilesettings",  
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+# BACKUP FOLDER AD SETTINGS
+# ------------------------------------------------------------------------------
+DB_BACKUP_FOLDER = str(BASE_DIR / "db_backup")
+DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
+DBBACKUP_STORAGE_OPTIONS = {"location": DB_BACKUP_FOLDER}
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -166,6 +181,7 @@ MIDDLEWARE = [
     # "django.middleware.cache.FetchFromCacheMiddleware",
     # account status middleware
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
+    "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
 ]
 
 # CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.

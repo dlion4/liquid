@@ -71,6 +71,11 @@ class EmailSignupForm(forms.Form):
             attrs={
                 "class": "form-control form-control-lg",
                 "placeholder": "Email Address",
+                "hx-get": "/users/htmx-signup-email-lookup/",
+                "hx-target": "#email-lookup-result",
+                "hx-trigger": "keyup changed delay:1s",
+                "hx-swap": "outerHTML",
+                "hx-swap-oob": "true",
             }
         )
     )
@@ -126,6 +131,11 @@ class ProfileDetailForm(forms.ModelForm):
                 attrs={
                     "class": "form-control form-control-lg",
                     "placeholder": "Phone Number",
+                    "hx-get": "/kyc/dashboard/kyc/htmx/validation/validate-unique-phone-number/",
+                    "hx-target": "#phone-number-error-message",
+                    "hx-trigger": "keyup changed delay:1s",
+                    "hx-swap": "outerHTML",
+                    "hx-swap-oob": "true",
                 }
             ),
             "date_of_birth": forms.TextInput(
@@ -133,6 +143,11 @@ class ProfileDetailForm(forms.ModelForm):
                     "class": "form-control form-control-lg date-picker-alt",
                     "placeholder": "2000-04-01",
                     "data-date-format": "yyyy-mm-dd",
+                    # "hx-get": "/kyc/dashboard/kyc/htmx/validation/validate-date-of-birth/",
+                    # "hx-target": "#date-of-birth-error-message",
+                    # "hx-trigger": "keyup changed delay:1s, change",
+                    # "hx-swap": "outerHTML",
+                    # "hx-swap-oob": "true",
                 }
             ),
         }

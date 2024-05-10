@@ -199,6 +199,7 @@ plans = InvestmentSchemeView.as_view()
 
 class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
     template_name = "account/dashboard/investment/plan.html"
+    htmx_template_name = "account/dashboard/investment/partials/transactions.html"
     queryset = Account
     plan = Plan
     tarnasaction = Transaction
@@ -207,6 +208,7 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
         return Transaction.objects.filter(
             profile=self._get_user().profile_user
         ).order_by("-id")
+
 
     def get_object(self):
         plan = get_object_or_404(
@@ -226,5 +228,18 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
         context["cancel_plan_form"] = CancelPlanForm()
         return context
 
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        if request.htmx:
+            if type_of_transaction := request.GET.get("type_of_transaction"):
+                print(type_of_transaction)
+                context["transactions"] = Transaction.objects.filter(
+                    type=type_of_transaction, profile=self._get_user().profile_user
+                ).order_by("-id")
+            return render(request, self.htmx_template_name, context)
+        return super().get(request, *args, **kwargs)
+
 
 plan = InvestmentPlanView.as_view()
+

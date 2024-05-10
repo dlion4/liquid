@@ -54,6 +54,13 @@ urlpatterns = [
             namespace="htmx",
         ),
     ),
+    # path("monee/dashboard/invest/", include("amiribd.invest.urls", namespace="invest")),
+    # Htmx actions and related views
+    path("settings/", include("amiribd.profilesettings.urls", namespace="settings")),
+    # transaction related urls
+    path(
+        "transactions/", include("amiribd.transactions.urls", namespace="transactions")
+    ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

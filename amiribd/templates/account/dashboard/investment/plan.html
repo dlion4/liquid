@@ -262,7 +262,23 @@
           {% if transactions %}
             <div class="nk-block nk-block-lg">
               <div class="nk-block-head">
-                <h5 class="nk-block-title">Transactions</h5>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <h5 class="nk-block-title">Transactions</h5>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="form-control-wrap">
+                        <select class="form-select form-control" aria-hidden="true" id="transactionFilter" name="type_of_transaction">
+                          <option value="All" selected="selected">All Transactions</option>
+                          <option value="DEPOSIT">Deposit</option>
+                          <option value="WITHDRAWAL">Withdrawal</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="card card-bordered">
                 <table class="table table-iv-tnx">
@@ -278,32 +294,7 @@
                         <span class="overline-title">Amount</span></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {% for transaction in transactions %}
-                      <tr>
-                        <td class="tb-col-type">
-                          <span class="sub-text">{{transaction.type}}</span>
-                        </td>
-                        <td class="tb-col-time tb-col-end">
-                          <span class="sub-text ">{{transaction.created_at}}</span>
-                        </td>
-                        <td class="tb-col-date tb-col-end">
-                          <span class="sub-text">{{transaction.source}}</span>
-                        </td>
-                        <td class="tb-col-time tb-col-end">
-                          {% if transaction.type == "DEPOSIT" %}
-                            <span class="lead-text text-success">{{transaction.paid|floatformat:2|intcomma}}
-                              KES</span>
-                          {% else %}
-                            <span class="lead-text text-danger">-
-                              {{transaction.paid|floatformat:2|intcomma}}
-                              KES</span>
-                          {% endif %}
-
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
+                  {% include "account/dashboard/investment/partials/transactions.html" %}
                 </table>
               </div>
             </div>
@@ -350,9 +341,9 @@
           submitBtn.removeAttribute("disabled")
         }
       }
-
     }
     swapArea.addEventListener('htmx:afterSwap', function (event) {
+
       handleSubmit()
     });
 
@@ -523,41 +514,83 @@
     const reactivateBtn = document.getElementById("reactivate-plan")
 
     function handlePlanReactivation(e) {
-      e.preventDefault()
-      const planId = e
-        .target
-        .getAttribute("data-plan-pk")
-      const userId = e
-        .target
-        .getAttribute("data-user-pk")
-      // send the plan id to the user using a get request to retrive the pla id and the associated user
-      fetch(`/htmx/account/reactivate-plan/${planId}/${userId}/`, {method: "POST"})
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            console.log(data)
-            alert('Plan Reactivated Successfully!');
-          } else {
-            // Handle errors, display them on the form
-            console.error('Errors:', data);
-            alert('Failed to process reactivation: ' + JSON.stringify(data));
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('An error occurred. Please try again.');
-        })
-        . finally(() => {
-          window
-            .location
-            .reload();
-        });
+        e.preventDefault()
+        const planId = e
+            .target
+            .getAttribute("data-plan-pk")
+        const userId = e
+            .target
+            .getAttribute("data-user-pk")
+        // send the plan id to the user using a get request to retrive the pla id and the associated user
+        fetch(`/htmx/account/reactivate-plan/${planId}/${userId}/`, {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(data)
+                    alert('Plan Reactivated Successfully!');
+                } else {
+                    // Handle errors, display them on the form
+                    console.error('Errors:', data);
+                    alert('Failed to process reactivation: ' + JSON.stringify(data));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            })
+            .finally(() => {
+                window
+                    .location
+                    .reload();
+            });
 
     }
 
     reactivateBtn.addEventListener("click", (e) => {
-      handlePlanReactivation(e)
+        handlePlanReactivation(e)
     })
-  </script>
+
+    const transactionFilter = document.getElementById("transactionFilter")
+
+    function formatDate(dateString) {
+        const d = new Date(dateString)
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = months[d.getMonth()];
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const day = days[d.getDay()];
+        const year = d.getFullYear()
+        return `${month}, ${day} ${year}`
+    }
+
+    transactionFilter.addEventListener("change", async (e) => {
+        if (e.target.value == 'All') {
+            window.location.reload();
+        } else {
+            const response = await fetch(`{% url 'transactions:filter-transaction' %}?type_of_transaction=${e.target.value}`);
+            const data = await response.json();
+
+            const table = document.getElementById("transaction-table-list");
+            table.innerHTML = ''; // Clear existing rows
+
+            data.transactions.map(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                <td class="tb-col-type"><span class="sub-text">${row.type}</span></td>
+                <td class="tb-col-time tb-col-end"><span class="sub-text">${formatDate(row.created_at)}</span></td>
+                <td class="tb-col-date tb-col-end"><span class="sub-text">${row.source}</span></td>
+                <td class="tb-col-time tb-col-end">
+              ${row.type === "DEPOSIT" ? 
+                `<span class="lead-text text-success">${parseFloat(row.amount).toFixed(2)} KES</span>` : 
+                `<span class="lead-text text-danger">-${parseFloat(row.amount).toFixed(2)} KES</span>`
+              }
+            </td>
+          `;
+                table.appendChild(tr);
+            });
+        }
+    });
+</script>
 
 {% endblock modals %}

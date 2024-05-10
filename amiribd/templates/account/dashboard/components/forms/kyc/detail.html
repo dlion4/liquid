@@ -80,6 +80,11 @@
                   {% endfor %}
                 </ul>
               {% endif %}
+
+              <div style="margin-top: 5px!important;">
+                <small id="phone-number-error-message"></small>
+              </div>
+
             </div>
           </div>
         </div>
@@ -98,6 +103,10 @@
                   {% endfor %}
                 </ul>
               {% endif %}
+
+              <div style="margin-top: 5px!important;">
+                <small id="date-of-birth-error-message"></small>
+              </div>
             </div>
           </div>
         </div>
@@ -124,9 +133,43 @@
 
     <div class="nk-kycfm-footer">
       <div class="pt-2">
-        <button type="submit" class="btn btn-lg btn-primary">Proceed next...</button>
+        <button type="submit" id="proceedBtn" class="btn btn-lg btn-primary">Proceed next...</button>
       </div>
     </div>
 
   </form>
+
+  <script>
+    document
+      .body
+      .addEventListener("htmx:afterSwap", function (event) {
+        console.log(event.detail.target)
+
+        const swappedElement = event.detail.target
+        try {
+          const phoneNumberResponseBox = document.getElementById('phone-number-error-message');
+          const responseBox = phoneNumberResponseBox.getAttribute("data-bt-state")
+
+          const proceedBtn = document.getElementById('proceedBtn');
+          if (responseBox === "disabled") {
+
+            proceedBtn.setAttribute("disabled", "disabled")
+          } else {
+            if (proceedBtn.getAttribute("disabled")) {
+              proceedBtn.removeAttribute("disabled")
+            }
+          }
+        } catch (e) {
+          console.log(e)
+        }
+
+      })
+
+    document
+      .body
+      .removeEventListener("htmx:afterSwap", function (event) {
+        console.log(event.detail.target)
+      })
+  </script>
+
 {% endblock kycform %}

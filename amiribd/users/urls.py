@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import (
     LoginView,
@@ -6,7 +6,8 @@ from .views import (
     SuccessAuthenticationView,
     LogoutView,
     ReferralSignupView,
-    HandleHtmxEmailLookupView
+    HandleHtmxEmailLookupView,
+    HandleHtmxSignupEmailLookupView
 )
 
 app_name = "users"
@@ -19,4 +20,7 @@ urlpatterns = [
     ),
     path("success/", view=SuccessAuthenticationView.as_view(), name="success"),
     path("htmx-email-lookup/", view=HandleHtmxEmailLookupView.as_view(), name="email-lookup"),
+    path("htmx-signup-email-lookup/", view=HandleHtmxSignupEmailLookupView.as_view(), name="signup-email-lookup"),
+
+    path("profile/", include("amiribd.profiles.urls", namespace="profile")),
 ]

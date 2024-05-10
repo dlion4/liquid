@@ -180,6 +180,7 @@ class ReferralSignupView(
 
 
 class HtmxSetupView(View):
+    html_swap_message = ""
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
@@ -187,17 +188,53 @@ class HtmxSetupView(View):
 
 
 class HandleHtmxEmailLookupView(HtmxSetupView):
-    def get(self, request, *args, **kwargs):
 
+    def filter_user(self, request):
         email = request.GET.get("email")
-        if user := User.objects.filter(email=email).first():
-            html_template = """
+        return User.objects.filter(email=email).first()
+
+    def success_html_response(self, *args, **kwargs):
+        self.html_swap_message = """
                 <small class='text-muted uk-text-success' id='email-lookup-result'>Email address found</small>
             """
-            return HttpResponse(html_template)
 
-        html_template = """
+        return self.html_swap_message
+
+    def fail_html_response(self, *args, **kwargs):
+        self.html_swap_message = """
             <small class='text-muted uk-text-danger' data-bt-state='disabled' id='email-lookup-result'>No such email address found</small>
         """
 
-        return HttpResponse(html_template)
+        return self.html_swap_message
+
+    def get(self, request, *args, **kwargs):
+
+        if self.filter_user(request):
+
+            return HttpResponse(self.success_html_response(*args, **kwargs))
+
+        return HttpResponse(self.fail_html_response(*args, **kwargs))
+
+
+class HandleHtmxSignupEmailLookupView(HandleHtmxEmailLookupView):
+    def fail_html_response(self, *args, **kwargs):
+        self.html_swap_message = """
+            <small class='text-muted uk-text-danger' data-bt-state='disabled' id='email-lookup-result'>Email address already taken</small>
+        """
+
+        return self.html_swap_message
+
+    def success_html_response(self, *args, **kwargs):
+        self.html_swap_message = """
+                <small class='text-muted uk-text-success' id='email-lookup-result'></small>
+            """
+
+        return self.html_swap_message
+
+    def get(self, request, *args, **kwargs):
+
+        if self.filter_user(request):
+
+            return HttpResponse(self.fail_html_response(*args, **kwargs))
+
+        return HttpResponse(self.success_html_response(*args, **kwargs))

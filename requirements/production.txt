@@ -26,3 +26,6 @@ django
 djangorestframework
 django-ninja
 django-filter
+django-easy-audit
+django-dbbackup
+django-apscheduler

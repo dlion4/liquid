@@ -209,35 +209,47 @@
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a href="">
-                      <em class="icon ni ni-user-alt"></em>
-                      <span>View Profile</span></a>
-                  </li>
-                  <li>
-                    <a href="">
-                      <em class="icon ni ni-setting-alt"></em>
-                      <span>Account Setting</span></a>
-                  </li>
-                  <li>
-                    <a href="">
-                      <em class="icon ni ni-activity-alt"></em>
-                      <span>Login Activity</span></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="dropdown-inner">
-                <ul class="link-list">
-                  <li>
-                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-                      <em class="icon ni ni-signout"></em>
-                      <span>Sign out</span></a>
-                  </li>
-                </ul>
-              </div>
+                    {% if request.user.verified %}
+                      <a href="{% url 'users:profile:profile' %}">
+                      {% else %}
+                        <a href="{% url 'users:profile:profile' %}">
+                        {% endif %}
+                        <em class="icon ni ni-user-alt"></em>
+                        <span>View Profile</span></a>
+                    </li>
+                    <li>
+                      {% if request.user.verified %}
+                        <a href="">
+                        {% else %}
+                          <a href="">
+                          {% endif %}
+                          <em class="icon ni ni-setting-alt"></em>
+                          <span>Account Setting</span></a>
+                      </li>
+                      <li>
+                        {% if request.user.verified %}
+                          <a href="">
+                          {% else %}
+                            <a href="">
+                            {% endif %}
+                            <em class="icon ni ni-activity-alt"></em>
+                            <span>Login Activity</span></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="dropdown-inner">
+                      <ul class="link-list">
+                        <li>
+                          <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                            <em class="icon ni ni-signout"></em>
+                            <span>Sign out</span></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>

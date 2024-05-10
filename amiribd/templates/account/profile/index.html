@@ -1,0 +1,323 @@
+{% extends "account/dashboard/base.html" %}
+{% load static humanize %}
+{% block content %}
+
+
+
+  <div class="nk-content nk-content-fluid">
+    <div class="container-xl wide-xl">
+      <div class="nk-content-inner">
+        <div class="nk-content-body">
+          <div class="nk-block">
+            <div class="card card-bordered">
+              <div class="card-aside-wrap">
+
+                {% include "account/profile/components/personal.html" %}
+
+                <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg toggle-screen-lg" data-toggle-body="true" data-content="userAside" data-toggle-screen="lg" data-toggle-overlay="true">
+                  <div class="card-inner-group" data-simplebar="init">
+                    <div class="simplebar-wrapper" style="margin: 0px;">
+                      <div class="simplebar-height-auto-observer-wrapper">
+                        <div class="simplebar-height-auto-observer"></div>
+                      </div>
+                      <div class="simplebar-mask">
+                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                          <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                            <div class="simplebar-content" style="padding: 0px;">
+                              <div class="card-inner">
+                                <div class="user-card">
+                                  <div class="user-avatar bg-primary">
+                                    <span>{{profile.initials}}</span></div>
+                                  <div class="user-info">
+                                    <span class="lead-text">{{profile.full_name|title}}</span><span class="sub-text">{{profile.user.email}}</span></div>
+                                  <div class="user-action">
+                                    <div class="dropdown">
+                                      <a class="btn btn-icon btn-trigger me-n2" data-bs-toggle="dropdown" href="#">
+                                        <em class="icon ni ni-more-v"></em>
+                                      </a>
+                                      <div class="dropdown-menu dropdown-menu-end">
+                                        <ul class="link-list-opt no-bdr">
+                                          <li>
+                                            <a href="#">
+                                              <em class="icon ni ni-camera-fill"></em>
+                                              <span>Change Photo</span></a>
+                                          </li>
+                                          <li>
+                                            <a href="#">
+                                              <em class="icon ni ni-edit-fill"></em>
+                                              <span>Update Profile</span></a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card-inner">
+                                <div class="user-account-info py-0">
+                                  <h6 class="overline-title-alt">Liquid Wallet Account</h6>
+                                  <div class="user-balance">{{available_amount|floatformat:2|intcomma}}
+                                    <small class="currency currency-btc">KES</small>
+                                  </div>
+                                  <div class="user-balance-sub">Locked
+                                    <span>{{locked_amount|floatformat:2|intcomma}}
+                                      <span class="currency currency-btc">KES</span></span></div>
+                                </div>
+                              </div>
+                              <div class="card-inner p-0">
+                                <ul class="link-list-menu">
+                                  <li>
+                                    <a class="{% if request.resolver_match.view_name == 'users:profile:profile' %} active {% endif %}" hx-get="{% url 'users:profile:profile' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                      <em class="icon ni ni-user-fill-c"></em>
+                                      <span>Personal Infomation</span></a>
+                                  </li>
+                                  <li>
+                                    <a class="{% if request.resolver_match.view_name == 'users:profile:notifications' %} active {% endif %}" hx-get="{% url 'users:profile:notifications' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                      <em class="icon ni ni-bell-fill"></em>
+                                      <span>Notifications</span></a>
+                                  </li>
+                                  <li>
+                                    <a class="{% if request.resolver_match.view_name == 'users:profile:account-activity' %} active {% endif %}" hx-get="{% url 'users:profile:account-activity' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                      <em class="icon ni ni-activity-round-fill"></em>
+                                      <span>Account Activity</span></a>
+                                  </li>
+                                  <li>
+                                    <a class="{% if request.resolver_match.view_name == 'users:profile:security-settings' %} active {% endif %}" hx-get="{% url 'users:profile:security-settings' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                      <em class="icon ni ni-lock-alt-fill"></em>
+                                      <span>Security Settings</span></a>
+                                  </li>
+                                  <li>
+                                    <a class="{% if request.resolver_match.view_name == 'users:profile:social-connected' %} active {% endif %}" hx-get="{% url 'users:profile:social-connected' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                      <em class="icon ni ni-grid-add-fill-c"></em>
+                                      <span>Connected with Social</span></a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="simplebar-placeholder" style="width: auto; height: 504px;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                      <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+                      <div class="simplebar-scrollbar" style="height: 0px; display: none;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getTokens(user, token) {
+      // This function should return an object with tokens
+      // For example:
+      return {user: user.id, token: token};
+    }
+
+    async function fetchData() {
+      const baseUrl = "/users/profile/obtain-token/";
+      //const tokens = getTokens();
+
+      try {
+        const response = await fetch(baseUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // chec if token user is null
+
+        if (data.token.user == null && data.token.is_active == false) {
+          // call the create token endpoint to create a token using the users from this view
+
+          const postData = await fetch(`/users/profile/refresh-token/${data.user.id}/`, {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({"user": data.token.user})
+          })
+          const postdataResponse = await postData.json();
+          console.log(postdataResponse)
+        }
+
+        // verify the token
+
+        const verifyData = await fetch(`/users/profile/verify-token/?token=${data.token.token}`)
+        const verifyDataResponse = await verifyData.json();
+        console.log(verifyDataResponse)
+
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    // Call the function to perform the fetch operation
+    fetchData();
+  </script>
+
+
+  <style>
+    ul.link-list-menu > li > a {
+      cursor: pointer !important;
+    }
+  </style>
+
+
+
+
+<script type="text/javascript">
+  document
+    .body
+    .addEventListener('htmx:afterSwap', function (event) {
+      console.log(event.detail.target)
+      const serverResponse = event.detail.xhr.responseText;
+
+      // Use DOMParser to parse the HTML response
+      const parser = new DOMParser();
+      const html = parser.parseFromString(serverResponse, 'text/html');
+
+      // Get the element with id profile-account
+      // loop through the type juu they are multple
+      const notificationForm = html.getElementById('profile-account').getAttribute('data-bs-id');
+
+      if (notificationForm === "notifications") {
+
+        setTimeout(() =>{
+          document.querySelectorAll('.custom-control-input').forEach(async function (event) {
+            // do the fetch headers
+            const notificationTypeId = event.getAttribute('data-id-notification-type')
+  
+            const profileId = event.getAttribute('data-profile')
+
+            // do a fetch request
+            const response = await fetch(`/settings/notifications/subscribe/?notification_type_id=${notificationTypeId}&profile_id=${profileId}`)
+            const responseData = await response.json()
+
+
+            if(responseData.success){
+
+              if(responseData.subscribed == notificationTypeId){
+                event.checked = true;
+              }else{
+                event.checked = false;
+              }
+             
+            }
+          })
+        }, 1000)
+       
+      }
+    });
+</script>
+
+
+{% endblock content %}
+
+{% block modals %}
+
+  {% comment %} <div class="modal fade" id="profile-edit" data-select2-id="profile-edit" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" data-select2-id="8">
+        <a href="#" class="close" data-bs-dismiss="modal">
+          <em class="icon ni ni-cross-sm"></em>
+        </a>
+        <div class="modal-body modal-body-lg" data-select2-id="7">
+          <h5 class="title">Update Profile</h5>
+          <ul class="nk-nav nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#personal" aria-selected="false" role="tab" tabindex="-1">Personal</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="tab" href="#address" aria-selected="true" role="tab">Address</a>
+            </li>
+          </ul>
+          <div class="tab-content" data-select2-id="6">
+            <div class="tab-pane" id="personal" role="tabpanel">
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="full-name">Full Name</label><input type="text" class="form-control form-control-lg" id="full-name" value="Abu Bin Ishtiyak" placeholder="Enter Full name"></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="display-name">Display Name</label><input type="text" class="form-control form-control-lg" id="display-name" value="Ishtiyak" placeholder="Enter display name"></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="phone-no">Phone Number</label><input type="text" class="form-control form-control-lg" id="phone-no" value="" placeholder="Phone Number"></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group focused">
+                    <label class="form-label" for="birth-day">Date of Birth</label><input type="text" class="form-control form-control-lg date-picker" id="birth-day" data-date-format="yyyy-mm-dd" placeholder="Enter your birth-date"></div>
+                </div>
+                <div class="col-12">
+                  <div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="latest-sale">
+                    <label class="custom-control-label" for="latest-sale">Use full name to display
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                    <li>
+                      <a href="#" data-bs-dismiss="modal" class="btn btn-lg btn-primary">Update Profile</a>
+                    </li>
+                    <li>
+                      <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active show" id="address" role="tabpanel" data-select2-id="address">
+              <div class="row gy-4" data-select2-id="5">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="address-l1">Address Line 1</label><input type="text" class="form-control form-control-lg" id="address-l1" value="2337 Kildeer Drive"></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="address-l2">Address Line 2</label><input type="text" class="form-control form-control-lg" id="address-l2" value=""></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="address-st">State</label>
+                    <input type="text" class="form-control form-control-lg" id="address-st" value="Kentucky">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label" for="address-st">State</label>
+                    <input type="text" class="form-control form-control-lg" id="address-st" value="Kentucky">
+                  </div>
+                </div>
+                <div class="col-12">
+                  <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                    <li>
+                      <a href="#" class="btn btn-lg btn-primary">Update Address</a>
+                    </li>
+                    <li>
+                      <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> {% endcomment %}
+
+{% endblock modals %}

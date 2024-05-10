@@ -185,3 +185,5 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.profile.user.username} Verification Document"
+
+

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = "kyc"
@@ -11,5 +11,12 @@ urlpatterns = [
         "kyc/done/verification/",
         views.kyc_profile_complete,
         name="complete_verification",
+    ),
+    path(
+        "kyc/htmx/validation/",
+        include(
+            "amiribd.dashboard.kyc.htmx.urls",
+            namespace="kyc-htmx-validation",
+        ),
     ),
 ]
