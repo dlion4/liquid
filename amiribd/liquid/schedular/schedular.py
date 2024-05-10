@@ -47,7 +47,7 @@ class Backup:
             * self.WEEKS_PER_MONTH
         )
 
-        scheduler.add_jobstore(DjangoJobStore(), "default")
+        scheduler.add_jobstore(DjangoMemoryJobStore(), "kwasa")
         scheduler.add_job(
             self.call_db_backup,
             "interval",
@@ -64,7 +64,7 @@ class Backup:
         )
         register_events(scheduler)
         scheduler.start()
-        scheduler.shutdown(wait=False)
+        # scheduler.shutdown(wait=False)
 
 
 def main():

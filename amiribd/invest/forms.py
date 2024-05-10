@@ -169,7 +169,7 @@ class AddPlanForm(forms.ModelForm):
         required=True,
         label="Plan Selection",
         help_text="Select a suitable plan that fits your pocket",
-        empty_label=None if PlanType.objects.exists() else "No plan available",
+        empty_label="No plan available",
     )
 
     class Meta:
@@ -187,4 +187,4 @@ class AddPlanForm(forms.ModelForm):
                 account__pool__profile=self.request.user.profile_user
             )
 
-            #TODO: exclude the user_selected_type_id from the queryset
+            # TODO: exclude the user_selected_type_id from the queryset
