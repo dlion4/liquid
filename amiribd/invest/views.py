@@ -1,9 +1,15 @@
 import contextlib
 from typing import Any
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
+from django.views import View
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse, reverse_lazy
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+from intasend import APIService
+from amiribd.payments.helpers import MpesaStkPushSetUp
+from amiribd.users.models import Profile
 from .forms import (
     AccountEventWithdrawalForm,
     AddPlanForm,
@@ -14,14 +20,14 @@ from .forms import (
     PaymentOptionForm,
 )
 from django.db import transaction
-
-from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from .models import Pool, Account, Plan
+from .models import AccountType, PlanType, Pool, Account, Plan, PoolType
 from amiribd.dashboard.views import DashboardGuard, DashboardViewMixin
 from decimal import Decimal  # Import Decimal from the decimal module
 from django.utils.termcolors import colorize
 from amiribd.transactions.models import Transaction
+from .serializers import AccountSerializer, PlanSerializer, PoolSerializer
 
 # Create your views here.
 
@@ -49,7 +55,7 @@ class InvestmentRegistrationView(InvestmentSetupView):
         context["poolform"] = self.form_class()
         context["accountform"] = AccountRegistrationForm()
         context["planform"] = PlanRegistrationForm()
-        context["payoptions"] = PaymentOptionForm()
+        # context["payoptions"] = PaymentOptionForm()
         return context
 
     # Simplified and optimized version of the post method
@@ -60,127 +66,355 @@ class InvestmentRegistrationView(InvestmentSetupView):
         poolForm = self.form_class(request.POST)
         accountForm = AccountRegistrationForm(request.POST)
         planForm = PlanRegistrationForm(request.POST)
-        payoptions = PaymentOptionForm(request.POST)
+        amount = request.POST.get(
+            "amount",
+        )
+        phone = request.POST.get(
+            "phone",
+        )
+        # payoptions = PaymentOptionForm(request.POST)
 
-        if all(
-            form.is_valid() for form in [poolForm, accountForm, planForm, payoptions]
-        ):
-            poolInstance = poolForm.save(commit=False)
-            poolInstance.profile = self._get_user().profile_user
-            poolInstance.save()
-            poolForm.save()
-            # poolInstance.refresh_from_db()
+        # if all(form.is_valid() for form in [poolForm, accountForm, planForm]):
+        #     poolInstance = poolForm.save(commit=False)
+        #     poolInstance.profile = self._get_user().profile_user
+        #     poolInstance.save()
+        #     poolForm.save()
 
-            accountInstance = accountForm.save(commit=False)
-            accountInstance.pool = poolInstance
-            accountInstance.save()
-            accountForm.save()
-            # accountInstance.refresh_from_db()
+        #     accountInstance = accountForm.save(commit=False)
+        #     accountInstance.pool = poolInstance
+        #     accountInstance.save()
+        #     accountForm.save()
 
-            planInstance = planForm.save(commit=False)
-            planInstance.account = accountInstance
-            planInstance.save()
-            planForm.save()
-            # planInstance.refresh_from_db()
+        #     planInstance = planForm.save(commit=False)
+        #     planInstance.account = accountInstance
+        #     planInstance.save()
+        #     planForm.save()
 
-            totalInvestment = sum(
-                instance.type.price
-                for instance in [poolInstance, accountInstance, planInstance]
-            )
-            print(totalInvestment, "Total Investment")
-            discountPrice = Decimal(Decimal("0.3") * Decimal(totalInvestment))
-            print(discountPrice, "Discount Price")
-            paymentChannel = payoptions.cleaned_data.get("channel")
+        #     totalInvestment = sum(
+        #         instance.type.price
+        #         for instance in [poolInstance, accountInstance, planInstance]
+        #     )
 
-            print(paymentChannel, "Channel")
+        #     discountPrice = Decimal(Decimal("0.3") * Decimal(totalInvestment))
 
-            planInstance.payment_method = paymentChannel.channel
-            planInstance.save()
+        #     # paymentChannel = payoptions.cleaned_data.get("channel")
 
-            transaction = Transaction.objects.create(
-                profile=poolInstance.profile,
-                account=accountInstance,
-                type="DEPOSIT",
-                amount=totalInvestment,
-                discount=discountPrice,
-                source="Account Registration",
-            )
+        #     # planInstance.payment_method = paymentChannel.channel
+        #     planInstance.save()
 
-            print(transaction.paid, "paid amount|Deposited")
+        #     transaction = Transaction.objects.create(
+        #         profile=poolInstance.profile,
+        #         account=accountInstance,
+        #         type="DEPOSIT",
+        #         amount=totalInvestment,
+        #         discount=discountPrice,
+        #         source="Account Registration",
+        #     )
 
-            accountInstance.balance = Decimal(
-                Decimal(accountInstance.balance) + Decimal(transaction.paid)
-            )
-            accountInstance.save()
+        #     print(transaction.paid, "paid amount|Deposited")
 
-            # look for the referrer
-            print(accountInstance.balance, "Account Balance")
+        #     accountInstance.balance = Decimal(
+        #         Decimal(accountInstance.balance) + Decimal(transaction.paid)
+        #     )
+        #     accountInstance.save()
 
-            profile = poolInstance.profile
+        #     # look for the referrer
+        #     print(accountInstance.balance, "Account Balance")
 
-            with contextlib.suppress(Exception):
-                if referrer := profile.referred_by:
-                    print(
-                        referrer,
-                        "User",
-                        referrer.profile_user,
-                        "Profile ser",
-                        profile,
-                        "Profile thats onbording",
-                    )
+        #     profile = poolInstance.profile
 
-                    # update the referrer account by a percentage of the deposit
-                    referrer_profile = referrer.profile_user
-                    referrer_profile_account = Account.objects.get(
-                        pool__profile=referrer_profile
-                    )
-                    interest_earned = Decimal(
-                        Decimal("0.35") * Decimal(transaction.paid)
-                    )
-                    print(interest_earned, "Interest to be earned")
+        #     with contextlib.suppress(Exception):
+        #         if referrer := profile.referred_by:
+        #             print(
+        #                 referrer,
+        #                 "User",
+        #                 referrer.profile_user,
+        #                 "Profile ser",
+        #                 profile,
+        #                 "Profile thats onbording",
+        #             )
 
-                    transaction = Transaction.objects.create(
-                        profile=referrer_profile,
-                        account=referrer_profile_account,
-                        type="DEPOSIT",
-                        amount=interest_earned,
-                        discount=Decimal("0.00"),
-                        source="Referral Earnings",
-                    )
-                    transaction.save()
-                    referrer_profile_account.balance += transaction.paid
-                    # referrer_profile_account.interest +=
-                    # now save the transaction
-                    referrer_profile_account.save()
-                    # referrer_profile_account.refresh_from_db()
+        #             referrer_profile = referrer.profile_user
+        #             referrer_profile_account = Account.objects.get(
+        #                 pool__profile=referrer_profile
+        #             )
+        #             interest_earned = Decimal(
+        #                 Decimal("0.35") * Decimal(transaction.paid)
+        #             )
+        #             print(interest_earned, "Interest to be earned")
 
-                    print(
-                        referrer_profile_account.balance, "Account balance of refferer"
-                    )
+        #             transaction = Transaction.objects.create(
+        #                 profile=referrer_profile,
+        #                 account=referrer_profile_account,
+        #                 type="DEPOSIT",
+        #                 amount=interest_earned,
+        #                 discount=Decimal("0.00"),
+        #                 source="Referral Earnings",
+        #             )
+        #             transaction.save()
+        #             referrer_profile_account.balance += transaction.paid
+        #             referrer_profile_account.save()
 
-                    # lets create a transaction record for this transaction
+        #             print(
+        #                 referrer_profile_account.balance, "Account balance of refferer"
+        #             )
 
-            return redirect(self.success_url)
+        #     return redirect(self.success_url)
 
-        for form in [poolForm, accountForm, planForm, payoptions]:
-            if form.errors:
-                for choice in form.fields["type"].choices:
-                    print(choice)
-                print(form.errors)
+        # return render(
+        #     request,
+        #     self.template_name,
+        #     {
+        #         "poolform": poolForm,
+        #         "accountform": accountForm,
+        #         "planform": planForm,
+        #     },
+        # )
 
-        return render(
-            request,
-            self.template_name,
+        return JsonResponse(
             {
-                "poolform": poolForm,
-                "accountform": accountForm,
-                "planform": planForm,
-                "payoptions": payoptions,
-            },
+                "amount": amount,
+                "phone": phone,
+                # "payoptions": payoptions,
+                "success": True,
+                "message": "You have successfully registered your investment scheme",
+                "status": 200,
+            }
         )
 
 
 invest = InvestmentRegistrationView.as_view()
+
+
+class HandlePoolSelectionView(LoginRequiredMixin, View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        pool_type = get_object_or_404(PoolType, pk=request.GET.get("pool_id"))
+        profile = self.request.user.profile_user
+        message = ""
+        pool_data = None
+        try:
+            pool = Pool.objects.get(
+                profile=profile,
+                type=pool_type,
+            )
+            if pool is not None:
+                pool.delete()
+                message = "Pool has been deleted."
+            pool = Pool.objects.create(profile=profile, type=pool_type)
+            pool_data = PoolSerializer(pool).data
+        except Exception as e:
+            message = "You have successfully selected your pool."
+            pool = Pool.objects.get(
+                profile=profile,
+            ).delete()
+            pool = Pool.objects.create(profile=profile, type=pool_type)
+            pool_data = PoolSerializer(pool).data
+
+        return JsonResponse(
+            {"success": True, "message": message, "status": 200, "pool": pool_data}
+        )
+
+
+class HandleAccountSelectionView(LoginRequiredMixin, View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        profile = request.user.profile_user
+        pool = Pool.objects.get(profile=profile, id=request.GET.get("pool_id"))
+        account_type = AccountType.objects.get(id=request.GET.get("account_id"))
+
+        account_data = None
+
+        try:
+            account = Account.objects.get(
+                pool=pool, pool__profile=profile, type=account_type
+            )
+
+            if account is not None:
+                account.delete()
+                message = "Account has been deleted."
+            else:
+                account = Account.objects.create(pool=pool, type=account_type)
+            account_data = AccountSerializer(account).data
+        except Exception as e:
+            Account.objects.filter(pool=pool, pool__profile=profile).delete()
+            account = Account.objects.create(pool=pool, type=account_type)
+            account_data = AccountSerializer(account).data
+            message = "Account has been created."
+
+        return JsonResponse(
+            {
+                "success": True,
+                "status": 200,
+                "message": message,
+                "account": account_data,
+            }
+        )
+
+
+class HandlePlanSelectionView(LoginRequiredMixin, View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        profile = request.user.profile_user
+        pool = Pool.objects.get(profile=profile, id=request.GET.get("pool_id"))
+        account = Account.objects.get(
+            pool=pool, pool__profile=profile, id=request.GET.get("account_id")
+        )
+        plan_type = PlanType.objects.get(id=request.GET.get("plan_id"))
+        plan_data = None
+
+        try:
+            plan = Plan.objects.get(
+                account=account, account__pool__profile=profile, type=plan_type
+            )
+            if plan is not None:
+                plan.delete()
+                message = "Plan has been deleted."
+            else:
+                plan = Plan.objects.create(account=account, type=plan_type)
+                message = "Plan has been created."
+        except Exception as e:
+            plan = Plan.objects.filter(
+                account=account, account__pool__profile=profile
+            ).delete()
+            plan = Plan.objects.create(account=account, type=plan_type)
+            print(plan)
+
+        plan_data = PlanSerializer(plan).data
+        return JsonResponse(
+            {
+                "success": True,
+                "status": 200,
+                "message": "Plan has been selected.",
+                "plan": plan_data,
+            }
+        )
+
+
+class HandlePaymentPopupView(LoginRequiredMixin, View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        # TODO: get the account related to the user
+
+        # TODO: check if this user is a referal | from this view i have
+        #  access to the profile the pool and thye account
+        profile = Profile.objects.get(pk=kwargs.get("profile"))
+        pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool"))
+        account = Account.objects.get(
+            pool=pool, pool__profile=profile, pk=kwargs.get("account")
+        )
+        plan = Plan.objects.get(
+            account=account, account__pool__profile=profile, pk=kwargs.get("plan")
+        )
+
+        totalInvestment = sum(instance.type.price for instance in [pool, account, plan])
+
+        discountPrice = Decimal(Decimal("0.2") * Decimal(totalInvestment))
+
+        transaction = Transaction.objects.create(
+            profile=profile,
+            account=account,
+            type="DEPOSIT",
+            amount=totalInvestment,
+            discount=discountPrice,
+            source="Account Registration",
+        )
+
+        account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
+        account.save()
+
+        # look for the referrer
+        profile = pool.profile
+
+        referrer = self.__get_referrer_and_update_account(profile)
+
+        return JsonResponse(
+            {"success": True, "url": reverse_lazy("dashboard:invest:plans")}
+        )
+
+    def __get_referrer_and_update_account(self, profile):
+        if referrer := profile.referred_by:
+            # update the referrer account
+
+            referrer_profile = referrer.profile_user
+            referrer_profile_account = Account.objects.get(
+                pool__profile=referrer_profile
+            )
+            interest_earned = Decimal(Decimal("0.25") * Decimal(transaction.paid))
+
+            transaction = Transaction.objects.create(
+                profile=referrer_profile,
+                account=referrer_profile_account,
+                type="DEPOSIT",
+                amount=interest_earned,
+                discount=Decimal("0.00"),
+                source="Referral Earnings",
+            )
+            transaction.save()
+            referrer_profile_account.balance += transaction.paid
+            referrer_profile_account.save()
+
+            return True
+        return False
+
+
+def fetch_amount_tobe_paid_plus_discount(request):
+    profile = Profile.objects.get(pk=request.GET.get("profile"))
+    pool = Pool.objects.get(profile=profile)
+    account = Account.objects.get(pool=pool, pool__profile=profile)
+    plan = Plan.objects.get(
+        account=account, account__pool__profile=profile, pk=request.GET.get("plan_pk")
+    )
+    totalInvestment = sum(instance.type.price for instance in [pool, account, plan])
+    discountPrice = Decimal(Decimal("0.2") * Decimal(totalInvestment))
+    amount_to_be_paid = totalInvestment - discountPrice
+    return JsonResponse({"amount": amount_to_be_paid})
+
+
+class HandleRegistrationPaymentView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        service = MpesaStkPushSetUp().mpesa_stk_push_service()
+        phone = request.GET.get("phone")
+        amount = request.GET.get("amount")
+        profile = Profile.objects.get(pk=request.GET.get("profile"))
+
+        response = service.collect.mpesa_stk_push(
+            phone_number=str(phone),
+            email=str(profile.user.email),
+            # amount=amount,
+            amount=1,
+            narrative="Package Purchase Payment",
+        )
+
+        return JsonResponse(
+            {
+                "success": True,
+                "status": 200,
+                "response": response,
+            }
+        )
+
+
+def check_payment_status(request):
+    service = MpesaStkPushSetUp().mpesa_stk_push_service()
+    response = service.collect.status(invoice_id=request.GET.get("invoice_id"))
+    print(response)
+    return JsonResponse({"success": True, "response": response})
 
 
 class InvestmentSchemeView(InvestmentSetupView, DashboardViewMixin):
@@ -208,7 +442,6 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
         return Transaction.objects.filter(
             profile=self._get_user().profile_user
         ).order_by("-id")
-
 
     def get_object(self):
         plan = get_object_or_404(
@@ -242,4 +475,3 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
 
 
 plan = InvestmentPlanView.as_view()
-

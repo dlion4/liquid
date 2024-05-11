@@ -124,7 +124,7 @@ INSTALLED_APPS += ["anymail"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 # https://anymail.readthedocs.io/en/stable/esps
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 ANYMAIL = {}
 
 # django-compressor
@@ -230,3 +230,13 @@ integrations = [
 #     environment=env("SENTRY_ENVIRONMENT", default="production"),
 #     traces_sample_rate=env.float("SENTRY_TRACES_SAMPLE_RATE", default=0.0),
 # )
+
+# MEPSA INTEGRATION
+
+INTASEND_PUBLISHABLE_KEY = env.str("INTASEND_PUBLISHABLE_KEY", default="")
+INTASEND_SECRET_KEY = env.str("INTASEND_SECRET_KEY", default="")
+
+
+INTASEND_TEST_MODE = env.bool("INTASEND_TEST_MODE", default=False)
+
+

@@ -6,7 +6,9 @@ from amiribd.transactions.models import PaymentMethod
 
 class PoolRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
-        widget=forms.Select(attrs={"class": "form-control select"}),
+        widget=forms.Select(
+            attrs={"class": "form-control select", "id": "pool-type-id", "name": "pool-type"}
+        ),
         queryset=PoolType.objects.all(),
         required=True,
         label="Pool Type",
@@ -21,7 +23,9 @@ class PoolRegistrationForm(forms.ModelForm):
 class AccountRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         queryset=AccountType.objects.all(),
-        widget=forms.Select(attrs={"class": "form-control select"}),
+        widget=forms.Select(
+            attrs={"class": "form-control select", "id": "account-type-id", "name": "account-type"}
+        ),
         label="Account Selection",
         help_text="Select an account type for your plan",
     )
@@ -36,7 +40,9 @@ class AccountRegistrationForm(forms.ModelForm):
 class PlanRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         queryset=PlanType.objects.all(),
-        widget=forms.Select(attrs={"class": "form-control select"}),
+        widget=forms.Select(
+            attrs={"class": "form-control select", "id": "plan-type-id", "name": "plan-type"}
+        ),
         label="Plan Seelction",
         help_text="Select a suitable plan that fits your pocket",
     )
@@ -47,10 +53,11 @@ class PlanRegistrationForm(forms.ModelForm):
 
 
 class PaymentOptionForm(forms.Form):
-    channel = forms.ModelChoiceField(
-        queryset=PaymentMethod.objects.all(),
-        widget=forms.Select(attrs={"class": "form-control"}),
-    )
+    # channel = forms.ModelChoiceField(
+    #     queryset=PaymentMethod.objects.all(),
+    #     widget=forms.Select(attrs={"class": "form-control"}),
+    # )
+    pass
 
 
 class AccountEventWithdrawalForm(forms.ModelForm):

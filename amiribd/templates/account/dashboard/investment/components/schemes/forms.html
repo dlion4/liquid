@@ -1,32 +1,354 @@
 <div class="col-lg-7">
-  <form action="{% url 'dashboard:invest:invest' %}" method="post">
+  <form action="{% url 'dashboard:invest:invest' %}" method="post" id="investment-registration-form">
     {% csrf_token %}
     <div class="invest-field form-group">
-      <div class="form-group">
-        {{poolform}}
-      </div>
+      <div class="form-group">{{poolform}}</div>
     </div>
 
     <div class="invest-field form-group">
-      <div class="form-group">
-        {{accountform}}
-      </div>
+      <div class="form-group">{{accountform}}</div>
     </div>
 
     <div class="invest-field form-group">
-      <div class="form-group">
-        {{planform}}
-      </div>
-    </div>
-
-    <div class="invest-field form-group">
-      <div class="form-group">
-        {{ payoptions }}
-      </div>
+      <div class="form-group">{{planform}}</div>
     </div>
 
     <div class="text-center bg-lighter w-100">
-      <button type="submit" class="btn btn-lg btn-primary ttu w-100 text-center">Confirm &amp; proceed</button>
+      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn" data-bs-profile="{{request.user.profile_user.id}}">
+        Confirm &amp; proceed
+      </button>
     </div>
   </form>
 </div>
+
+<div class="modal fade zoom" id="modalZoom" aria-modal="true" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Customer Info</h5>
+        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-validate is-alter" novalidate="novalidate">
+          <div class="form-group">
+            <label class="form-label" for="phone-no">Phone No</label>
+            <div class="form-control-wrap">
+              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no"/>
+            </div>
+            <span id="phone-error" class="errorlist"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pay-amount">Amount</label>
+            <div class="form-control-wrap">
+              <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
+              <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              <span id="payment-text">Confirm to pay</span>
+            </button>
+
+            <style>
+              .center-justify {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+            </style>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light">
+        <span class="sub-text">Modal Footer Text</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const popupSubmitBtn = document.getElementById("confirm-and-proceed-btn");
+  const poolType = document.getElementById("pool-type-id");
+  const accountType = document.getElementById("account-type-id");
+  const planType = document.getElementById("plan-type-id");
+
+  // Store initial values
+  const initialAccountTypeHTML = accountType.innerHTML;
+  const initialPlanTypeHTML = planType.innerHTML;
+
+  popupSubmitBtn.setAttribute("disabled", "disabled");
+  const paymentBtnSpinner = document.getElementById("payment-btn-spinner");
+  const paymentBtnText = document.getElementById("payment-text");
+
+  paymentBtnSpinner.style.display = "none";
+
+  accountType.innerHTML = "";
+  planType.innerHTML = "";
+
+  let poolFromServer = null;
+  let accountFromServer = null;
+  let planFromServer = null;
+
+  let poolId = null;
+  let accountId = null;
+  let planId = null;
+  let profileId = null;
+
+  poolType.addEventListener("change", async (e) => {
+    const itemId = e.target.value;
+
+    if (itemId) {
+      const response = await fetch(`{% url 'dashboard:invest:handle-pool-selection' %}?pool_id=${itemId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = await response.json();
+
+      if (!data.pool) {
+        alert("Something went wrong");
+        accountType.innerHTML = "";
+      }
+      // accountType.innerHTML = initialAccountTypeHTML;
+
+      if (data.pool) {
+        accountType.innerHTML = initialAccountTypeHTML;
+        poolFromServer = data.pool;
+        poolId = poolFromServer.id;
+
+        // listent for the change event for the account type
+
+        accountType.addEventListener("change", async (e) => {
+          console.log(poolFromServer);
+
+          const accountTypeId = e.target.value;
+          if (accountTypeId) {
+            const response = await fetch(`{% url 'dashboard:invest:handle-account-selection' %}?pool_id=${poolFromServer.id}&account_id=${accountTypeId}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+
+            const data = await response.json();
+
+            if (!data.account) {
+              alert("Something went wrong");
+              accountType.innerHTML = "";
+            }
+
+            if (data.account) {
+              accountFromServer = data.account;
+              accountId = accountFromServer.id;
+
+              planType.innerHTML = initialPlanTypeHTML;
+
+              planType.addEventListener("change", async (e) => {
+                // console.log(accountFromServer);
+
+                const planTypeId = e.target.value;
+
+                if (planTypeId) {
+                  const response = await fetch(`{% url 'dashboard:invest:handle-plan-selection' %}?pool_id=${poolFromServer.id}&account_id=${accountFromServer.id}&plan_id=${planTypeId}`, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json"
+                    }
+                  });
+
+                  popupSubmitBtn.removeAttribute("disabled");
+                  popupSubmitBtn.setAttribute("data-bs-toggle", "modal");
+                  popupSubmitBtn.setAttribute("data-bs-target", "#modalZoom");
+
+                  const data = await response.json();
+
+                  if (!data.plan) {
+                    alert("Something went wrong");
+                    accountType.innerHTML = "";
+                  }
+
+                  if (data.plan) {
+                    planId = data.plan.id;
+                  }
+                }
+
+                if (planType === "") {
+                  popupSubmitBtn.setAttribute("disabled", "disabled");
+                }
+              });
+            }
+          }
+
+          if (accountTypeId === "") {
+            planType.innerHTML = "";
+          }
+        });
+      }
+    }
+
+    // no pool information
+
+    if (itemId === "") {
+      accountType.innerHTML = "";
+      planType.innerHTML = "";
+    }
+  });
+
+  popupSubmitBtn.addEventListener("click", async (e) => {
+    console.log(e.target.dataset);
+
+    function cleanCurrency(value) {
+      return value.replace(/KES:\s?/, "");
+    }
+
+    profileId = e.target.dataset.bsProfile;
+
+    const paymentBtnForm = document.getElementById("mpesa-payment-btn-popup");
+    paymentBtnForm.setAttribute("disabled", "disabled");
+
+    console.log("poolId:", poolId, "accountId:", accountId, "planId:", planId, "profileId:", profileId);
+
+    const phoneNo = document.getElementById("phone-no");
+    const payAmount = document.getElementById("pay-amount");
+
+    // fethc the amount to be paid endpoint
+
+    const response = await fetch(`{% url 'dashboard:invest:fetch-amount-to-be-paid-plus-discount' %}?profile=${profileId}&plan_pk=${planId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const data = await response.json();
+
+    payAmount.value = parseFloat(data.amount).toFixed(2);
+    payAmount.placeholder = `KES: ${payAmount.value}`;
+
+    payAmount.value = `KES: ${parseFloat(data.amount).toFixed(2)}`;
+
+    payAmount.setAttribute("disabled", "disabled");
+
+    const cleanedCurrency = cleanCurrency(payAmount.value);
+
+    console.log(cleanedCurrency);
+
+    phoneNo.addEventListener("input", (e) => {
+      var phoneN = e.target;
+      const validPhoneNumberFormat = /^\d{12}$/;
+
+      if (!validPhoneNumberFormat.test(phoneN.value)) {
+        // If the phone number is not valid
+        phoneN
+          .classList
+          .add('errorlist'); // Add invalid class for visual feedback
+        document
+          .getElementById('phone-error')
+          .textContent = 'Invalid phone number. Please enter a valid number.';
+
+        paymentBtnForm.setAttribute("disabled", "disabled");
+      } else {
+        // If the phone number is valid
+        phoneN
+          .classList
+          .remove('errorlist');
+        document
+          .getElementById('phone-error')
+          .textContent = ''; // Clear any error message
+
+        paymentBtnForm.removeAttribute("disabled");
+
+        paymentBtnForm.addEventListener("click", () => {
+          const url = `{% url 'dashboard:invest:handle-payment' %}?phone=${phoneNo.value}&amount=${cleanedCurrency}&currency=KES&profile=${profileId}`;
+          async function handlePayment() {
+            const response = await fetch(url, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.success) {
+              // window.location.href = data.url;
+
+              if (data.response.invoice.state === "PENDING") {
+
+                paymentBtnSpinner.style.display = "block";
+                paymentBtnText.textContent = "Payment in progress...";
+                paymentBtnForm.setAttribute("disabled", "disabled");
+
+              }
+
+              const invoice_id = data.response.invoice.invoice_id;
+
+              let checkInterval = setInterval(async () => {
+
+                const response = await checkPaymentStatus(invoice_id);
+
+                if (response.response.invoice.state === "PROCESSING") {
+                  console.log("Still processing...");
+                } else if (response.response.invoice.state === "COMPLETED") {
+                  clearInterval(checkInterval);
+
+                  console.log("Payment successful");
+                  paymentBtnSpinner.style.display = "none";
+                  paymentBtnText.textContent = "Payment successful";
+
+                  const response = await fetch(`{% url 'dashboard:invest:handle-payment-popup' %}?profile=${profileId}&pool=${poolId}&account=${accountId}&plan=${planId}`, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json"
+                    }
+                  });
+
+                  const data = await response.json();
+
+                  if (!data.success) {
+                    alert("Something went wrong");
+                  }
+
+                  if (data.success) {
+                    window.location.href = data.url;
+                  }
+
+                }
+
+              }, 10000); // Check every 10 seconds
+
+              async function checkPaymentStatus(invoice_id) {
+                // Implement the logic to check the payment status
+                console.log("Checking payment status...");
+                // You might need to make another API call here to check the status
+                const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${invoice_id}`, {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json"
+                  }
+                });
+
+                const data = await response.json();
+                console.log("data", data);
+
+                return data;
+
+              }
+
+            }
+          }
+
+          handlePayment();
+        });
+
+        // call the payment here
+      }
+    });
+  });
+</script>
