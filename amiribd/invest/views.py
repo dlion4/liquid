@@ -62,127 +62,6 @@ class InvestmentRegistrationView(InvestmentSetupView):
     # Simplified and optimized version of the post method
 
     # Simplified and optimized version of the post method
-    @transaction.atomic
-    def post(self, request, *args, **kwargs):
-        poolForm = self.form_class(request.POST)
-        accountForm = AccountRegistrationForm(request.POST)
-        planForm = PlanRegistrationForm(request.POST)
-        amount = request.POST.get(
-            "amount",
-        )
-        phone = request.POST.get(
-            "phone",
-        )
-        # payoptions = PaymentOptionForm(request.POST)
-
-        # if all(form.is_valid() for form in [poolForm, accountForm, planForm]):
-        #     poolInstance = poolForm.save(commit=False)
-        #     poolInstance.profile = self._get_user().profile_user
-        #     poolInstance.save()
-        #     poolForm.save()
-
-        #     accountInstance = accountForm.save(commit=False)
-        #     accountInstance.pool = poolInstance
-        #     accountInstance.save()
-        #     accountForm.save()
-
-        #     planInstance = planForm.save(commit=False)
-        #     planInstance.account = accountInstance
-        #     planInstance.save()
-        #     planForm.save()
-
-        #     totalInvestment = sum(
-        #         instance.type.price
-        #         for instance in [poolInstance, accountInstance, planInstance]
-        #     )
-
-        #     discountPrice = Decimal(Decimal("0.3") * Decimal(totalInvestment))
-
-        #     # paymentChannel = payoptions.cleaned_data.get("channel")
-
-        #     # planInstance.payment_method = paymentChannel.channel
-        #     planInstance.save()
-
-        #     transaction = Transaction.objects.create(
-        #         profile=poolInstance.profile,
-        #         account=accountInstance,
-        #         type="DEPOSIT",
-        #         amount=totalInvestment,
-        #         discount=discountPrice,
-        #         source="Account Registration",
-        #     )
-
-        #     print(transaction.paid, "paid amount|Deposited")
-
-        #     accountInstance.balance = Decimal(
-        #         Decimal(accountInstance.balance) + Decimal(transaction.paid)
-        #     )
-        #     accountInstance.save()
-
-        #     # look for the referrer
-        #     print(accountInstance.balance, "Account Balance")
-
-        #     profile = poolInstance.profile
-
-        #     with contextlib.suppress(Exception):
-        #         if referrer := profile.referred_by:
-        #             print(
-        #                 referrer,
-        #                 "User",
-        #                 referrer.profile_user,
-        #                 "Profile ser",
-        #                 profile,
-        #                 "Profile thats onbording",
-        #             )
-
-        #             referrer_profile = referrer.profile_user
-        #             referrer_profile_account = Account.objects.get(
-        #                 pool__profile=referrer_profile
-        #             )
-        #             interest_earned = Decimal(
-        #                 Decimal("0.35") * Decimal(transaction.paid)
-        #             )
-        #             print(interest_earned, "Interest to be earned")
-
-        #             transaction = Transaction.objects.create(
-        #                 profile=referrer_profile,
-        #                 account=referrer_profile_account,
-        #                 type="DEPOSIT",
-        #                 amount=interest_earned,
-        #                 discount=Decimal("0.00"),
-        #                 source="Referral Earnings",
-        #             )
-        #             transaction.save()
-        #             referrer_profile_account.balance += transaction.paid
-        #             referrer_profile_account.save()
-
-        #             print(
-        #                 referrer_profile_account.balance, "Account balance of refferer"
-        #             )
-
-        #     return redirect(self.success_url)
-
-        # return render(
-        #     request,
-        #     self.template_name,
-        #     {
-        #         "poolform": poolForm,
-        #         "accountform": accountForm,
-        #         "planform": planForm,
-        #     },
-        # )
-
-        return JsonResponse(
-            {
-                "amount": amount,
-                "phone": phone,
-                # "payoptions": payoptions,
-                "success": True,
-                "message": "You have successfully registered your investment scheme",
-                "status": 200,
-            }
-        )
-
 
 invest = InvestmentRegistrationView.as_view()
 
@@ -373,8 +252,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         response = service.collect.mpesa_stk_push(
             phone_number=str(phone),
             email=str(profile.user.email),
-            # amount=amount,
-            amount=1,
+            amount=amount,
             narrative="Package Purchase Payment",
         )
 
