@@ -25,4 +25,6 @@ class TransactionAdmin(admin.ModelAdmin):
         "verified",
         "receipt_number",
         "source",
+        "payment_phone",
+        "is_payment_success",
     ]

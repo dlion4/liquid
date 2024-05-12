@@ -51,6 +51,7 @@
               <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
               <span id="payment-text">Confirm to pay</span>
             </button>
+            <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
 
             <style>
               .center-justify {
@@ -62,9 +63,7 @@
           </div>
         </form>
       </div>
-      <div class="modal-footer bg-light">
-        <span class="sub-text">Modal Footer Text</span>
-      </div>
+      <div class="modal-footer bg-light"></div>
     </div>
   </div>
 </div>
@@ -174,7 +173,6 @@
                     }
                   });
 
-
                   const data = await response.json();
 
                   if (!data.plan) {
@@ -187,7 +185,7 @@
                     popupSubmitBtn.removeAttribute("disabled");
                     popupSubmitBtn.setAttribute("data-bs-toggle", "modal");
                     popupSubmitBtn.setAttribute("data-bs-target", "#modalZoom");
-  
+
                   }
                 }
 
@@ -299,41 +297,34 @@
                 paymentBtnText.textContent = "Payment in progress...";
                 paymentBtnForm.setAttribute("disabled", "disabled");
 
-                const invoice_id = data.response.invoice.invoice_id;
+                let invoice_id = data.response.invoice.invoice_id;
 
-                let checkInterval = setInterval(async () => {
-
-                  const response = await checkPaymentStatus(invoice_id);
-
-                  if (response.response.invoice.state === "PROCESSING") {
-                    console.log("Still processing...");
-                  } else if (response.response.invoice.state === "COMPLETED") {
-                    clearInterval(checkInterval);
-
-                    console.log("Payment successful");
+                let intervalId = setInterval(async () => {
+                  const res = await checkPaymentStatus(invoice_id);
+                  if (res.response.invoice.state !== "PROCESSING") {
+                    clearInterval(intervalId); // Stop checking when the invoice is no longer pending
                     paymentBtnSpinner.style.display = "none";
-                    paymentBtnText.textContent = "Payment successful";
-
-                    const response = await fetch(`{% url 'dashboard:invest:handle-payment-popup' %}?profile=${profileId}&pool=${poolId}&account=${accountId}&plan=${planId}`, {
-                      method: "GET",
-                      headers: {
-                        "Content-Type": "application/json"
-                      }
-                    });
-
-                    const data = await response.json();
-
-                    if (!data.success) {
-                      alert("Something went wrong");
-                    }
-
-                    if (data.success) {
-                      window.location.href = data.url;
-                    }
+                    paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
+                    paymentBtnForm.removeAttribute("disabled");
 
                   }
-
                 }, 10000); // Check every 10 seconds
+
+                // Set a timeout to clear the interval after 40 seconds
+                setTimeout(() => {
+                  clearInterval(intervalId);
+                  paymentBtnSpinner.style.display = "none";
+                  paymentBtnText.textContent = "Payment Timeout";
+                  paymentBtnForm.removeAttribute("disabled");
+                  document
+                    .getElementById("payment-btn-help-text")
+                    .innerHTML = "Slow network detected. Will proceed to next step and validate the payment later"
+
+                  setTimeout(() => {
+                    handleCreateTransaction(poolId, accountId, planId)
+                  }, 1000)
+
+                }, 30000); // Stop checking after 40 seconds
               }
 
               async function checkPaymentStatus(invoice_id) {
@@ -348,9 +339,27 @@
                 });
 
                 const data = await response.json();
-                console.log("data", data);
 
                 return data;
+
+              }
+
+              async function handleCreateTransaction(pool_id, account_id, plan_id) {
+                const response = await fetch(`/dashboard/invest/handle-payment-create-transaction/${pool_id}/${account_id}/${plan_id}/`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({phone_number: phoneNo.value})
+                });
+
+                console.log(phoneNo.value)
+
+                const data = await response.json()
+
+                console.log(data)
+
+                window.location.href = data.url
 
               }
 

@@ -3,7 +3,7 @@ from django.urls import reverse, path, include
 
 from .views import (
     HandleAccountSelectionView,
-    HandlePaymentPopupView,
+    HandlePaymentCreateTransactionView,
     HandlePlanSelectionView,
     HandlePoolSelectionView,
     HandleRegistrationPaymentView,
@@ -42,9 +42,9 @@ urlpatterns = [
         name="handle-plan-selection",
     ),
     path(
-        "handle-payment-popup/",
-        HandlePaymentPopupView.as_view(),
-        name="handle-payment-popup",
+        "handle-payment-create-transaction/<pool_id>/<account_id>/<plan_id>/",
+        HandlePaymentCreateTransactionView.as_view(),
+        name="handle-payment-create-transaction",
     ),
     path(
         "fetch-amount-to-be-paid-plus-discount/",
@@ -55,5 +55,10 @@ urlpatterns = [
         "check-payment-status/",
         check_payment_status,
         name="check-payment-status",
+    ),
+    path(
+        "check-payment-state/",
+        check_payment_status,
+        name="check-payment-state",
     ),
 ]

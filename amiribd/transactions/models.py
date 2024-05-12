@@ -37,8 +37,10 @@ class Transaction(models.Model):
         db_persist=True,
     )
     verified = models.BooleanField(default=False)
+    is_payment_success = models.BooleanField(default=False)
     receipt_number = models.CharField(max_length=255, blank=True, null=True)
     source = models.CharField(max_length=255, blank=True, null=True)
+    payment_phone = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.type} Transaction"

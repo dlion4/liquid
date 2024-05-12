@@ -1,4 +1,5 @@
 import contextlib
+import json
 from typing import Any
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -212,7 +213,7 @@ class HandlePoolSelectionView(LoginRequiredMixin, View):
         pool = Pool.objects.create(profile=profile, type=pool_type)
         pool_data = PoolSerializer(pool).data
 
-        return JsonResponse({"success": True,"status": 200, "pool": pool_data})
+        return JsonResponse({"success": True, "status": 200, "pool": pool_data})
 
 
 class HandleAccountSelectionView(LoginRequiredMixin, View):
@@ -225,7 +226,9 @@ class HandleAccountSelectionView(LoginRequiredMixin, View):
 
         pool = get_object_or_404(Pool, profile=profile, pk=request.GET.get("pool_id"))
 
-        account_type = get_object_or_404(AccountType, pk=request.GET.get("account_type_id"))
+        account_type = get_object_or_404(
+            AccountType, pk=request.GET.get("account_type_id")
+        )
 
         account_data = None
 
@@ -240,7 +243,6 @@ class HandleAccountSelectionView(LoginRequiredMixin, View):
         account = Account.objects.create(pool=pool, type=account_type)
 
         account_data = AccountSerializer(account).data
-
 
         return JsonResponse(
             {
@@ -262,11 +264,9 @@ class HandlePlanSelectionView(LoginRequiredMixin, View):
         account = get_object_or_404(Account, pk=request.GET.get("account_id"))
         plan_type = get_object_or_404(PlanType, pk=request.GET.get("plan_type_id"))
 
-
         plan = Plan.objects.filter(account__pool__profile=profile)
         if plan.exists():
             plan.delete()
-
 
         plan = Plan.objects.create(account=account, type=plan_type)
         plan_data = PlanSerializer(plan).data
@@ -281,7 +281,7 @@ class HandlePlanSelectionView(LoginRequiredMixin, View):
         )
 
 
-class HandlePaymentPopupView(LoginRequiredMixin, View):
+class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -290,13 +290,15 @@ class HandlePaymentPopupView(LoginRequiredMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
 
-        profile = Profile.objects.get(pk=kwargs.get("profile"))
-        pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool"))
+        profile = request.user.profile_user
+        data = json.loads(request.body)
+        phone_number = data.get('phone_number')
+        pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool_id"))
         account = Account.objects.get(
-            pool=pool, pool__profile=profile, pk=kwargs.get("account")
+            pool=pool, pool__profile=profile, pk=kwargs.get("account_id")
         )
         plan = Plan.objects.get(
-            account=account, account__pool__profile=profile, pk=kwargs.get("plan")
+            account=account, account__pool__profile=profile, pk=kwargs.get("plan_id")
         )
 
         totalInvestment = sum(instance.type.price for instance in [pool, account, plan])
@@ -310,6 +312,7 @@ class HandlePaymentPopupView(LoginRequiredMixin, View):
             amount=totalInvestment,
             discount=discountPrice,
             source="Account Registration",
+            payment_phone=phone_number
         )
 
         account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
@@ -318,7 +321,7 @@ class HandlePaymentPopupView(LoginRequiredMixin, View):
         # look for the referrer
         profile = pool.profile
 
-        referrer = self.__get_referrer_and_update_account(profile)
+        self.__get_referrer_and_update_account(profile)
 
         return JsonResponse(
             {"success": True, "url": reverse_lazy("dashboard:invest:plans")}
@@ -345,9 +348,6 @@ class HandlePaymentPopupView(LoginRequiredMixin, View):
             transaction.save()
             referrer_profile_account.balance += transaction.paid
             referrer_profile_account.save()
-
-            return True
-        return False
 
 
 def fetch_amount_tobe_paid_plus_discount(request):
