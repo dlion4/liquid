@@ -31,7 +31,7 @@ class PoolType(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f"{self.type} Pool"
+        return f"{self.type}"
 
 
 # Create your models here.
@@ -223,11 +223,13 @@ class Plan(models.Model):
         )
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["account", "type"], name="unique_account_plan_type"
-            )
-        ]
+        # constraints = [
+        #     models.UniqueConstraint(
+        #         fields=["account", "type"], name="unique_account_plan_type"
+        #     )
+        # ]
+        pass
+    
 
 
 class AccountWithdrawalAction(models.Model):

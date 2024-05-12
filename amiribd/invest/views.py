@@ -193,31 +193,26 @@ class HandlePoolSelectionView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        pool_type = get_object_or_404(PoolType, pk=request.GET.get("pool_id"))
         profile = self.request.user.profile_user
+        pool_type = get_object_or_404(PoolType, pk=request.GET.get("pool_type_id"))
         message = ""
         pool_data = None
-        try:
-            pool = Pool.objects.get(
-                profile=profile,
-                type=pool_type,
-            )
-            if pool is not None:
-                pool.delete()
-                message = "Pool has been deleted."
-            pool = Pool.objects.create(profile=profile, type=pool_type)
-            pool_data = PoolSerializer(pool).data
-        except Exception as e:
-            message = "You have successfully selected your pool."
-            pool = Pool.objects.get(
-                profile=profile,
-            ).delete()
-            pool = Pool.objects.create(profile=profile, type=pool_type)
-            pool_data = PoolSerializer(pool).data
 
-        return JsonResponse(
-            {"success": True, "message": message, "status": 200, "pool": pool_data}
-        )
+        pool = Pool.objects.filter(profile=profile)
+
+        if pool.exists():
+            account = Account.objects.filter(pool__profile=profile)
+            if account.exists():
+                plan = Plan.objects.filter(account__pool__profile=profile)
+                if plan.exists():
+                    plan.delete()
+                account.delete()
+            pool.delete()
+
+        pool = Pool.objects.create(profile=profile, type=pool_type)
+        pool_data = PoolSerializer(pool).data
+
+        return JsonResponse({"success": True,"status": 200, "pool": pool_data})
 
 
 class HandleAccountSelectionView(LoginRequiredMixin, View):
@@ -227,33 +222,31 @@ class HandleAccountSelectionView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         profile = request.user.profile_user
-        pool = Pool.objects.get(profile=profile, id=request.GET.get("pool_id"))
-        account_type = AccountType.objects.get(id=request.GET.get("account_id"))
+
+        pool = get_object_or_404(Pool, profile=profile, pk=request.GET.get("pool_id"))
+
+        account_type = get_object_or_404(AccountType, pk=request.GET.get("account_type_id"))
 
         account_data = None
 
-        try:
-            account = Account.objects.get(
-                pool=pool, pool__profile=profile, type=account_type
-            )
+        account = Account.objects.filter(pool__profile=profile)
 
-            if account is not None:
-                account.delete()
-                message = "Account has been deleted."
-            else:
-                account = Account.objects.create(pool=pool, type=account_type)
-            account_data = AccountSerializer(account).data
-        except Exception as e:
-            Account.objects.filter(pool=pool, pool__profile=profile).delete()
-            account = Account.objects.create(pool=pool, type=account_type)
-            account_data = AccountSerializer(account).data
-            message = "Account has been created."
+        if account.exists():
+            plan = Plan.objects.filter(account__pool__profile=profile)
+            if plan.exists():
+                plan.delete()
+            account.delete()
+
+        account = Account.objects.create(pool=pool, type=account_type)
+
+        account_data = AccountSerializer(account).data
+
 
         return JsonResponse(
             {
                 "success": True,
                 "status": 200,
-                "message": message,
+                "message": "message",
                 "account": account_data,
             }
         )
@@ -266,31 +259,18 @@ class HandlePlanSelectionView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         profile = request.user.profile_user
-        pool = Pool.objects.get(profile=profile, id=request.GET.get("pool_id"))
-        account = Account.objects.get(
-            pool=pool, pool__profile=profile, id=request.GET.get("account_id")
-        )
-        plan_type = PlanType.objects.get(id=request.GET.get("plan_id"))
-        plan_data = None
+        account = get_object_or_404(Account, pk=request.GET.get("account_id"))
+        plan_type = get_object_or_404(PlanType, pk=request.GET.get("plan_type_id"))
 
-        try:
-            plan = Plan.objects.get(
-                account=account, account__pool__profile=profile, type=plan_type
-            )
-            if plan is not None:
-                plan.delete()
-                message = "Plan has been deleted."
-            else:
-                plan = Plan.objects.create(account=account, type=plan_type)
-                message = "Plan has been created."
-        except Exception as e:
-            plan = Plan.objects.filter(
-                account=account, account__pool__profile=profile
-            ).delete()
-            plan = Plan.objects.create(account=account, type=plan_type)
-            print(plan)
 
+        plan = Plan.objects.filter(account__pool__profile=profile)
+        if plan.exists():
+            plan.delete()
+
+
+        plan = Plan.objects.create(account=account, type=plan_type)
         plan_data = PlanSerializer(plan).data
+
         return JsonResponse(
             {
                 "success": True,
@@ -309,10 +289,7 @@ class HandlePaymentPopupView(LoginRequiredMixin, View):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        # TODO: get the account related to the user
 
-        # TODO: check if this user is a referal | from this view i have
-        #  access to the profile the pool and thye account
         profile = Profile.objects.get(pk=kwargs.get("profile"))
         pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool"))
         account = Account.objects.get(

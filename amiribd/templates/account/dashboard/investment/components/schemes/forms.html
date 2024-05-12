@@ -97,11 +97,14 @@
   let planId = null;
   let profileId = null;
 
+  let poolTypeId = null;
+  let planTypeId = null;
+
   poolType.addEventListener("change", async (e) => {
     const itemId = e.target.value;
 
     if (itemId) {
-      const response = await fetch(`{% url 'dashboard:invest:handle-pool-selection' %}?pool_id=${itemId}`, {
+      const response = await fetch(`{% url 'dashboard:invest:handle-pool-selection' %}?pool_type_id=${itemId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -118,8 +121,12 @@
 
       if (data.pool) {
         accountType.innerHTML = initialAccountTypeHTML;
+        planType.innerHTML = ""
         poolFromServer = data.pool;
         poolId = poolFromServer.id;
+
+        console.log(data)
+        popupSubmitBtn.setAttribute("disabled", "disabled");
 
         // listent for the change event for the account type
 
@@ -127,8 +134,9 @@
           console.log(poolFromServer);
 
           const accountTypeId = e.target.value;
+
           if (accountTypeId) {
-            const response = await fetch(`{% url 'dashboard:invest:handle-account-selection' %}?pool_id=${poolFromServer.id}&account_id=${accountTypeId}`, {
+            const response = await fetch(`{% url 'dashboard:invest:handle-account-selection' %}?pool_id=${poolId}&account_type_id=${accountTypeId}`, {
               method: "GET",
               headers: {
                 "Content-Type": "application/json"
@@ -147,23 +155,25 @@
               accountId = accountFromServer.id;
 
               planType.innerHTML = initialPlanTypeHTML;
+              popupSubmitBtn.setAttribute("disabled", "disabled");
 
               planType.addEventListener("change", async (e) => {
                 // console.log(accountFromServer);
 
                 const planTypeId = e.target.value;
 
+                poolTypeId = document
+                  .getElementById("pool-type-id")
+                  .value;
+
                 if (planTypeId) {
-                  const response = await fetch(`{% url 'dashboard:invest:handle-plan-selection' %}?pool_id=${poolFromServer.id}&account_id=${accountFromServer.id}&plan_id=${planTypeId}`, {
+                  const response = await fetch(`{% url 'dashboard:invest:handle-plan-selection' %}?account_id=${accountId}&plan_type_id=${planTypeId}`, {
                     method: "GET",
                     headers: {
                       "Content-Type": "application/json"
                     }
                   });
 
-                  popupSubmitBtn.removeAttribute("disabled");
-                  popupSubmitBtn.setAttribute("data-bs-toggle", "modal");
-                  popupSubmitBtn.setAttribute("data-bs-target", "#modalZoom");
 
                   const data = await response.json();
 
@@ -174,6 +184,10 @@
 
                   if (data.plan) {
                     planId = data.plan.id;
+                    popupSubmitBtn.removeAttribute("disabled");
+                    popupSubmitBtn.setAttribute("data-bs-toggle", "modal");
+                    popupSubmitBtn.setAttribute("data-bs-target", "#modalZoom");
+  
                   }
                 }
 
@@ -285,43 +299,42 @@
                 paymentBtnText.textContent = "Payment in progress...";
                 paymentBtnForm.setAttribute("disabled", "disabled");
 
-              }
+                const invoice_id = data.response.invoice.invoice_id;
 
-              const invoice_id = data.response.invoice.invoice_id;
+                let checkInterval = setInterval(async () => {
 
-              let checkInterval = setInterval(async () => {
+                  const response = await checkPaymentStatus(invoice_id);
 
-                const response = await checkPaymentStatus(invoice_id);
+                  if (response.response.invoice.state === "PROCESSING") {
+                    console.log("Still processing...");
+                  } else if (response.response.invoice.state === "COMPLETED") {
+                    clearInterval(checkInterval);
 
-                if (response.response.invoice.state === "PROCESSING") {
-                  console.log("Still processing...");
-                } else if (response.response.invoice.state === "COMPLETED") {
-                  clearInterval(checkInterval);
+                    console.log("Payment successful");
+                    paymentBtnSpinner.style.display = "none";
+                    paymentBtnText.textContent = "Payment successful";
 
-                  console.log("Payment successful");
-                  paymentBtnSpinner.style.display = "none";
-                  paymentBtnText.textContent = "Payment successful";
+                    const response = await fetch(`{% url 'dashboard:invest:handle-payment-popup' %}?profile=${profileId}&pool=${poolId}&account=${accountId}&plan=${planId}`, {
+                      method: "GET",
+                      headers: {
+                        "Content-Type": "application/json"
+                      }
+                    });
 
-                  const response = await fetch(`{% url 'dashboard:invest:handle-payment-popup' %}?profile=${profileId}&pool=${poolId}&account=${accountId}&plan=${planId}`, {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json"
+                    const data = await response.json();
+
+                    if (!data.success) {
+                      alert("Something went wrong");
                     }
-                  });
 
-                  const data = await response.json();
+                    if (data.success) {
+                      window.location.href = data.url;
+                    }
 
-                  if (!data.success) {
-                    alert("Something went wrong");
                   }
 
-                  if (data.success) {
-                    window.location.href = data.url;
-                  }
-
-                }
-
-              }, 10000); // Check every 10 seconds
+                }, 10000); // Check every 10 seconds
+              }
 
               async function checkPaymentStatus(invoice_id) {
                 // Implement the logic to check the payment status
