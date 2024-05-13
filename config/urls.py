@@ -61,8 +61,18 @@ urlpatterns = [
     path(
         "transactions/", include("amiribd.transactions.urls", namespace="transactions")
     ),
+    # mpesa test callbacks
+    path(
+        "apis/",
+        include(
+            "amiribd.apis.urls",
+            namespace="apis",
+        ),
+    ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    # Media files
+    *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 ]
 
 
