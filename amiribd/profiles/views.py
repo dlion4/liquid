@@ -108,7 +108,7 @@ class RefreshTokenView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        user_id = kwargs.get("user")
+        user_id = kwargs.get("user_id")
         user = User.objects.get(pk=user_id)
         # Deactivate all active tokens in one query
         Token.objects.filter(user=user, is_active=True).update(is_active=False)
@@ -126,6 +126,3 @@ class RefreshTokenView(View):
 
 class TokenRevokeView(View):
     pass
-
-
-

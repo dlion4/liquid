@@ -124,7 +124,7 @@ INSTALLED_APPS += ["anymail"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 # https://anymail.readthedocs.io/en/stable/esps
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 ANYMAIL = {}
 
 # django-compressor
@@ -238,5 +238,3 @@ INTASEND_SECRET_KEY = env.str("INTASEND_SECRET_KEY", default="")
 
 
 INTASEND_TEST_MODE = env.bool("INTASEND_TEST_MODE", default=False)
-
-

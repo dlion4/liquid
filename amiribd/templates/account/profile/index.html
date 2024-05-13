@@ -67,27 +67,27 @@
                               <div class="card-inner p-0">
                                 <ul class="link-list-menu">
                                   <li>
-                                    <a class="{% if request.resolver_match.view_name == 'users:profile:profile' %} active {% endif %}" hx-get="{% url 'users:profile:profile' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                    <a class="{% if request.path == '/users/profile/profile/' %} active {% endif %}" hx-get="{% url 'users:profile:profile' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
                                       <em class="icon ni ni-user-fill-c"></em>
                                       <span>Personal Infomation</span></a>
                                   </li>
                                   <li>
-                                    <a class="{% if request.resolver_match.view_name == 'users:profile:notifications' %} active {% endif %}" hx-get="{% url 'users:profile:notifications' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                    <a class="{% if request.path == '/users/profile/notifications/' %} active {% endif %}" hx-get="{% url 'users:profile:notifications' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
                                       <em class="icon ni ni-bell-fill"></em>
                                       <span>Notifications</span></a>
                                   </li>
                                   <li>
-                                    <a class="{% if request.resolver_match.view_name == 'users:profile:account-activity' %} active {% endif %}" hx-get="{% url 'users:profile:account-activity' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                    <a class="{% if request.path == '/users/profile/account-activity/' %} active {% endif %}" hx-get="{% url 'users:profile:account-activity' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
                                       <em class="icon ni ni-activity-round-fill"></em>
                                       <span>Account Activity</span></a>
                                   </li>
                                   <li>
-                                    <a class="{% if request.resolver_match.view_name == 'users:profile:security-settings' %} active {% endif %}" hx-get="{% url 'users:profile:security-settings' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                    <a class="{% if request.path == '/users/profile/security-settings/' %} active {% endif %}" hx-get="{% url 'users:profile:security-settings' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
                                       <em class="icon ni ni-lock-alt-fill"></em>
                                       <span>Security Settings</span></a>
                                   </li>
                                   <li>
-                                    <a class="{% if request.resolver_match.view_name == 'users:profile:social-connected' %} active {% endif %}" hx-get="{% url 'users:profile:social-connected' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
+                                    <a class="{% if request.path == '/users/profile/social-connected/' %} active {% endif %}" hx-get="{% url 'users:profile:social-connected' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
                                       <em class="icon ni ni-grid-add-fill-c"></em>
                                       <span>Connected with Social</span></a>
                                   </li>
@@ -131,11 +131,11 @@
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        let data = await response.json();
 
         // chec if token user is null
 
-        if (data.token.user == null && data.token.is_active == false) {
+        if (data.token.user == null || data.token.is_active == false) {
           // call the create token endpoint to create a token using the users from this view
 
           const postData = await fetch(`/users/profile/refresh-token/${data.user.id}/`, {
@@ -148,6 +148,7 @@
           })
           const postdataResponse = await postData.json();
           console.log(postdataResponse)
+          data=postdataResponse
         }
 
         // verify the token

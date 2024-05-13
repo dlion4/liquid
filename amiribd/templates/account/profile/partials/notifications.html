@@ -18,7 +18,7 @@
   </div>
 
   {% if notifications %}
- 
+
     {% for notification in notifications %}
 
       <div class="nk-block-head nk-block-head-sm">
@@ -35,7 +35,6 @@
                 <div class="custom-control custom-switch checked">
                   <input data-id-notification="{{notification.id}}" data-id-notification-type="{{type.id}}" data-profile="{{profile.id}}" type="checkbox" class="custom-control-input" id="unusual-activity-{{type.id}}">
                   <label class="custom-control-label" for="unusual-activity-{{type.id}}">{{type.label}}</label>
-
                 </div>
               </div>
             </div>
@@ -62,8 +61,6 @@
 
         // use this to call the backend view
         const url = `/settings/notifications/notifications-subscribe/${notificationId}/${notificationTypeId}/${profileId}/`;
-
-        console.log('Checkbox with ID ' + this.id + ' changed to ' + this.checked);
 
         // now check if input is checked the call the post method
 
