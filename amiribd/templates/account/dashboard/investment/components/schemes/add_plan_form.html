@@ -12,7 +12,8 @@
       </div>
     </div>
 
-    <small id="plan-type-response"></small>
+    <small id='plan-type-response'>
+      <span id='response-price' data-price='{plan.price}'></span></small>
 
     <div class="col-12">
       <ul class="d-flex justify-content-between gx-4 mt-1">
@@ -44,26 +45,16 @@
 
   // Check if plan-type-response has an ID of 'success'
 
-  planTypeResponse.addEventListener("htmx:afterSwap", () => {
-    // Insert the priceField after plan-type-response
-
-    planTypeResponse
-      .parentNode
-      .insertBefore(priceField, planTypeResponse.nextSibling);
-
-    // update after the swap
-
-    const planTypePrice = document.getElementById("id_price")
-    const responsePrice = document.getElementById("response-price")
-    planTypePrice.value = responsePrice.getAttribute("data-price")
-  })
-
   const addPlanForm = document.getElementById("addPlanForm")
 
   addPlanForm.addEventListener("submit", (e) => {
     e.preventDefault()
     const formData = new FormData(addPlanForm)
     console.log(formData)
+
+    if (!formData) {
+      return null;
+    }
 
     fetch("/htmx/account/plan-type/", {
       method: "POST",
@@ -82,4 +73,33 @@
         alert("You already subscribed to the selected plan")
       })
     })
+
+  const typeSelection = document.getElementById("plan-type-choice")
+  typeSelection.addEventListener("change", handlePlanTypeSelection)
+
+  async function handlePlanTypeSelection(e) {
+
+    if (!e.target.value) {
+      if (priceField) {
+        priceField.remove()
+      }
+      return false
+    }
+    const response = await fetch(`/htmx/account/plan-type/?plan-type=${e.target.value}`)
+
+    const data = await response.json();
+
+    if (!data) {
+      return new Error(`Plan type not found`)
+    }
+
+    planTypeResponse
+      .parentNode
+      .insertBefore(priceField, planTypeResponse.nextSibling);
+    // update after the swap
+    const planTypePrice = document.getElementById("id_price")
+    const responsePrice = document.getElementById("response-price")
+    responsePrice.setAttribute("data-price", data.price)
+    planTypePrice.value = responsePrice.getAttribute("data-price")
+  }
 </script>

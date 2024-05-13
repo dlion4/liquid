@@ -62,7 +62,7 @@ class AccountEventWithdrawalView(View):
                 )
             else:
                 return JsonResponse({"success": False, "message": "Insufficent funds"})
-        return JsonResponse(form.errors, status=400)
+        return JsonResponse({"success": False, "message": form.errors}, status=400)
 
     # TODO Rename this here and in `post`
     def _validate_account_balance_and_create_transaction(
@@ -153,10 +153,9 @@ class FilterPlanTypePriceView(HtmxDispatchView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        plan_type_pk = request.GET.get("type")
+        plan_type_pk = request.GET.get("plan-type")
         plan = PlanType.objects.get(pk=plan_type_pk)
-        html_response = f"<small id='plan-type-response'><span id='response-price' data-price='{plan.price}'></span></small>"
-        return HttpResponse(html_response)
+        return JsonResponse({"price": plan.price})
 
     def post(self, request, *args, **kwargs):
         form = AddPlanForm(request.POST, request=self.request)

@@ -63,6 +63,7 @@ class InvestmentRegistrationView(InvestmentSetupView):
 
     # Simplified and optimized version of the post method
 
+
 invest = InvestmentRegistrationView.as_view()
 
 
@@ -171,7 +172,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
         profile = request.user.profile_user
         data = json.loads(request.body)
-        phone_number = data.get('phone_number')
+        phone_number = data.get("phone_number")
         pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool_id"))
         account = Account.objects.get(
             pool=pool, pool__profile=profile, pk=kwargs.get("account_id")
@@ -191,7 +192,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             amount=totalInvestment,
             discount=discountPrice,
             source="Account Registration",
-            payment_phone=phone_number
+            payment_phone=phone_number,
         )
 
         account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
@@ -279,7 +280,7 @@ class InvestmentSchemeView(InvestmentSetupView, DashboardViewMixin):
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["withdrawal_form"] = AccountEventWithdrawalForm()
-        context["add_plan_form"] = AddPlanForm()
+        context["add_plan_form"] = AddPlanForm(request=self.request)
         return context
 
 
@@ -336,48 +337,69 @@ plan = InvestmentPlanView.as_view()
 
 class WidsthdrawView(TemplateView):
     template_name = "account/dashboard/investment/withdrawal.html"
+
+
 modified_widthdrawal_view = WidsthdrawView.as_view()
 
 
 class WalletView(TemplateView):
     template_name = "account/dashboard/investment/wallet.html"
+
+
 modified_wallet_view = WalletView.as_view()
 
 
 class ReferalView(TemplateView):
     template_name = "account/dashboard/investment/referal.html"
+
+
 modified_referal_view = ReferalView.as_view()
 
 
 class BonusView(TemplateView):
     template_name = "account/dashboard/investment/bonus.html"
+
+
 modified_bonus_view = BonusView.as_view()
 
 
 class WhatsappView(TemplateView):
     template_name = "account/dashboard/investment/whatsapp.html"
+
+
 modified_whatsapp_view = WhatsappView.as_view()
 
 
 class JobsView(TemplateView):
     template_name = "account/dashboard/investment/jobs.html"
+
+
 modified_jobs_view = JobsView.as_view()
 
 
 class InvestView(TemplateView):
     template_name = "account/dashboard/investment/invest.html"
+
+
 modified_invest_view = InvestView.as_view()
+
 
 class AdvertismentView(TemplateView):
     template_name = "account/dashboard/investment/advertisment.html"
+
+
 modified_advertisment_view = AdvertismentView.as_view()
+
 
 class LoansView(TemplateView):
     template_name = "account/dashboard/investment/loans.html"
+
+
 modified_loans_view = LoansView.as_view()
+
 
 class VipView(TemplateView):
     template_name = "account/dashboard/investment/vip.html"
+
+
 modified_vip_view = VipView.as_view()
-
-

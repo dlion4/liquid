@@ -7,7 +7,11 @@ from amiribd.transactions.models import PaymentMethod
 class PoolRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         widget=forms.Select(
-            attrs={"class": "form-control select", "id": "pool-type-id", "name": "pool-type"}
+            attrs={
+                "class": "form-control select",
+                "id": "pool-type-id",
+                "name": "pool-type",
+            }
         ),
         queryset=PoolType.objects.all(),
         required=True,
@@ -24,7 +28,11 @@ class AccountRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         queryset=AccountType.objects.all(),
         widget=forms.Select(
-            attrs={"class": "form-control select", "id": "account-type-id", "name": "account-type"}
+            attrs={
+                "class": "form-control select",
+                "id": "account-type-id",
+                "name": "account-type",
+            }
         ),
         label="Account Selection",
         help_text="Select an account type for your plan",
@@ -41,7 +49,11 @@ class PlanRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         queryset=PlanType.objects.all(),
         widget=forms.Select(
-            attrs={"class": "form-control select", "id": "plan-type-id", "name": "plan-type"}
+            attrs={
+                "class": "form-control select",
+                "id": "plan-type-id",
+                "name": "plan-type",
+            }
         ),
         label="Plan Seelction",
         help_text="Select a suitable plan that fits your pocket",
@@ -164,11 +176,6 @@ class AddPlanForm(forms.ModelForm):
             attrs={
                 "class": "form-control form-control-lg",
                 "id": "plan-type-choice",
-                "hx-get": "/htmx/account/plan-type/",
-                "hx-target": "#plan-type-response",
-                "hx-trigger": "change",
-                "hx-swap": "innerHTML",
-                "hx-swap-oob": "true",
                 "name": "plan-type",
                 "required": "",
             }
@@ -189,9 +196,16 @@ class AddPlanForm(forms.ModelForm):
         self.request = kwargs.pop("request", None)
         super(AddPlanForm, self).__init__(*args, **kwargs)
         # Now you can use self.request to access request object properties like user
-        if self.request:
-            user_selected_type_id = Plan.objects.filter(
-                account__pool__profile=self.request.user.profile_user
+        if self.request.user.profile_user:
+            # Look for all the ids of the types in the plan and the exclude them from the queryset
+            user_selected_type_id = (
+                Plan.objects.filter(
+                    account__pool__profile=self.request.user.profile_user
+                )
+                .all()
+                .values_list("type_id", flat=True)
             )
 
-            # TODO: exclude the user_selected_type_id from the queryset
+            self.fields["type"].queryset = self.fields["type"].queryset.exclude(
+                id__in=user_selected_type_id
+            )
