@@ -13,6 +13,20 @@ from .views import (
     invest,
     plans,
     plan,
+    # mopdified urls here new
+    modified_widthdrawal_view,
+    modified_wallet_view,
+    modified_referal_view,
+    modified_bonus_view ,
+    modified_whatsapp_view,
+    modified_jobs_view ,
+    modified_invest_view,
+    modified_advertisment_view,
+    modified_loans_view,
+    modified_vip_view,
+
+
+
 )
 
 app_name = "invest"
@@ -61,4 +75,77 @@ urlpatterns = [
         check_payment_status,
         name="check-payment-state",
     ),
+
+
+
+# modifies viwes kwa dashboard settings
+
+
+
+
+
+
+
+    path(
+        "widsthdraw/",
+       modified_widthdrawal_view,
+        name="widsthdraw",
+    ),
+
+    path(
+        "wallet/",
+       modified_wallet_view,
+        name="wallet",
+    ),
+
+    path(
+        "referals/",
+       modified_referal_view,
+        name="referals",
+    ),
+
+    path(
+        "bonus/",
+      modified_bonus_view,
+        name="bonus",
+    ),
+
+    path(
+        "whatsapp/",
+       modified_whatsapp_view,
+        name="whatsapp",
+    ),
+
+    path(
+        "jobs/",
+       modified_jobs_view ,
+        name="jobs",
+    ),
+
+    path(
+        "invest/",
+       modified_invest_view,
+        name="invest_modified",
+    ),
+
+    path(
+        "advertisment/",
+      modified_advertisment_view,
+        name="advertisment",
+    ),
+    path(
+        "loans/",
+       modified_loans_view,
+        name="loans",
+    ),
+    path(
+        "vip/",
+       modified_vip_view,
+        name="VIP",
+    ),
+ 
+ 
+
+
+    
 ]

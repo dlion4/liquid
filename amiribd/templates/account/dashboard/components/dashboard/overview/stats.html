@@ -28,7 +28,7 @@
         <div class="card-inner">
           <div class="nk-iv-wg2">
             <div class="nk-iv-wg2-title">
-              <h6 class="title">Total Amount
+              <h6 class="title">Total Desposits
                 <em class="icon ni ni-info"></em>
               </h6>
             </div>
@@ -48,7 +48,7 @@
         <div class="card-inner">
           <div class="nk-iv-wg2">
             <div class="nk-iv-wg2-title">
-              <h6 class="title">Total Profits
+              <h6 class="title">Total Widthdrawn</h6
                 <em class="icon ni ni-info"></em>
               </h6>
             </div>
@@ -65,6 +65,138 @@
     </div>
   </div>
 </div>
+<div class="nk-block">
+  <div class="row gy-gs">
+    <div class="col-md-6 col-lg-4">
+      <div class="nk-wg-card is-s3 card card-bordered">
+        <div class="card-inner">
+          <div class="nk-iv-wg2">
+            <div class="nk-iv-wg2-title">
+              <h6 class="title">Whatsapp Earnings
+                <em class="icon ni ni-info"></em>
+              </h6>
+            </div>
+            <div class="nk-iv-wg2-text">
+              <div class="nk-iv-wg2-amount">
+                {{available_amount|floatformat:2|intcomma}}
+                KES
+                <span class="change up">
+                  <span class="sign"></span>{{account.percentage_profit}}%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="nk-wg-card is-s1 card card-bordered">
+        <div class="card-inner">
+          <div class="nk-iv-wg2">
+            <div class="nk-iv-wg2-title">
+              <h6 class="title">Bonus Earnings
+                <em class="icon ni ni-info"></em>
+              </h6>
+            </div>
+            <div class="nk-iv-wg2-text">
+              <div class="nk-iv-wg2-amount">
+                {{balance|floatformat:2|intcomma}}
+
+                <span class="change up">
+                  <span class="sign"></span>2.8%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+      <div class="nk-wg-card is-s3 card card-bordered">
+        <div class="card-inner">
+          <div class="nk-iv-wg2">
+            <div class="nk-iv-wg2-title">
+              <h6 class="title">Investment Earnings
+                <em class="icon ni ni-info"></em>
+              </h6>
+            </div>
+            <div class="nk-iv-wg2-text">
+              <div class="nk-iv-wg2-amount">
+                {{available_amount|floatformat:2|intcomma}}
+
+                <span class="change down">
+                  <span class="sign"></span>1.4%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="nk-block">
+  <div class="row gy-gs">
+    <div class="col-md-6 col-lg-4">
+      <div class="nk-wg-card is-s3 card card-bordered">
+        <div class="card-inner">
+          <div class="nk-iv-wg2">
+            <div class="nk-iv-wg2-title">
+              <h6 class="title">Loans
+                <em class="icon ni ni-info"></em>
+              </h6>
+            </div>
+            <div class="nk-iv-wg2-text">
+              <div class="nk-iv-wg2-amount">
+                {{available_amount|floatformat:2|intcomma}}
+                KES
+                <span class="change up">
+                  <span class="sign"></span>{{account.percentage_profit}}%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="nk-wg-card is-s1 card card-bordered">
+        <div class="card-inner">
+          <div class="nk-iv-wg2">
+            <div class="nk-iv-wg2-title">
+              <h6 class="title">Jobs Available
+                <em class="icon ni ni-info"></em>
+              </h6>
+            </div>
+            <div class="nk-iv-wg2-text">
+              <div class="nk-iv-wg2-amount">
+                {{balance|floatformat|intcomma}}
+
+                <span class="change up">
+                  <span class="sign"></span>2.8%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+      <div class="nk-wg-card is-s3 card card-bordered">
+        <div class="card-inner">
+          <div class="nk-iv-wg2">
+            <div class="nk-iv-wg2-title">
+              <h6 class="title">Current  Packages
+                <em class="icon ni ni-info"></em>
+              </h6>
+            </div>
+            <div class="nk-iv-wg2-text">
+              <div class="nk-iv-wg2-amount">
+                {{available_amount|floatformat:2|intcomma}}
+
+                <span class="change down">
+                  <span class="sign"></span>1.4%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 <div class="nk-block">
   <div class="row gy-gs">

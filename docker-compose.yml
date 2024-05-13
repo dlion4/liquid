@@ -19,7 +19,7 @@ services:
       - POSTGRES_HOST=localhost
       - POSTGRES_USER=debug
       - POSTGRES_PASSWORD=debug
-      - DATABASE_URL=postgres://kwasa:1234@localhost:5432/amiribd
-
+      - DATABASE_URL=postgres://postgres:1234@localhost:5432/amiribd
+      # - DATABASE_URL=postgresql://amiribd_owner:vIlVOSJ0hs3C@ep-empty-sun-a5o1i2jp-pooler.us-east-2.aws.neon.tech/amiribd?sslmode=require
 volumes:
   postgres_data:
