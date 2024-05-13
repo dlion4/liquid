@@ -6,12 +6,15 @@ from django.shortcuts import render
 
 
 def mpesa_callback_url(request):
-    payload: str | bytearray | bytes = request.body or "request body data"
+
+    print(request.body)
+    print(request.headers)
+    print(request.method)
 
     return JsonResponse(
         {
             "message": "Mpesa callback url",
             "status": 200,
-            "data": {"url": "https://mpesa.com", "payload": json.loads(payload)},
+            "data": {"url": "https://mpesa.com", "payload": "some data"},
         }
     )
