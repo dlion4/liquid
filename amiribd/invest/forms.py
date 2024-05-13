@@ -1,4 +1,9 @@
+from collections.abc import Mapping
+from typing import Any
 from django import forms
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
 from .models import AccountWithdrawalAction, Pool, Plan, Account, PoolType
 from .models import PlanType, AccountType
 from amiribd.transactions.models import PaymentMethod
@@ -23,6 +28,17 @@ class PoolRegistrationForm(forms.ModelForm):
         model = Pool
         fields = ["type"]
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+
+        if self.request:
+            user_selected_pool_type = Pool.objects.filter(
+                profile=self.request.user.profile_user
+            ).all().values_list("type_id", flat=True)
+
+            self.fields["type"].queryset = self.fields["type"].queryset.exclude(id__in=user_selected_pool_type)
+
 
 class AccountRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
@@ -44,6 +60,23 @@ class AccountRegistrationForm(forms.ModelForm):
             "type",
         ]
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+
+        if self.request:
+            user_selected_account_type = (
+                Account.objects.filter(
+                    pool__profile=self.request.user.profile_user
+                )
+                .all()
+                .values_list("type_id", flat=True)
+            )
+
+            self.fields["type"].queryset = self.fields["type"].queryset.exclude(
+                id__in=user_selected_account_type
+            )
+
 
 class PlanRegistrationForm(forms.ModelForm):
     type = forms.ModelChoiceField(
@@ -62,6 +95,20 @@ class PlanRegistrationForm(forms.ModelForm):
     class Meta:
         model = Plan
         fields = ["type"]
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+
+        super().__init__(*args, **kwargs)
+
+        if self.request:
+            user_selected_plan_type = Plan.objects.filter(
+                account__pool__profile=self.request.user.profile_user
+            ).all().values_list("type_id", flat=True)
+
+            self.fields["type"].queryset = self.fields["type"].queryset.exclude(
+                id__in=user_selected_plan_type
+            )
 
 
 class PaymentOptionForm(forms.Form):

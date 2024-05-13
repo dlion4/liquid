@@ -53,10 +53,9 @@ class InvestmentRegistrationView(InvestmentSetupView):
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["poolform"] = self.form_class()
-        context["accountform"] = AccountRegistrationForm()
-        context["planform"] = PlanRegistrationForm()
-        # context["payoptions"] = PaymentOptionForm()
+        context["poolform"] = self.form_class(request=self.request)
+        context["accountform"] = AccountRegistrationForm(request=self.request)
+        context["planform"] = PlanRegistrationForm(request=self.request)
         return context
 
     # Simplified and optimized version of the post method

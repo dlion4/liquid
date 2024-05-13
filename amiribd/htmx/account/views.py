@@ -169,8 +169,7 @@ class FilterPlanTypePriceView(HtmxDispatchView):
                 )
             except Exception as e:
                 return JsonResponse({"success": False, "message": str(e)})
-        print(form.errors)
-        return JsonResponse(form.errors, status=400)
+        return JsonResponse({"success": False, "message": form.errors}, status=400)
 
     # TODO Rename this here and in `post`
     def _extracted_post_instance_save_and_transaction(self, form, account, request):

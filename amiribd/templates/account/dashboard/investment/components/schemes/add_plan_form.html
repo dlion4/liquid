@@ -74,32 +74,33 @@
       })
     })
 
-  const typeSelection = document.getElementById("plan-type-choice")
-  typeSelection.addEventListener("change", handlePlanTypeSelection)
+  try {
+    const typeSelection = document.getElementById("plan-type-choice")
 
-  async function handlePlanTypeSelection(e) {
+    typeSelection.addEventListener("change", async (e) => {
 
-    if (!e.target.value) {
-      if (priceField) {
-        priceField.remove()
+      if (!e.target.value) {
+        if (priceField) {
+          priceField.remove()
+        }
+        return false
       }
-      return false
-    }
-    const response = await fetch(`/htmx/account/plan-type/?plan-type=${e.target.value}`)
+      const response = await fetch(`/htmx/account/plan-type/?plan-type=${e.target.value}`)
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!data) {
-      return new Error(`Plan type not found`)
-    }
+      if (!data) {
+        return new Error(`Plan type not found`)
+      }
 
-    planTypeResponse
-      .parentNode
-      .insertBefore(priceField, planTypeResponse.nextSibling);
-    // update after the swap
-    const planTypePrice = document.getElementById("id_price")
-    const responsePrice = document.getElementById("response-price")
-    responsePrice.setAttribute("data-price", data.price)
-    planTypePrice.value = responsePrice.getAttribute("data-price")
-  }
+      planTypeResponse
+        .parentNode
+        .insertBefore(priceField, planTypeResponse.nextSibling);
+      // update after the swap
+      const planTypePrice = document.getElementById("id_price")
+      const responsePrice = document.getElementById("response-price")
+      responsePrice.setAttribute("data-price", data.price)
+      planTypePrice.value = responsePrice.getAttribute("data-price")
+    })
+  } catch (error) {}
 </script>
