@@ -229,7 +229,6 @@ class Plan(models.Model):
         #     )
         # ]
         pass
-    
 
 
 class AccountWithdrawalAction(models.Model):
