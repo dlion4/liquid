@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from intasend import APIService
 from amiribd.payments.helpers import MpesaStkPushSetUp
+from amiribd.profiles.models import PlantformType
 from amiribd.users.models import Profile
 from .forms import (
     AccountEventWithdrawalForm,
@@ -29,6 +30,8 @@ from decimal import Decimal  # Import Decimal from the decimal module
 from django.utils.termcolors import colorize
 from amiribd.transactions.models import Transaction
 from .serializers import AccountSerializer, PlanSerializer, PoolSerializer
+
+from amiribd.profiles.forms import AgentForm, PlantformForm, PlantformTypeForm, PositionForm
 
 # Create your views here.
 
@@ -397,8 +400,16 @@ class LoansView(TemplateView):
 modified_loans_view = LoansView.as_view()
 
 
-class VipView(TemplateView):
+class VipView(DashboardGuard, TemplateView):
     template_name = "account/dashboard/investment/vip.html"
+    form_class = AgentForm
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["agent_form"] = self.form_class()
+        context["platform_form"] = PlantformForm()
+        context["platform_type"] = PlantformType.objects.all()
+        return context
 
 
 modified_vip_view = VipView.as_view()
