@@ -1,8 +1,9 @@
 from amiribd.invest.forms import (
     AccountEventWithdrawalForm,
-    AddPlanForm,)
+    AddPlanForm,
+)
+
 
 def display_add_plan_form(request):
-    return {
-            "add_plan_form": AddPlanForm(request=request)
-        }
+    if request.user.is_authenticated:
+        return {"add_plan_form": AddPlanForm(request=request)}
