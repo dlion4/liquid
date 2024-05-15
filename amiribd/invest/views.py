@@ -263,7 +263,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         response = service.collect.mpesa_stk_push(
             phone_number=str(phone),
             email=str(profile.user.email),
-            amount=1,
+            amount=amount,
             narrative="Package Purchase Payment",
         )
 

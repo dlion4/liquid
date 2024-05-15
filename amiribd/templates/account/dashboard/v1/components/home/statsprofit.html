@@ -40,8 +40,7 @@
       <div class="nk-block">
         <div class="nk-block-head-xs">
           <div class="nk-block-between-md g-2">
-            <div class="nk-block-head-content">
-            </div>
+            <div class="nk-block-head-content"></div>
             <div class="nk-block-head-content">
               <a href="" class="link link-primary">See All</a>
             </div>
@@ -54,12 +53,13 @@
                 <a class="nk-wgw-inner" href="{% url 'dashboard:invest:whatsapp' %}">
                   <div class="nk-wgw-name">
                     <div class="nk-wgw-icon">
-                        <em class="icon ni ni-whatsapp"></em>
+                      <em class="icon ni ni-whatsapp"></em>
                     </div>
                     <h5 class="nk-wgw-title title">WhatsApp Earnings</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">{{earnings|floatformat:2|intcomma|default:"0.00"}}<span class="currency currency-nio">KES</span></div>
+                    <div class="amount">{{earnings|floatformat:2|intcomma|default:"0.00"}}
+                      <span class="currency currency-nio">KES</span></div>
                   </div>
                 </a>
               </div>
@@ -71,12 +71,13 @@
                 <a class="nk-wgw-inner" href="">
                   <div class="nk-wgw-name">
                     <div class="nk-wgw-icon">
-                        <em class="icon ni ni-building"></em>
+                      <em class="icon ni ni-building"></em>
                     </div>
                     <h5 class="nk-wgw-title title">Investments</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">{{investments|floatformat:2|intcomma|default:"0.00"}}<span class="currency currency-btc">KES</span></div>
+                    <div class="amount">{{investments|floatformat:2|intcomma|default:"0.00"}}
+                      <span class="currency currency-btc">KES</span></div>
                   </div>
                 </a>
               </div>
@@ -93,7 +94,8 @@
                     <h5 class="nk-wgw-title title">Bonuses</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">{{bonuses|floatformat:2|intcomma|default:"0.00"}}<span class="currency currency-eth">KES</span></div>
+                    <div class="amount">{{bonuses|floatformat:2|intcomma|default:"0.00"}}
+                      <span class="currency currency-eth">KES</span></div>
                   </div>
                 </a>
               </div>
@@ -124,7 +126,7 @@
                     <h5 class="nk-wgw-title title">NioWallet</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">4.434953<span class="currency currency-nio">NIO</span></div>
+                    <div class="amount">0.00<span class="currency currency-nio">NIO</span></div>
                   </div>
                 </a>
               </div>
@@ -141,7 +143,7 @@
                     <h5 class="nk-wgw-title title">Bitcoin Wallet</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">4.434953<span class="currency currency-btc">BTC</span></div>
+                    <div class="amount">0.00<span class="currency currency-btc">BTC</span></div>
                   </div>
                 </a>
               </div>
@@ -158,7 +160,7 @@
                     <h5 class="nk-wgw-title title">Ethereum Wallet</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">0.000560<span class="currency currency-eth">ETH</span></div>
+                    <div class="amount">0.00<span class="currency currency-eth">ETH</span></div>
                   </div>
                 </a>
               </div>

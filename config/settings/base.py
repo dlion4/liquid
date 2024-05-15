@@ -109,7 +109,7 @@ LOCAL_APPS = [
     "amiribd.profiles",
     # tokens
     "amiribd.tokens",
-    "amiribd.profilesettings",  
+    "amiribd.profilesettings",
     "amiribd.payments",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

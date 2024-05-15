@@ -74,7 +74,6 @@ class EmailSesemaAuthenticationLinkView:
     def email_submitted(self, email):
         user = self.get_user(email)
         if user is None:
-
             link = reverse("users:signup")
             link = self.request.build_absolute_uri(link)
             self.send_email(link=link, email=email)
@@ -82,6 +81,23 @@ class EmailSesemaAuthenticationLinkView:
         else:
             link = self.create_link(user=user, path="sesame-login")
             self.send_email(user, link)
+
+
+@after_response.enable
+def send_welcome_email(user, template_name, context: dict):
+    html_message = render_to_string(template_name, context)
+    plain_message = strip_tags(html_message)
+
+    message = EmailMultiAlternatives(
+        subject="[Liquid Investment] Successfull onboarding",
+        body=plain_message,
+        from_email=None,
+        to=[user.email],
+    )
+
+    message.attach_alternative(html_message, "text/html")
+
+    message.send()
 
 
 class LoginView(EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormView):
@@ -115,6 +131,18 @@ class SignupView(EmailSesemaAuthenticationLinkView, AuthenticationGuard, FormVie
             # create profile after successful user creation
             # profle = Profile.objects.create(user=user)
             # login the user without having to send him/her email
+
+            send_welcome_email.after_response(
+                user,
+                "account/dashboard/v1/mails/welcome.html",
+                {
+                    "profile": user.profile_user,
+                    "register_url": self.request.build_absolute_uri(
+                        reverse("dashboard:invest:invest")
+                    ),
+                },
+            )
+
             login(self.request, user, backend="sesame.backends.ModelBackend")
             # redirect to home page after login
             return super().form_valid(form)
@@ -172,6 +200,16 @@ class ReferralSignupView(
                 profile.save()
                 # redirect to home page after login
                 # login the user without having to send him/her email
+                send_welcome_email.after_response(
+                    user,
+                    "account/dashboard/v1/mails/welcome.html",
+                    {
+                        "profile": profile,
+                        "register_url": self.request.build_absolute_uri(
+                            reverse("dashboard:invest:invest")
+                        ),
+                    },
+                )
                 login(self.request, user, backend="sesame.backends.ModelBackend")
                 return redirect(self.success_url)
 

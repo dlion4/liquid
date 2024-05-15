@@ -286,12 +286,11 @@
             });
 
             const data = await response.json();
-            console.log(data);
 
             if (data.success) {
               // window.location.href = data.url;
 
-              if (data.response.invoice.state === "PENDING") {
+              if (data.response.invoice.state == "PENDING") {
 
                 paymentBtnSpinner.style.display = "block";
                 paymentBtnText.textContent = "Payment in progress...";
@@ -299,39 +298,57 @@
 
                 let invoice_id = data.response.invoice.invoice_id;
 
+                console.log(invoice_id)
+
                 let intervalId = setInterval(async () => {
                   const res = await checkPaymentStatus(invoice_id);
-                  if (res.response.invoice.state !== "PROCESSING") {
-                    clearInterval(intervalId); // Stop checking when the invoice is no longer pending
+
+                  if (res.response.invoice.state === "PROCESSING") {
+                    // clearInterval(intervalId);  Stop checking when the invoice is no longer pending
+                    //paymentBtnSpinner.style.display = "none";
+                    //paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
+                    // paymentBtnForm.removeAttribute("disabled");
+                    paymentBtnText.textContent = "Recived. Validating payment ..."
+
+                  } else if (res.response.invoice.state === "COMPLETE") {
+                    clearInterval(intervalId);
                     paymentBtnSpinner.style.display = "none";
-                    paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
+                    paymentBtnText.textContent = "Payment Completed successfully.";
                     paymentBtnForm.removeAttribute("disabled");
+                    document
+                      .getElementById("payment-btn-help-text")
+                      .innerHTML = "Payment was successful"
 
+                    setTimeout(() => {
+                      handleCreateTransaction(poolId, accountId, planId)
+                    }, 4000)
+
+                    //}, 30000);  Stop checking after 40 seconds
+                  } else if (res.response.invoice.state === "FAILED") {
+                    clearInterval(intervalId);
+                    paymentBtnSpinner.style.display = "none";
+                    paymentBtnText.textContent = "Payment Failed. Retry?";
+                    paymentBtnForm.removeAttribute("disabled");
+                    document
+                      .getElementById("payment-btn-help-text")
+                      .innerHTML = "You cancelled the payment. Would you like to retry?"
+                  } else if (res.response.invoice.state === "RETRY") {
+                    clearInterval(intervalId);
+                    paymentBtnSpinner.style.display = "none";
+                    paymentBtnText.textContent = "Payment Failed";
+                    paymentBtnForm.removeAttribute("disabled");
+                    document
+                      .getElementById("payment-btn-help-text")
+                      .innerHTML = "Failed to initiate transaction. Retry";
                   }
-                }, 10000); // Check every 10 seconds
-
+                }, 15000); // Check every 10 seconds
                 // Set a timeout to clear the interval after 40 seconds
-                setTimeout(() => {
-                  clearInterval(intervalId);
-                  paymentBtnSpinner.style.display = "none";
-                  paymentBtnText.textContent = "Payment Timeout";
-                  paymentBtnForm.removeAttribute("disabled");
-                  document
-                    .getElementById("payment-btn-help-text")
-                    .innerHTML = "Slow network detected. Will proceed to next step and validate the payment later"
-
-                  setTimeout(() => {
-                    handleCreateTransaction(poolId, accountId, planId)
-                  }, 1000)
-
-                }, 30000); // Stop checking after 40 seconds
               }
 
-              async function checkPaymentStatus(invoice_id) {
+              async function checkPaymentStatus(id) {
                 // Implement the logic to check the payment status
-                console.log("Checking payment status...");
                 // You might need to make another API call here to check the status
-                const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${invoice_id}`, {
+                const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${id}`, {
                   method: "GET",
                   headers: {
                     "Content-Type": "application/json"
@@ -339,7 +356,6 @@
                 });
 
                 const data = await response.json();
-
                 return data;
 
               }

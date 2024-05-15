@@ -249,8 +249,11 @@ class AddPlanForm(forms.ModelForm):
         self.request = kwargs.pop("request", None)
         super(AddPlanForm, self).__init__(*args, **kwargs)
         # Now you can use self.request to access request object properties like user
-        if self.request.user.profile_user:
-            # Look for all the ids of the types in the plan and the exclude them from the queryset
+        if (
+            self.request
+            and self.request.user.is_authenticated
+            and self.request.user.profile_user
+        ):
             user_selected_type_id = (
                 Plan.objects.filter(
                     account__pool__profile=self.request.user.profile_user
