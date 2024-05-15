@@ -6,7 +6,7 @@
 
 {% block content %}
 
-  <div class="nk-content nk-content-lg nk-content-fluid">
+  <div class="nk-content nk-content-lg nk-content-fluid" >
     <div class="container-xl wide-lg">
       <div class="nk-content-inner">
         <div class="nk-content-body">
@@ -15,13 +15,13 @@
             <div class="nk-block-head nk-block-head-lg wide-xs mx-auto">
               <div class="nk-block-head-content text-center">
                 <h2 class="nk-block-title fw-normal">
-                  {% block h2 %}Begin your ID-Verification{% endblock h2 %}
+                
                 </h2>
                 <div class="nk-block-des">
                   <p>
-                    {% block headerDescription %}
+                    {% comment %} {% block headerDescription %}
                     To comply with regulation each participant will have to go through indentity verification (KYC/AML) to prevent fraud causes.
-                    {% endblock headerDescription %}
+                    {% endblock headerDescription %} {% endcomment %}
                   </p>
                 </div>
               </div>

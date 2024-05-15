@@ -19,19 +19,20 @@ class DashboardViewMixin(TemplateView):
     # @method_decorator(
     #     cache_page(60), name="dispatch"
     # )  # Cache for 1 minute, adjust as needed
+    def __get_user(self):
+        return self.request.user
 
     def __pure_referral_earnings(self):
         __referral_profit = Decimal("0.00")
         try:
             account = self.queryset.objects.get(
-                pool__profile=self._get_user().profile_user
+                pool__profile=self.__get_user().profile_user
             )
             __referral_profit = account.transaction_account.filter(
                 Q(source__icontains="Referral Earnings")
             ).aggregate(total_paid=Sum("paid"))["total_paid"]
         except Exception as e:
             __referral_profit = Decimal("0.00")
-
 
         return __referral_profit if __referral_profit is not None else Decimal("0.00")
 
@@ -47,7 +48,7 @@ class DashboardViewMixin(TemplateView):
         try:
             __current_date = timezone.now() - timedelta(days=days)
             account = self.queryset.objects.get(
-                pool__profile=self._get_user().profile_user
+                pool__profile=self.__get_user().profile_user
             )
             __current_date_profit = account.transaction_account.filter(
                 (
@@ -66,19 +67,20 @@ class DashboardViewMixin(TemplateView):
     def get_account_total(self, **kwargs):
         try:
             return self.queryset.objects.get(
-                pool__profile=self._get_user().profile_user
+                pool__profile=self.__get_user().profile_user
             ).balance
         except Exception:
             return Decimal("0.00")
 
     def get_account_locked_amount(self, **kwargs):
         try:
-            transaction = Transaction.objects.get(
-                profile=self._get_user().profile_user,
+            if transaction := Transaction.objects.filter(
+                profile=self.__get_user().profile_user,
                 type="DEPOSIT",
                 source="Account Registration",
-            )
-            return Decimal(transaction.paid)
+            ).first():
+                return Decimal(transaction.paid)
+            return Decimal("0.00")
         except Transaction.DoesNotExist:
             return Decimal("0.00")
 
@@ -92,7 +94,7 @@ class DashboardViewMixin(TemplateView):
 
     def get_profile_plans(self, **kwargs):
         return Plan.objects.filter(
-            account__pool__profile=self._get_user().profile_user
+            account__pool__profile=self.__get_user().profile_user
         ).all()
 
     def _get_profile_active_plans(self, **kwargs):
@@ -103,13 +105,16 @@ class DashboardViewMixin(TemplateView):
 
     def profile_account(self):
         return (
-            Account.objects.filter(pool__profile=self._get_user().profile_user)
+            Account.objects.filter(pool__profile=self.__get_user().profile_user)
             .all()
             .first()
         )
 
+    def get_account_transactions(self):
+        return Transaction.objects.filter(profile=self.__get_user().profile_user).all()
+
     def get_context_data(self, **kwargs):
-        profile = self._get_user().profile_user
+        profile = self.__get_user().profile_user
         context = super().get_context_data(**kwargs)
         context["profile"] = profile
         context["link"] = build_signup_referral_link(self.request, profile)
@@ -123,7 +128,7 @@ class DashboardViewMixin(TemplateView):
         context["monthly_profit"] = self.__current_month_transactions()
         context["daily_profit"] = self.__current_date_transaction_profit()
         context["referral_earnings"] = self.__pure_referral_earnings()
-
+        context["transactions"] = self.get_account_transactions()
         return context
 
 
@@ -131,11 +136,11 @@ class DashboardView(DashboardViewMixin):
     template_name = "account/dashboard/home.html"
     queryset = Account
 
-    def _get_user(self):
+    def __get_user(self):
         return self.request.user
 
     def _referrals(self):
-        return self._get_user().referrals.all().count()
+        return self.__get_user().referrals.all().count()
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
@@ -149,3 +154,11 @@ class WelcomeView(DashboardGuard, DashboardViewMixin):
 
 
 welcome = WelcomeView.as_view()
+
+
+class SupportView(DashboardGuard, DashboardViewMixin):
+    template_name = "account/dashboard/v1/support.html"
+
+
+support = SupportView.as_view()
+

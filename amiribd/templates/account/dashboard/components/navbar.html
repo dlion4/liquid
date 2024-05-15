@@ -46,48 +46,71 @@
             <a href="{% url 'dashboard:invest:wallet' %}" class="nk-menu-link">
               <span class="nk-menu-text">Wallet</span></a>
           </li>
-          <!-- <li class="nk-menu-item">
-            <a href="/profile/" class="nk-menu-link">
-              <span class="nk-menu-text">Profile</span></a>
-          </li> -->
-          <li class="nk-menu-item active has-sub"><a href="#"
-            class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">Income</span></a>
-        <ul class="nk-menu-sub">
-            <!-- <li class="nk-menu-item"><a href="{% url 'dashboard:invest:widsthdraw' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Personal Info</span></a></li> -->
-                    <li class="nk-menu-item"><a href="{% url 'dashboard:invest:invest' %}"
-                      class="nk-menu-link"><span class="nk-menu-text">Verification</span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:wallet' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Wallet
-                        </span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:referals' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Referals
-                        </span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:bonus' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Bonus</span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:whatsapp' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Whatsapp</span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:jobs' %}" class="nk-menu-link"><span
-                        class="nk-menu-text">Jobs <em
-                            class="icon ni ni-external"></em> </span></a></li>
-           
-            
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:academic_writing_accounts' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Online Writing</span></a></li>
-            <!-- <li class="nk-menu-item"><a href="{% url 'dashboard:invest:loans' %}"
-                    class="nk-menu-link"><span class="nk-menu-text">Loans</span></a></li> -->
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:VIP' %}" class="nk-menu-link"><span
-                        class="nk-menu-text">VIP <em
-                            class="icon ni ni-external"></em> </span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:invest-order' %}" class="nk-menu-link"><span
-                        class="nk-menu-text">Investment Order <em
-                            class="icon ni ni-external"></em> </span></a></li>
-            <li class="nk-menu-item"><a href="{% url 'dashboard:invest:invest-record' %}" class="nk-menu-link"><span
-                        class="nk-menu-text">Investment Records <em
-                            class="icon ni ni-external"></em> </span></a></li>
-           
-        </ul>
-    </li>
+          <li class="nk-menu-item active has-sub">
+            <a href="#" class="nk-menu-link nk-menu-toggle">
+              <span class="nk-menu-text">Income</span></a>
+            <ul class="nk-menu-sub">
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:invest' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Verification</span></a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:wallet' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Wallet
+                  </span>
+                </a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:referals' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Referals
+                  </span>
+                </a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:bonus' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Bonus</span></a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:whatsapp' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Whatsapp</span></a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:jobs' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Jobs
+                    <em class="icon ni ni-external"></em>
+                  </span>
+                </a>
+              </li>
+
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:academic_writing_accounts' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Online Writing</span></a>
+              </li>
+              <!-- <li class="nk-menu-item"><a href="{% url 'dashboard:invest:loans' %}" class="nk-menu-link"><span class="nk-menu-text">Loans</span></a></li> -->
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:vip' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">VIP
+                    <em class="icon ni ni-external"></em>
+                  </span>
+                </a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:invest-order' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Investment Order
+                    <em class="icon ni ni-external"></em>
+                  </span>
+                </a>
+              </li>
+              <li class="nk-menu-item">
+                <a href="{% url 'dashboard:invest:invest-record' %}" class="nk-menu-link">
+                  <span class="nk-menu-text">Investment Records
+                    <em class="icon ni ni-external"></em>
+                  </span>
+                </a>
+              </li>
+
+            </ul>
+          </li>
 
         </ul>
       </div>
@@ -297,6 +320,6 @@
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>

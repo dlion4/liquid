@@ -1,22 +1,26 @@
-{% extends "base.html" %}
+{% extends "account/dashboard/base.html" %}
+{% load static %}
 
-{% block title %}Page not found{% endblock title %}
-{% block content %}
+{% block title %}Page Not Found{% endblock title %}
+{% block body %}
+  <!-- section content begin -->
 
-  <div class="uk-section">
-    <div class="uk-container">
-      <div class="uk-grid uk-flex uk-flex-center">
-        <div class="uk-width-3-4@m">
-          <h1>Page not found</h1>
-          <p>
-            {% if exception %}
-              {{ exception }}
-            {% else %}
-              This is not the page you were looking for.
-            {% endif %}
-          </p>
+  <div class="nk-app-root">
+    <div class="nk-main ">
+      <div class="nk-wrap nk-wrap-nosidebar">
+        <div class="nk-content ">
+          <div class="nk-block nk-block-middle wide-md mx-auto">
+            <div class="nk-block-content nk-error-ld text-center"><img class="nk-error-gfx" src="{% static 'images/error-404.svg' %}" alt="">
+              <div class="wide-xs mx-auto">
+                <h3 class="nk-error-title">Oops! Why you’re here?</h3>
+                <p class="nk-error-text">We are very sorry for inconvenience. It looks like you’re try to access a page that either has been deleted or never existed.</p>
+                <a href="{% url 'dashboard:home' %}" class="btn btn-lg btn-primary mt-2">Back To Home</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-{% endblock content %}
+
+{% endblock body %}

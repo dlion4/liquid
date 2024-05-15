@@ -243,6 +243,7 @@ TEMPLATES = [
                 # liquid app processor
                 "amiribd.liquid.context_processors.liquid_site_data",
                 "amiribd.invest.context_processors.withdrawal_form_action",
+                "amiribd.htmx.context_processors.display_add_plan_form",
             ],
         },
     },

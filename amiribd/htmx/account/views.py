@@ -109,11 +109,8 @@ class CancelPlanView(HtmxDispatchView):
         )
 
     def post(self, request, *args, **kwargs):
-
         form = CancelPlanForm(request.POST)
-
         if form.is_valid():
-            print(form.cleaned_data["plan"])
             plan = Plan.objects.filter(type__type=form.cleaned_data["plan"]).first()
             if plan is not None:
                 plan.status = "CANCELLED"

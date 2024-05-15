@@ -1,0 +1,93 @@
+{% load static humanize %}
+
+<div class="nk-block">
+  <div class="card card-bordered">
+    <div class="card-inner-group">
+      <div class="card-inner">
+        <div class="row gy-gs">
+          <div class="col-lg-5">
+            <div class="nk-iv-wg3">
+              <div class="nk-iv-wg3-title">Total Balance</div>
+              <div class="nk-iv-wg3-group  flex-lg-nowrap gx-4">
+                <div class="nk-iv-wg3-sub">
+                  <div class="nk-iv-wg3-amount">
+                    <div class="number">{{available_amount}}
+                      <small class="currency currency-usd">KES</small>
+                    </div>
+                  </div>
+                  <div class="nk-iv-wg3-subtitle">Available Balance</div>
+                </div>
+                <div class="nk-iv-wg3-sub">
+                  <span class="nk-iv-wg3-plus text-soft">
+                    <em class="icon ni ni-plus"></em>
+                  </span>
+                  <div class="nk-iv-wg3-amount">
+                    <div class="number-sm">{{locked_amount}}</div>
+                  </div>
+                  <div class="nk-iv-wg3-subtitle">Locked Balance
+                    <em class="icon ni ni-info-fill" data-bs-toggle="tooltip" data-bs-placement="right" title="You can't use"></em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="nk-iv-wg3">
+              <div class="nk-iv-wg3-title">This Month
+                <em class="icon ni ni-info-fill" data-bs-toggle="tooltip" data-bs-placement="right" title="Current Month Profit"></em>
+              </div>
+              <div class="nk-iv-wg3-group flex-md-nowrap g-4">
+                <div class="nk-iv-wg3-sub-group gx-4">
+                  <div class="nk-iv-wg3-sub">
+                    <div class="nk-iv-wg3-amount">
+                      <div class="number">{{monthly_profit|floatformat:2|intcomma}}</div>
+                    </div>
+                    <div class="nk-iv-wg3-subtitle">Total Profit</div>
+                  </div>
+                  <div class="nk-iv-wg3-sub">
+                    <span class="nk-iv-wg3-plus text-soft">
+                      <em class="icon ni ni-plus"></em>
+                    </span>
+                    <div class="nk-iv-wg3-amount">
+                      <div class="number-sm">{{daily_profit|floatformat:2|intcomma}}</div>
+                    </div>
+                    <div class="nk-iv-wg3-subtitle">Today Profit</div>
+                  </div>
+                </div>
+                <div class="nk-iv-wg3-sub flex-grow-1 ms-md-3">
+                  <div class="nk-iv-wg3-ck">
+                    <canvas class="chart-profit" id="profitCM"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-inner">
+        <ul class="nk-iv-wg3-nav">
+          <li>
+            <a href="#">
+              <em class="icon ni ni-notes-alt"></em>
+              <span>WhatsApp Earnings</span></a>
+          </li>
+          <li>
+            <a href="#">
+              <em class="icon ni ni-growth"></em>
+              <span>Remote Tasks</span></a>
+          </li>
+          <li>
+            <a href="#">
+              <em class="icon ni ni-report-profit"></em>
+              <span>Referrals Earnings</span></a>
+          </li>
+          <li>
+            <a href="#">
+              <em class="icon ni ni-help"></em>
+              <span>Investment Tips</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -151,6 +151,7 @@ class PlanType(models.Model):
     )
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     percentage_return = models.FloatField(default=0)
+    icon = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f"{self.type}"
@@ -179,6 +180,7 @@ class Plan(models.Model):
     )
     payment_method = models.CharField(max_length=100, blank=True, null=True)
     sku = models.CharField(max_length=100, blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.type} Plan"

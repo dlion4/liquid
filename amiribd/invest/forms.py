@@ -33,11 +33,15 @@ class PoolRegistrationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if self.request:
-            user_selected_pool_type = Pool.objects.filter(
-                profile=self.request.user.profile_user
-            ).all().values_list("type_id", flat=True)
+            user_selected_pool_type = (
+                Pool.objects.filter(profile=self.request.user.profile_user)
+                .all()
+                .values_list("type_id", flat=True)
+            )
 
-            self.fields["type"].queryset = self.fields["type"].queryset.exclude(id__in=user_selected_pool_type)
+            self.fields["type"].queryset = self.fields["type"].queryset.exclude(
+                id__in=user_selected_pool_type
+            )
 
 
 class AccountRegistrationForm(forms.ModelForm):
@@ -66,9 +70,7 @@ class AccountRegistrationForm(forms.ModelForm):
 
         if self.request:
             user_selected_account_type = (
-                Account.objects.filter(
-                    pool__profile=self.request.user.profile_user
-                )
+                Account.objects.filter(pool__profile=self.request.user.profile_user)
                 .all()
                 .values_list("type_id", flat=True)
             )
@@ -102,9 +104,13 @@ class PlanRegistrationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if self.request:
-            user_selected_plan_type = Plan.objects.filter(
-                account__pool__profile=self.request.user.profile_user
-            ).all().values_list("type_id", flat=True)
+            user_selected_plan_type = (
+                Plan.objects.filter(
+                    account__pool__profile=self.request.user.profile_user
+                )
+                .all()
+                .values_list("type_id", flat=True)
+            )
 
             self.fields["type"].queryset = self.fields["type"].queryset.exclude(
                 id__in=user_selected_plan_type

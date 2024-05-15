@@ -1,0 +1,171 @@
+{% load humanize static %}
+
+<div class="nk-block">
+  <div class="row gy-gs">
+    <div class="col-lg-5 col-xl-4">
+      <div class="nk-block">
+        <div class="nk-block-head-xs">
+          <div class="nk-block-head-content">
+            <h5 class="nk-block-title title">Overview</h5>
+          </div>
+        </div>
+        <div class="nk-block">
+          <div class="card card-bordered text-light is-dark h-100">
+            <div class="card-inner">
+              <div class="nk-wg7">
+                <div class="nk-wg7-stats">
+                  <div class="nk-wg7-title">Available balance in KES</div>
+                  <div class="number-lg amount">{{available_amount|floatformat:2|intcomma}}</div>
+                </div>
+                <div class="nk-wg7-stats-group">
+                  <div class="nk-wg7-stats w-50">
+                    <div class="nk-wg7-title">Plans</div>
+                    <div class="number-lg">{{plans.count|default:"0"}}</div>
+                  </div>
+                  <div class="nk-wg7-stats w-50">
+                    <div class="nk-wg7-title">Transactions</div>
+                    <div class="number">{{transactions.count|default:"0"}}</div>
+                  </div>
+                </div>
+                <div class="nk-wg7-foot">
+                  <span class="nk-wg7-note">Last activity at
+                    <span>19 Nov, 2019</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 col-xl-8">
+      <div class="nk-block">
+        <div class="nk-block-head-xs">
+          <div class="nk-block-between-md g-2">
+            <div class="nk-block-head-content">
+            </div>
+            <div class="nk-block-head-content">
+              <a href="" class="link link-primary">See All</a>
+            </div>
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-sm-4">
+            <div class="card bg-light">
+              <div class="nk-wgw sm">
+                <a class="nk-wgw-inner" href="{% url 'dashboard:invest:whatsapp' %}">
+                  <div class="nk-wgw-name">
+                    <div class="nk-wgw-icon">
+                        <em class="icon ni ni-whatsapp"></em>
+                    </div>
+                    <h5 class="nk-wgw-title title">WhatsApp Earnings</h5>
+                  </div>
+                  <div class="nk-wgw-balance">
+                    <div class="amount">{{earnings|floatformat:2|intcomma|default:"0.00"}}<span class="currency currency-nio">KES</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card bg-light">
+              <div class="nk-wgw sm">
+                <a class="nk-wgw-inner" href="">
+                  <div class="nk-wgw-name">
+                    <div class="nk-wgw-icon">
+                        <em class="icon ni ni-building"></em>
+                    </div>
+                    <h5 class="nk-wgw-title title">Investments</h5>
+                  </div>
+                  <div class="nk-wgw-balance">
+                    <div class="amount">{{investments|floatformat:2|intcomma|default:"0.00"}}<span class="currency currency-btc">KES</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card bg-light">
+              <div class="nk-wgw sm">
+                <a class="nk-wgw-inner" href="{% url 'dashboard:invest:bonus' %}">
+                  <div class="nk-wgw-name">
+                    <div class="nk-wgw-icon">
+                      <em class="icon ni ni-gift"></em>
+                    </div>
+                    <h5 class="nk-wgw-title title">Bonuses</h5>
+                  </div>
+                  <div class="nk-wgw-balance">
+                    <div class="amount">{{bonuses|floatformat:2|intcomma|default:"0.00"}}<span class="currency currency-eth">KES</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nk-block nk-block-md">
+        <div class="nk-block-head-xs">
+          <div class="nk-block-between-md g-2">
+            <div class="nk-block-head-content">
+              <h6 class="nk-block-title title">VIP Accounts</h6>
+            </div>
+            <div class="nk-block-head-content">
+              <a href="wallets.html" class="link link-primary"></a>
+            </div>
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-sm-4">
+            <div class="card bg-light">
+              <div class="nk-wgw sm">
+                <a class="nk-wgw-inner" href="">
+                  <div class="nk-wgw-name">
+                    <div class="nk-wgw-icon">
+                      <em class="icon ni ni-sign-btc"></em>
+                    </div>
+                    <h5 class="nk-wgw-title title">NioWallet</h5>
+                  </div>
+                  <div class="nk-wgw-balance">
+                    <div class="amount">4.434953<span class="currency currency-nio">NIO</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card bg-light">
+              <div class="nk-wgw sm">
+                <a class="nk-wgw-inner" href="">
+                  <div class="nk-wgw-name">
+                    <div class="nk-wgw-icon">
+                      <em class="icon ni ni-sign-btc"></em>
+                    </div>
+                    <h5 class="nk-wgw-title title">Bitcoin Wallet</h5>
+                  </div>
+                  <div class="nk-wgw-balance">
+                    <div class="amount">4.434953<span class="currency currency-btc">BTC</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card bg-light">
+              <div class="nk-wgw sm">
+                <a class="nk-wgw-inner" href="">
+                  <div class="nk-wgw-name">
+                    <div class="nk-wgw-icon">
+                      <em class="icon ni ni-sign-eth"></em>
+                    </div>
+                    <h5 class="nk-wgw-title title">Ethereum Wallet</h5>
+                  </div>
+                  <div class="nk-wgw-balance">
+                    <div class="amount">0.000560<span class="currency currency-eth">ETH</span></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

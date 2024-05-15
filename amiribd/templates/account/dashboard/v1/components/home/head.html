@@ -1,0 +1,64 @@
+{% load static %}
+
+<div class="nk-block-head">
+  <div class="nk-block-head-sub">
+    <span>Welcome!</span></div>
+  <div class="nk-block-between-md g-4">
+    <div class="nk-block-head-content">
+      <h2 class="nk-block-title fw-normal">{{profile.full_name|title}}</h2>
+      <div class="nk-block-des">
+        <p>At a glance summary of your account. Have fun!</p>
+      </div>
+    </div>
+    <div class="nk-block-head-content">
+      <ul class="nk-block-tools gx-3">
+        {% if not plans %}
+          <li>
+            <a href="{% url 'dashboard:invest:invest' %}" class="btn btn-primary">
+              <span>Subscribe</span>
+              <em class="icon ni ni-arrow-long-right"></em>
+            </a>
+          </li>
+        {% else %}
+          <li>
+            <a href="#" class="btn btn-primary">
+              <span>Deposit</span>
+              <em class="icon ni ni-arrow-long-right"></em>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="btn btn-white btn-light">
+              <span>Buy / Sell</span>
+              <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
+            </a>
+          </li>
+        {% endif %}
+
+        <li class="opt-menu-md dropdown">
+          <a href="#" class="btn btn-white btn-light btn-icon" data-bs-toggle="dropdown">
+            <em class="icon ni ni-setting"></em>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end">
+            <ul class="link-list-opt no-bdr">
+              <li>
+                <a href="#">
+                  <em class="icon ni ni-coin-alt"></em>
+                  <span>Curreny Settings</span></a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="icon ni ni-notify"></em>
+                  <span>Push Notification</span></a>
+              </li>
+              <li>
+                <a href="#">
+                  <em class="icon ni ni-cart-fill"></em>
+                  <span>Plan Purchase</span></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
