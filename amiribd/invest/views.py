@@ -376,18 +376,30 @@ class JobsView(TemplateView):
 modified_jobs_view = JobsView.as_view()
 
 
-class InvestView(TemplateView):
-    template_name = "account/dashboard/investment/invest.html"
+class InvestplanView(TemplateView):
+    template_name = "account/dashboard/investment/investment_plan.html"
+
+modified_investplan_view = InvestplanView.as_view()
 
 
-modified_invest_view = InvestView.as_view()
+class InvestorderView(TemplateView):
+    template_name = "account/dashboard/investment/investment_order.html"
 
 
-class AdvertismentView(TemplateView):
-    template_name = "account/dashboard/investment/advertisment.html"
+modified_investorder_view = InvestorderView.as_view()
+
+class InvestrecordView(TemplateView):
+    template_name = "account/dashboard/investment/investment_record.html"
 
 
-modified_advertisment_view = AdvertismentView.as_view()
+modified_investrecord_view = InvestrecordView.as_view()
+
+
+class AcademicView(TemplateView):
+    template_name = "account/dashboard/investment/academic_writing_accounts.html"
+
+
+modified_academic_view = AcademicView.as_view()
 
 
 class LoansView(TemplateView):
