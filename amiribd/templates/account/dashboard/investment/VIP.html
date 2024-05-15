@@ -1,334 +1,201 @@
 {% extends "account/dashboard/base.html" %}
 {% load static %}
+{% load phone_number_filter %}
 {% block content %}
 
-
-<div class="nk-content ">
+  <div class="nk-content ">
     <div class="container-fluid">
-        <div class="nk-content-inner">
-            <div class="nk-content-body">
-                <div class="components-preview wide-md mx-auto">
-                    <div class="nk-block-head nk-block-head-lg wide-sm">
-                        <div class="nk-block-head-content">
-                            <div class="nk-block-head-sub"><a class="back-to" href="/demo1/components.html"><em
-                                        class="icon ni ni-arrow-left"></em><span>Components</span></a>
-                            </div>
-                            <h2 class="nk-block-title fw-normal">VIP Packages</h2>
-                            <div class="nk-block-des">
-                                <p class="lead">Form is most esential part of your project. We styled
-                                    out nicely so you can build your form so quickly.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nk-block nk-block-lg">
-                        <div class="nk-block-head">
-                            <div class="nk-block-head-content">
-                                <h4 class="title nk-block-title">Submit your filled detailed bellow to be attain extra
-                                    income as a mentor, Team leader or an agent</h4>
-                                <div class="nk-block-des">
-                                    <p>You might be subjected to verify you filled details in case your request is
-                                        approved</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-bordered">
-                            <div class="card-inner">
-                                <div class="card-head">
-                                    <h5 class="card-title">Client Information</h5>
-                                </div>
-                                <form action="#">
-                                    <div class="row g-4">
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label class="form-label" for="full-name-1">Full
-                                                    Name</label>
-                                                <div class="form-control-wrap"><input type="text" class="form-control"
-                                                        id="full-name-1"></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label class="form-label" for="phone-no-1">Phone
-                                                    No</label>
-                                                <div class="form-control-wrap"><input type="text" class="form-control"
-                                                        id="phone-no-1"></div>
-                                            </div>
-                                        </div>
-
-
-                                        <!-- <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-label">Communication</label>
-                                                <ul class="custom-control-group g-3 align-center">
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-radio">
-                                                            <input type="radio" class="custom-control-input"
-                                                                id="com-email-1" name="communication" value="email">
-                                                            <label class="custom-control-label"
-                                                                for="com-email-1">Agent</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-radio">
-                                                            <input type="radio" class="custom-control-input"
-                                                                id="com-sms-1" name="communication" value="sms">
-                                                            <label class="custom-control-label"
-                                                                for="com-sms-1">Mentor</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-radio">
-                                                            <input type="radio" class="custom-control-input"
-                                                                id="com-phone-1" name="communication" value="phone">
-                                                            <label class="custom-control-label" for="com-phone-1">Team
-                                                                Leader</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
- -->
-
-                                        <!--neeeeeeeeeeeeeeeeeeeeeeeee-->
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-label">VIP Position</label>
-                                                <ul class="custom-control-group g-3 align-center">
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-radio"
-                                                            data-bs-toggle="popover" data-bs-placement="top"
-                                                            data-bs-content="🥇Engage with potential customers through social media and networking events.
-                                                            🥇Conduct product demonstrations and presentations to showcase platform benefits.
-                                                            🥇Recruit new members to expand the network.
-                                                            🥇Follow up with leads and provide assistance in the onboarding process.
-                                                            💰Achieve sales targets to earn bonuses based on performance.💰">
-                                                            <input type="radio" class="custom-control-input"
-                                                                id="com-email-11" name="communication" value="email">
-                                                            <label class="custom-control-label"
-                                                                for="com-email-11">Agent</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-radio"
-                                                            data-bs-toggle="popover" data-bs-placement="top"
-                                                            data-bs-content="🥈Provide one-on-one guidance and training to new agents.
-                                                            🥈Host webinars and training sessions to educate team members about marketing strategies.
-                                                            🥈Offer support and motivation to help agents overcome challenges.
-                                                            🥈Share success stories and best practices to inspire team members.
-                                                            💰Mentorship bonuses awarded based on the success and growth of mentored users.💰">
-                                                            <input type="radio" class="custom-control-input"
-                                                                id="com-sms-112" name="communication" value="sms">
-                                                            <label class="custom-control-label"
-                                                                for="com-sms-112">Mentor</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-radio"
-                                                            data-bs-toggle="popover" data-bs-placement="top"
-                                                            data-bs-content="🥉Lead and motivate their team members to achieve individual and collective goals.
-                                                            🥉Set targets and develop action plans to drive performance.
-                                                            🥉Provide regular feedback and performance evaluations to team members.
-                                                            🥉Coordinate team meetings and training sessions to foster collaboration and skill development.
-                                                            💰Earn leadership bonuses based on the overall performance and growth of their team in the network marketing platform.💰 ">
-                                                            <input type="radio" class="custom-control-input"
-                                                                id="com-phone-121" name="communication" value="phone">
-                                                            <label class="custom-control-label" for="com-phone-121">Team
-                                                                Leader</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-
-                                       
-                                        <!-- Popover card -->
-
-                                        <!-- <div class="col-lg-6">
-                                            <div class="form-group"><label class="form-label">Communication</label>
-                                                <ul class="custom-control-group g-3 align-center">
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="com-email-1"><label class="custom-control-label"
-                                                                for="com-email-1">Email</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="com-sms-1"><label class="custom-control-label"
-                                                                for="com-sms-1">SMS</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="com-phone-1"><label class="custom-control-label"
-                                                                for="com-phone-1">Phone</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div> -->
-                                        <div class="col-lg-6">
-                                            <div class="form-group"><label class="form-label">Platforms You Use
-                                                </label>
-                                                <ul class="custom-control-group g-3 align-center">
-                                                    <!-- Existing platforms -->
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-card-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-card-1">WhatsApp</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-bitcoin-1">
-                                                            <label class="custom-control-label" for="pay-bitcoin-1">X
-                                                                -Twitter </label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-cash-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-cash-1">Facebook</label>
-                                                        </div>
-                                                    </li>
-                                                    <!-- Add more platforms here -->
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-twitter-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-twitter-1">Direct SMS</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-linkedin-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-linkedin-1">LinkedIn</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-youtube-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-youtube-1">YouTube</label>
-                                                        </div>
-                                                    </li>
-                                                    <!-- Add more platforms as needed -->
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-instagram-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-instagram-1">Instagram</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-pinterest-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-pinterest-1">Pinterest</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-tumblr-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-tumblr-1">Tik Tok</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-snapchat-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-snapchat-1">Snapchat</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-snapchat-13">
-                                                            <label class="custom-control-label"
-                                                                for="pay-snapchat-13">Telegram</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-snapchat-2">
-                                                            <label class="custom-control-label"
-                                                                for="pay-snapchat-2">Mail</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-snapchat-4">
-                                                            <label class="custom-control-label"
-                                                                for="pay-snapchat-4">Quora</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-reddit-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-reddit-1">Reddit</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-blog-1">
-                                                            <label class="custom-control-label" for="pay-blog-1">Blog
-                                                                Posts</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="pay-blog-1">
-                                                            <label class="custom-control-label"
-                                                                for="pay-blog-1">Other</label>
-                                                        </div>
-                                                    </li>
-                                                    <!-- Add more platforms as needed -->
-                                                </ul>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group"><button type="submit"
-                                                    class="btn btn-lg btn-primary">Submit
-                                                </button></div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+      <div class="nk-content-inner">
+        <div class="nk-content-body">
+          <div class="components-preview wide-md mx-auto">
+            <div class="nk-block-head nk-block-head-lg wide-sm">
+              <div class="nk-block-head-content">
+                <div class="nk-block-head-sub">
+                  <a class="back-to" href="/demo1/components.html">
+                    <em class="icon ni ni-arrow-left"></em>
+                    <span>Components</span></a>
                 </div>
+                <h2 class="nk-block-title fw-normal">VIP Packages</h2>
+                <div class="nk-block-des">
+                  <p class="lead">Form is most esential part of your project. We styled out nicely so you can build your form so quickly.</p>
+                </div>
+              </div>
             </div>
+
+            <div class="nk-block nk-block-lg">
+              <div class="nk-block-head">
+                <div class="nk-block-head-content">
+                  <h4 class="title nk-block-title">Submit your filled detailed bellow to be attain extra income as a mentor, Team leader or an agent</h4>
+                  <div class="nk-block-des">
+                    <p>You might be subjected to verify you filled details in case your request is approved</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card card-bordered">
+                <div class="card-inner">
+                  <div class="card-head">
+                    <h5 class="card-title">Client Information</h5>
+                  </div>
+                  <form action="#">
+                    <div class="row g-4">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-label" for="full-name-1">Full Name</label>
+                          <div class="form-control-wrap"><input value="{{profile.full_name}}" type="text" class="form-control" id="full-name-1"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-label" for="phone-no-1">Phone No</label>
+                          <div class="form-control-wrap">
+                            <input value="0{{ profile.phone_number|format_phone_number }}" type="text" class="form-control" id="phone-no-1">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-label">VIP Position</label>
+                          <ul class="custom-control-group g-3 align-center">
+                            {% for position in agent_form.position %}
+                              <li class="vip-position">
+                                {{position}}
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-label">Platforms You Use
+                          </label>
+                          <ul class="custom-control-group g-3 align-center">
+                            <!-- Existing platforms -->
+                            {% for field in platform_type %}
+                              <li class="vip-platform">
+                                <div class="custom-control custom-switch custom-control-sm custom-checkbox">
+                                  <input type="checkbox" class="custom-control-input" data-bs-id="{{field.pk}}" id="customSwitch{{field.pk}}">
+                                  <label class="custom-control-label" for="customSwitch{{field.pk}}">{{field.name}}</label>
+                                </div>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<!--nnnnnnnnnnnnnnnneeeeeeeeeeeeeeeeeeeewwwwwwwwwww-->
+  <script>
+    const vipLevelChoices = document.querySelectorAll(".vip-position input[type='radio']");
+    const vipPlatformChoices = document.querySelectorAll(".vip-platform input[type='checkbox']");
+    // listent for any change
 
+    vipLevelChoices.forEach((choice) => {
+      choice.addEventListener("change", () => {
+        CreateUserProfileVipLevel(choice)
+        // console.log(choice)
+      })
+    })
+    async function CreateUserProfileVipLevel(e) {
+      const response = await fetch(`/profiles/async/profile-register-vip-level/${e.value}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
 
+      const data = await response.json()
+      console.log(data)
+      updateTheVipLevel();
+    }
+    // call the endpoint on the page load
+    window.addEventListener("load", async () => {
+      // fetch the input fields
+
+      // reload the page to update the ui state
+      updateTheVipLevel();
+      await updateTheVipPlatform();
+
+    })
+
+    async function updateTheVipLevel() {
+      const response = await fetch("/profiles/async/profile-filter-agent/")
+      const data = await response.json()
+
+      vipLevelChoices.forEach((position) => {
+        if (position.value == data.position) {
+          position.checked = true;
+        }
+      })
+    }
+
+    vipPlatformChoices.forEach((platform) => {
+      // check will call 1 can work just fine forms of view functions to determine the state of cehcked or unchecked
+
+      platform.addEventListener("change", async () => {
+        // call if the checked
+        if (platform.checked) {
+          const id = platform.dataset.bsId
+          createUserProfileVipPlatform(id)
+          // console.log(platform)
+        }
+        // call if the unchecked
+        if (!platform.checked) {
+          const id = platform.dataset.bsId
+          deleteUserProfileVipPlatform(id)
+          // console.log(platform)
+        }
+      })
+    })
+
+    async function createUserProfileVipPlatform(id) {
+      const response = await fetch(`/profiles/async/profile-agent-plantform-selection/${id}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const data = await response.json()
+    }
+    async function deleteUserProfileVipPlatform(id) {
+      const response = await fetch(`/profiles/async/profile-agent-plantform-selection/?platform_type_id=${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const data = await response.json()
+    }
+
+    async function updateTheVipPlatform() {
+      const response = await fetch("/profiles/async/profile-filter-agent-platform/")
+      const data = await response.json()
+      // console.log(data.platforms)
+
+      if (!data.success) {
+        return
+      }
+      vipPlatformChoices.forEach((platform) => {
+        if (data.platforms.includes(Number.parseInt(platform.dataset.bsId))) {
+          platform.checked = true;
+        } else {
+          platform.checked = false;
+        }
+      })
+    }
+  </script>
 
 {% endblock content %}

@@ -69,6 +69,7 @@ urlpatterns = [
             namespace="apis",
         ),
     ),
+    path("profiles/", include("amiribd.profiles.urls", namespace="profiles")),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     # Media files
