@@ -1,0 +1,23 @@
+{% extends "account/dashboard/v1/base.html" %}
+
+{% load static %}
+
+{% block heading %}
+  {% include "account/dashboard/v1/components/subscriptions/head.html" %}
+{% endblock heading %}
+
+{% block main %}
+
+{% include "account/dashboard/v1/components/subscriptions/main.html" %}
+
+
+{% include "account/dashboard/v1/components/subscriptions/plans/index.html" %}
+
+{% include "account/dashboard/v1/components/support.html" %}
+
+{% comment %} {% include "account/dashboard/v1/components/footer.html" %} {% endcomment %}
+
+{% comment %} {% include "account/dashboard/v1/components/scripts.html" %} {% endcomment %}
+
+{% endblock main %}
+

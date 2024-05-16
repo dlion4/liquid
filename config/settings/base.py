@@ -111,6 +111,8 @@ LOCAL_APPS = [
     "amiribd.tokens",
     "amiribd.profilesettings",
     "amiribd.payments",
+    # subscriptions
+    "amiribd.subscriptions",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -212,10 +214,10 @@ STATICFILES_FINDERS = [
 
 # MEDIA
 # ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = "media/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(APPS_DIR / "media")
-# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = "/media/"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -394,4 +396,3 @@ REST_FRAMEWORK = {
 
 
 SESSION_COOKIE_DOMAIN = ".localhost"
-

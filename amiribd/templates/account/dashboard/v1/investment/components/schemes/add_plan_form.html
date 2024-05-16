@@ -33,7 +33,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Customer Info</h5>
-        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()" id="closePaymentModal">
+        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="" id="closePaymentModal">
           <em class="icon ni ni-cross"></em>
         </a>
       </div>
@@ -94,11 +94,11 @@
   // Check if plan-type-response has an ID of 'success'
 
   const addPlanForm = document.getElementById("addPlanForm")
+  let planSelectionId;
 
   addPlanForm.addEventListener("submit", async (e) => {
     e.preventDefault()
     const formData = new FormData(addPlanForm)
-    console.log(formData)
 
     if (!formData) {
       return null;
@@ -110,12 +110,12 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
 
         if (data.success) {
           // fetc the endpoint to retun the price information for the selcted plan
           // const response = await fetch(`/htmx/account/plan-type/?plan-type=${data.plan_type}`)
           //const data = await response.json()
+          planSelectionId = data.plan.id;
 
           addPlanForm.style.display = "none"
           addPlanForm
@@ -193,6 +193,8 @@
     spinner.style.display = "block"
   }
 
+  let profileId = null;
+
   async function handlePlanPaymentRequest() {
 
     profileId = Number.parseInt(document.getElementById("profileId").value);
@@ -245,8 +247,9 @@
             });
 
             const data = await response.json();
+            planSelectionId = data.plan.id
 
-            handleClosePlanScelection(profileId, data.plan.id);
+            handleClosePlanSelection(profileId, data.plan.id);
 
             if (data.success) {
               // window.location.href = data.url;
@@ -276,7 +279,7 @@
                       .getElementById("payment-btn-help-text")
                       .innerHTML = "Payment was successful";
                     setTimeout(() => {
-                      handlePlanPaymentSuccess(profileId, res.plan.id);
+                      handlePlanPaymentSuccess(profileId, res.plan.id, phoneNo.value);
                     }, 3000); // Adjusted to 3 seconds for consistency
                   } else if (res.response.invoice.state === "FAILED") {
                     clearInterval(intervalId);
@@ -288,7 +291,7 @@
                       .innerHTML = "You cancelled the payment. Redirecting in 3 seconds ...";
                     setTimeout(() => {
                       handlePlanPaymentFailed(profileId, data.plan.id);
-                      handleClosePlanScelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
+                      handleClosePlanSelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
                     }, 3000); // Adjusted to 3 seconds for consistency
                   } else if (res.response.invoice.state === "RETRY") {
                     clearInterval(intervalId);
@@ -318,7 +321,7 @@
                     // Remove this payment screen and then return the plan screen modal
                     reloadAndDisplayPlanSelectionForm();
 
-                    handleClosePlanScelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
+                    handleClosePlanSelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
 
                   }, 3000); // process the handlepayment failed and then process the ui after one second of informating the user of the failure
                 }, 40000); // Stop checking after 40 seconds
@@ -370,13 +373,13 @@
     console.log(data)
   }
 
-  async function handlePlanPaymentSuccess(profileId, plan_id) {
+  async function handlePlanPaymentSuccess(profileId, plan_id, payment_phone) {
     const response = await fetch(`/htmx/account/handle-payment-success/?profile_id=${profileId}&plan_id=${plan_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({profile_id: profileId, plan_id})
+      body: JSON.stringify({profile_id: profileId, plan_id, payment_phone})
     })
 
     const data = await response.json();
@@ -399,11 +402,39 @@
       .add("show");
   }
 
-  function handleClosePlanScelection(profileId, planId) {
-    document
-      .getElementById("closePaymentModal")
-      .addEventListener("click", () => {
-        handlePlanPaymentFailed(profileId, planId)
-      })
+  function handleClosePlanSelection(profileId, planId) {
+    closePaymentCancelRegisteredPlan(profileId, planId)
   }
+
+  const closePaymentModal = document.getElementById("closePaymentModal")
+
+  function closePaymentCancelRegisteredPlan(profileId, planId) {
+    closePaymentModal.addEventListener("click", () => {
+      handlePlanPaymentFailed(profileId, planId)
+
+      window
+        .location
+        .reload();
+    })
+  }
+
+  closePaymentModal.addEventListener("click", () => {
+    handlePlanPaymentFailed(profileId, planSelectionId);
+
+    window
+      .location
+      .reload();
+
+  })
+
+  document
+    .getElementById("closeAddPlanPopupForm")
+    .addEventListener("click", () => {
+
+      handleClosePlanSelection(profileId, planSelectionId)
+      window
+        .location
+        .reload();
+
+    });
 </script>

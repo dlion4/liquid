@@ -1,0 +1,152 @@
+{% load static value_filter humanize %}
+
+<style>
+  .d-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+{% if plans %}
+  <div class="nk-block">
+    {% for plan in plans %}
+    <div class="card card-bordered sp-plan mb-4">
+      <div class="row no-gutters">
+        <div class="col-md-9">
+          <div class="sp-plan-info card-inner">
+            <div class="row gx-0 gy-3">
+              <div class="col-xl-9 col-sm-8">
+                <div class="sp-plan-name">
+                  <h6 class="title">
+                    <a href="{{plan.get_absolute_url}}">{{plan.type|title}} Plan
+                      {% if plan.status == "RUNNING" %}
+                        <span class="badge bg-success rounded-pill">Active</span>
+                      {% elif plan.status == "CANCELLED" %}
+                        <span class="badge bg-warning rounded-pill">Cancelled</span>
+                      {% else %}
+                        <span class="badge bg-warning rounded-pill">Stopped</span>
+                      {% endif %}
+                    </a>
+                  </h6>
+                  <p>Subscription ID:
+                    <span class="text-base">{{plan.sku|strip_none}}</span></p>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-4">
+                <div class="sp-plan-opt">
+                  <div class="custom-control custom-switch">
+                    {% if plan.status == "RUNNING" %}
+                      <input type="checkbox" class="custom-control-input" id="auto-plan-p1" checked disabled>
+                    {% else %}
+                      <input type="checkbox" class="custom-control-input" id="auto-plan-p1" disabled>
+                    {% endif %}
+                    <label class="custom-control-label text-soft" for="auto-plan-p1">{{plan.status|title}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sp-plan-desc card-inner">
+            <ul class="row gx-1">
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Started On</span>
+                  {{plan.created_at|date:"M d, Y"}}
+                </p>
+              </li>
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Recuring</span>
+                  No</p>
+              </li>
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Price</span>
+                  KES {{plan.type.price|floatformat:2|intcomma}}</p>
+              </li>
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Access</span>
+                  Unlimited</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="sp-plan-action card-inner">
+            <div class="sp-plan-btn d-center">
+              <a class="btn btn-primary"  href="{{plan.get_absolute_url}}">
+                <span>View Plan</span></a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% comment %} <div class="card card-bordered sp-plan">
+      <div class="row no-gutters">
+        <div class="col-md-9">
+          <div class="sp-plan-info card-inner">
+            <div class="row gx-0 gy-3">
+              <div class="col-xl-9 col-sm-8">
+                <div class="sp-plan-name">
+                  <h6 class="title">
+                    <a href="subscriptions-detail.html">Pro Plan
+                      <span class="badge bg-light rounded-pill">Expired</span></a>
+                  </h6>
+                  <p>Subscription ID:
+                    <span class="text-base">100142725</span></p>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-4">
+                <div class="sp-plan-opt">
+                  <div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="auto-plan-p2" disabled="">
+                    <label class="custom-control-label text-soft" for="auto-plan-p2">Auto Renew</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sp-plan-desc card-inner">
+            <ul class="row gx-1">
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Started On</span>
+                  Oct 12, 2017</p>
+              </li>
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Recuring</span>
+                  Yes</p>
+              </li>
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Price</span>
+                  $249.00</p>
+              </li>
+              <li class="col-6 col-lg-3">
+                <p>
+                  <span class="text-soft">Access</span>
+                  Up to 10 Members</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="sp-plan-action card-inner ">
+            <div class="sp-plan-btn d-center">
+              <a href="#" class="btn btn-dim btn-white btn-outline-primary">
+                <span>Renew Plan</span></a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div> {% endcomment %}
+  </div>
+
+{% endif %}

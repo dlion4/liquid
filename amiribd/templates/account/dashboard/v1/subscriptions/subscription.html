@@ -1,0 +1,35 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static humanize dashboard_tags %}
+
+{% block heading %}
+
+  {% include "account/dashboard/v1/components/subscriptions/head/subscription.html" %}
+
+{% endblock heading %}
+
+<!-- Modal -->
+{% comment %} {% block modals %}
+  {% include "account/dashboard/v1/components/subscriptions/modals/subscription.html" %}
+{% endblock modals %} {% endcomment %}
+
+
+{% block main %}
+
+
+{% include "account/dashboard/v1/components/subscriptions/subscription/subscription.html" %}
+
+
+
+{% endblock main %}
+
+
+
+{% block modals %}
+
+
+
+{% include "account/dashboard/v1/components/subscriptions/modals/subscription.html" %}
+
+
+
+{% endblock modals %}

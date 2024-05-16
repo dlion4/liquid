@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load usergroups %}
+
 <div class="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
   <div class="nk-sidebar-element nk-sidebar-head">
     <div class="nk-sidebar-brand">
@@ -182,7 +184,7 @@
                 </span><span class="nk-menu-text">Dashboard</span>
               </a>
             </li>
-           
+
             <li class="nk-menu-item">
               <a href="{% url 'dashboard:invest:wallet' %}" class="nk-menu-link">
                 <span class="nk-menu-icon">
@@ -207,7 +209,7 @@
             <li class="nk-menu-item">
               <a href="order-history.html" class="nk-menu-link">
                 <span class="nk-menu-icon">
-                    <em class="icon ni ni-article"></em>
+                  <em class="icon ni ni-article"></em>
                 </span><span class="nk-menu-text">Articles</span>
               </a>
             </li>
@@ -308,7 +310,7 @@
                     <em class="icon ni ni-plus"></em>
                   </div>
                   <div class="wallet-text">
-                    <h6 class="wallet-name" role="button"  data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal">Add another plan</h6>
+                    <h6 class="wallet-name" role="button" data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal">Add another plan</h6>
                   </div>
                 </a>
               </li>
@@ -320,14 +322,44 @@
 
           <ul class="nk-menu">
             <li class="nk-menu-item">
-                <a href="accounts.html" class="nk-menu-link">
-                  <span class="nk-menu-icon">
-                    <em class="icon ni ni-user-c"></em>
-                  </span><span class="nk-menu-text">My Account</span>
-                </a>
-              </li>
+              <a href="{% url 'profile:profile' %}" class="nk-menu-link">
+                <span class="nk-menu-icon">
+                  <em class="icon ni ni-user-c"></em>
+                </span><span class="nk-menu-text">My Account</span>
+              </a>
+            </li>
+            <li class="nk-menu-item">
+              <a href="{% url 'subscriptions:home' %}" class="nk-menu-link">
+                <span class="nk-menu-icon">
+                  <em class="icon ni ni-swap-alt"></em>
+                </span><span class="nk-menu-text">Subscriptions</span>
+              </a>
+            </li>
           </ul>
         </div>
+
+        {% if request.user.is_authenticated %}
+          {% if is_premium %}
+            <hr/>
+            <div class="nk-sidebar-menu">
+
+              <ul class="nk-menu">
+                <li class="nk-menu-heading mb-3">
+                  <h6 class="overline-title">Premium Access</h6>
+                </li>
+                <li class="nk-menu-item">
+                  <a href="" class="nk-menu-link">
+                    <span class="nk-menu-icon">
+                      <em class="icon ni ni-files"></em>
+                    </span><span class="nk-menu-text">Blogging</span>
+                  </a>
+                </li>
+
+              </ul>
+
+            </div>
+          {% endif %}
+        {% endif %}
         <hr/>
         <div class="nk-sidebar-footer">
           <ul class="nk-menu nk-menu-footer">
@@ -340,7 +372,7 @@
             </li>
             <li class="nk-menu-item ms-auto">
               <div class="dropup">
-              {% include "account/dashboard/v1/components/languages.html" %}
+                {% include "account/dashboard/v1/components/languages.html" %}
               </div>
             </li>
           </ul>

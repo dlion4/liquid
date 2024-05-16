@@ -1,0 +1,27 @@
+<style>
+  .nav-tabs li {
+    color: #a0acbc;
+    cursor: pointer;
+    font-size: 18px;
+  }
+</style>
+
+<ul class="nk-nav nav nav-tabs mb-5">
+  <li class="nav-item">
+    <a role="button" class="nav-link " hx-get="{% url 'users:profile:profile' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">Personal</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " hx-get="{% url 'users:profile:security-settings' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">Security</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link " hx-get="{% url 'users:profile:account-activity' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">Activity</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" hx-get="{% url 'users:profile:notifications' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">Notifications</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" hx-get="{% url 'users:profile:social-connected' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">Connect Social</a>
+  </li>
+</ul>

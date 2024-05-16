@@ -102,7 +102,7 @@
                 <ul class="link-list">
 
                   <li>
-                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
+                    <a href="{% if request.user.verified %}{% url 'profile:profile' %}{% else %}#{% endif %}">
                       <em class="icon ni ni-user-alt"></em>
                       <span>View Profile</span></a>
                   </li>

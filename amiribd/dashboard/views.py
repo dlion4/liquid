@@ -113,6 +113,9 @@ class DashboardViewMixin(TemplateView):
     def get_account_transactions(self):
         return Transaction.objects.filter(profile=self.__get_user().profile_user).all()
 
+    def __premium_user(self):
+        return self.request.user.groups.filter(name="Premium").exists()
+
     def get_context_data(self, **kwargs):
         profile = self.__get_user().profile_user
         context = super().get_context_data(**kwargs)
@@ -129,6 +132,7 @@ class DashboardViewMixin(TemplateView):
         context["daily_profit"] = self.__current_date_transaction_profit()
         context["referral_earnings"] = self.__pure_referral_earnings()
         context["transactions"] = self.get_account_transactions()
+        context["is_premium"] = self.__premium_user()
         return context
 
 
@@ -161,4 +165,3 @@ class SupportView(DashboardGuard, DashboardViewMixin):
 
 
 support = SupportView.as_view()
-

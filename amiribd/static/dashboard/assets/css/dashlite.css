@@ -12,7 +12,7 @@
 @font-face {
     font-family: Roboto;
     src: url(../../../fonts/Roboto-Light.ttf);
-    src: local("Roboto Light"), local("Roboto-Light"),  url(../../../fonts/Roboto-Light.ttf) format("truetype");
+    src: local("Roboto Light"), local("Roboto-Light"), url(../../../fonts/Roboto-Light.ttf) format("truetype");
     font-weight: 300;
     font-style: normal
 }
@@ -36,7 +36,7 @@
 @font-face {
     font-family: Roboto;
     src: url(../../../fonts/Roboto-Bold.ttf);
-    src: local("Roboto Bold"), local("Roboto-Medium"),  url(../../../fonts/Roboto-Bold.ttf) format("truetype");
+    src: local("Roboto Bold"), local("Roboto-Medium"), url(../../../fonts/Roboto-Bold.ttf) format("truetype");
     font-weight: 700;
     font-style: normal
 }
@@ -55,7 +55,7 @@
     src: local("Nunito Bold"), local("Nunito-Bold"), url(../../../fonts/Nunito-Bold.ttf) format("truetype");
     font-weight: 700;
     font-style: normal
-} 
+}
 
 :root,
 [data-bs-theme=light] {
@@ -4603,12 +4603,12 @@ fieldset:disabled .dual-listbox .dual-listbox__button {
     border-color: var(--bs-nav-tabs-link-hover-border-color)
 }
 
-.nav-tabs .nav-item.show .nav-link,
+/* .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     color: var(--bs-nav-tabs-link-active-color);
     background-color: var(--bs-nav-tabs-link-active-bg);
     border-color: var(--bs-nav-tabs-link-active-border-color)
-}
+} */
 
 .nav-tabs .dropdown-menu {
     margin-top: calc(-1 * var(--bs-nav-tabs-border-width));
@@ -20589,7 +20589,7 @@ div.dataTables_wrapper div.dataTables_length select {
     color: #6576ff
 }
 
-.nav-tabs .nav-link:after,
+/* .nav-tabs .nav-link:after,
 .nav-tabs .nav-link:before {
     position: absolute;
     content: ""
@@ -20602,7 +20602,7 @@ div.dataTables_wrapper div.dataTables_length select {
     height: 3px;
     background: #6576ff;
     opacity: 0
-}
+} */
 
 .nav-tabs .nav-link.active {
     color: #6576ff;
