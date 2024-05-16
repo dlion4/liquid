@@ -19,4 +19,14 @@ urlpatterns = [
         views.FilterPlanTypePriceView.as_view(),
         name="plan-type",
     ),
+    path(
+        "plan-payment/handle-payment-failed/",
+        views.HandlePlanPaymentFailedView.as_view(),
+        name="handle-payment-failed",
+    ),
+    path(
+        "handle-payment-success/",
+        views.HandlePlanPaymentSuccessView.as_view(),
+        name="handle-payment-success",
+    ),
 ]

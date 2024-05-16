@@ -230,6 +230,7 @@ class Plan(models.Model):
         #         fields=["account", "type"], name="unique_account_plan_type"
         #     )
         # ]
+        get_latest_by = ["created_at"]
         pass
 
 

@@ -259,6 +259,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         phone = request.GET.get("phone")
         amount = request.GET.get("amount")
         profile = Profile.objects.get(pk=request.GET.get("profile"))
+        plan = Plan.objects.filter(account__pool__profile=profile).latest()
 
         response = service.collect.mpesa_stk_push(
             phone_number=str(phone),
@@ -272,6 +273,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
                 "success": True,
                 "status": 200,
                 "response": response,
+                "plan": PlanSerializer(plan).data,
             }
         )
 

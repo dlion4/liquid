@@ -1,4 +1,5 @@
 from typing import Any
+from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from amiribd.invest.forms import AccountEventWithdrawalForm, AddPlanForm, CancelPlanForm
 from amiribd.invest.models import Account, Plan, PlanType
@@ -12,6 +13,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.forms import model_to_dict
+from amiribd.invest.serializers import PlanSerializer
+from django.db import transaction
 
 
 class AvailableAmount(View):
@@ -122,6 +125,7 @@ class CancelPlanView(HtmxDispatchView):
 
 class ReactivatePlanView(HtmxDispatchView):
 
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         try:
             plan_id = kwargs.get("plan_id")
@@ -154,6 +158,7 @@ class FilterPlanTypePriceView(HtmxDispatchView):
         plan = PlanType.objects.get(pk=plan_type_pk)
         return JsonResponse({"price": plan.price})
 
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         form = AddPlanForm(request.POST, request=self.request)
         account = Account.objects.get(pool__profile=request.user.profile_user)
@@ -187,4 +192,75 @@ class FilterPlanTypePriceView(HtmxDispatchView):
             source="Plan purchase",
         )
 
+        return JsonResponse({"success": True, "plan": PlanSerializer(instance).data})
+
+
+class PlanPaymentView(HtmxDispatchView):
+
+    def post(self, request, *args, **kwargs):
+        plan_id = kwargs.get("plan_id")
+        plan = Plan.objects.get(pk=plan_id)
+
+        profile = Profile.objects.get(pk=kwargs.get("profile_id"))
+        account = Account.objects.get(pool__profile=profile)
+
+        plan.save()
+
         return JsonResponse({"success": True})
+
+
+class HandlePlanPaymentFailedView(HtmxDispatchView):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        print(data)
+        profile = get_object_or_404(Profile, pk=data.get("profile_id"))
+        plan = get_object_or_404(
+            Plan, account__pool__profile=profile, pk=data.get("plan_id")
+        )
+        account = get_object_or_404(Account, pool__profile=profile)
+
+        account.balance -= plan.type.price
+        account.save()
+        plan.delete()
+
+        self.__delete_transaction(account, profile)
+
+        return JsonResponse({"success": True})
+
+    def __delete_transaction(self, account, profile) -> None:
+        transaction = Transaction.objects.filter(
+            profile=profile, account=account, source="Plan purchase", type="DEPOSIT"
+        ).latest()
+        if transaction is not None:
+            transaction.delete()
+        return None
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({"success": True, "data": None})
+
+
+class HandlePlanPaymentSuccessView(HtmxDispatchView):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        profile = get_object_or_404(Profile, pk=data.get("profile_id"))
+        plan = get_object_or_404(
+            Plan, account__pool__profile=profile, pk=data.get("plan_id")
+        )
+        account = get_object_or_404(Account, pool__profile=profile)
+        plan.status = "RUNNING"
+        plan.is_paid = True
+        account.balance += plan.type.price
+        account.save()
+        plan.save()
+        self.__create_transaction(profile, account, plan.type.price)
+        return JsonResponse({"success": True, "url": plan.get_absolute_url()})
+
+    def __create_transaction(self, profile, account, amount):
+        Transaction.objects.create(
+            profile=profile,
+            account=account,
+            type="DEPOSIT",
+            amount=amount,
+            discount=0,
+            source="Plan purchase",
+        )
