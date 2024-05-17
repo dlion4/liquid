@@ -133,6 +133,16 @@ class Profile(models.Model):
         super(Profile, self).save(*args, **kwargs)
         self.initials = self.generate_initials()
 
+    # for websocket url generation
+    @property
+    def get_ws_sender_url(self):
+        return f"@{self.user.username}"
+
+    # same as above
+    @property
+    def get_ws_receiver_url(self):
+        return f"@{self.user.username}"
+
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
@@ -185,5 +195,3 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.profile.user.username} Verification Document"
-
-

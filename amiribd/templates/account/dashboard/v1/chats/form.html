@@ -1,0 +1,81 @@
+{% load static %}
+
+<div class="nk-chat-editor">
+  <div class="nk-chat-editor-upload ms-n1">
+    <a href="#" class="btn btn-sm btn-icon btn-trigger text-primary toggle-opt" data-target="chat-upload">
+      <em class="icon ni ni-plus-circle-fill"></em>
+    </a>
+    <div class="chat-upload-option" data-content="chat-upload">
+      <ul class="">
+        <li>
+          <a href="#">
+            <em class="icon ni ni-img-fill"></em>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <em class="icon ni ni-camera-fill"></em>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <em class="icon ni ni-mic"></em>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <em class="icon ni ni-grid-sq"></em>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="nk-chat-editor-form">
+    <div class="form-control-wrap">
+      <textarea name="message" class="form-control form-control-simple no-resize" rows="1" id="default-textarea" placeholder="Type your message..."></textarea>
+    </div>
+  </div>
+  <ul class="nk-chat-editor-tools g-2">
+    <li>
+      <a href="#" class="btn btn-sm btn-icon btn-trigger text-primary">
+        <em class="icon ni ni-happyf-fill"></em>
+      </a>
+    </li>
+    <li>
+      <button class="btn btn-round btn-primary btn-icon" onclick="sendMessage()">
+        <em class="icon ni ni-send-alt"></em>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  const ws = new WebSocket("ws://127.0.0.1:8200/ws/streams/technical-support");
+
+  function sendMessage() {
+    const textarea = document.querySelector('textarea[name="message"]');
+    const message = textarea.value;
+    if (message.trim() !== '') {
+      ws.send(message);
+      textarea.value = ''; // Clear the textarea after sending the message
+    }
+  }
+
+  ws.onmessage = function (event) {
+    document
+      .body
+      .insertAdjacentHTML('beforeend', event.data);
+    htmx.process(document.getElementById('chat_messages'));
+
+  };
+</script>
+
+<script>
+  const messageBodyContent = document.getElementById("messageBodyContent");
+
+  function scrollToBottom() {
+    messageBodyContent.scroll({top: messageBodyContent.scrollHeight, behavior: 'smooth'});
+  }
+
+  scrollToBottom()
+</script>

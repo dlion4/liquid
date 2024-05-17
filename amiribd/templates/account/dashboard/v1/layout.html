@@ -18,6 +18,7 @@
     {% compress css %}
     <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite.css' %}?ver=3.2.3"/>
     <link id="skin-default" rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
+    <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}"/>
 
     <style>
       .errorlist {
@@ -52,11 +53,14 @@
       {% compress js %}
 
       <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
+      <script src="{% static 'js/vendors/ext/htmx/ws.js' %}"></script>
+      <script src="{% static 'js/vendors/_hyperscript.min.js' %}"></script>
       <script src="{% static 'js/vendors/axios.min.js' %}"></script>
       <script src="{% static 'v1/assets/js/bundle.js' %}?ver=3.2.3"></script>
       <script src="{% static 'v1/assets/js/scripts.js' %}?ver=3.2.3"></script>
       <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
       <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
 
       {% endcompress %}
     {% endblock javascript %}

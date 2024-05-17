@@ -1,4 +1,7 @@
+from itertools import groupby
 from django.views.generic import TemplateView
+
+from amiribd.streams.models import Room, RoomMessage, Message
 
 from .guard import DashboardGuard
 from amiribd.users.actions import build_signup_referral_link
@@ -9,6 +12,7 @@ from amiribd.invest.models import Plan, Account
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q, Sum
+from django.utils.timezone import localtime
 
 
 # Create your views here.
@@ -160,8 +164,33 @@ class WelcomeView(DashboardGuard, DashboardViewMixin):
 welcome = WelcomeView.as_view()
 
 
-class SupportView(DashboardGuard, DashboardViewMixin):
+class SupportView(DashboardViewMixin):
     template_name = "account/dashboard/v1/support.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["rooms"] = Room.objects.all()[:5]
+        context["collection_messages"] = self.__collection_messages(**kwargs)
+        context["my_messages"] = self.__my_messages(**kwargs)
+        context["my_referrals"] = self.__my_referrals(**kwargs)
+        return context
+
+    def __my_referrals(self, **kwargs):
+        return self.request.user.referrals
+
+    def __collection_messages(self, **kwargs):
+        messages = RoomMessage.objects.all().order_by("-created_at")
+        return {
+            date: list(items)
+            for date, items in groupby(
+                messages, key=lambda item: localtime(item.created_at).date()
+            )
+        }
+
+    def __my_messages(self, **kwargs):
+        return Message.objects.filter(
+            receiver=self.request.user.profile_user
+        ).prefetch_related("receiver")
 
 
 support = SupportView.as_view()

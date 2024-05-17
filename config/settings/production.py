@@ -71,6 +71,9 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
 # ------------------------------------------------------------------------------
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
 INSTALLED_APPS += ["storages", "whitenoise.runserver_nostatic"]
+# daphne installation
+
+INSTALLED_APPS.insert(0, "daphne")
 GS_BUCKET_NAME = env("DJANGO_GCP_STORAGE_BUCKET_NAME")
 GS_DEFAULT_ACL = "publicRead"
 # STATIC & MEDIA
