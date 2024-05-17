@@ -225,7 +225,6 @@ class HandlePlanPaymentFailedView(HtmxDispatchView):
 
         self.__delete_transaction(account, profile)
 
-
         return JsonResponse({"success": True})
 
     def __delete_transaction(self, account, profile) -> None:
@@ -253,7 +252,9 @@ class HandlePlanPaymentSuccessView(HtmxDispatchView):
         account.balance += plan.type.price
         account.save()
         plan.save()
-        self.__create_transaction(profile, account, plan.type.price, data.get("payment_phone"))
+        self.__create_transaction(
+            profile, account, plan.type.price, data.get("payment_phone")
+        )
         return JsonResponse({"success": True, "url": plan.get_absolute_url()})
 
     def __create_transaction(self, profile, account, amount, payment_phone):
