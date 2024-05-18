@@ -8,6 +8,7 @@ psycopg2-binary   # https://github.com/psycopg/psycopg
 # Django
 # ------------------------------------------------------------------------------
 django-storages[google]   # https://github.com/jschneier/django-storages
+django-storages[s3]
 django-anymail # https://github.com/anymail/django-anymail
 sentry-sdk[django]
 python-dotenv

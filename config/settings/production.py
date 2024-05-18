@@ -72,28 +72,46 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
 INSTALLED_APPS += ["storages", "whitenoise.runserver_nostatic"]
 # daphne installation
-
 INSTALLED_APPS.insert(0, "daphne")
-GS_BUCKET_NAME = env("DJANGO_GCP_STORAGE_BUCKET_NAME")
-GS_DEFAULT_ACL = "publicRead"
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_ACCESS_KEY_ID = env("DJANGO_AWS_ACCESS_KEY_ID")
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_SECRET_ACCESS_KEY = env("DJANGO_AWS_SECRET_ACCESS_KEY")
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_STORAGE_BUCKET_NAME = env("DJANGO_AWS_STORAGE_BUCKET_NAME")
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_QUERYSTRING_AUTH = False
+# DO NOT change these unless you know what you're doing.
+_AWS_EXPIRY = 60 * 60 * 24 * 7
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate",
+}
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_S3_MAX_MEMORY_SIZE = env.int(
+    "DJANGO_AWS_S3_MAX_MEMORY_SIZE",
+    default=100_000_000,  # 100MB
+)
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#cloudfront
+AWS_S3_CUSTOM_DOMAIN = env("DJANGO_AWS_S3_CUSTOM_DOMAIN", default=None)
+aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+# AWS_DEFAULT_ACL = "public-read"
 # STATIC & MEDIA
 # ------------------------
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.s3.S3Storage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-# STATIC
-# ------------------------------------------------------------------------------
-
-
-# MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/media/"
-# COLLECTFAST_STRATEGY = "collectfast.strategies.gcloud.GoogleCloudStrategy"
-# STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/static/"
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# MEDIA_URL = f"https://{aws_s3_domain}/media/"
+# COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+# STATIC_URL = f"https://{aws_s3_domain}/static/"
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -225,12 +243,12 @@ integrations = [
     # CeleryIntegration(),
     RedisIntegration(),
 ]
-# sentry_sdk.init(
-#     dsn=SENTRY_DSN,
-#     integrations=integrations,
-#     environment=env("SENTRY_ENVIRONMENT", default="production"),
-#     traces_sample_rate=env.float("SENTRY_TRACES_SAMPLE_RATE", default=0.0),
-# )
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=integrations,
+    environment=env("SENTRY_ENVIRONMENT", default="production"),
+    traces_sample_rate=env.float("SENTRY_TRACES_SAMPLE_RATE", default=0.0),
+)
 
 # MEPSA INTEGRATION
 
