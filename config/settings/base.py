@@ -135,8 +135,7 @@ MIGRATION_MODULES = {"sites": "amiribd.contrib.sites.migrations"}
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "sesame.backends.ModelBackend",
+    "users.backends.TokenAuthenticationBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
@@ -321,6 +320,22 @@ LOGGING = {
         },
     },
     "root": {"level": "INFO", "handlers": ["console"]},
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "users": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    },
 }
 
 
@@ -360,7 +375,7 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 LOGIN_BY_CODE_ENABLED = True
 
 # SESAME CONFIGURATIONS
-SESAME_MAX_AGE = 300  # 300 seconds = 5 minutes
+# SESAME_MAX_AGE = 300  # 300 seconds = 5 minutes
 
 
 # MENTENANCE MODE
@@ -398,4 +413,7 @@ REST_FRAMEWORK = {
 }
 
 
-SESSION_COOKIE_DOMAIN = ".localhost"
+# SESSION_COOKIE_DOMAIN = ".localhost"
+
+
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}

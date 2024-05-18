@@ -31,4 +31,5 @@ django-dbbackup
 django-apscheduler
 intasend-python
 Twisted[http2,tls]
-channels["daphne"]
+channels[daphne]
+channels-redis

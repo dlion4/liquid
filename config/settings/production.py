@@ -183,9 +183,7 @@ LOGGING = {
             "level": "ERROR",
             "propagate": True,
         },
-        # Errors logged by the SDK itself
-        "sentry_sdk": {"level": "ERROR", "handlers": ["console"], "propagate": False},
-        "django.security.DisallowedHost": {
+        "sentry_sdk": {
             "level": "ERROR",
             "handlers": ["console"],
             "propagate": False,
@@ -241,3 +239,20 @@ INTASEND_SECRET_KEY = env.str("INTASEND_SECRET_KEY", default="")
 
 
 INTASEND_TEST_MODE = env.bool("INTASEND_TEST_MODE", default=False)
+
+# https://pypi.org/project/channels-redis/
+import re
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             # "hosts": [("0.0.0.0", 6379)],
+#             "channel_capacity": {
+#                 "http.request": 200,
+#                 "http.response!*": 10,
+#                 re.compile(r"^websocket.send\!.+"): 20,
+#             },
+#         },
+#     },
+# }

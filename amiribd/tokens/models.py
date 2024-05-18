@@ -21,3 +21,13 @@ class Token(models.Model):
         if not self.expires:
             self.expires = timezone.now() + timedelta(hours=1)
         super(Token, self).save(*args, **kwargs)
+
+class AuthToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.code)
+

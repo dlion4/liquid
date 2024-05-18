@@ -7,27 +7,28 @@
   <div class="nk-wrap nk-wrap-nosidebar">
     <div class="nk-content">
       <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
-
         <div class="card card-bordered">
           <div class="card-inner card-inner-lg">
             <div class="nk-block-head">
               <div class="nk-block-head-content">
-                <h5 class="nk-block-title">Login Password Sent</h5>
+                <h5 class="nk-block-title mb-3">Login Password Sent</h5>
                 <div class="nk-block-des">
-                  <p>We've emailed you a login code. Check your email and click the link to proceed.</p>
+                  <p>We've emailed you a login code. Check your email to proceed.</p>
                 </div>
               </div>
             </div>
 
-            <div class="form-note-s2 text-center pt-4">
+            <div class="form-note-s2 text-center">
               <div class="form-group">
-                <button onclick="window.location.href='{% url 'users:login' %}'" class="btn btn-lg btn-primary btn-block">Back to login</button>
+                <div class="form-control-wrap mb-4"></div>
+                <button class="btn btn-lg btn-primary btn-block" onclick="window.location.href='{% url 'users:login' %}'">Back to login</button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 {% endblock content %}

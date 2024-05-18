@@ -19,12 +19,10 @@
 
             {% block inner %}
 
-              {% block heading %}
+              {% block heading %}{% endblock heading %}
 
-                {% include "account/dashboard/v1/chats/components/head.html" %}
+              {% block message %}{% endblock message %}
 
-              {% endblock heading %}
-              
               <div class="nk-chat-panel" data-simplebar="init">
                 <div class="simplebar-wrapper" style="margin: -20px">
                   <div class="simplebar-height-auto-observer-wrapper">
@@ -33,21 +31,27 @@
                   <div class="simplebar-mask">
                     <div class="simplebar-offset" style="right: 0px; bottom: 0px">
                       <div class="simplebar-content-wrapper" tabindex="0" role="region" id="messageBodyContent" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll">
-
-                        {% if collection_messages.items %}
-                          <div class="simplebar-content" style="padding: 20px">
-                            {% for date, messages in collection_messages.items %}
-                              <div class="chat-sap">
-                                <div class="chat-sap-meta">
-                                  <span>{{date}}</span>
+                        {% block panel %}
+                          <!--PANEL MESSAGE TO BE INDEPENDENT-->
+                          {% if collection_messages.items %}
+                            <div class="simplebar-content" style="padding: 20px" id="stream_room_chat_messages">
+                              {% for date, messages in collection_messages.items %}
+                                <div class="chat-sap">
+                                  <div class="chat-sap-meta">
+                                    <span>{{date}}</span>
+                                  </div>
                                 </div>
-                              </div>
-                              {% for message in messages reversed %}
-                                {% include "account/dashboard/v1/chats/messages.html" %}
+                                {% for message in messages reversed %}
+                                  <div class="fade-in-up" id="chat_messages">
+                                    {% include "account/dashboard/v1/chats/messages.html" %}
+                                  </div>
+                                {% endfor %}
                               {% endfor %}
-                            {% endfor %}
-                          </div>
-                        {% endif %}
+                            </div>
+                          {% endif %}
+                          <!--//PANEL MESSAGE TO BE INDEPENDENT-->
+                        {% endblock panel %}
+
                       </div>
                     </div>
                   </div>
@@ -69,9 +73,14 @@
                 </div>
               </div>
 
-              {% include "account/dashboard/v1/chats/form.html" %}
+              {% block form %}
+
+                {% include "account/dashboard/v1/chats/form.html" %}
+
+              {% endblock form %}
 
             {% endblock inner %}
+
           </div>
         </div>
       </div>
@@ -156,4 +165,14 @@
         .classList
         .remove("show-message")
     });
+</script>
+
+<script>
+  const messageBodyContent = document.getElementById("messageBodyContent");
+
+  function scrollToBottom() {
+    messageBodyContent.scroll({top: messageBodyContent.scrollHeight, behavior: 'smooth'});
+  }
+
+  scrollToBottom()
 </script>

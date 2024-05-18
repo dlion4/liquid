@@ -119,8 +119,8 @@
                   {% if my_referrals %}
                     <ul class="chat-list">
                       {% for network in my_referrals %}
-                        <li class="chat-item is-unread" id="networkItem" data-network-pk="{{network.pk}}">
-                          <a class="chat-link chat-open" href="#">
+                        <li class="chat-item is-unread chat-item-list" id="networkItem-{{network.pk}}" data-network-pk="{{network.pk}}">
+                          <a class="chat-link chat-open" role="button">
                             <div class="chat-media user-avatar">
                               <span>{{network.initials|default:network.full_name|generate_initials|upper}}</span>
                               <span class="status dot dot-lg dot-gray"></span>
@@ -195,21 +195,34 @@
     // Store CSRF token in a JavaScript variable
     const csrfToken = '{{ csrf_token }}';
 
-    const networks = document.querySelectorAll("#networkItem");
-    const currentUser = document
+    const networks = document.querySelectorAll(".chat-item-list");
+    const currentProfile = document
       .getElementById("currentUser")
       .getAttribute("data-current-profile-user-pk");
 
     networks.forEach((network) => {
-      network.addEventListener("click", async () => {
-        const response = await fetch("/streams/create-retrieve-message/", {
-          method: "GET",
-          // body: JSON.stringify({network: network.getAttribute("data-network-pk"), profile_pk: currentUser})
-        })
+      network.addEventListener("click", () => {
+        const url = "{% url 'dashboard:streams:message_create_retrieve_inbox' %}"
 
-        const data = await response.json();
-        console.log(data);
+        setTimeout(async () => {
+          const res = await fetch(url, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrfToken
+            },
+            body: JSON.stringify({network_pk: network.getAttribute("data-network-pk"), profile_pk: currentProfile})
+          })
 
+          const data = await res.json();
+          console.log(data);
+
+          if (!data) {
+            return ""
+          }
+
+          window.location.href = data.message.path_url;
+
+        }, 1000);
       });
     });
   </script>

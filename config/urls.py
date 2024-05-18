@@ -74,10 +74,7 @@ urlpatterns = [
         "subscriptions/",
         include("amiribd.subscriptions.urls", namespace="subscriptions"),
     ),
-    path(
-        "streams/",
-        include("amiribd.streams.urls", namespace="streams"),
-    ),
+   
 ]
 
 

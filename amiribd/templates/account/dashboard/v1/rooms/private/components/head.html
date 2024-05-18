@@ -33,14 +33,14 @@
     <li class="nk-chat-head-user">
       <div class="user-card">
         <div class="user-avatar bg-purple">
-          <span>{{message.sender.name|generate_initials}}</span>
+          <span>{{message.receiver.full_name|generate_initials}}</span>
         </div>
         <div class="user-info">
-          <div class="lead-text">{{room.name|title}}</div>
+          <div class="lead-text">{{message.receiver.full_name|title}}</div>
           <div class="sub-text">
             <span class="d-none d-sm-inline me-1">Created
             </span>
-            {{room.created_at|timesince}}
+            {{message.created_at|timesince}}
             ago
           </div>
         </div>

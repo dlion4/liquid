@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Room, RoomMessage, Favorite, Message, Archive
+from .models import Inbox, Room, RoomMessage, Favorite, Message, Archive
 
 
 class RoomMessageInline(admin.StackedInline):
@@ -44,6 +44,11 @@ class ArchiveInline(admin.StackedInline):
     extra = 0
 
 
+class InboxMessageInline(admin.StackedInline):
+    model = Inbox
+    extra = 0
+
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ("sender", "receiver", "created_at", "updated_at")
@@ -51,4 +56,7 @@ class MessageAdmin(admin.ModelAdmin):
     list_filter = ("created_at", "updated_at")
     list_display_links = ("sender", "receiver")
 
-    inlines = [ArchiveInline]
+    inlines = [
+        ArchiveInline,
+        InboxMessageInline,
+    ]

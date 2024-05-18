@@ -1,0 +1,168 @@
+{% load static %}
+<form action="" method="post" id="private-message-form">
+  {% csrf_token %}
+  <div class="nk-chat-editor">
+    <div class="nk-chat-editor-upload ms-n1">
+      <a href="#" class="btn btn-sm btn-icon btn-trigger text-primary toggle-opt" data-target="chat-upload">
+        <em class="icon ni ni-plus-circle-fill"></em>
+      </a>
+      <div class="chat-upload-option" data-content="chat-upload">
+        <ul class="">
+          <li>
+            <a href="#">
+              <em class="icon ni ni-img-fill"></em>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <em class="icon ni ni-camera-fill"></em>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <em class="icon ni ni-mic"></em>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <em class="icon ni ni-grid-sq"></em>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="nk-chat-editor-form">
+      <div class="form-control-wrap">
+        <textarea name="message" class="form-control form-control-simple no-resize" rows="1" id="default-textarea-send-message" placeholder="Type your message..."></textarea>
+      </div>
+    </div>
+    <ul class="nk-chat-editor-tools g-2">
+      <li>
+        <a href="#" class="btn btn-sm btn-icon btn-trigger text-primary">
+          <em class="icon ni ni-happyf-fill"></em>
+        </a>
+      </li>
+      <li>
+        <button class="btn btn-round btn-primary btn-icon">
+          <em class="icon ni ni-send-alt"></em>
+        </button>
+      </li>
+    </ul>
+  </div>
+</form>
+
+<script>
+  const chatDiv = document.getElementById("private_chat_messages");
+
+  const roomPk = "{{message.pk}}";
+  const ws = new WebSocket(`ws://${window.location.host}/ws/streams/private/${roomPk}`);
+
+  const messageForm = document.getElementById("private-message-form");
+  const messageBox = document.getElementById("default-textarea-send-message");
+
+  messageForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const message = messageBox.value;
+
+    ws.send(JSON.stringify({message: message, messagePk: roomPk, sender: "{{message.sender}}"}));
+
+    messageBox.value = ""
+  });
+
+  ws.addEventListener("message", function (event) {
+    const data = JSON.parse(event.data);
+    const message = data.message.inbox.body;
+    const timeSent = new Date(data.message.inbox.created_at).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    })
+    console.log(data)
+    
+    const recipientIntitials = data.message.inbox.message.receiver.name_initials
+
+    if (data.message.sender === "{{message.sender}}") {
+      messageBox.value = "";
+      chatDiv.innerHTML += `
+      <div class="fade-in-up">
+      <div class="chat is-me">
+        <div class="chat-content">
+          <div class="chat-bubbles">
+            <div class="chat-bubble">
+            <div class="chat-msg">${message}</div>
+
+            <ul class="chat-msg-more">
+                <li class="d-none d-sm-block">
+                  <a href="#" class="btn btn-icon btn-sm btn-trigger">
+                    <em class="icon ni ni-reply-fill"></em>
+                  </a>
+                </li>
+                <li>
+                  <div class="dropdown">
+                    <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-sm">
+                      <ul class="link-list-opt no-bdr">
+                        <li class="d-sm-none">
+                          <a href="#">
+                            <em class="icon ni ni-reply-fill"></em>
+                            Reply</a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <em class="icon ni ni-pen-alt-fill"></em>
+                            Edit</a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <em class="icon ni ni-trash-fill"></em>
+                            Remove</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+          <ul class="chat-meta">
+            <li>${timeSent}</li>
+          </ul>
+        </div>
+      </div> 
+      </div> 
+      `;
+      scrollToBottom();
+    } else {
+      chatDiv.innerHTML += `
+          <div class="chat is-you">
+            <div class="chat-avatar">
+              <div class="user-avatar bg-purple">
+                <span>${recipientIntitials}</span>
+              </div>
+            </div>
+            <div class="chat-content">
+              <div class="chat-bubbles">
+                <div class="chat-bubble">
+                  <div class="chat-msg">${message}</div>
+                </div>
+              </div>
+              <ul class="chat-meta">
+                <li>${timeSent}</li>
+              </ul>
+            </div>
+          </div>`
+    }
+  });
+
+  const messageBodyContent = document.getElementById("messageBodyContent");
+
+  function scrollToBottom() {
+    messageBodyContent.scroll({top: messageBodyContent.scrollHeight, behavior: 'smooth'});
+  }
+
+  scrollToBottom()
+</script>

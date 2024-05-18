@@ -47,7 +47,7 @@ class Room(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("streams:room-detail", kwargs={"room_slug": self.slug})
+        return reverse("dashboard:streams:room-detail", kwargs={"room_slug": self.slug})
 
     @property
     def kind(self):
@@ -98,19 +98,19 @@ class Message(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    seen = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.sender.user.username} to {self.receiver.user.username}"
 
     def get_absolute_url(self):
         return reverse(
-            "streams:message-detail",
-            kwargs={"pk": self.pk, "sender": self.sender.get_ws_sender_url},
+            "dashboard:streams:message-detail",
+            kwargs={"pk": self.pk, "receiver": self.receiver.get_ws_sender_url},
         )
 
     class Meta:
         get_latest_by = "created_at"
+
 
 class Inbox(models.Model):
     message = models.ForeignKey(
@@ -119,9 +119,11 @@ class Inbox(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    seen = models.BooleanField(default=False)
 
     class Meta:
         get_latest_by = "created_at"
+
 
 class Archive(models.Model):
     message = models.ForeignKey(

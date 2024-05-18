@@ -1,3 +1,4 @@
+from itertools import groupby
 import json
 from typing import Any
 from django import http
@@ -9,6 +10,10 @@ from amiribd.dashboard.views import SupportView
 from amiribd.streams.models import Room
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from amiribd.users.models import Profile
+from amiribd.streams.serializers import MessageSerializer
+from .models import Inbox, Message
+from django.utils.timezone import localdate, localtime
 
 # Create your views here.
 
@@ -34,11 +39,14 @@ class MessageInboxRetrieveCreateView(View):
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
-        print(data)
-        return JsonResponse({"success": True})
-
-
-from django.views.decorators.http import require_POST, require_GET
+        # create a message object
+        message, _ = Message.objects.get_or_create(
+            sender=Profile.objects.get(pk=data.get("profile_pk")),
+            receiver=Profile.objects.get(pk=data.get("network_pk")),
+        )
+        serializer = MessageSerializer(message).data
+        print("data", data)
+        return JsonResponse({"success": True, "message": serializer})
 
 
 # This decorator restricts this view to only handle POST requests
@@ -50,3 +58,29 @@ def create_retrieve_message(request):
 
 class MessageInboxView(SupportView):
     template_name = "account/dashboard/v1/rooms/private/message_inbox.html"
+
+    def __get_message(self, **kwargs):
+        return get_object_or_404(
+            Message,
+            pk=kwargs.get("pk"),
+            receiver__user__username__iexact=kwargs.get("receiver").lstrip("@"),
+            sender=self.request.user.profile_user,
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["message"] = self.__get_message(**kwargs)
+        context["inbox_messages"] = self.__inbox_private__messages(**kwargs)
+        return context
+
+    def __inbox_private__messages(self, **kwargs):
+        inbox_messages = Inbox.objects.filter(
+            message=self.__get_message(**kwargs)
+        ).order_by("-created_at")
+
+        return {
+            date: list(items)
+            for date, items in groupby(
+                inbox_messages, key=lambda item: localtime(item.created_at).date()
+            )
+        }
