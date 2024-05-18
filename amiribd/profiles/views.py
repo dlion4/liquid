@@ -1,6 +1,8 @@
 from typing import Any
 from django import http
+from django.conf import settings
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from amiribd.dashboard.views import DashboardViewMixin
 from django.views.generic import View
 from amiribd.profilesettings.forms import NotificationForm
@@ -26,8 +28,10 @@ class ProfileHtmxSetupView(DashboardViewMixin):
     def dispatch(
         self, request: http.HttpRequest, *args: Any, **kwargs: Any
     ) -> http.HttpResponse:
-        if not self._get_user().verified:
-            return redirect("dashboard:welcome")
+        if request.user.is_authenticated:
+            if not self._get_user().verified:
+                return redirect("dashboard:welcome")
+            return redirect(reverse_lazy(settings.LOGIN_URL))
         return super().dispatch(request, *args, **kwargs)
 
     def _get_user(self):
