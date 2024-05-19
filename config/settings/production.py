@@ -108,11 +108,10 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# USE S3 just for images and files
 if env.bool("USE_S3BOT", False):
     MEDIA_URL = f"https://{aws_s3_domain}/media/"
-    COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
-    STATIC_URL = f"https://{aws_s3_domain}/static/"
+
 
 # EMAIL
 # ------------------------------------------------------------------------------

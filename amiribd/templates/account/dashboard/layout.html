@@ -15,7 +15,7 @@
     <meta name="description" content="investment app"/>
     <meta name="author" content="kwasa"/>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-    {% compress css %}
+     {% compress css %}
       <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
       <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
 
@@ -25,7 +25,7 @@
   }
 
 </style>
-      {% endcompress css %}
+      {% endcompress css %} 
 
     
 
@@ -54,7 +54,7 @@
     {% endblock body %}
 
     {% block javascript %}
-    {% compress js %}
+     {% compress js %} 
   
         <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
         <script src="{% static 'js/vendors/axios.min.js' %}"></script>
@@ -68,7 +68,7 @@
         
 
   
-        {% endcompress %}
+        {% endcompress %} 
         {% endblock javascript %}
 
     
