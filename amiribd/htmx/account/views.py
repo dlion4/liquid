@@ -15,6 +15,7 @@ import json
 from django.forms import model_to_dict
 from amiribd.invest.serializers import PlanSerializer
 from django.db import transaction
+import after_response
 
 
 class AvailableAmount(View):
@@ -158,14 +159,15 @@ class FilterPlanTypePriceView(HtmxDispatchView):
         plan = PlanType.objects.get(pk=plan_type_pk)
         return JsonResponse({"price": plan.price})
 
+    def get_profile(self):
+        return get_user(self.request).profile_user
+
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         form = AddPlanForm(request.POST, request=self.request)
-        account = Account.objects.get(pool__profile=request.user.profile_user)
+        account = Account.objects.get(pool__profile=self.get_profile())
         if form.is_valid():
-            print(form.cleaned_data)
             try:
-
                 return self._extracted_post_instance_save_and_transaction(
                     form, account, request
                 )
@@ -174,6 +176,7 @@ class FilterPlanTypePriceView(HtmxDispatchView):
         return JsonResponse({"success": False, "message": form.errors}, status=400)
 
     # TODO Rename this here and in `post`
+    @after_response.enable
     def _extracted_post_instance_save_and_transaction(self, form, account, request):
         instance = form.save(commit=False)
         instance.account = account
@@ -221,6 +224,7 @@ class HandlePlanPaymentFailedView(HtmxDispatchView):
 
         account.balance -= plan.type.price
         account.save()
+
         plan.delete()
 
         self.__delete_transaction(account, profile)

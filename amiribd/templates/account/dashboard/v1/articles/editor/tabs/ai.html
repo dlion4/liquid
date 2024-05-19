@@ -1,0 +1,43 @@
+<div class="tab-pane fade show active" id="AIWriter" role="tabpanel">
+  <div class="px-3 pt-4 pb-3">
+    <h6 class="title">What do you want to generate?</h6>
+  </div>
+  <ul class="d-flex flex-column">
+    <li>
+      <a class="d-flex bg-opacity-80 hover-bg-lighter px-3 py-2" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article-ai-generation' %}">
+        <em class="icon fs-4 ni ni-file-text-fill text-warning"></em>
+        <div class="ps-2">
+          <h6 class="mb-1">Blog Ideas</h6>
+          <p class="sub-text">Write blog ideas for business engagements.</p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex bg-opacity-80 hover-bg-lighter px-3 py-2" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article-ai-generation' %}">
+        <em class="icon fs-4 ni ni-list-thumb-fill text-info"></em>
+        <div class="ps-2">
+          <h6 class="mb-1">Blog Post Outline</h6>
+          <p class="sub-text">Create blog outlines that performs best.</p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex bg-opacity-80 hover-bg-lighter px-3 py-2" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article-ai-generation' %}">
+        <em class="icon fs-4 ni ni-pen-fill text-primary"></em>
+        <div class="ps-2">
+          <h6 class="mb-1">Social Media Posts</h6>
+          <p class="sub-text">Write blog ideas for business engagements.</p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex bg-opacity-80 hover-bg-lighter px-3 py-2" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article-ai-generation' %}">
+        <em class="icon fs-4 ni ni-laptop text-blue"></em>
+        <div class="ps-2">
+          <h6 class="mb-1">Website Headlines/Copy</h6>
+          <p class="sub-text">Professional copy for your website</p>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

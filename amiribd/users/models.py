@@ -114,6 +114,7 @@ class Profile(models.Model):
         related_name="profile_referred_by",
     )
 
+
     def __str__(self):
         return f"{self.user.username}"
 

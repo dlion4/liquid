@@ -17,7 +17,7 @@
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}"/>
     {% compress css %}
     <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite.css' %}?ver=3.2.3"/>
-    <link id="skin-default" rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
+    <link  rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
     <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}"/>
 
     <style>
@@ -25,10 +25,12 @@
         color: red !important;
       }
     </style>
+
+    {% block css %}{% endblock css %}
     {% endcompress css %}
   </head>
 
-  <body class="nk-body npc-crypto bg-white has-sidebar">
+  <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
     {% block body %}
 
       <div class="nk-app-root">
@@ -49,8 +51,8 @@
       {% block modals %}{% endblock modals %}
     {% endblock body %}
 
+    {% compress js %}
     {% block javascript %}
-      {% compress js %}
 
       <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
       <script src="{% static 'js/vendors/ext/htmx/ws.js' %}"></script>
@@ -62,8 +64,8 @@
       <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
       <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
 
-      {% endcompress %}
     {% endblock javascript %}
+    {% endcompress %}
   </body>
 
 </html>

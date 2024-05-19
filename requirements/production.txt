@@ -34,3 +34,7 @@ intasend-python
 Twisted[http2,tls]
 channels[daphne]
 channels-redis
+transformers
+tokenizers
+datasets
+g4f[all]

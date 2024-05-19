@@ -335,6 +335,7 @@
                 </span><span class="nk-menu-text">Subscriptions</span>
               </a>
             </li>
+
           </ul>
         </div>
 
@@ -347,14 +348,29 @@
                 <li class="nk-menu-heading mb-3">
                   <h6 class="overline-title">Premium Access</h6>
                 </li>
-                <li class="nk-menu-item">
-                  <a href="" class="nk-menu-link">
+
+                <li class="nk-menu-item has-sub">
+                  <a href="#" class="nk-menu-link nk-menu-toggle">
                     <span class="nk-menu-icon">
                       <em class="icon ni ni-files"></em>
                     </span><span class="nk-menu-text">Blogging</span>
                   </a>
-                </li>
 
+                  <ul class="nk-menu-sub">
+                    <li class="nk-menu-item">
+                      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:blogging-home' %}" class="nk-menu-link">
+                        <span class="nk-menu-text">My content
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nk-menu-item">
+                      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}" class="nk-menu-link">
+                        <span class="nk-menu-text">Pricing
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
               </ul>
 
             </div>

@@ -13,7 +13,7 @@
     </div>
 
     <small id='plan-type-response'>
-      <span id='response-price' data-price='{plan.price}'></span></small>
+      <span id='response-price' data-price='{{plan.price}}'></span></small>
 
     <div class="col-12">
       <ul class="d-flex justify-content-between gx-4 mt-1">
@@ -102,5 +102,7 @@
       responsePrice.setAttribute("data-price", data.price)
       planTypePrice.value = responsePrice.getAttribute("data-price")
     })
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 </script>

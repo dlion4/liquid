@@ -29,10 +29,11 @@ class ProfileHtmxSetupView(DashboardViewMixin):
         self, request: http.HttpRequest, *args: Any, **kwargs: Any
     ) -> http.HttpResponse:
         if request.user.is_authenticated:
-            if not self._get_user().verified:
+            if self._get_user().verified:
+                return super().dispatch(request, *args, **kwargs)
+            else:
                 return redirect("dashboard:welcome")
-            return redirect(reverse_lazy(settings.LOGIN_URL))
-        return super().dispatch(request, *args, **kwargs)
+        return redirect(reverse_lazy(settings.LOGIN_URL))
 
     def _get_user(self):
         return self.request.user
