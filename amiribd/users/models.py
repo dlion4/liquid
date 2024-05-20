@@ -114,7 +114,6 @@ class Profile(models.Model):
         related_name="profile_referred_by",
     )
 
-
     def __str__(self):
         return f"{self.user.username}"
 
@@ -131,8 +130,8 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         self.referral_code = generate_referral_code(self.pk)
-        self.initials = self.generate_initials()
         super(Profile, self).save(*args, **kwargs)
+        self.initials = self.generate_initials()
 
     # for websocket url generation
     @property

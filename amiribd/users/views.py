@@ -135,7 +135,7 @@ class SignupView(AuthenticationGuard, FormView):
                     ),
                 },
             )
-
+            user.backend = "users.backends.TokenAuthenticationBackend"
             login(self.request, user)
             # redirect to home page after login
             return super().form_valid(form)
@@ -280,8 +280,8 @@ def login_with_link(request, uid, token):
 
     if user and default_token_generator.check_token(user, token):
         # Log the user in without requiring a password
-        user.backend = "users.backends.TokenAuthenticationBackend"
-        login(request, user)
+        # user.backend = "users.backends.TokenAuthenticationBackend"
+        login(request, user, backend="users.backends.TokenAuthenticationBackend")
 
         print(user.is_authenticated)
 
