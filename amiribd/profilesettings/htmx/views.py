@@ -16,42 +16,43 @@ class HandleNotificationSwitcherView(HtmxDispatchView):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        notification_type_id = kwargs.get("notification_type")
-        profile_id = kwargs.get("profile")
-
-        notification_type = NotificationType.objects.get(id=notification_type_id)
-
-        # with contextlib.suppress(Exception):
+        notification_id = kwargs.get("notification_id", None)
+        notification_type_id = kwargs.get("notification_type_id", None)
+        profile_id = kwargs.get("profile_id", None)
 
         notification_type = NotificationType.objects.get(id=notification_type_id)
         profile = Profile.objects.get(id=profile_id)
-        notification_type.profile.add(profile)
 
         # with contextlib.suppress(Exception):
         subscription, _ = NotificationSubscription.objects.get_or_create(
-            notify_label_type=notification_type, profile=profile
+            # id=kwargs.get("notification"),
+            notify_label_type=notification_type,
+            profile=profile,
         )
+        # if subscription:
         subscription.is_active = True
         subscription.save()
+
+        notification_type.profile.add(profile)
+
+        notification_type.save()
 
         return JsonResponse(
             {"success": True, "message": "Subscription successfully added"}
         )
 
-        # return JsonResponse({"success": False, "message": "Subscription failed"})
-
     def get(self, request, *args, **kwargs):
 
-        notification_type_id = kwargs.get("notification_type")
-        profile_id = kwargs.get("profile")
+        notification_type_id = kwargs.get("notification_type_id", None)
+        profile_id = kwargs.get("profile_id", None)
 
         notification_type = NotificationType.objects.get(id=notification_type_id)
+
+        print(notification_type)
 
         # with contextlib.suppress(Exception):
 
-        notification_type = NotificationType.objects.get(id=notification_type_id)
         profile = Profile.objects.get(id=profile_id)
-        notification_type.profile.remove(profile)
 
         # with contextlib.suppress(NotificationSubscription.DoesNotExist):
         subscription = NotificationSubscription.objects.get(
@@ -59,6 +60,9 @@ class HandleNotificationSwitcherView(HtmxDispatchView):
         )
         subscription.is_active = False
         subscription.save()
+
+        notification_type.profile.remove(profile)
+        notification_type.save()
 
         return JsonResponse(
             {"success": True, "message": "Subscription successfully removed"}
@@ -69,6 +73,7 @@ class ProfileNotificationSubscribeLookupView(View):
     # htmx_template_name = "account/profile/partials/notifications.html"
 
     def get(self, request, *args, **kwargs):
+        notification_id = request.GET.get("notification_id")
         notification_type_id = request.GET.get("notification_type_id")
         profile_id = request.GET.get("profile_id")
 
@@ -83,8 +88,9 @@ class ProfileNotificationSubscribeLookupView(View):
             for sub in subscribed:
                 ntype = sub.notify_label_type.pk
                 return JsonResponse({"success": True, "subscribed": ntype})
+        print(notification_type)
         return JsonResponse(
             {
-                "success": False,
+                "success": True,
             }
         )

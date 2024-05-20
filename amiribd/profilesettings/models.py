@@ -44,7 +44,7 @@ class NotificationSubscription(models.Model):
         on_delete=models.CASCADE,
         related_name="notification_profile_subscription",
     )
-    notify_label_type = models.OneToOneField(
+    notify_label_type = models.ForeignKey(
         NotificationType,
         on_delete=models.SET_NULL,
         null=True,

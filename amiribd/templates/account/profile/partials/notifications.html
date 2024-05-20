@@ -33,7 +33,7 @@
             <div class="gy-3">
               <div class="g-item">
                 <div class="custom-control custom-switch checked">
-                  <input data-id-notification="{{notification.id}}" data-id-notification-type="{{type.id}}" data-profile="{{profile.id}}" type="checkbox" class="custom-control-input" id="unusual-activity-{{type.id}}">
+                  <input data-bs-n-check="notificationCheck" data-id-notification="{{notification.id}}" data-id-notification-type="{{type.id}}" data-profile="{{profile.id}}" type="checkbox" class="custom-control-input" id="unusual-activity-{{type.id}}">
                   <label class="custom-control-label" for="unusual-activity-{{type.id}}">{{type.label}}</label>
                 </div>
               </div>
@@ -58,6 +58,7 @@
         const notificationId = this.dataset.idNotification;
         const notificationTypeId = this.dataset.idNotificationType;
         const profileId = this.dataset.profile;
+        console.log(notificationId, notificationTypeId, profileId);
 
         // use this to call the backend view
         const url = `/settings/notifications/notifications-subscribe/${notificationId}/${notificationTypeId}/${profileId}/`;
@@ -65,7 +66,7 @@
         // now check if input is checked the call the post method
 
         if (this.checked) {
-          fetch(url, {method: "POST"})
+          fetch(url, {method: 'POST'})
             .then(response => response.json())
             .then(data => {
               if (data.success) {
@@ -76,7 +77,7 @@
               }
             });
         } else {
-          fetch(url, {method: "GET"})
+          fetch(url)
             .then(response => response.json())
             .then(data => {
               if (data.success) {
@@ -87,7 +88,6 @@
               }
             });
         }
-
       });
     });
 </script>
