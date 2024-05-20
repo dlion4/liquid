@@ -39,3 +39,4 @@ tokenizers
 datasets
 g4f[all]
 django-ckeditor
+django-ckeditor-5
