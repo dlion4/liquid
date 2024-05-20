@@ -1,0 +1,143 @@
+{% extends "account/dashboard/v1/articles/base.html" %}
+
+{% block heading %}
+  <div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between g-3">
+      <div class="nk-block-head-content">
+        <h3 class="nk-block-title page-title">Pricing Plans</h3>
+        <div class="nk-block-des text-soft">
+          <p>Generate unlimited copy 10X faster with our cost effective plan to write blog posts, social media ads and many more.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock heading %}
+
+{% block main %}
+
+  <div class="nk-block">
+    <div class="row row-gap-5">
+      <div class="col-sm-6 col-lg-4">
+        <div class="card pricing">
+          <div class="p-4">
+            <div class="pricing-title">
+              <h4 class="card-title title">Basic</h4>
+              <p class="sub-text">Limited Words.</p>
+            </div>
+            <div class="pricing-price">
+              <h3 class="display-5">Free
+                <span class="caption-text text-base fw-normal">
+                  / forever</span></h3>
+            </div>
+          </div>
+          <div class="px-4">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:payment-for-plans-for-ai' %}" class="btn btn-outline-light btn-block">Get Started</a>
+          </div>
+          <div class="p-4">
+            <ul class="pricing-features">
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>1000 words/mo. generation</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Total 5000 words generation</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Access to 10 templates</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Upto 5 projects can be created</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Only 7 days of generation history</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card pricing">
+          <div class="p-4">
+            <div class="pricing-title">
+              <h4 class="card-title title">Professional</h4>
+              <p class="sub-text">Unlimited Words.</p>
+            </div>
+            <div class="pricing-price">
+              <h3 class="display-5">$48
+                <span class="caption-text text-base fw-normal">
+                  / month</span></h3>
+            </div>
+          </div>
+          <div class="px-4">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:payment-for-plans-for-ai' %}" class="btn btn-primary btn-block">Upgrade Now</a>
+          </div>
+          <div class="p-4">
+            <ul class="pricing-features">
+              <li>
+                <em class="icon text-primary ni ni-check-circle-fill"></em>
+                <span>Unlimited words generation</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle-fill"></em>
+                <span>Access to all templates for free</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle-fill"></em>
+                <span>No project limitation</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle-fill"></em>
+                <span>30 days of AI generation history</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle-fill"></em>
+                <span>Wordpress plugin integration</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card pricing">
+          <div class="p-4">
+            <div class="pricing-title">
+              <h4 class="card-title title">Enterprise</h4>
+              <p class="sub-text">Customized Plan.</p>
+            </div>
+            <div class="pricing-price">
+              <h3 class="display-5">$225
+                <span class="caption-text text-base fw-normal">
+                  / month</span></h3>
+            </div>
+          </div>
+          <div class="px-4">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:payment-for-plans-for-ai' %}" class="btn btn-outline-light btn-block">Upgrade Now</a>
+          </div>
+          <div class="p-4">
+            <ul class="pricing-features">
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Dedicated Account Manager</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Custom Tools</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Advanced Integrations</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Premium Technical Support</span></li>
+              <li>
+                <em class="icon text-primary ni ni-check-circle"></em>
+                <span>Many More Special Features</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-5">
+      <h5>Want to learn more about our pricing &amp; plans?</h5>
+      <p>Read our
+        <a href="">Plans</a>,
+        <a href="#">Billing &amp; Payment</a>,
+        <a href="#">FAQs</a>
+        to learn more about our service.</p>
+    </div>
+  </div>
+
+{% endblock main %}

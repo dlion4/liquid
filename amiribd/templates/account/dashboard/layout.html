@@ -14,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="investment app"/>
     <meta name="author" content="kwasa"/>
-    {% compress css %}
-      <link rel="shortcut icon" href="{% static 'dashboard/images/favicon.png' %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+     {% compress css %}
       <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
       <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
 
@@ -25,13 +25,13 @@
   }
 
 </style>
-      {% endcompress css %}
+      {% endcompress css %} 
 
     
 
   </head>
 
-  <body class="nk-body npc-invest bg-lighter ">
+  <body class="nk-body npc-invest bg-lighter">
 
     {% block body %}
 
@@ -54,7 +54,7 @@
     {% endblock body %}
 
     {% block javascript %}
-    {% compress js %}
+     {% compress js %} 
   
         <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
         <script src="{% static 'js/vendors/axios.min.js' %}"></script>
@@ -68,7 +68,7 @@
         
 
   
-        {% endcompress %}
+        {% endcompress %} 
         {% endblock javascript %}
 
     

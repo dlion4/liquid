@@ -1,0 +1,187 @@
+{% extends "account/dashboard/v1/articles/editor/base.html" %}
+
+{% block main %}
+
+  <div class="card">
+    <div class="nk-editor">
+      <div class="nk-editor-header">
+        <div class="nk-editor-title">
+          <h4 class="me-3 mb-0 line-clamp-1">2023-02-03 Untitled</h4>
+          <ul class="d-inline-flex align-item-center">
+            <li>
+              <button class="btn btn-sm btn-icon btn-trigger">
+                <em class="icon ni ni-pen"></em>
+              </button>
+            </li>
+            <li>
+              <button class="btn btn-sm btn-icon btn-trigger">
+                <em class="icon ni ni-star"></em>
+              </button>
+            </li>
+            <li class="d-xl-none">
+              <div class="dropdown">
+                <button class="btn btn-sm btn-icon btn-trigger" type="button" data-bs-toggle="dropdown">
+                  <em class="icon ni ni-download-cloud"></em>
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                  <div class="dropdown-content">
+                    <ul class="link-list-opt">
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-docs"></em>
+                          <span>Docs</span></a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-text"></em>
+                          <span>Text</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-xl-none ms-1">
+              <button class="btn btn-sm btn-icon btn-primary">
+                <em class="icon ni ni-save"></em>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="nk-editor-tools d-none d-xl-flex">
+          <ul class="d-inline-flex gx-3 gx-lg-4 pe-4 pe-lg-5">
+            <li>
+              <span class="sub-text text-nowrap">Words
+                <span class="text-dark">25</span></span></li>
+            <li>
+              <span class="sub-text text-nowrap">Characters
+                <span class="text-dark">84</span></span></li>
+          </ul>
+          <ul class="d-inline-flex gx-3">
+            <li>
+              <div class="dropdown">
+                <button class="btn btn-md btn-light rounded-pill" type="button" data-bs-toggle="dropdown">
+                  <span>Export</span>
+                  <em class="icon ni ni-chevron-down"></em>
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                  <div class="dropdown-content">
+                    <ul class="link-list-opt">
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-doc"></em>
+                          <span>Docs</span></a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-text"></em>
+                          <span>Text</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <button class="btn btn-md btn-primary rounded-pill" type="button">
+                Save
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="nk-editor-main">
+        <div class="nk-editor-base">
+          <ul class="nav nav-tabs nav-sm nav-tabs-s1 px-3" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="tab" href="#AIWriter" aria-selected="true" role="tab">AI Writer</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#History" aria-selected="false" tabindex="-1" role="tab">History</a>
+            </li>
+          </ul>
+          <div class="tab-content mt-0">
+            <div class="tab-pane fade show active" id="AIWriter" role="tabpanel">
+              <form action="document-editor-edit.html" class="px-3 py-3">
+                <div class="row gy-4 gx-4">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-label">Select Template</label>
+                      <div class="form-control-wrap">
+                        <select class="form-select select2 select2-container select2-container--default" tabindex="-1" aria-hidden="true">
+                          <option value="1" data-select2-id="3">Social Media Posts</option>
+                          <option value="2">Website Copy</option>
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-label">What do you want to generate?</label>
+                      <div class="form-control-wrap">
+                        <textarea cols="30" rows="4" class="form-control">Write a Facebook post about openai that revolutionizes the world through the power of data.</textarea>
+                      </div>
+                      <div class="form-note d-flex justify-content-end mb-n1">
+                        <span>0/500 Characters</span></div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="PrimaryKeywords" class="form-label">Primary Keywords</label>
+                      <div class="form-control-wrap"><input id="PrimaryKeywords" type="text" class="form-control" value="chatgpt, openai, facebook"></div>
+                      <div class="form-note d-flex justify-content-between">
+                        <span>Separated with a comma</span><span>0/10</span></div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="form-label">Select Language</label>
+                      <div class="form-control-wrap">
+                        <select class="form-select form-control select2 select2-container select2-container--default" data-select2-id="4" tabindex="-1" aria-hidden="true">
+                          <option value="1" data-select2-id="6">English US</option>
+                          <option value="2">Español</option>
+                          <option value="3">Français</option>
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="form-label">Select Tone</label>
+                      <div class="form-control-wrap">
+                        <select class="form-select select2 select2-container select2-container--default" tabindex="-1" aria-hidden="true">
+                          <option value="1" data-select2-id="9">Friendly</option>
+                          <option value="2">Creative</option>
+                          <option value="3">Extreme</option>
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group d-flex align-items-center flex-row-reverse">
+                      <label for="Variant" class="form-label ms-3 mb-0 flex-grow-1">Variant</label>
+                      <div class="form-control-wrap w-70px"><input id="Variant" type="number" class="form-control" value="1"></div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <button type="submit" class="btn btn-primary btn-block">Generate</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            {% include "account/dashboard/v1/articles/editor/tabs/history.html" %}
+          </div>
+        </div>
+        <div class="nk-editor-body">
+          <div class="tinymce-toolbar nk-editor-style-clean nk-editor-full p-4">
+            <!--Body content-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock main %}

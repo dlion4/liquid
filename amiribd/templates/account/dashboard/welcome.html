@@ -1,11 +1,11 @@
 {% extends "account/dashboard/base.html" %}
 
 {% block content %}
-  <div class="nk-content nk-content-lg nk-content-fluid">
+  <div class="nk-content nk-content-lg nk-content-fluid" style="padding-top:80px !important">
     <div class="container-xl wide-lg">
       <div class="nk-content-inner">
         <div class="nk-content-body">
-          <div class="nk-block-head nk-block-head-lg wide-xs mx-auto">
+          {% comment %} <div class="nk-block-head nk-block-head-lg wide-xs mx-auto">
             <div class="nk-block-head-content text-center">
               <h2 class="nk-block-title fw-normal">Nice,
                 {{profile.user}}</h2>
@@ -14,7 +14,7 @@
                   <strong>Liquid Dashboard</strong>. You are few steps away to complete your profile. These are required for security of our platform! Let’s start!</p>
               </div>
             </div>
-          </div>
+          </div> {% endcomment %}
           <div class="nk-block">
             <div class="card card-custom-s1 card-bordered">
               <div class="row no-gutters">

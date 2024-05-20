@@ -60,6 +60,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -109,8 +110,14 @@ LOCAL_APPS = [
     "amiribd.profiles",
     # tokens
     "amiribd.tokens",
-    "amiribd.profilesettings",  
+    "amiribd.profilesettings",
     "amiribd.payments",
+    # subscriptions
+    "amiribd.subscriptions",
+    # streams
+    "amiribd.streams",
+    # articles
+    "amiribd.articles",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -130,8 +137,7 @@ MIGRATION_MODULES = {"sites": "amiribd.contrib.sites.migrations"}
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "sesame.backends.ModelBackend",
+    "users.backends.TokenAuthenticationBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
@@ -212,10 +218,10 @@ STATICFILES_FINDERS = [
 
 # MEDIA
 # ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = "media/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(APPS_DIR / "media")
-# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = "/media/"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -243,6 +249,7 @@ TEMPLATES = [
                 # liquid app processor
                 "amiribd.liquid.context_processors.liquid_site_data",
                 "amiribd.invest.context_processors.withdrawal_form_action",
+                "amiribd.htmx.context_processors.display_add_plan_form",
             ],
         },
     },
@@ -315,6 +322,22 @@ LOGGING = {
         },
     },
     "root": {"level": "INFO", "handlers": ["console"]},
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "users": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    },
 }
 
 
@@ -354,7 +377,7 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 LOGIN_BY_CODE_ENABLED = True
 
 # SESAME CONFIGURATIONS
-SESAME_MAX_AGE = 300  # 300 seconds = 5 minutes
+# SESAME_MAX_AGE = 300  # 300 seconds = 5 minutes
 
 
 # MENTENANCE MODE
@@ -390,3 +413,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ),
 }
+
+
+# SESSION_COOKIE_DOMAIN = ".localhost"
+
+
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}

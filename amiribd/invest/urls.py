@@ -19,19 +19,15 @@ from .views import (
     modified_referal_view,
     modified_bonus_view,
     modified_whatsapp_view,
-    modified_jobs_view ,
+    modified_jobs_view,
     # modified_invest_view,
     modified_academic_view,
     modified_loans_view,
     modified_vip_view,
     modified_investplan_view,
-    modified_investorder_view, 
-    modified_investrecord_view, 
-
-
-
+    modified_investorder_view,
+    modified_investrecord_view,
     modified_jobs_view,
-    
     modified_loans_view,
     modified_vip_view,
 )
@@ -115,25 +111,23 @@ urlpatterns = [
     ),
     path(
         "investment_plan/",
-       modified_investplan_view,
+        modified_investplan_view,
         name="invest_plan",
     ),
     path(
         "invest-order/",
-      modified_investorder_view,
+        modified_investorder_view,
         name="invest-order",
     ),
     path(
         "invest-record/",
-      modified_investrecord_view,
+        modified_investrecord_view,
         name="invest-record",
     ),
     path(
         "academic_writing_accounts/",
-      modified_academic_view,
+        modified_academic_view,
         name="academic_writing_accounts",
-        
-        
     ),
     path(
         "loans/",

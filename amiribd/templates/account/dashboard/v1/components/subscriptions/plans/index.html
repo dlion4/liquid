@@ -1,0 +1,37 @@
+{% load static %}
+
+{% if plans %}
+  {% for plan in plans %}
+    <div class="nk-block">
+      <div class="card card-bordered">
+        <div class="card-inner-group">
+          <div class="card-inner">
+            <div class="between-center flex-wrap flex-md-nowrap g-3">
+              <div class="nk-block-text">
+                <h6>{{plan.type|title}}
+                  Plan -
+                  <span class="text-base">KES
+                    {{plan.type.price}}
+                    |
+                    {{plan.type.interval}}</span></h6>
+                <p class="text-soft">{{plan.type.description}}</p>
+              </div>
+              <div class="nk-block-actions flex-shrink-0">
+                <a href="{{plan.get_absolute_url}}" class="btn btn-primary">View Plan</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-inner">
+            <div class="between-center flex-wrap flex-md-nowrap g-3">
+              <div class="nk-block-text">
+                <p>Learn more about our
+                  <a href="#">subscription options</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+{% endif %}

@@ -1,0 +1,69 @@
+<div class="col-lg-7">
+  <form action="{% url 'dashboard:invest:invest' %}" method="post" id="investment-registration-form">
+    {% csrf_token %}
+    <div class="invest-field form-group">
+      <div class="form-group">{{poolform}}</div>
+    </div>
+
+    <div class="invest-field form-group">
+      <div class="form-group">{{accountform}}</div>
+    </div>
+
+    <div class="invest-field form-group">
+      <div class="form-group">{{planform}}</div>
+    </div>
+
+    <div class="text-center bg-lighter w-100">
+      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn" data-bs-profile="{{request.user.profile_user.id}}">
+        Confirm &amp; proceed
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade zoom" id="modalZoom" aria-modal="true" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Customer Info</h5>
+        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" id="closeAddPlanPopupForm">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-validate is-alter" novalidate="novalidate">
+          <div class="form-group">
+            <label class="form-label" for="phone-no">Phone No</label>
+            <div class="form-control-wrap">
+              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no"/>
+            </div>
+            <span id="phone-error" class="errorlist"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pay-amount">Amount</label>
+            <div class="form-control-wrap">
+              <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
+              <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              <span id="payment-text">Confirm to pay</span>
+            </button>
+            <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
+
+            <style>
+              .center-justify {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+            </style>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light"></div>
+    </div>
+  </div>
+</div>

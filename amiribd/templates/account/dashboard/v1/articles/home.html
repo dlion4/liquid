@@ -1,0 +1,130 @@
+{% extends "account/dashboard/v1/articles/base.html" %}
+
+{% block heading %}
+
+  <div class="nk-block-head nk-page-head nk-block-head-sm">
+    <div class="col-12">
+      <div class="card card-bordered">
+        <div class="card-inner">
+          <div class="card-title mb-4">
+            <h3 class="title">Welcome to CMS Dashboard!</h3>
+          </div>
+          <div class="row g-gs">
+            <div class="col-xxl-3">
+              <div class="fake-class">
+                <h5 class="title">Get Started</h5>
+                <div class="nk-block-des text-soft">
+                  <p>You can customize your site from here.</p>
+                </div>
+                <a href="#" class="btn btn-primary btn-lg mt-4">Customize Site</a>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xxl-3">
+              <div class="fake-class">
+                <h5 class="title">Next Steps</h5>
+                <ul class="link-list is-compact pb-0">
+                  <li>
+                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article' %}">
+                      <em class="icon ni ni-file-text"></em>
+                      <span>Write a blog post</span></a>
+                  </li>
+                  <li>
+                    <a href="/about/">
+                      <em class="icon ni ni-property-add"></em>
+                      <span>Add an about page</span></a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <em class="icon ni ni-laptop"></em>
+                      <span>View your articles</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xxl-3">
+              <div class="fake-class">
+                <h5 class="title">At a Glance</h5>
+                <ul class="link-list is-compact pb-0">
+                  <li>
+                    <a href="/posts/">
+                      <em class="icon ni ni-edit-fill"></em>
+                      <span>0 Posts</span></a>
+                  </li>
+                  <li>
+                    <a href="/pages/">
+                      <em class="icon ni ni-files"></em>
+                      <span>0 Pages</span></a>
+                  </li>
+                  <li>
+                    <a href="/comments/">
+                      <em class="icon ni ni-comments"></em>
+                      <span>0 Comments</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-xxl-3">
+              <div class="fake-class">
+                <h5 class="title">More Actions</h5>
+                <ul class="link-list is-compact pb-0">
+                  <li>
+                    <a href="#">
+                      <em class="icon ni ni-grid-fill"></em>
+                      <span>Manage widgets or menu</span></a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <em class="icon ni ni-comments"></em>
+                      <span>Trun comments off or on</span></a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <em class="icon ni ni-more-h"></em>
+                      <span>More about content generation</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock heading %}
+
+{% block main %}
+
+  <div class="nk-block-head">
+    <div class="nk-block-between">
+      <div class="nk-block-head-content">
+        <h4 class="nk-block-title">Popular Templates</h4>
+      </div>
+      <div class="nk-block-head-content">
+        <a hx-on::after-request="window.location.reload()" hx-get="{% url 'dashboard:articles:blogging-templates' %}" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" class="link">Explore All</a>
+      </div>
+    </div>
+  </div>
+
+  <!--Article templates-->
+
+  {% include "account/dashboard/v1/articles/components/ai/templates.html" %}
+
+  <!--Recent Articles-->
+  <div class="nk-block-head">
+    <div class="nk-block-between">
+      <div class="nk-block-head-content">
+        <h4 class="nk-block-title">Recent Writings</h4>
+      </div>
+      <div class="nk-block-head-content">
+        <a hx-on::after-request="window.location.reload()" hx-get="{% url 'dashboard:articles:blogging-posts-history' %}" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" class="link">
+          <span>See All</span>
+          <em class="icon ni ni-chevron-right"></em>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% include "account/dashboard/v1/articles/components/ai/recent.html" %}
+
+{% endblock main %}

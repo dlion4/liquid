@@ -151,6 +151,22 @@ class PlanType(models.Model):
     )
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     percentage_return = models.FloatField(default=0)
+    icon = models.CharField(max_length=100, blank=True, null=True)
+    svg = models.FileField(upload_to="icons/", blank=True, null=True)
+    interval = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        help_text="Interval ie Monthly, Yearly, Unlimited",
+        default="Unlimited",
+    )
+    description = models.CharField(
+        blank=True,
+        null=True,
+        help_text="Description",
+        max_length=500,
+        default="Unlimited access with priority support, 99.95% uptime, powerfull features and more...",
+    )
 
     def __str__(self):
         return f"{self.type}"
@@ -179,6 +195,7 @@ class Plan(models.Model):
     )
     payment_method = models.CharField(max_length=100, blank=True, null=True)
     sku = models.CharField(max_length=100, blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.type} Plan"
@@ -218,7 +235,7 @@ class Plan(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            "dashboard:invest:plan",
+            "subscriptions:subscription",
             kwargs={"plan_slug": self.slug, "plan_id": self.pk},
         )
 
@@ -228,6 +245,7 @@ class Plan(models.Model):
         #         fields=["account", "type"], name="unique_account_plan_type"
         #     )
         # ]
+        get_latest_by = ["created_at"]
         pass
 
 

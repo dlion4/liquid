@@ -1,119 +1,32 @@
-{% extends "account/dashboard/base.html" %}
+{% extends "account/dashboard/v1/base.html" %}
 {% load static humanize %}
-{% block content %}
+
+
+{% block heading %}
+
+
+<div class="nk-block-head"><div class="nk-block-head-content"><div class="nk-block-head-sub"><span>Account Setting</span></div><h2 class="nk-block-title fw-normal">My Profile</h2><div class="nk-block-des"><p>You have full control to manage your own account setting. <span class="text-primary"><em class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tooltip on right" data-bs-original-title="Tooltip on right"></em></span></p></div></div></div>
 
 
 
-  <div class="nk-content nk-content-fluid">
-    <div class="container-xl wide-xl">
-      <div class="nk-content-inner">
-        <div class="nk-content-body">
-          <div class="nk-block">
-            <div class="card card-bordered">
-              <div class="card-aside-wrap">
+{% endblock heading %}
+
+
+
+{% block main %}
+
+
+
+{% include "account/profile/navbar/tabs.html" %}
+
+
+
+
+    
 
                 {% include "account/profile/components/personal.html" %}
 
-                <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg toggle-screen-lg" data-toggle-body="true" data-content="userAside" data-toggle-screen="lg" data-toggle-overlay="true">
-                  <div class="card-inner-group" data-simplebar="init">
-                    <div class="simplebar-wrapper" style="margin: 0px;">
-                      <div class="simplebar-height-auto-observer-wrapper">
-                        <div class="simplebar-height-auto-observer"></div>
-                      </div>
-                      <div class="simplebar-mask">
-                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                          <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
-                            <div class="simplebar-content" style="padding: 0px;">
-                              <div class="card-inner">
-                                <div class="user-card">
-                                  <div class="user-avatar bg-primary">
-                                    <span>{{profile.initials}}</span></div>
-                                  <div class="user-info">
-                                    <span class="lead-text">{{profile.full_name|title}}</span><span class="sub-text">{{profile.user.email}}</span></div>
-                                  <div class="user-action">
-                                    <div class="dropdown">
-                                      <a class="btn btn-icon btn-trigger me-n2" data-bs-toggle="dropdown" href="#">
-                                        <em class="icon ni ni-more-v"></em>
-                                      </a>
-                                      <div class="dropdown-menu dropdown-menu-end">
-                                        <ul class="link-list-opt no-bdr">
-                                          <li>
-                                            <a href="#">
-                                              <em class="icon ni ni-camera-fill"></em>
-                                              <span>Change Photo</span></a>
-                                          </li>
-                                          <li>
-                                            <a href="#">
-                                              <em class="icon ni ni-edit-fill"></em>
-                                              <span>Update Profile</span></a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="card-inner">
-                                <div class="user-account-info py-0">
-                                  <h6 class="overline-title-alt">Liquid Wallet Account</h6>
-                                  <div class="user-balance">{{available_amount|floatformat:2|intcomma}}
-                                    <small class="currency currency-btc">KES</small>
-                                  </div>
-                                  <div class="user-balance-sub">Locked
-                                    <span>{{locked_amount|floatformat:2|intcomma}}
-                                      <span class="currency currency-btc">KES</span></span></div>
-                                </div>
-                              </div>
-                              <div class="card-inner p-0">
-                                <ul class="link-list-menu">
-                                  <li>
-                                    <a class="{% if request.path == '/users/profile/profile/' %} active {% endif %}" hx-get="{% url 'users:profile:profile' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
-                                      <em class="icon ni ni-user-fill-c"></em>
-                                      <span>Personal Infomation</span></a>
-                                  </li>
-                                  <li>
-                                    <a class="{% if request.path == '/users/profile/notifications/' %} active {% endif %}" hx-get="{% url 'users:profile:notifications' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
-                                      <em class="icon ni ni-bell-fill"></em>
-                                      <span>Notifications</span></a>
-                                  </li>
-                                  <li>
-                                    <a class="{% if request.path == '/users/profile/account-activity/' %} active {% endif %}" hx-get="{% url 'users:profile:account-activity' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
-                                      <em class="icon ni ni-activity-round-fill"></em>
-                                      <span>Account Activity</span></a>
-                                  </li>
-                                  <li>
-                                    <a class="{% if request.path == '/users/profile/security-settings/' %} active {% endif %}" hx-get="{% url 'users:profile:security-settings' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
-                                      <em class="icon ni ni-lock-alt-fill"></em>
-                                      <span>Security Settings</span></a>
-                                  </li>
-                                  <li>
-                                    <a class="{% if request.path == '/users/profile/social-connected/' %} active {% endif %}" hx-get="{% url 'users:profile:social-connected' %}" hx-target="#profile-account" hx-swap="outerHTML" hx-swap-oob="true">
-                                      <em class="icon ni ni-grid-add-fill-c"></em>
-                                      <span>Connected with Social</span></a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="simplebar-placeholder" style="width: auto; height: 504px;"></div>
-                    </div>
-                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                      <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
-                    </div>
-                    <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
-                      <div class="simplebar-scrollbar" style="height: 0px; display: none;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <script>
     function getTokens(user, token) {
@@ -224,7 +137,7 @@
 </script>
 
 
-{% endblock content %}
+{% endblock main %}
 
 {% block modals %}
 

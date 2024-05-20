@@ -31,7 +31,12 @@ from django.utils.termcolors import colorize
 from amiribd.transactions.models import Transaction
 from .serializers import AccountSerializer, PlanSerializer, PoolSerializer
 
-from amiribd.profiles.forms import AgentForm, PlantformForm, PlantformTypeForm, PositionForm
+from amiribd.profiles.forms import (
+    AgentForm,
+    PlantformForm,
+    PlantformTypeForm,
+    PositionForm,
+)
 
 # Create your views here.
 
@@ -51,7 +56,8 @@ class InvestmentSetupView(DashboardGuard, TemplateView):
 
 class InvestmentRegistrationView(InvestmentSetupView):
     form_class = PoolRegistrationForm
-    template_name = "account/dashboard/investment/setup.html"
+    template_name = "account/dashboard/v1/investment/setup.html"
+    # template_name = "account/dashboard/investment/setup.html"
     success_url = reverse_lazy("dashboard:invest:plans")
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
@@ -196,6 +202,8 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             source="Account Registration",
             payment_phone=phone_number,
         )
+        plan.is_paid = True
+        plan.save()
 
         account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
         account.save()
@@ -251,6 +259,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         phone = request.GET.get("phone")
         amount = request.GET.get("amount")
         profile = Profile.objects.get(pk=request.GET.get("profile"))
+        plan = Plan.objects.filter(account__pool__profile=profile).latest()
 
         response = service.collect.mpesa_stk_push(
             phone_number=str(phone),
@@ -264,6 +273,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
                 "success": True,
                 "status": 200,
                 "response": response,
+                "plan": PlanSerializer(plan).data,
             }
         )
 
@@ -276,7 +286,8 @@ def check_payment_status(request):
 
 
 class InvestmentSchemeView(InvestmentSetupView, DashboardViewMixin):
-    template_name = "account/dashboard/investment/plans.html"
+    # template_name = "account/dashboard/investment/plans.html"
+    template_name = "account/dashboard/v1/investment/plans.html"
     queryset = Account
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
@@ -290,7 +301,8 @@ plans = InvestmentSchemeView.as_view()
 
 
 class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
-    template_name = "account/dashboard/investment/plan.html"
+    # template_name = "account/dashboard/investment/plan.html"
+    template_name = "account/dashboard/v1/investment/plan.html"
     htmx_template_name = "account/dashboard/investment/partials/transactions.html"
     queryset = Account
     plan = Plan
@@ -337,83 +349,97 @@ plan = InvestmentPlanView.as_view()
 # modified view way of creting views
 
 
-class WidsthdrawView(TemplateView):
-    template_name = "account/dashboard/investment/withdrawal.html"
+class WidsthdrawView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/withdrawal.html"
+    template_name = "account/dashboard/v1/investment/withdrawal.html"
 
 
 modified_widthdrawal_view = WidsthdrawView.as_view()
 
 
-class WalletView(TemplateView):
-    template_name = "account/dashboard/investment/wallet.html"
+class WalletView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/wallet.html"
+    template_name = "account/dashboard/v1/investment/wallet.html"
 
 
 modified_wallet_view = WalletView.as_view()
 
 
-class ReferalView(TemplateView):
-    template_name = "account/dashboard/investment/referal.html"
+class ReferalView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/referal.html"
+    template_name = "account/dashboard/v1/investment/referal.html"
 
 
 modified_referal_view = ReferalView.as_view()
 
 
-class BonusView(TemplateView):
-    template_name = "account/dashboard/investment/bonus.html"
+class BonusView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/bonus.html"
+    template_name = "account/dashboard/v1/investment/bonus.html"
 
 
 modified_bonus_view = BonusView.as_view()
 
 
-class WhatsappView(TemplateView):
-    template_name = "account/dashboard/investment/whatsapp.html"
+class WhatsappView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/whatsapp.html"
+    template_name = "account/dashboard/v1/investment/whatsapp.html"
 
 
 modified_whatsapp_view = WhatsappView.as_view()
 
 
-class JobsView(TemplateView):
-    template_name = "account/dashboard/investment/jobs.html"
+class JobsView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/jobs.html"
+    template_name = "account/dashboard/v1/investment/jobs.html"
 
 
 modified_jobs_view = JobsView.as_view()
 
 
-class InvestplanView(TemplateView):
-    template_name = "account/dashboard/investment/investment_plan.html"
+class InvestplanView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/investment_plan.html"
+    template_name = "account/dashboard/v1/investment/investment_plan.html"
+
 
 modified_investplan_view = InvestplanView.as_view()
 
 
-class InvestorderView(TemplateView):
-    template_name = "account/dashboard/investment/investment_order.html"
+class InvestorderView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/investment_order.html"
+    template_name = "account/dashboard/v1/investment/investment_order.html"
 
 
 modified_investorder_view = InvestorderView.as_view()
 
-class InvestrecordView(TemplateView):
-    template_name = "account/dashboard/investment/investment_record.html"
+
+class InvestrecordView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/investment_record.html"
+    template_name = "account/dashboard/v1/investment/investment_record.html"
 
 
 modified_investrecord_view = InvestrecordView.as_view()
 
 
-class AcademicView(TemplateView):
-    template_name = "account/dashboard/investment/academic_writing_accounts.html"
+class AcademicView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/academic_writing_accounts.html"
+    template_name = "account/dashboard/v1/investment/academic_writing_accounts.html"
 
 
 modified_academic_view = AcademicView.as_view()
 
 
-class LoansView(TemplateView):
-    template_name = "account/dashboard/investment/loans.html"
+class LoansView(DashboardViewMixin):
+    # template_name = "account/dashboard/investment/loans.html"
+    template_name = "account/dashboard/v1/investment/loans.html"
 
 
 modified_loans_view = LoansView.as_view()
 
 
-class VipView(DashboardGuard, TemplateView):
-    template_name = "account/dashboard/investment/vip.html"
+class VipView(DashboardGuard, DashboardViewMixin):
+    # template_name = "account/dashboard/investment/vip.html"
+    template_name = "account/dashboard/v1/investment/vip.html"
     form_class = AgentForm
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:

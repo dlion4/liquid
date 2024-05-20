@@ -60,6 +60,19 @@ class EmailLoginForm(forms.Form):
     )
 
 
+class AuthTokenCodeForm(forms.Form):
+    code = forms.CharField(
+        label="Authorization code",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control form-control-lg form-control-outlined",
+                "id": "outlined-lg",
+                "placeholder": "323433442",
+            }
+        ),
+    )
+
+
 class EmailSignupForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(

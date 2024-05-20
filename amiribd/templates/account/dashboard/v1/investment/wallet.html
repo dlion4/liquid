@@ -1,0 +1,719 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static %}
+
+{% block heading %}
+  <div class="nk-block-head">
+    <div class="nk-block-head-sub">
+      <span>Account Balance</span></div>
+    <div class="nk-block-between-md g-4">
+      <div class="nk-block-head-content">
+        <h2 class="nk-block-title fw-normal">My Account</h2>
+        <div class="nk-block-des">
+          <p>At a glance summary of your account finances. Have fun!</p>
+        </div>
+      </div>
+      <div class="nk-block-head-content">
+        <ul class="nk-block-tools gx-3">
+          <li class="btn-wrap">
+            <a href="#" class="btn btn-icon btn-xl btn-dim btn-outline-light">
+              <em class="icon ni ni-arrow-from-right"></em>
+            </a>
+            <span class="btn-extext">Send</span></li>
+          <li class="btn-wrap">
+            <a href="#" class="btn btn-icon btn-xl btn-success">
+              <em class="icon ni ni-wallet-in"></em>
+            </a>
+            <span class="btn-extext">Deposit</span>
+          </li>
+          <li class="btn-wrap">
+            <a href="#" class="btn btn-icon btn-xl btn-warning">
+              <em class="icon ni ni-wallet-out"></em>
+            </a>
+            <span class="btn-extext">Withdraw</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock heading %}
+{% block main %}
+
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-wg1 mb-3">
+          <div class="nk-wg1-group g-2">
+            <div class="nk-wg1-item me-xl-4">
+
+              <div class="nk-block nk-block-lg">
+                <div class="nk-block-head">
+                  <div class="nk-block-head-content">
+                    <h4 class="title nk-block-title">Widthdraw</h4>
+                    <div class="nk-block-des">
+                      <p>You can simply widthraw the avaolable balances from various pools of income</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-bordered card-preview">
+                  <div class="card-inner">
+                    <ul class="nav nav-tabs mt-n3">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5">
+                          <em class="icon ni ni-lock-alt"></em>
+                          <span>Referal Comissions</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem6">
+                          <em class="icon ni ni-lock-alt"></em>
+                          <span>Bonus</span></a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem7">
+                          <em class="icon ni ni-bell"></em>
+                          <span>Whatsapp</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem8">
+                          <em class="icon ni ni-bell"></em>
+                          <span>Investments</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem9">
+                          <em class="icon ni ni-bell"></em>
+                          <span>loans</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem10">
+                          <em class="icon ni ni-bell"></em>
+                          <span>VIP</span></a>
+                      </li>
+
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tabItem5">
+
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-email" checked="checked" disabled="disabled">
+                                              <label class="custom-control-label text-muted" for="com-email">Mpesa Numbers Only</label>
+                                            </div>
+
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Check out
+                                    <a href="#" class="link link-dark">Referal comissions</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. Thank you!!
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tabItem6">
+
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-email" checked="checked" disabled="disabled">
+                                              <label class="custom-control-label text-muted" for="com-email">Mpesa Numbers Only</label>
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Check out
+                                    <a href="#" class="link link-dark">Bonus Earnings</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. Thank you!!
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tabItem7">
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-email" checked="checked" disabled="disabled">
+                                              <label class="custom-control-label text-muted" for="com-email">Mpesa Numbers Only</label>
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Check out
+                                    <a href="#" class="link link-dark">WhatsApp Earnings</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. Thank you!!
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tabItem8">
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-email" checked="checked" disabled="disabled">
+                                              <label class="custom-control-label text-muted" for="com-email">Mpesa Numbers Only</label>
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Check out
+                                    <a href="#" class="link link-dark">Investment Earnings</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. Thank you!!
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tabItem9">
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-email" checked="checked" disabled="disabled">
+                                              <label class="custom-control-label text-muted" for="com-email">Mpesa Numbers Only</label>
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Check out
+                                    <a href="#" class="link link-dark">Matured loans</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. Thank you!!
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tabItem10">
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-email" checked="checked" disabled="disabled">
+                                              <label class="custom-control-label text-muted" for="com-email">Mpesa Numbers Only</label>
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Withdraw Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Check out
+                                    <a href="#" class="link link-dark">Weekly VIP Earnings</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. Thank you!!
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <br/>
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-wg1 mb-3">
+          <div class="nk-wg1-group g-2">
+            <div class="nk-wg1-item me-xl-4">
+
+              <div class="nk-block nk-block-lg">
+                <div class="nk-block-head">
+                  <div class="nk-block-head-content">
+                    <h4 class="title nk-block-title">Deposit</h4>
+                    <div class="nk-block-des">
+                      <p>You can simply deposit to your account to use for available pacakges, upgrades and offers the avaolable balances from various pools of income</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-bordered card-preview">
+                  <div class="card-inner">
+                    <ul class="nav nav-tabs mt-n3">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#tabItem15">
+                          <em class="icon ni ni-lock-alt"></em>
+                          <span>STK Push</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem16">
+                          <em class="icon ni ni-lock-alt"></em>
+                          <span>Manual Deposit</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem17">
+                          <em class="icon ni ni-lock-alt"></em>
+                          <span>Repay Loans</span></a>
+                      </li>
+
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tabItem15">
+
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Input Amount</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Deposit Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">You will be prompted to enter your pin number to
+                                    <a href="#" class="link link-dark">Complete the Deposit</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The deposit is has a short window to be completed Successfully. Thank you!!
+                        </p>
+                      </div>
+
+                      <div class="tab-pane" id="tabItem16">
+
+                        <div class="col-md-12 col-lg-12">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Input Amount</h6>
+                                </div>
+                                <div class="col-lg-12">
+                                  <ul class="list list-checked">
+                                    <li>Access M-Pesa: Open M-Pesa app or dial USSD code.</li>
+                                    <li>Select "Lipa na M-Pesa": Choose option for making payments.</li>
+                                    <li>Input Till Number: Enter the Till Number 99999
+                                    <li>Enter PIN: Authorize transaction by entering your PIN.</li>
+                                    <li>Confirm Transaction: Review and confirm transaction details.</li>
+                                    <li>Wait for Confirmation: Wait for transaction confirmation message.
+                                    </li>
+                                    <li>Check Account Balance: Verify deduction from account balance.</li>
+                                    <li>Purchase Package/Service: Use account balance to buy desired package or service.</li>
+                                    <li>Work towards Profits: Utilize purchased service to achieve financial goals.</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="tab-pane" id="tabItem17">
+
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Unpaid Loan Amount</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Deposit Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">You will be prompted to enter your pin number to
+                                    <a href="#" class="link link-dark">Complete the Deposit</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>Culpa dolor voluptate do laboris laboris irure reprehenderit
+
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <br/>
+  <div class="nk-block">
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="nk-wg1 mb-3">
+          <div class="nk-wg1-group g-2">
+            <div class="nk-wg1-item me-xl-4">
+
+              <div class="nk-block nk-block-lg">
+                <div class="nk-block-head">
+                  <div class="nk-block-head-content">
+                    <h4 class="title nk-block-title">Send</h4>
+                    <div class="nk-block-des">
+                      <p>You can simply send to another person or user within our platform
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-bordered card-preview">
+                  <div class="card-inner">
+                    <ul class="nav nav-tabs mt-n3">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#tabItem25">
+                          <em class="icon ni ni-lock-alt"></em>
+                          <span>Send</span></a>
+                      </li>
+
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tabItem25">
+
+                        <div class="col-md-6 col-lg-4">
+                          <div class="nk-wg-card card card-bordered h-100">
+                            <div class="card-inner h-100">
+                              <div class="nk-iv-wg2">
+                                <div class="nk-iv-wg2-title">
+                                  <h6 class="title">Account Balance</h6>
+                                </div>
+                                <div class="nk-iv-wg2-text">
+                                  <div class="nk-iv-wg2-amount ui-v2">000 KES</div>
+                                  <ul class="nk-iv-wg2-list">
+                                    <li>
+                                      <div class="form-group">
+                                        <label class="form-label" for="phone-no">Phone No</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="phone-no">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-label">User type</label>
+                                        <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-phone">
+                                              <label class="custom-control-label" for="com-phone">NOT a user in our platform</label>
+                                            </div>
+                                          </li>
+                                          <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="com-sms">
+                                              <label class="custom-control-label" for="com-sms">Active User in our platform</label>
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-label" for="pay-amount">Amount</label>
+                                        <div class="form-control-wrap">
+                                          <input type="text" class="form-control" id="pay-amount">
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
+                                </div>
+                                <div class="nk-iv-wg2-cta">
+                                  <button type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" disabled="disabled" class="btn btn-primary btn-lg btn-block">Send Funds</button>
+                                  <!-- <button type="button" {% if available_amount > 0.00 %} data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" {% else %} disabled="disabled" {% endif %} class="btn btn-primary btn-lg btn-block">Withdraw Funds</button> -->
+                                  <div class="cta-extra">Transfer money to another party
+                                    <a href="#" class="link link-dark">or individual</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p>The transaction might take up to three minutes to complete. For users with their active accounts, the funds will be transacted to their account balance not their mpesa or other channels
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock main %}

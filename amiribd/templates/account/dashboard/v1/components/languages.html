@@ -1,0 +1,27 @@
+{% load static %}
+
+<a href="" class="nk-menu-link dropdown-indicator has-indicator" data-bs-toggle="dropdown" data-offset="0,10">
+    <span class="nk-menu-icon">
+      <em class="icon ni ni-globe"></em>
+    </span><span class="nk-menu-text">English</span>
+  </a>
+  <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+    <ul class="language-list">
+      <li>
+        <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt="" class="language-flag">
+          <span class="language-name">English</span></a>
+      </li>
+      <li>
+        <a href="#" class="language-item"><img src="{% static 'images/flags/spanish.png' %}" alt="" class="language-flag">
+          <span class="language-name">Español</span></a>
+      </li>
+      <li>
+        <a href="#" class="language-item"><img src="{% static 'images/flags/french.png' %}" alt="" class="language-flag">
+          <span class="language-name">Français</span></a>
+      </li>
+      <li>
+        <a href="#" class="language-item"><img src="{% static 'images/flags/turkey.png' %}" alt="" class="language-flag">
+          <span class="language-name">Türkçe</span></a>
+      </li>
+    </ul>
+  </div>

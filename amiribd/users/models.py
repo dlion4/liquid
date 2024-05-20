@@ -122,7 +122,7 @@ class Profile(models.Model):
             names = self.full_name.split()
             initials = [name[0].upper() for name in names]
             return "".join(initials[:2])
-        return None
+        return self.initials
 
     @cached_property
     def referrals(self) -> int:
@@ -132,6 +132,16 @@ class Profile(models.Model):
         self.referral_code = generate_referral_code(self.pk)
         super(Profile, self).save(*args, **kwargs)
         self.initials = self.generate_initials()
+
+    # for websocket url generation
+    @property
+    def get_ws_sender_url(self):
+        return f"@{self.user.username}".lower()
+
+    # same as above
+    @property
+    def get_ws_receiver_url(self):
+        return f"@{self.user.username}"
 
 
 @receiver(post_save, sender=User)
@@ -185,5 +195,3 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.profile.user.username} Verification Document"
-
-

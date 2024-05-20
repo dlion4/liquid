@@ -1,0 +1,71 @@
+{% load static i18n compress%}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>
+      {% block title %}
+        Amiri Dashboard
+      {% endblock title %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="investment app"/>
+    <meta name="author" content="kwasa"/>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}"/>
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite.css' %}?ver=3.2.3"/>
+    <link  rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
+    <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}"/>
+
+    <style>
+      .errorlist {
+        color: red !important;
+      }
+    </style>
+
+    {% block css %}{% endblock css %}
+    {% endcompress css %}
+  </head>
+
+  <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
+    {% block body %}
+
+      <div class="nk-app-root">
+        <div class="nk-main">
+          {% block sidebar %}{% endblock sidebar %}
+          <div class="nk-wrap">
+            {% block content %}
+
+              {% block navbar %}{% endblock navbar %}
+
+              {% block footer %}{% endblock footer %}
+
+            {% endblock content %}
+          </div>
+        </div>
+      </div>
+
+      {% block modals %}{% endblock modals %}
+    {% endblock body %}
+
+    {% compress js %}
+    {% block javascript %}
+
+      <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
+      <script src="{% static 'js/vendors/ext/htmx/ws.js' %}"></script>
+      <script src="{% static 'js/vendors/_hyperscript.min.js' %}"></script>
+      <script src="{% static 'js/vendors/axios.min.js' %}"></script>
+      <script src="{% static 'v1/assets/js/bundle.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/scripts.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
+
+    {% endblock javascript %}
+    {% endcompress %}
+  </body>
+
+</html>

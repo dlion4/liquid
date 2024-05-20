@@ -1,0 +1,308 @@
+{% extends "account/dashboard/v1/articles/editor/base.html" %}
+
+{% block main %}
+  <div class="card">
+    <div class="nk-editor">
+      <div class="nk-editor-header">
+        <div class="nk-editor-title">
+          <h4 class="me-3 mb-0 line-clamp-1">2023-02-03 Untitled</h4>
+          <ul class="d-inline-flex align-item-center">
+            <li>
+              <button class="btn btn-sm btn-icon btn-trigger">
+                <em class="icon ni ni-pen"></em>
+              </button>
+            </li>
+            <li>
+              <button class="btn btn-sm btn-icon btn-trigger">
+                <em class="icon ni ni-star"></em>
+              </button>
+            </li>
+            <li class="d-xl-none">
+              <div class="dropdown">
+                <button class="btn btn-sm btn-icon btn-trigger" type="button" data-bs-toggle="dropdown">
+                  <em class="icon ni ni-download-cloud"></em>
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                  <div class="dropdown-content">
+                    <ul class="link-list-opt">
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-docs"></em>
+                          <span>Docs</span></a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-text"></em>
+                          <span>Text</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-xl-none ms-1">
+              <button class="btn btn-sm btn-icon btn-primary">
+                <em class="icon ni ni-save"></em>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="nk-editor-tools d-none d-xl-flex">
+          <ul class="d-inline-flex gx-3 gx-lg-4 pe-4 pe-lg-5">
+            <li>
+              <span class="sub-text text-nowrap">Words
+                <span class="text-dark">25</span></span></li>
+            <li>
+              <span class="sub-text text-nowrap">Characters
+                <span class="text-dark">84</span></span></li>
+          </ul>
+          <ul class="d-inline-flex gx-3">
+            <li>
+              <div class="dropdown">
+                <button class="btn btn-md btn-light rounded-pill" type="button" data-bs-toggle="dropdown">
+                  <span>Export</span>
+                  <em class="icon ni ni-chevron-down"></em>
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                  <div class="dropdown-content">
+                    <ul class="link-list-opt">
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-doc"></em>
+                          <span>Docs</span></a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-text"></em>
+                          <span>Text</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <button class="btn btn-md btn-primary rounded-pill" type="button">
+                Save
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="nk-editor-main row-gap-4" style="max-height:auto!important">
+        <div class="nk-editor-base">
+          <ul class="nav nav-tabs nav-sm nav-tabs-s1 px-3" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#AIWriter" aria-selected="false" role="tab" tabindex="-1">AI Writer</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="tab" href="#History" aria-selected="true" role="tab">History</a>
+            </li>
+          </ul>
+          <div class="tab-content mt-0">
+            <div class="tab-pane fade" id="AIWriter" role="tabpanel">
+              <div class="p-3 ">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="user-avatar xs text-primary bg-primary-dim">
+                      <em class="icon ni ni-pen-fill"></em>
+                    </div>
+                    <h5 class="fs-14px fw-normal ms-2">Social Media Post</h5>
+                  </div>
+
+                  <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article-ai-generation' %}" class="link">Edit Prompt</a>
+                </div>
+                <div class="card bg-lighter shadow-none mt-3">
+                  <div class="p-3">
+                    <p class="small text-dark">Write a Facebook post about openai that revolutionizes the world through the power of data.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p-3 border-top border-light">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <div class="text-primary fs-12px">Variant 1</div>
+                          <ul class="d-flex align-items-center gx-1">
+                            <li>
+                              <button class="btn btn-sm btn-icon btn-trigger">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </button>
+                            </li>
+                            <li>
+                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPostNew01" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                <span class="clipboard-text">
+                                  <em class="icon ni ni-copy"></em></span></button>
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="small text-dark" id="SocialMediaPostNew01">Hey everyone! Have you met ChatGPT? As an AI language model, I'm trained to answer your questions and have a conversation with you! Ask me anything, and let's get chatting! 😊</p>
+                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                          <span>42 Words</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <div class="text-primary fs-12px">Variant 2</div>
+                          <ul class="d-flex align-items-center gx-1">
+                            <li>
+                              <button class="btn btn-sm btn-icon btn-trigger">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </button>
+                            </li>
+                            <li>
+                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPostNew02" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                <span class="clipboard-text">
+                                  <em class="icon ni ni-copy"></em></span></button>
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="small text-dark" id="SocialMediaPostNew02">Are you tired of Googling for answers? Meet ChatGPT - your one-stop solution for all your queries! I'm an AI language model trained to provide you with accurate and informative responses. Try me out! 💬</p>
+                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                          <span>42 Words</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <div class="text-primary fs-12px">Variant 3</div>
+                          <ul class="d-flex align-items-center gx-1">
+                            <li>
+                              <button class="btn btn-sm btn-icon btn-trigger">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </button>
+                            </li>
+                            <li>
+                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPostNew03" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                <span class="clipboard-text">
+                                  <em class="icon ni ni-copy"></em></span></button>
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="small text-dark" id="SocialMediaPostNew03">OpenAI is changing the game for data-driven innovation. With its cutting-edge technology, we can harness the power of data in ways we never thought possible.</p>
+                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                          <span>42 Words</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade active show" id="History" role="tabpanel">
+              <div class="px-3 py-4">
+                <div class="d-flex flex-wrap justify-content-between mb-3">
+                  <h6 class="mb-0 me-3">Generation History</h6>
+                  <div class="fs-11px">
+                    <span class="text-dark">1763</span>
+                    words left.
+                    <a href="#">Go Unlimited</a>
+                  </div>
+                </div>
+                <div class="row g-4">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <div class="badge badge-dim bg-primary rounded-pill align-center">
+                            <em class="icon ni ni-pen-fill fs-11px"></em>
+                            <span>Social Media Post</span></div>
+                          <ul class="d-flex align-items-center gx-1">
+                            <li>
+                              <button class="btn btn-sm btn-icon btn-trigger">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </button>
+                            </li>
+                            <li>
+                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost03" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                <span class="clipboard-text">
+                                  <em class="icon ni ni-copy"></em></span></button>
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="text-dark" id="SocialMediaPost01">Hey everyone! Have you met ChatGPT? As an AI language model, I'm trained to answer your questions and have a conversation with you! Ask me anything, and let's get chatting! 😊</p>
+                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                          <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <div class="badge badge-dim bg-primary rounded-pill align-center">
+                            <em class="icon ni ni-pen-fill fs-11px"></em>
+                            <span>Social Media Post</span></div>
+                          <ul class="d-flex align-items-center gx-1">
+                            <li>
+                              <button class="btn btn-sm btn-icon btn-trigger">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </button>
+                            </li>
+                            <li>
+                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost02" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                <span class="clipboard-text">
+                                  <em class="icon ni ni-copy"></em></span></button>
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="text-dark" id="SocialMediaPost02">Are you tired of Googling for answers? Meet ChatGPT - your one-stop solution for all your queries! I'm an AI language model trained to provide you with accurate and informative responses. Try me out! 💬</p>
+                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                          <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="p-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <div class="badge badge-dim bg-primary rounded-pill align-center">
+                            <em class="icon ni ni-pen-fill fs-11px"></em>
+                            <span>Social Media Post</span></div>
+                          <ul class="d-flex align-items-center gx-1">
+                            <li>
+                              <button class="btn btn-sm btn-icon btn-trigger">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </button>
+                            </li>
+                            <li>
+                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost03" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                <span class="clipboard-text">
+                                  <em class="icon ni ni-copy"></em></span></button>
+                            </li>
+                          </ul>
+                        </div>
+                        <p class="text-dark" id="SocialMediaPost03">OpenAI is changing the game for data-driven innovation. With its cutting-edge technology, we can harness the power of data in ways we never thought possible.</p>
+                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                          <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nk-editor-body">
+          <div class="tinymce-toolbar nk-editor-style-clean nk-editor-full p-4 form-contol ">
+            <h1>The Importance of Business Metrics in Product Design Industry</h1>
+            <h3>Introduction</h3>
+            <p>In the product design industry, creating a successful product is a top priority for any business. However, creating a product that sells and brings in revenue is equally important. This is where business metrics come into play. Business metrics are key performance indicators (KPIs) that measure a company's success in achieving its goals. In this blog post, we will discuss the importance of business metrics in the product design industry.</p>
+            <h3>Understanding Customer Needs</h3>
+            <p>One of the most important aspects of product design is understanding customer needs. Business metrics help companies gather data on customer behavior, such as purchase history, product reviews, and customer feedback. By analyzing this data, companies can determine what products are in demand and what features customers are looking for. This helps companies design products that meet customer needs, which can increase sales and customer satisfaction.</p>
+            <h3>Measuring Product Performance</h3>
+            <p>Business metrics also help companies measure the performance of their products. Metrics such as sales revenue, profit margin, and customer retention rate can provide insight into how well a product is performing in the market. By analyzing these metrics, companies can make data-driven decisions about product design, pricing, and marketing strategies. This can increase profitability and help companies stay competitive in the market.</p>
+            <h3>Identifying Areas for Improvement</h3>
+            <p>Finally, business metrics can help companies identify areas for improvement in their product design process. Metrics such as product development cycle time, defect rate, and customer satisfaction can help companies pinpoint areas where they can improve their processes. By addressing these areas, companies can streamline their product design process and improve the quality of their products.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main %}

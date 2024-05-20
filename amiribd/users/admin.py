@@ -47,6 +47,7 @@ class UserAdmin(auth_admin.UserAdmin):
             },
         ),
     )
+    readonly_fields = ["date_joined"]
 
 
 @admin.register(Profile)

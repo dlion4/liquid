@@ -1,147 +1,17 @@
-{% extends "account/dashboard/base.html" %}
+{% extends "account/dashboard/v1/base.html" %}
+
 {% load static %}
-{% block content %}
 
-<div class="nk-content nk-content-lg nk-content-fluid">
-  <div class="container-xl wide-lg">
-    <div class="nk-content-inner">
-      <div class="nk-content-body">
-          {% comment %} head {% endcomment %}
-          {% include "account/dashboard/components/dashboard/overview/head.html" %}
+{% block heading %}
+  {% include "account/dashboard/v1/components/home/head.html" %}
+{% endblock heading %}
 
-          <div class="nk-block">
-              <div class="nk-news card card-bordered">
-                <div class="card-inner">
-                  <div class="nk-news-list">
-                    <a class="nk-news-item" href="#">
-                      <div class="nk-news-icon">
-                        <em class="icon ni ni-card-view"></em>
-                      </div>
-                      <div class="nk-news-text">
-                        <p>Your account is active and ready to earn
-                          <span>Have a look on how to start on Youtube</span></p>
-                        <em class="icon ni ni-external"></em>
-                      </div>
-                    </a>
-                  
-                  </div>
-                </div>
-              </div>
-          </div>
+{% block main %}
 
-          {% comment %} stats {% endcomment %}
+  {% include "account/dashboard/v1/components/home/statsprofit.html" %}
 
-          {% include "account/dashboard/components/dashboard/overview/stats.html" %}
+  {% include "account/dashboard/v1/components/home/actions.html" %}
 
-          {% comment %} referrals {% endcomment %}
-          {% include "account/dashboard/components/dashboard/overview/action.html" %}
-      </div>
-    </div>
-  </div>
-</div>
+  {% include "account/dashboard/v1/components/support.html" %}
 
-{% endblock content %}
-
-
-
-{% block modals %}
-
-<div class="pmo-lv pmo-dark">
-  <a class="pmo-close" href="#">
-    <em class="ni ni-cross"></em>
-  </a>
-  <a class="pmo-wrap" target="_blank" href="">
-    <div class="pmo-text text-white">Looking for functional script for Investment Platform? Check out
-      <em class="ni ni-arrow-long-right"></em>
-    </div>
-  </a>
-</div>
-
-
-<a class="pmo-st pmo-dark" target="_blank" href="">
-  <div class="pmo-st-img"><img src="{% static 'dashboard/images/landing/promo-investorm-4.png' %}" alt="Investorm"></div>
-  <div class="pmo-st-text">Looking for Advanced<br>Investment Platform?
-  </div>
-</a>
-
-
-{% include "account/dashboard/components/dashboard/account/modals/setup.html" %}
-
-
-
-
-
-  <div class="modal fade" id="withdrawalPopupForm" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Withdrawal Form</h5>
-          <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <em class="icon ni ni-cross"></em>
-          </a>
-        </div>
-        <div class="modal-body">
-          {% include "account/dashboard/investment/components/schemes/withdrawal_form.html" %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const submitBtn = document.getElementById("updateEvent")
-    const swapArea = document.getElementById("id_available_amount")
-
-    function handleSubmit() {
-
-      const errorId = document.querySelector("span.errorlist")
-      const successId = document.querySelector("span.text-success")
-
-      if (errorId) {
-        submitBtn.setAttribute("disabled", "disabled")
-      }
-      if (successId) {
-        if (submitBtn.getAttribute("disabled")) {
-          submitBtn.removeAttribute("disabled")
-        }
-      }
-
-    }
-    swapArea.addEventListener('htmx:afterSwap', function (event) {
-      handleSubmit()
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
-
-      form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData(form);
-
-        fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
-          method: 'POST',
-          body: formData
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Withdrawal Initiated Successfully!');
-            } else {
-              // Handle errors, display them on the form
-              console.error('Errors:', data);
-              alert('Failed to process withdrawal: ' + JSON.stringify(data));
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-          })
-          . finally(window.location.reload());
-      });
-    });
-  </script>
-
-
-
-
-{% endblock modals %}
+{% endblock main %}

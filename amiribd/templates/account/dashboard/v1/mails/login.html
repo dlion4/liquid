@@ -1,0 +1,47 @@
+{% load static %}
+
+<table class="email-wraper">
+  <tbody>
+    <tr>
+      <td class="py-5">
+        <table class="email-header"></table>
+        <table class="email-body">
+          <tbody>
+            <tr>
+              <td class="px-3 px-sm-5 pt-3 pt-sm-5 pb-3">
+                <h2 class="email-heading">Login Link From
+                  {{ team }}</h2>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-3 px-sm-5 pb-2">
+                <p>Hi
+                  {{username}},</p>
+                <p>Welcome!
+                  <br>
+                  You are receiving this email because you have registered on our site.</p>
+                <p>Click the link below to active your DashLite account.</p>
+                <p class="mb-4">This link will expire in 15 minutes and can only be used once.</p>
+                <a href="{{link}}" class="email-btn">click to login</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-3 px-sm-5 pt-4">
+                <h4 class="email-heading-s2">or</h4>
+                <p>If the button above does not work, paste this link into your web browser:</p>
+                <a href="{{link}}" class="link-block">{{link}}</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-3 px-sm-5 pt-4 pb-3 pb-sm-5">
+                <p>If you did not make this request, please contact us or ignore this message.</p>
+                <p class="email-note">This is an automatically generated email please do not reply to this email. If you face any issues, please contact us at help@dashlite.com</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="email-footer"></table>
+      </td>
+    </tr>
+  </tbody>
+</table>

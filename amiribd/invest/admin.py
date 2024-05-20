@@ -42,7 +42,7 @@ class PlanInlineAdmin(admin.StackedInline):
 
 @admin.register(PlanType)
 class PlanTypeAdmin(admin.ModelAdmin):
-    list_display = ["type", "price", "percentage_return"]
+    list_display = ["type", "price", "percentage_return", "icon", "svg"]
 
     inlines = [PlanInlineAdmin]
 

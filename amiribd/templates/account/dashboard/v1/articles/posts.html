@@ -1,0 +1,24 @@
+{% extends "account/dashboard/v1/articles/base.html" %}
+
+{% block heading %}
+
+  <div class="nk-block">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <h4 class="mb-0">Words Generated</h4>
+      <div class="caption-text text-dark">940
+        <span class="text-base">of 5000 free tokens used.</span></div>
+    </div>
+    <div class="progress progress-md bg-primary bg-opacity-10 mt-3">
+      <div class="progress-bar bg-primary" data-progress="55" style="width: 55%;"></div>
+    </div>
+    <div class="fs-14px text-dark mt-2">To increase your limit, check our
+      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}">
+        <span class="nk-menu-text text-primary">Pricing &amp; Plans</span>
+      </a>.</div>
+  </div>
+
+{% endblock heading %}
+
+{% block main %}
+  {% include "account/dashboard/v1/articles/components/posts/list.html" %}
+{% endblock main %}

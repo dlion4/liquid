@@ -1,0 +1,74 @@
+{% extends "account/dashboard/v1/articles/base.html" %}
+
+{% block heading %}
+  <div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+      <div class="nk-block-head-content">
+        <h3 class="nk-block-title page-title">Free and Premium Templates</h3>
+      </div>
+      <div class="nk-block-head-content">
+        <div class="toggle-wrap nk-block-tools-toggle">
+          <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+            <em class="icon ni ni-more-v"></em>
+          </a>
+          <div class="toggle-expand-content" data-content="pageMenu">
+            <ul class="nk-block-tools g-3">
+              <li>
+                <a href="" class="btn btn-md btn-icon btn-outline-light">
+                  <em class="icon ni ni-view-list-wd"></em>
+                </a>
+              </li>
+              <li>
+                <a href="" class="btn btn-md btn-icon btn-primary btn-dim">
+                  <em class="icon ni ni-grid-fill"></em>
+                </a>
+              </li>
+              <li class="nk-block-tools-opt">
+                <div class="form-control-wrap">
+                  <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-search"></em>
+                  </div><input type="text" class="form-control" placeholder="Search Template">
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock heading %}
+
+{% block main %}
+
+  <div class="nk-block">
+
+    <div class="row row-gap-3 filter-container">
+      <div class="col-12 col-md-6  filter-item blog-content">
+        <div class="card card-full">
+          <div class="card-inner">
+            <div class="user-avatar text-primary bg-primary-dim mb-3">
+              <em class="icon ni ni-bulb-fill"></em>
+            </div>
+            <h5 class="title">Blog Ideas</h5>
+            <p class="sub-text">Produce trendy blog ideas for your business that engages.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 filter-item blog-content">
+        <div class="card card-full">
+          <div class="card-inner">
+            <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+              <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+            </div>
+            <div class="user-avatar text-primary bg-primary-dim mb-3">
+              <em class="icon ni ni-list-thumb-fill"></em>
+            </div>
+            <h5 class="title">Blog Post Outline</h5>
+            <p class="sub-text">Create lists and outlines for your articles that performs best.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock main %}
