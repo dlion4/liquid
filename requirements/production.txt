@@ -38,3 +38,4 @@ transformers
 tokenizers
 datasets
 g4f[all]
+django-ckeditor

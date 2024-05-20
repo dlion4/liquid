@@ -102,17 +102,20 @@
           </ul>
           <div class="tab-content mt-0">
             <div class="tab-pane fade show active" id="AIWriter" role="tabpanel">
-              <form action="document-editor-edit.html" class="px-3 py-3">
+              <form action="{% url 'ai:generate' %}" method="post" class="px-3 py-3" id="ai-generation-form">
+                {% csrf_token %}
                 <div class="row gy-4 gx-4">
                   <div class="col-12">
                     <div class="form-group">
                       <label class="form-label">Select Template</label>
                       <div class="form-control-wrap">
-                        <select class="form-select select2 select2-container select2-container--default" tabindex="-1" aria-hidden="true">
-                          <option value="1" data-select2-id="3">Social Media Posts</option>
-                          <option value="2">Website Copy</option>
+                        <select class="form-select select2 select2-container select2-container--default" tabindex="-1" aria-hidden="true" name="template">
+                          <option value="1" selected="selected">Health and Science</option>
+                          <option value="2">Technology</option>
+                          <option value="3">Economics and Finance</option>
+                          <option value="4">Climate Change</option>
+                          <option value="5">Biology and Life</option>
                         </select>
-
                       </div>
                     </div>
                   </div>
@@ -120,54 +123,38 @@
                     <div class="form-group">
                       <label class="form-label">What do you want to generate?</label>
                       <div class="form-control-wrap">
-                        <textarea cols="30" rows="4" class="form-control">Write a Facebook post about openai that revolutionizes the world through the power of data.</textarea>
+                        <textarea name="content" cols="20" rows="3" class="form-control">Write a Facebook post about openai that revolutionizes the world through the power of data.</textarea>
                       </div>
-                      <div class="form-note d-flex justify-content-end mb-n1">
-                        <span>0/500 Characters</span></div>
+
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
                       <label for="PrimaryKeywords" class="form-label">Primary Keywords</label>
-                      <div class="form-control-wrap"><input id="PrimaryKeywords" type="text" class="form-control" value="chatgpt, openai, facebook"></div>
+                      <div class="form-control-wrap">
+                        <input name="keywords" id="PrimaryKeywords" type="text" class="form-control" value="chatgpt, openai, facebook">
+                      </div>
                       <div class="form-note d-flex justify-content-between">
-                        <span>Separated with a comma</span><span>0/10</span></div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label class="form-label">Select Language</label>
-                      <div class="form-control-wrap">
-                        <select class="form-select form-control select2 select2-container select2-container--default" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                          <option value="1" data-select2-id="6">English US</option>
-                          <option value="2">Español</option>
-                          <option value="3">Français</option>
-                        </select>
-
+                        <span>Separated with a comma</span><span>0/10</span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label class="form-label">Select Tone</label>
-                      <div class="form-control-wrap">
-                        <select class="form-select select2 select2-container select2-container--default" tabindex="-1" aria-hidden="true">
-                          <option value="1" data-select2-id="9">Friendly</option>
-                          <option value="2">Creative</option>
-                          <option value="3">Extreme</option>
-                        </select>
 
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div class="form-control-wrap">
+                        <input id="Variant" name="samples" type="number" class="form-control" value="1">
+                      </div>
+                      <div class="form-note d-flex justify-content-between">
+                        <span>number of samples to be generated (max-10)</span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <div class="form-group d-flex align-items-center flex-row-reverse">
-                      <label for="Variant" class="form-label ms-3 mb-0 flex-grow-1">Variant</label>
-                      <div class="form-control-wrap w-70px"><input id="Variant" type="number" class="form-control" value="1"></div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <button type="submit" class="btn btn-primary btn-block">Generate</button>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block" id="ai-submit-btn">
+                      <span class="spinner-grow spinner-grow-sm" id="ai-submit-btn-spinner" aria-hidden="true"></span>
+                      <span role="status">Generate...</span>
+                    </button>
                   </div>
                 </div>
               </form>
@@ -178,10 +165,65 @@
         <div class="nk-editor-body">
           <div class="tinymce-toolbar nk-editor-style-clean nk-editor-full p-4">
             <!--Body content-->
+            <div id="ai-body-editor"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    const AiForm = document.getElementById("ai-generation-form");
+    const AiBodyEditor = document.getElementById("ai-body-editor");
+    const aiSubmitBtn = document.getElementById("ai-submit-btn");
+    const aiSubmitBtnSpinner = document.getElementById("ai-submit-btn-spinner");
+
+    aiSubmitBtnSpinner.style.display = "none";
+
+    AiForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const template = document
+        .querySelector('select[name="template"]')
+        .value;
+      const content = document
+        .querySelector('textarea[name="content"]')
+        .value;
+      const keywords = document
+        .querySelector('input[name="keywords"]')
+        .value;
+      const samples = document
+        .querySelector('input[name="samples"]')
+        .value;
+
+      if (samples === '' | template === '' | content === '' | keywords === '') {
+        return
+      }
+      const response = await fetch("{% url 'ai:generate' %}", {
+        method: "POST",
+        body: JSON.stringify({template, content, keywords, samples})
+      })
+      const data = await response.json()
+
+      // before receiving the data | wait for 3 seconds before pinging the endpoint for the api stream
+      aiSubmitBtn.addEventListener('click', () => {
+        aiSubmitBtn.setAttribute('disabled', 'disabled')
+        aiSubmitBtnSpinner.style.display = "block";
+      });
+
+      setTimeout(() => {
+        // if data is not okay stop
+        if (!data.success) {
+          return
+        }
+
+        aiSubmitBtn.removeAttribute('disabled')
+        aiSubmitBtnSpinner.style.display = "none";
+
+        AiBodyEditor.innerHTML = data.content
+      }, 3000) // wit for three seconds before requesting the data
+
+    })
+  </script>
 
 {% endblock main %}

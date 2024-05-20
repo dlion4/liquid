@@ -27,6 +27,8 @@
 </style>
       {% endcompress css %} 
 
+      {% block css %}{% endblock css %}
+
     
 
   </head>
@@ -64,12 +66,15 @@
         <script src="{% static 'dashboard/assets/js/charts/chart-invest.js' %}?ver=3.2.3"></script>
         
        
-       
-        
-
+  
   
         {% endcompress %} 
+
+       
+
         {% endblock javascript %}
+
+        {% block js %}{% endblock js %}
 
     
   </body>

@@ -17,7 +17,7 @@
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}"/>
     {% compress css %}
     <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite.css' %}?ver=3.2.3"/>
-    <link  rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
+    <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
     <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}"/>
 
     <style>
@@ -28,6 +28,8 @@
 
     {% block css %}{% endblock css %}
     {% endcompress css %}
+
+    {% block editorcss %}{% endblock editorcss %}
   </head>
 
   <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
@@ -66,6 +68,8 @@
 
     {% endblock javascript %}
     {% endcompress %}
+
+    {% block js %}{% endblock js %}
   </body>
 
 </html>

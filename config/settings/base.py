@@ -92,8 +92,10 @@ THIRD_PARTY_APPS = [
     "easyaudit",  # for recordign all the user events
     "django_apscheduler",  # backup and othe rtask scheduling
     "dbbackup",  # django-dbbackup
+    # "ckeditor",  # https://pypi.org/project/django-ckeditor/#installation
+    "django_ckeditor_5",
+    "ckeditor_uploader",  # https://pypi.org/project/django-ckeditor-uploader/#installation
 ]
-
 LOCAL_APPS = [
     "amiribd.users",
     # Your stuff: custom apps go here
@@ -294,7 +296,7 @@ ADMIN_URL = "admin/"
 # Django CLIENT Dashboard URL
 DASHBOARD_URL = env.str("DJANGO_DASHBOARD_URL", default="dashboard:home")
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""kwasa""", "kwasa@example.com")]
+ADMINS = [("""kwasa""", "support@earnkraft.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 # https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
@@ -419,3 +421,372 @@ REST_FRAMEWORK = {
 
 
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+
+
+# cskeditor
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+# Define a list of allowed plugins
+CKEDITOR_ALLOWED_PLUGINS = [
+    "Bold",
+    "Italic",
+    "Underline",
+    "List",
+    "Autoformat",
+    "Mention",
+]
+
+# Simulate the builtinPlugins as a list of dictionaries
+CKEDITOR_BUILTIN_PLUGINS = [
+    {"pluginName": "Bold"},
+    {"pluginName": "Italic"},
+    {"pluginName": "Underline"},
+    {"pluginName": "List"},
+    {"pluginName": "Autoformat"},
+    {"pluginName": "Mention"},
+    {"pluginName": "OtherPlugin"},
+]
+
+
+# Filter the plugins
+CKEDITOR_FILTERED_PLUGINS = [
+    plugin["pluginName"]
+    for plugin in CKEDITOR_BUILTIN_PLUGINS
+    if plugin["pluginName"] in CKEDITOR_ALLOWED_PLUGINS
+]
+
+
+CKEDITOR_5_CONFIGS = {
+    "default": {
+        # https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+        "toolbar": {
+            "items": [
+                "aiCommands",
+                "aiAssistant",
+                "|",
+                "ckbox",
+                # "uploadImage",
+                "|",
+                "exportPDF",
+                "exportWord",
+                "|",
+                "comment",
+                "trackChanges",
+                "revisionHistory",
+                "|",
+                "findAndReplace",
+                "selectAll",
+                "formatPainter",
+                "|",
+                "undo",
+                "redo",
+                # "-",
+                "|",
+                "bold",
+                "italic",
+                "strikethrough",
+                "underline",
+                "removeFormat",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "multiLevelList",
+                "todoList",
+                "|",
+                "outdent",
+                "indent",
+                "|",
+                "alignment",
+                "|",
+                "subscript",
+                "superscript",
+                "-",
+                "heading",
+                "|",
+                "fontSize",
+                "fontFamily",
+                "fontColor",
+                "fontBackgroundColor",
+                "highlight",
+                "|",
+                "link",
+                "blockQuote",
+                "insertTable",
+                "mediaEmbed",
+                "tableOfContents",
+                "insertTemplate",
+                "|",
+                "specialCharacters",
+                "horizontalLine",
+                "pageBreak",
+            ],
+            "shouldNotGroupWhenFull": True,
+        },
+        # Changing the language of the interface requires loading the language file using the <script> tag.
+        # "language": "e",
+        "list": {"properties": {"styles": True, "startIndex": True, "reversed": True}},
+        # https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+        "heading": {
+            "options": [
+                {
+                    "model": "paragraph",
+                    "title": "Paragraph",
+                    "class": "ck-heading_paragraph",
+                },
+                {
+                    "model": "heading1",
+                    "view": "h1",
+                    "title": "Heading 1",
+                    "class": "ck-heading_heading1",
+                },
+                {
+                    "model": "heading2",
+                    "view": "h2",
+                    "title": "Heading 2",
+                    "class": "ck-heading_heading2",
+                },
+                {
+                    "model": "heading3",
+                    "view": "h3",
+                    "title": "Heading 3",
+                    "class": "ck-heading_heading3",
+                },
+                {
+                    "model": "heading4",
+                    "view": "h4",
+                    "title": "Heading 4",
+                    "class": "ck-heading_heading4",
+                },
+                {
+                    "model": "heading5",
+                    "view": "h5",
+                    "title": "Heading 5",
+                    "class": "ck-heading_heading5",
+                },
+                {
+                    "model": "heading6",
+                    "view": "h6",
+                    "title": "Heading 6",
+                    "class": "ck-heading_heading6",
+                },
+            ]
+        },
+        # https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+        "fontFamily": {
+            "options": [
+                "default, Roboto, Poppins",
+                "Arial, Helvetica, sans-serif",
+                "Courier New, Courier, monospace",
+                "Georgia, serif",
+                "Lucida Sans Unicode, Lucida Grande, sans-serif",
+                "Tahoma, Geneva, sans-serif",
+                "Times New Roman, Times, serif",
+                "Trebuchet MS, Helvetica, sans-serif",
+                "Verdana, Geneva, sans-serif",
+            ],
+            "supportAllValues": True,
+        },
+        # https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+        "fontSize": {
+            "options": [
+                10,
+                12,
+                14,
+                "default",
+                18,
+                20,
+                22,
+                24,
+                26,
+                28,
+                30,
+                48,
+                50,
+            ],
+            "supportAllValues": True,
+        },
+        # Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+        # https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+        "htmlSupport": {
+            "allow": [
+                {"name": "/.*/", "attributes": True, "classes": True, "styles": True}
+            ]
+        },
+        # Be careful with enabling previews
+        # https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+        "htmlEmbed": {"showPreviews": True},
+        # https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+        "mention": {
+            "feeds": [
+                {
+                    "marker": "@",
+                    "feed": [
+                        "@apple",
+                        "@bears",
+                        "@brownie",
+                        "@cake",
+                        "@cake",
+                        "@candy",
+                        "@canes",
+                        "@chocolate",
+                        "@cookie",
+                        "@cotton",
+                        "@cream",
+                        "@cupcake",
+                        "@danish",
+                        "@donut",
+                        "@dragée",
+                        "@fruitcake",
+                        "@gingerbread",
+                        "@gummi",
+                        "@ice",
+                        "@jelly-o",
+                        "@liquorice",
+                        "@macaroon",
+                        "@marzipan",
+                        "@oat",
+                        "@pie",
+                        "@plum",
+                        "@pudding",
+                        "@sesame",
+                        "@snaps",
+                        "@soufflé",
+                        "@sugar",
+                        "@sweet",
+                        "@topping",
+                        "@wafer",
+                    ],
+                    "minimumCharacters": 1,
+                }
+            ]
+        },
+        "template": {
+            "definitions": [
+                {
+                    "title": "The title of the template",
+                    "description": "A longer description of the template",
+                    "data": "<p>Data inserted into the content</p>",
+                },
+                {
+                    "title": "Annual financial report",
+                    "description": "A report that spells out the company's financial condition.",
+                    "data": "",
+                },
+            ]
+        },
+        # https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+        "placeholder": "Welcome to Liquid 5!",
+        # Used by real-time collaboration
+        "cloudServices": {
+            # Be careful - do not use the development token endpoint on production systems!
+            "tokenUrl": "https://110069.cke-cs.com/token/dev/QFSgjaKo9ZSzY6iuKSMwomhekcA4bCbrYKOp?limit=10",
+            "webSocketUrl": "wss://110069.cke-cs.com/ws",
+            "uploadUrl": "https://110069.cke-cs.com/easyimage/upload/",
+        },
+        # "collaboration": {
+        #     # Modify the channelId to simulate editing different documents
+        #     # https://ckeditor.com/docs/ckeditor5/latest/features/collaboration/real-time-collaboration/real-time-collaboration-integration.html#the-channelid-configuration-property
+        #     "channelId": "document-id-8"
+        # },
+        # https://ckeditor.com/docs/ckeditor5/latest/features/collaboration/annotations/annotations-custom-configuration.html#sidebar-configuration
+        "sidebar": {"container": "document.querySelector('#sidebar')"},
+        "documentOutline": {"container": "document.querySelector('#outline')"},
+        # https://ckeditor.com/docs/ckeditor5/latest/features/collaboration/real-time-collaboration/users-in-real-time-collaboration.html#users-presence-list
+        "presenceList": {
+            "container": "document.querySelector('#presence-list-container')"
+        },
+        # Add configuration for the comments editor if the Comments plugin is added.
+        # https://ckeditor.com/docs/ckeditor5/latest/features/collaboration/annotations/annotations-custom-configuration.html#comment-editor-configuration
+        "comments": {
+            "editorConfig": {
+                "extraPlugins": CKEDITOR_FILTERED_PLUGINS,
+                # Combine mentions + Webhooks to notify users about new comments
+                # https://ckeditor.com/docs/cs/latest/guides/webhooks/events.html
+                "mention": {
+                    "feeds": [
+                        {
+                            "marker": "@",
+                            "feed": [
+                                "@Baby Doe",
+                                "@Joe Doe",
+                                "@Jane Doe",
+                                "@Jane Roe",
+                                "@Richard Roe",
+                            ],
+                            "minimumCharacters": 1,
+                        }
+                    ]
+                },
+            }
+        },
+        # Do not include revision history configuration if you do not want to integrate it.
+        # Remember to remove the 'revisionHistory' button from the toolbar in such a case.
+        # "revisionHistory": {
+        #     "editorContainer": "document.querySelector('#editor-container')",
+        #     "viewerContainer": "document.querySelector('#revision-viewer-container')",
+        #     "viewerEditorElement": "document.querySelector('#revision-viewer-editor')",
+        #     "viewerSidebarContainer": "document.querySelector('#revision-viewer-sidebar')"
+        # },
+        # https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/ckbox.html
+        "ckbox": {
+            # Be careful - do not use the development token endpoint on production systems!
+            "tokenUrl": "https://110069.cke-cs.com/token/dev/QFSgjaKo9ZSzY6iuKSMwomhekcA4bCbrYKOp?limit=10"
+        },
+        "ai": {
+            # AI Assistant feature configuration.
+            # https://ckeditor.com/docs/ckeditor5/latest/features/ai-assistant.html
+            "aiAssistant": {"contentAreaCssClass": "formatted"},
+            # Configure one of the supported AI integration: OpenAI, Azure OpenAI, Amazon Bedrock
+            # https://ckeditor.com/docs/ckeditor5/latest/features/ai-assistant/ai-assistant-integration.html#integration
+            "openAI": {
+                # apiUrl: 'https://url.to.your.application/ai'
+            },
+        },
+        "style": {
+            "definitions": [
+                {
+                    "name": "Article category",
+                    "element": "h3",
+                    "classes": ["category"],
+                },
+                {"name": "Info box", "element": "p", "classes": ["info-box"]},
+            ]
+        },
+        # License key is required only by the Pagination plugin and non-realtime Comments/Track changes.
+        "licenseKey": "WVJOOHVieTNyaEVQTk9zbGFaR2RKdHhsRHlESUpKdHhsUkRlbmg1MVZRUTlvaXBaMnJTTXhvQ2xIeTh4bmc9PS1NakF5TkRBMk1Uaz0=",
+        "removePlugins": [
+            # Before enabling Pagination plugin, make sure to provide proper configuration and add relevant buttons to the toolbar
+            # https://ckeditor.com/docs/ckeditor5/latest/features/pagination/pagination.html
+            "Pagination",
+            # Intentionally disabled, file uploads are handled by CKBox
+            "Base64UploadAdapter",
+            # Intentionally disabled, file uploads are handled by CKBox
+            "CKFinder",
+            # Intentionally disabled, file uploads are handled by CKBox
+            "EasyImage",
+            # Requires additional license key
+            "WProofreader",
+            # Incompatible with real-time collaboration
+            "SourceEditing",
+            # Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+            # from a local file system (file://) - load this site via HTTP server if you enable MathType
+            "MathType",
+            # If you would like to adjust enabled collaboration features:
+            # 'RealTimeCollaborativeComments',
+            # / 'RealTimeCollaborativeTrackChanges',
+            # 'RealTimeCollaborativeRevisionHistory',
+            # 'PresenceList',
+            # 'Comments',
+            # 'TrackChanges',
+            # 'TrackChangesData',
+            # 'RevisionHistory',
+        ],
+    },
+}
+
+
+CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
+
+CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"

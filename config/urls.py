@@ -6,6 +6,7 @@ from django.urls import include
 from django.urls import path
 from django.views import defaults as default_views
 from sesame.views import LoginView
+from amiribd.articles.editor import views as ck_editor_views
 
 urlpatterns = [
     # root urls
@@ -74,7 +75,15 @@ urlpatterns = [
         "subscriptions/",
         include("amiribd.subscriptions.urls", namespace="subscriptions"),
     ),
-   
+    # ckeditor
+    # path("ckeditor/", include("ckeditor_uploader.urls")),
+    path(
+        "ckeditor5/image-upload/",
+        ck_editor_views.ck_editor_upload_files,
+        name="image_upload",
+    ),
+    path("ckeditor5/", include("django_ckeditor_5.urls")),
+    path("ai/", include("amiribd.ai.urls", namespace="ai")),
 ]
 
 
