@@ -194,3 +194,10 @@ class SupportView(DashboardViewMixin):
 
 
 support = SupportView.as_view()
+
+
+
+class AssistanceView(SupportView):
+    template_name = "account/dashboard/v1/assistance.html"
+
+assistance = AssistanceView.as_view()

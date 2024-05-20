@@ -9,127 +9,56 @@
         </a>
       </div>
       <div class="nk-header-brand d-xl-none">
-        <a href="index.html" class="logo-link"><img class="logo-light logo-img" src="{% static 'images/logo.png' %}" srcset="{% static 'images/logo2x.png' %} 2x" alt="logo"><img class="logo-dark logo-img" src="{% static 'images/logo-dark.png' %}" srcset="{% static 'images/logo-dark2x.png' %} 2x" alt="logo-dark">
+        <a href="index.html" class="logo-link"><img class="logo-light logo-img" src="{% static 'images/logo.png' %}" srcset="{% static 'images/logo2x.png' %} 2x" alt="logo"/><img class="logo-dark logo-img" src="{% static 'images/logo-dark.png' %}" srcset="{% static 'images/logo-dark2x.png' %} 2x" alt="logo-dark"/>
           <span class="nio-version">LIQUID</span></a>
       </div>
-      <div class="nk-header-news d-none d-xl-block">
-        <div class="nk-news-list">
-          <a class="nk-news-item" href="#">
-            <div class="nk-news-icon">
-              <em class="icon ni ni-card-view"></em>
-            </div>
-            <div class="nk-news-text">
-              <p>Do you know the latest update of 2022?
-                <span>
-                  A overview of our is now available on YouTube</span></p>
-              <em class="icon ni ni-external"></em>
-            </div>
-          </a>
+
+      {% block headerNews %}
+        <div class="nk-header-news d-none d-xl-block">
+          <div class="nk-news-list">
+            <a class="nk-news-item" href="#">
+              <div class="nk-news-icon">
+                <em class="icon ni ni-card-view"></em>
+              </div>
+              <div class="nk-news-text">
+                <p>
+                  Do you know the latest update of 2022?
+                  <span>
+                    A overview of our is now available on YouTube</span>
+                </p>
+                <em class="icon ni ni-external"></em>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
+      {% endblock headerNews %}
       <div class="nk-header-tools">
         <ul class="nk-quick-nav">
           <li class="dropdown language-dropdown d-none d-sm-block me-n1">
             <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
-              <div class="quick-icon border border-light"><img class="icon" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt=""></div>
+              <div class="quick-icon border border-light">
+                <img class="icon" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt=""/>
+              </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-s1">
               <ul class="language-list">
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/english.png' %}" alt="" class="language-flag">
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/english.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">English</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/spanish.png' %}" alt="" class="language-flag">
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/spanish.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">Español</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/french.png' %}" alt="" class="language-flag">
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/french.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">Français</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/turkey.png' %}" alt="" class="language-flag">
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/turkey.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">Türkçe</span></a>
                 </li>
               </ul>
-            </div>
-          </li>
-          <li class="dropdown user-dropdown">
-            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
-              <div class="user-toggle">
-                <div class="user-avatar sm">
-                  <em class="icon ni ni-user-alt"></em>
-                </div>
-
-                <div class="user-info d-none d-md-block">
-                  {% if request.user.verified %}
-                    <div class="user-status user-status-verified">Verified</div>
-                  {% else %}
-                    <div class="user-status user-status-unverified">Unverified</div>
-                  {% endif %}
-                  <div class="user-name dropdown-indicator">{{profile.full_name|truncatewords:"3"}}</div>
-                </div>
-              </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
-              <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
-                <div class="user-card">
-                  <div class="user-avatar">
-                    <span>{{profile.initials}}</span></div>
-                  <div class="user-info">
-                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span></div>
-                </div>
-              </div>
-              {% if plans %}
-                <div class="dropdown-inner user-account-info">
-                  <h6 class="overline-title-alt">Liquid Wallet Balance</h6>
-                  <div class="user-balance">{{available_amount}}
-                    <small class="currency currency-btc">KES</small>
-                  </div>
-                  <div class="user-balance-sub">Locked
-                    <span>{{locked_amount}}
-                      <span class="currency currency-btc">KES</span></span></div>
-
-                  {% if available_amount > 0.00 %}
-                    <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="link">
-                      <span>Withdraw Funds</span>
-                      <em class="icon ni ni-wallet-out"></em>
-                    </a>
-                  {% endif %}
-                </div>
-              {% endif %}
-              <div class="dropdown-inner">
-                <ul class="link-list">
-
-                  <li>
-                    <a href="{% if request.user.verified %}{% url 'profile:profile' %}{% else %}#{% endif %}">
-                      <em class="icon ni ni-user-alt"></em>
-                      <span>View Profile</span></a>
-                  </li>
-                  <li>
-                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
-                      <em class="icon ni ni-setting-alt"></em>
-                      <span>Account Setting</span></a>
-                  </li>
-                  <li>
-
-                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
-
-                      <em class="icon ni ni-activity-alt"></em>
-                      <span>Login Activity</span></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="dropdown-inner">
-                <ul class="link-list">
-                  <li>
-                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-                      <em class="icon ni ni-signout"></em>
-                      <span>Sign out</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </div>
           </li>
           <li class="dropdown notification-dropdown me-n1">
@@ -150,8 +79,10 @@
                       <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     <div class="nk-notification-content">
-                      <div class="nk-notification-text">You have requested to
-                        <span>Widthdrawl</span></div>
+                      <div class="nk-notification-text">
+                        You have requested to
+                        <span>Widthdrawl</span>
+                      </div>
                       <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                   </div>
@@ -160,9 +91,11 @@
                       <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                     </div>
                     <div class="nk-notification-content">
-                      <div class="nk-notification-text">Your
+                      <div class="nk-notification-text">
+                        Your
                         <span>Deposit Order</span>
-                        is placed</div>
+                        is placed
+                      </div>
                       <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                   </div>
@@ -171,8 +104,10 @@
                       <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     <div class="nk-notification-content">
-                      <div class="nk-notification-text">You have requested to
-                        <span>Widthdrawl</span></div>
+                      <div class="nk-notification-text">
+                        You have requested to
+                        <span>Widthdrawl</span>
+                      </div>
                       <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                   </div>
@@ -181,9 +116,11 @@
                       <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                     </div>
                     <div class="nk-notification-content">
-                      <div class="nk-notification-text">Your
+                      <div class="nk-notification-text">
+                        Your
                         <span>Deposit Order</span>
-                        is placed</div>
+                        is placed
+                      </div>
                       <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                   </div>
@@ -192,8 +129,10 @@
                       <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     <div class="nk-notification-content">
-                      <div class="nk-notification-text">You have requested to
-                        <span>Widthdrawl</span></div>
+                      <div class="nk-notification-text">
+                        You have requested to
+                        <span>Widthdrawl</span>
+                      </div>
                       <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                   </div>
@@ -202,9 +141,11 @@
                       <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                     </div>
                     <div class="nk-notification-content">
-                      <div class="nk-notification-text">Your
+                      <div class="nk-notification-text">
+                        Your
                         <span>Deposit Order</span>
-                        is placed</div>
+                        is placed
+                      </div>
                       <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                   </div>
@@ -212,6 +153,90 @@
               </div>
               <div class="dropdown-foot center">
                 <a href="#">View All</a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown user-dropdown">
+            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+              <div class="user-toggle">
+                <div class="user-avatar sm">
+                  <em class="icon ni ni-user-alt"></em>
+                </div>
+
+                <div class="user-info d-none d-md-block">
+                  {% if request.user.verified %}
+                    <div class="user-status user-status-verified">Verified</div>
+                  {% else %}
+                    <div class="user-status user-status-unverified">
+                      Unverified
+                    </div>
+                  {% endif %}
+                  <div class="user-name dropdown-indicator">
+                    {{profile.full_name|truncatewords:"3"}}
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+              <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                <div class="user-card">
+                  <div class="user-avatar">
+                    <span>{{profile.initials}}</span>
+                  </div>
+                  <div class="user-info">
+                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span>
+                  </div>
+                </div>
+              </div>
+              {% if plans %}
+                <div class="dropdown-inner user-account-info">
+                  <h6 class="overline-title-alt">Liquid Wallet Balance</h6>
+                  <div class="user-balance">
+                    {{available_amount}}
+                    <small class="currency currency-btc">KES</small>
+                  </div>
+                  <div class="user-balance-sub">
+                    Locked
+                    <span>{{locked_amount}}
+                      <span class="currency currency-btc">KES</span></span>
+                  </div>
+
+                  {% if available_amount > 0.00 %}
+                    <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="link">
+                      <span>Withdraw Funds</span>
+                      <em class="icon ni ni-wallet-out"></em>
+                    </a>
+                  {% endif %}
+                </div>
+              {% endif %}
+              <div class="dropdown-inner">
+                <ul class="link-list">
+                  <li>
+                    <a href="{% if request.user.verified %}{% url 'profile:profile' %}{% else %}#{% endif %}">
+                      <em class="icon ni ni-user-alt"></em>
+                      <span>View Profile</span></a>
+                  </li>
+                  <li>
+                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
+                      <em class="icon ni ni-setting-alt"></em>
+                      <span>Account Setting</span></a>
+                  </li>
+                  <li>
+                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
+                      <em class="icon ni ni-activity-alt"></em>
+                      <span>Login Activity</span></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="dropdown-inner">
+                <ul class="link-list">
+                  <li>
+                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                      <em class="icon ni ni-signout"></em>
+                      <span>Sign out</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </li>
