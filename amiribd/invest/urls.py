@@ -19,7 +19,6 @@ from .views import (
     modified_referal_view,
     modified_bonus_view,
     modified_whatsapp_view,
-<<<<<<< HEAD
     modified_jobs_view ,
     # modified_invest_view,
     modified_academic_view,
@@ -31,13 +30,10 @@ from .views import (
 
 
 
-=======
     modified_jobs_view,
-    modified_invest_view,
-    modified_advertisment_view,
+    
     modified_loans_view,
     modified_vip_view,
->>>>>>> ac97029b4b35e2c247cbfa4709344a46943dd60c
 )
 
 app_name = "invest"
@@ -118,7 +114,6 @@ urlpatterns = [
         name="jobs",
     ),
     path(
-<<<<<<< HEAD
         "investment_plan/",
        modified_investplan_view,
         name="invest_plan",
@@ -132,22 +127,13 @@ urlpatterns = [
         "invest-record/",
       modified_investrecord_view,
         name="invest-record",
-=======
-        "invest/",
-        modified_invest_view,
-        name="invest_modified",
->>>>>>> ac97029b4b35e2c247cbfa4709344a46943dd60c
     ),
     path(
-<<<<<<< HEAD
         "academic_writing_accounts/",
       modified_academic_view,
         name="academic_writing_accounts",
-=======
-        "advertisment/",
-        modified_advertisment_view,
-        name="advertisment",
->>>>>>> ac97029b4b35e2c247cbfa4709344a46943dd60c
+        
+        
     ),
     path(
         "loans/",
