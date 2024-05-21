@@ -151,7 +151,7 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-block" id="ai-submit-btn">
+                    <button type="submit" class="btn btn-primary btn-block" id="ai-submit-btn" disabled="disabled">
                       <span class="spinner-grow spinner-grow-sm" id="ai-submit-btn-spinner" aria-hidden="true"></span>
                       <span role="status">Generate...</span>
                     </button>
@@ -171,59 +171,5 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const AiForm = document.getElementById("ai-generation-form");
-    const AiBodyEditor = document.getElementById("ai-body-editor");
-    const aiSubmitBtn = document.getElementById("ai-submit-btn");
-    const aiSubmitBtnSpinner = document.getElementById("ai-submit-btn-spinner");
-
-    aiSubmitBtnSpinner.style.display = "none";
-
-    AiForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const template = document
-        .querySelector('select[name="template"]')
-        .value;
-      const content = document
-        .querySelector('textarea[name="content"]')
-        .value;
-      const keywords = document
-        .querySelector('input[name="keywords"]')
-        .value;
-      const samples = document
-        .querySelector('input[name="samples"]')
-        .value;
-
-      if (samples === '' | template === '' | content === '' | keywords === '') {
-        return
-      }
-      const response = await fetch("{% url 'ai:generate' %}", {
-        method: "POST",
-        body: JSON.stringify({template, content, keywords, samples})
-      })
-      const data = await response.json()
-
-      // before receiving the data | wait for 3 seconds before pinging the endpoint for the api stream
-      aiSubmitBtn.addEventListener('click', () => {
-        aiSubmitBtn.setAttribute('disabled', 'disabled')
-        aiSubmitBtnSpinner.style.display = "block";
-      });
-
-      setTimeout(() => {
-        // if data is not okay stop
-        if (!data.success) {
-          return
-        }
-
-        aiSubmitBtn.removeAttribute('disabled')
-        aiSubmitBtnSpinner.style.display = "none";
-
-        AiBodyEditor.innerHTML = data.content
-      }, 3000) // wit for three seconds before requesting the data
-
-    })
-  </script>
 
 {% endblock main %}

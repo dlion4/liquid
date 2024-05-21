@@ -20,64 +20,69 @@
           <th class="nk-tb-col tb-col-md">
             <h6 class="overline-title">Last Modified</h6>
           </th>
-          <th class="nk-tb-col">
+          <th class="nk-tb-col tb-col-end">
             <h6 class="overline-title">Actions</h6>
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="nk-tb-item">
-          <td class="nk-tb-col nk-tb-col-check">
-            <div class="custom-control custom-control-sm custom-checkbox notext checked"><input type="checkbox" class="custom-control-input" id="did-01">
-              <label class="custom-control-label" for="did-01"></label>
-            </div>
-          </td>
-          <td class="nk-tb-col">
-            <div class="caption-text">The Impact of Artificial Work</div>
-          </td>
-          <td class="nk-tb-col tb-col-sm">
-            <div class="">$ 54.89</div>
-          </td>
-          <td class="nk-tb-col tb-col-sm">
-            <div class="badge badge-dim bg-dark rounded-pill">Document</div>
-          </td>
-          <td class="nk-tb-col tb-col-md">
-            <div class="sub-text d-inline-flex flex-wrap gx-2">
-              <div>Feb 15,2023
-              </div>
-              <div>02:31 PM</div>
-            </div>
-          </td>
-          <td class="nk-tb-col tb-col-end">
-            <div class="dropdown">
-              <button class="btn btn-sm btn-icon btn-trigger me-n1" type="button" data-bs-toggle="dropdown">
-                <em class="icon ni ni-more-h"></em>
-              </button>
-              <div class="dropdown-menu dropdown-menu-end">
-                <div class="dropdown-content">
-                  <ul class="link-list-opt no-bdr">
-                    <li>
-                      <a href="#">
-                        <em class="icon ni ni-eye"></em>
-                        <span>View Document</span></a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <em class="icon ni ni-edit"></em>
-                        <span>Rename</span></a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <em class="icon ni ni-trash"></em>
-                        <span>Move to Trash</span></a>
-                    </li>
-                  </ul>
+      {% if articles %}
+        <tbody>
+          {% for article in articles %}
+            <tr class="nk-tb-item">
+              <td class="nk-tb-col nk-tb-col-check">
+                <div class="custom-control custom-control-sm custom-checkbox notext checked"><input type="checkbox" class="custom-control-input" id="did-01">
+                  <label class="custom-control-label" for="did-01"></label>
                 </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+              </td>
+              <td class="nk-tb-col">
+                <div class="caption-text">{{article.title|title|truncatewords:"3"}}</div>
+              </td>
+              <td class="nk-tb-col tb-col-sm">
+                <div class="">KES 0.00</div>
+              </td>
+              <td class="nk-tb-col tb-col-sm">
+                <div class="badge badge-dim bg-dark rounded-pill">Document</div>
+              </td>
+              <td class="nk-tb-col tb-col-md">
+                <div class="sub-text d-inline-flex flex-wrap gx-2">
+                  <div>
+                    {{article.created_at|date:"M d, Y"}}
+                  </div>
+                  <div>{{article.created_at|date:"h:i A"}}</div>
+                </div>
+              </td>
+              <td class="nk-tb-col tb-col-end">
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-icon btn-trigger me-n1" type="button" data-bs-toggle="dropdown">
+                    <em class="icon ni ni-more-h"></em>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <div class="dropdown-content">
+                      <ul class="link-list-opt no-bdr">
+                        <li>
+                          <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{{article.get_absolute_url}}">
+                            <em class="icon ni ni-eye"></em>
+                            <span>View Document</span></a>
+                        </li>
+                        <li>
+                          <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{{article.get_update_url}}">
+                            <em class="icon ni ni-edit"></em>
+                            <span>Edit</span></a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <em class="icon ni ni-trash"></em>
+                            <span>Move to Trash</span></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      {% endif %}
     </table>
   </div>
 </div>

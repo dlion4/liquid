@@ -65,7 +65,7 @@
           const emailResponseBox = document.getElementById('email-lookup-result');
           const responseBox = emailResponseBox.getAttribute("data-bt-state")
 
-          const submitButton = document.getElementById('submitBtn');
+          let submitButton = document.getElementById('submitBtn');
           if (responseBox === "disabled") {
 
             submitButton.setAttribute("disabled", "disabled")
