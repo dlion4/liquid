@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="nk-wg1-action">
-            <a href="{% url 'profile:profile' %}" class="link">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="link">
               <span>Manage Your Account</span>
               <em class="icon ni ni-chevron-right"></em>
             </a>
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="nk-wg1-action">
-            <a href="profile-setting.html" class="link">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="profile-setting.html" class="link">
               <span>Account Setting</span>
               <em class="icon ni ni-chevron-right"></em>
             </a>
@@ -94,13 +94,13 @@
               </svg>
             </div>
             <div class="nk-wg1-text">
-              <h5 class="title">Billing History</h5>
-              <p>Check out all your payment history. You can also download or print your invoice.</p>
+              <h5 class="title">Payment Channel</h5>
+              <p>Where my payment are channelled to. Update or use the registered phone number.</p>
             </div>
           </div>
           <div class="nk-wg1-action">
-            <a href="payments.html" class="link">
-              <span>Payment History</span>
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="payments.html" class="link">
+              <span>Update payment channel</span>
               <em class="icon ni ni-chevron-right"></em>
             </a>
           </div>
@@ -134,7 +134,7 @@
             </div>
           </div>
           <div class="nk-wg1-action">
-            <a href="{% url 'subscriptions:list' %}" class="link">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'subscriptions:list' %}" class="link">
               <span>Manage Subscription</span>
               <em class="icon ni ni-chevron-right"></em>
             </a>
