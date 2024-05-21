@@ -2,7 +2,7 @@
 {% block heading %}
   <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between flex-wrap g-1 align-start">
-      <div class="nk-block-head-content">
+      {% comment %} <div class="nk-block-head-content">
         <h5 class="nk-block-title">{{article.title|title}}</h5>
         <p>There’s currently no vaccine to prevent coronavirus disease (COVID-19).</p>
       </div>
@@ -11,7 +11,7 @@
           <span>Explore more writings</span>
           <em class="icon ni ni-arrow-long-right"></em>
         </a>
-      </div>
+      </div> {% endcomment %}
     </div>
   </div>
 
@@ -40,9 +40,7 @@
           <div class="card-inner card-inner-lg">
             <div class="alert-alt alert-danger alert-icon">
               <em class="icon ni ni-help-alt"></em>
-              <strong>If you develop a fever, cough, and have difficulty breathing, promptly seek medical care.
-                <br class="d-none d-lg-block">
-                Call in advance and tell your health provider as soon as possible for medical advice.</strong>
+              <h3>{{article.title|title|linebreaks}}</h3>
             </div>
             <div class="entry mt-5">
               {{article.content|safe}}
