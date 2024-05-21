@@ -1,10 +1,130 @@
 {% load static %}
 
+<style>
+  section {
+  padding-bottom: 60px;
+  background-color: #f1f1f1;
+}
+
+.how-it-works h2 {
+  margin-top: 60px;
+  margin-bottom: 1.8rem;
+}
+
+.how-it-works .box {
+  text-align: left;
+  border-left: 18px solid #f1f1f1;
+  background-color: #fff;
+}
+
+.box::before {
+  content: "\f058";
+  color: #d60e96;
+  font-family: FontAwesome;
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  margin-top: -25px;
+  font-size: 2.5rem;
+}
+
+@media (min-width: 600px) {
+  .how-it-works .d-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .box.col-md-6 {
+    width: 47%;
+    max-width: 47%;
+  }
+}
+</style>
+
+
+<!--ne styles-->
+<section class="how-it-works">
+  <div class="container">
+    <div class="row pb-5">
+      <div class="text-center col-md-8 mx-auto">
+        <h2>How it Works</h2>
+        <p>SpaceJet is transforming the travel experience, combining sleek, rocket-powered jetcraft with five-star luxury service to the stars. Space has never been closer – go explore it.</p>
+      </div>
+    </div>
+
+    <div class="row content">
+      <div class="row pb-5">
+
+        <div class="col-md-6 mt-2 mt-md-0 p-2 pl-4 box mb-3">
+          <div class="d-flex p-3 bg-white align-items-center justify-content-between">
+            <div class="p-1">
+              <h3 class="h4 mt-3 ">SpaceJet training</h3>
+              <p class="mt-3">At SpaceJet we provide complete training before and during your trip so you can enjoy the most thrilling excursions this side of Mars.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2 mt-md-0 p-2 pl-4 box mb-3">
+          <div class="d-flex p-3 bg-white align-items-center justify-content-between">
+            <div class="p-1">
+              <h3 class="h4 mt-3 ">Choose Your Flight</h3>
+              <p class="mt-3">Depart conveniently from Orlando, Houston, or Los Angeles</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2 mt-md-0 p-2 pl-4 box mb-3">
+          <div class="d-flex p-3 bg-white align-items-center justify-content-between">
+            <div class="p-1">
+              <h3 class="h4 mt-3 ">SkyDrift Hotel reservations</h3>
+
+              <p class="mt-3">Book your stay at the world’s only orbital luxury hotel, where you’ll be treated to breathtaking views of earth, award-winning restaurants.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2 mt-md-0 p-2 pl-4 box mb-3">
+          <div class="d-flex p-3 bg-white align-items-center justify-content-between">
+            <div class="p-1">
+              <h3 class="h4 mt-3 ">SpaceJet mobile app</h3>
+              <p class="mt-3">Book your flight and ground transportation, order floating room service, schedule a romantic spacewalk and so much more.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2 mt-md-0 p-2 pl-4 box mb-3">
+          <div class="d-flex p-3 bg-white align-items-center justify-content-between">
+            <div class="p-1">
+              <h3 class="h4 mt-3 ">Book Daily Flights</h3>
+              <p class="mt-3">Depart conveniently from Orlando, Houston, or Los Angeles</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-2 mt-md-0 p-2 pl-4 box mb-3">
+          <div class="d-flex p-3 bg-white align-items-center justify-content-between">
+            <div class="p-1">
+              <h3 class="h4 mt-3 ">Enjoy the Orbital entertainment</h3>
+              <p class="mt-3">See musical performances that are literally out of this world</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
 <!-- section content begin -->
 <div class="uk-section uk-section-default uk-padding-remove-vertical in-wave-5 in-offset-bottom-30">
   <div class="uk-container">
     <div class="uk-grid">
-      <div class="uk-width-1-1 uk-background-contain uk-background-center-right uk-background-image@s" style="background-image: url({% static 'img/in-wave-mockup-1.png' %});">
+      <!-- <div class="uk-width-1-1 uk-background-contain uk-background-center-right uk-background-image@s" style="background-image: url({% static 'img/in-wave-mockup-1.png' %});">
         <h1 class="uk-margin-remove-bottom">Smart
           <span class="uk-text-primary">investment</span></h1>
         <p class="uk-text-lead">on
@@ -28,7 +148,7 @@
               <span>Microsoft Store</span></span>
           </a>
         </div>
-      </div>
+      </div> -->
       <div class="uk-width-1-1 in-price-list">
         <div data-uk-slider="autoplay: true; autoplay-interval: 5000">
           <ul class="uk-slider-items uk-child-width-1-3@s uk-child-width-1-5@m uk-text-small uk-text-center" data-uk-grid="data-uk-grid">
