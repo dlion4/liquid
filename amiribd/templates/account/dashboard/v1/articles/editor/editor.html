@@ -1,21 +1,17 @@
-{% extends "account/dashboard/v1/articles/editor/base.html" %} {% block main %}
+{% extends "account/dashboard/v1/articles/editor/base.html" %} 
+
+
+{% comment %}  {% endcomment %}
+{% block main %}
 
 <div class="card">
   <div class="nk-editor">
     <div class="nk-editor-header">
       <div class="nk-editor-title">
-        <h4 class="me-3 mb-0 line-clamp-1">2023-02-03 Untitled</h4>
-        <ul class="d-inline-flex align-item-center">
-          <li>
-            <button class="btn btn-sm btn-icon btn-trigger">
-              <em class="icon ni ni-pen"></em>
-            </button>
-          </li>
-          <li>
-            <button class="btn btn-sm btn-icon btn-trigger">
-              <em class="icon ni ni-star"></em>
-            </button>
-          </li>
+         
+          <div class="ms-4"></div>
+          <div class="ms-5"></div>
+        <ul class="d-inline-flex align-item-center ms-5">
           <li class="d-xl-none">
             <div class="dropdown">
               <button
@@ -54,16 +50,7 @@
       </div>
       <div class="nk-editor-tools d-none d-xl-flex">
         <ul class="d-inline-flex gx-3 gx-lg-4 pe-4 pe-lg-5">
-          <li>
-            <span class="sub-text text-nowrap"
-              >Words <span class="text-dark">25</span></span
-            >
-          </li>
-          <li>
-            <span class="sub-text text-nowrap"
-              >Characters <span class="text-dark">84</span></span
-            >
-          </li>
+         
         </ul>
         <ul class="d-inline-flex gx-3">
           <li>
@@ -114,7 +101,7 @@
               href="#AIWriter"
               aria-selected="true"
               role="tab"
-              >AI Writer</a
+              >Writer</a
             >
           </li>
           <li class="nav-item" role="presentation">
@@ -147,9 +134,16 @@
             <div class="container">
               <div id="outline" class="document-outline-container"></div>
               <div class="sidebar" id="sidebar"></div>
-              <form method="POST">
-                {% csrf_token %} {{form.media}} {{form.content}}
-                <input type="submit" value="Submit article" />
+              <form method="POST" action="{{request.path}}">
+                {% csrf_token %} {{form.media}}
+                <div class="form-group">
+                 {{form.title}}
+                </div>
+                {{form.content}}
+                <div class="row mt-4 gap-4 mb-3 w-full mx-auto text-center">
+                  <button class="me-2 col-12 btn btn-primary btn-lg text-center" type="submit">Submit article</button>
+                </div>
+               </div>
               </form>
             </div>
           </div>
@@ -186,6 +180,16 @@
     }
     return cookieValue;
   }
+
+  document.getElementById("id_content_script-word-count").style.display = "none";
+
+</script>
+
+
+<script>
+  const titleInput = document.getElementById("title-edit-input")
+
+
 </script>
 
 {% endblock main %}

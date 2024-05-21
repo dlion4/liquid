@@ -15,4 +15,9 @@ urlpatterns = [
         views.ContentAiEditPostView.as_view(),
         name="new-article-ai-edit",
     ),
+    # articel minor edits
+    path(
+        "htmx/",
+        include("amiribd.articles.editor.htmx.urls", namespace="article_minor_edits"),
+    ),
 ]

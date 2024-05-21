@@ -1,0 +1,108 @@
+{% extends "account/dashboard/v1/articles/base.html" %}
+{% block heading %}
+  <div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between flex-wrap g-1 align-start">
+      <div class="nk-block-head-content">
+        <h5 class="nk-block-title">{{article.title|title}}</h5>
+        <p>There’s currently no vaccine to prevent coronavirus disease (COVID-19).</p>
+      </div>
+      <div class="nk-block-head-content">
+        <a href="" class="link">
+          <span>Explore more writings</span>
+          <em class="icon ni ni-arrow-long-right"></em>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .sticky {
+      position: fixed !important;
+      top: 0;
+      right: 0;
+      width: 26.15%;
+      bottom: 40px !important;
+    }
+
+    .move-up {
+      top: -50px;
+      /* Move up by 50px */
+    }
+  </style>
+{% endblock heading %}
+
+{% block main %}
+
+  <div class="nk-block mb-5">
+    <div class="row g-3">
+      <div class="col-xl-8" id="scroll-column">
+        <div class="card card-bordered">
+          <div class="card-inner card-inner-lg">
+            <div class="alert-alt alert-danger alert-icon">
+              <em class="icon ni ni-help-alt"></em>
+              <strong>If you develop a fever, cough, and have difficulty breathing, promptly seek medical care.
+                <br class="d-none d-lg-block">
+                Call in advance and tell your health provider as soon as possible for medical advice.</strong>
+            </div>
+            <div class="entry mt-5">
+              {{article.content|safe}}
+              <p class="sub-text mt-5">
+                Once an article has been purchased by by us although the writer will get featured.
+                <span>(Author:{{article.profile}})</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4" id="sticky-column">
+        <div class="ratio ratio-16x9">
+          <iframe class="ratio-item" src="https://www.youtube.com/embed/0Ni00XDSd6E?si=Ml2C2vvAqmunj-dU&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="allowfullscreen"></iframe>
+        </div>
+        <div class="entry mt-5">
+          <h5 class="text-primary">Symptoms and what to do</h5>
+          <p class="text-danger">
+            <strong>You must do not leave your home</strong>
+            if you have any of
+            <strong>coronavirus symptoms</strong>
+            (a high temperature or a new, continuous cough) call your medical service.</p>
+          <h6 class="text-primary">Stay at home to stop coronavirus spreading</h6>
+          <p>Everyone must stay at home to help stop the spread of coronavirus. You should only leave the house for very limited purposes:</p>
+          <ul class="list">
+            <li>shopping for basic necessities, for example food and medicine, which must be as important.</li>
+            <li>one form of exercise a day, for example a run, walk, or cycle – alone or with members of your household</li>
+            <li>any medical need, including to donate blood, avoid or escape risk of injury or harm, or to provide care or to help a vulnerable person.</li>
+            <li>travelling for work purposes, but only where you cannot work from home.</li>
+          </ul>
+        </div>
+        <h5 class="title mt-5 mb-3">Quick Links</h5>
+        <ul class="gy-3">
+          <li>
+            <a href="" class="link link-block link-between">
+              <span>Q&amp;A on Coronaviruses</span>
+              <em class="icon ni ni-arrow-long-right"></em>
+            </a>
+          </li>
+          <li>
+            <a href="" class="link link-block link-between">
+              <span>Prevention of Coronavirus</span>
+              <em class="icon ni ni-arrow-long-right"></em>
+            </a>
+          </li>
+          <li>
+            <a href="" target="_blank" class="link link-block link-between">
+              <span>Learn more on who.int</span>
+              <em class="icon ni ni-arrow-long-right"></em>
+            </a>
+          </li>
+        </ul>
+
+        {% for x in "222222222" %}
+          <br/>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script></script>
+
+{% endblock main %}

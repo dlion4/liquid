@@ -21,7 +21,11 @@ urlpatterns = [
         views.PaymentPlanForAiView.as_view(),
         name="payment-for-plans-for-ai",
     ),
-
+    path(
+        "articles/<slug>/<tm__year>/<tm__month>/<tm__day>/",
+        views.ArticleDetailView.as_view(),
+        name="article-detail",
+    ),
     # include the editor url
-    path("editor/", include("amiribd.articles.editor.urls", namespace="editor"))
+    path("editor/", include("amiribd.articles.editor.urls", namespace="editor")),
 ]
