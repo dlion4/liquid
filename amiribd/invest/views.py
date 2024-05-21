@@ -306,26 +306,26 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
     htmx_template_name = "account/dashboard/investment/partials/transactions.html"
     queryset = Account
     plan = Plan
-    tarnasaction = Transaction
+    transaction = Transaction
 
     def __transactions(self):
         return Transaction.objects.filter(
             profile=self._get_user().profile_user
         ).order_by("-id")
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         plan = get_object_or_404(
             self.plan,
             account__pool__profile=self._get_user().profile_user,
-            slug=self.kwargs.get("plan_slug"),
-            pk=self.kwargs.get("plan_id"),
+            slug=kwargs.get("plan_slug"),
+            pk=kwargs.get("plan_id"),
         )
 
         return plan
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["plan"] = self.get_object()
+        context["plan"] = self.get_object(**kwargs)
         context["transactions"] = self.__transactions()
         context["withdrawal_form"] = AccountEventWithdrawalForm()
         context["cancel_plan_form"] = CancelPlanForm()
@@ -358,7 +358,6 @@ modified_widthdrawal_view = WidsthdrawView.as_view()
 
 
 class WalletView(DashboardViewMixin):
-    # template_name = "account/dashboard/investment/wallet.html"
     template_name = "account/dashboard/v1/investment/wallet.html"
 
 

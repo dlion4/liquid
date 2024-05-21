@@ -148,17 +148,17 @@
 
             <ul class="link-list">
               <li>
-                <a href="">
+                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:profile' %}">
                   <em class="icon ni ni-user-alt"></em>
                   <span>View Profile</span></a>
               </li>
               <li>
-                <a href="profile-security.html">
+                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:profile' %}">
                   <em class="icon ni ni-setting-alt"></em>
                   <span>Account Setting</span></a>
               </li>
               <li>
-                <a href="profile-activity.html">
+                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:profile' %}">
                   <em class="icon ni ni-activity-alt"></em>
                   <span>Login Activity</span></a>
               </li>
@@ -186,28 +186,28 @@
             </li>
 
             <li class="nk-menu-item">
-              <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:wallet' %}" class="nk-menu-link">
+              <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:wallet' %}" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-wallet-alt"></em>
                 </span><span class="nk-menu-text">Wallets</span>
               </a>
             </li>
             <li class="nk-menu-item">
-              <a href="buy-sell.html" class="nk-menu-link">
+              <a href="/buy-sell/" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-coins"></em>
                 </span><span class="nk-menu-text">Buy / Sell</span>
               </a>
             </li>
             <li class="nk-menu-item">
-              <a href="order-history.html" class="nk-menu-link">
+              <a href="/order-history/" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-repeat"></em>
                 </span><span class="nk-menu-text">Orders</span>
               </a>
             </li>
             <li class="nk-menu-item">
-              <a href="order-history.html" class="nk-menu-link">
+              <a href="/articles/" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-article"></em>
                 </span><span class="nk-menu-text">Articles</span>
@@ -231,7 +231,7 @@
               <ul class="nk-menu-sub">
 
                 <li class="nk-menu-item">
-                  <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:wallet' %}" class="nk-menu-link">
+                  <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:wallet' %}" class="nk-menu-link">
                     <span class="nk-menu-text">Wallet
                     </span>
                   </a>
@@ -421,5 +421,3 @@
     </div>
   </div>
 </div>
-
-

@@ -89,6 +89,7 @@ urlpatterns = [
         modified_wallet_view,
         name="wallet",
     ),
+
     path(
         "referals/",
         modified_referal_view,

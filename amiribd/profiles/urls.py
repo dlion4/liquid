@@ -36,4 +36,8 @@ urlpatterns = [
         name="social-connected",
     ),
     path("async/", include("amiribd.profiles.async.urls", namespace="async")),
+    path(
+        "wallet-v1/",
+        include("amiribd.invest.wallet.urls", namespace="wallet"),
+    ),
 ]
