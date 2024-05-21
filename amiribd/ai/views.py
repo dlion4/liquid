@@ -6,50 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 
-keywords = ["GPT", "Nvidia", "Generative AI"]
-
-input_messages = [
-    {
-        "role": "system",
-        "content": """Generate articles that follow the users instructions exactly.""",
-    },
-    {
-        "role": "user",
-        "content": f"""Please generate an article using every keyword from the following list of words at least once in the article: {keywords}.
-Do not cluster the keywords together. The keywords must be sprinkled through the article in an organic manner, and each one used sparingly.
-Ensure the article is at least 500 words long, and no longer than 1000 words.""",
-    },
-    {
-        "role": "assistant",
-        "content": f"""Here is an article using each keyword in this list {keywords}:
-
-Article: """,
-    },
-]
-# print(input_messages)
-
-
-# completion = openai.ChatCompletion.create(
-#     model="gpt-3.5-turbo-16k-0613",
-#     messages=input_messages
-# )
 
 
 client = Client()
 
-paragraph = (
-    "Write a blog of 300 words with the heading 'The rise of alexander the great'"
-)
 
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": paragraph},
-    ],
-    temperature=0.7,
-)
-print(response.choices[0].message.content)
 
 
 class AIGenerateContentView(View):
