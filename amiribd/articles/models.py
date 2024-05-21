@@ -36,6 +36,16 @@ class Article(models.Model):
                 "tm__day": self.created_at.day,
             },
         )
+    def get_update_url(self):
+        return reverse(
+            "dashboard:articles:article-detail-edit",
+            kwargs={
+                "slug": self.slug,
+                "tm__year": self.created_at.year,
+                "tm__month": self.created_at.month,
+                "tm__day": self.created_at.day,
+            },
+        )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

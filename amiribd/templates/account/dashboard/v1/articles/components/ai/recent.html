@@ -65,9 +65,9 @@
                             <span>View Document</span></a>
                         </li>
                         <li>
-                          <a href="#">
+                          <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{{article.get_update_url}}">
                             <em class="icon ni ni-edit"></em>
-                            <span>Rename</span></a>
+                            <span>Edit</span></a>
                         </li>
                         <li>
                           <a href="#">

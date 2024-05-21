@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from amiribd.articles.editor.views import ContentArticleUpdateView
 
 app_name = "articles"
 
@@ -22,9 +23,14 @@ urlpatterns = [
         name="payment-for-plans-for-ai",
     ),
     path(
-        "articles/<slug>/<tm__year>/<tm__month>/<tm__day>/",
+        "articles/<tm__year>/<tm__month>/<tm__day>/<slug>/",
         views.ArticleDetailView.as_view(),
         name="article-detail",
+    ),
+    path(
+        "articles/<tm__year>/<tm__month>/<tm__day>/<slug>/edit/",
+        ContentArticleUpdateView.as_view(),
+        name="article-detail-edit",
     ),
     # include the editor url
     path("editor/", include("amiribd.articles.editor.urls", namespace="editor")),

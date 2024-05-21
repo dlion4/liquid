@@ -1,6 +1,7 @@
+from amiribd.articles.models import Article
 from amiribd.articles.views import ArticleMixinView
 from amiribd.articles.forms import ArticleForm
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 # views.py
 
@@ -35,6 +36,38 @@ class ContentCreationEditorView(ArticleMixinView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
+        if not form.is_valid():
+            print(form.errors)
+            return render(request, self.template_name, {"form": form})
+        instance = form.save(commit=False)
+        instance.profile = self.request.user.profile_user
+        instance.save()
+        return redirect(instance)
+
+
+class ContentArticleUpdateView(ArticleMixinView):
+    template_name = "account/dashboard/v1/articles/editor/editor.html"
+    form_class = ArticleForm
+
+    def get_object(self, **kwargs):
+        return get_object_or_404(
+            Article,
+            profile=self.get_profile(),
+            slug=self.kwargs.get("slug"),
+            created_at__year=self.kwargs.get("tm__year"),
+            created_at__month=self.kwargs.get("tm__month"),
+            created_at__day=self.kwargs.get("tm__day"),
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form_class(instance=self.get_object(**kwargs))
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(
+            request.POST, request.FILES, instance=self.get_object(**kwargs)
+        )
         if not form.is_valid():
             print(form.errors)
             return render(request, self.template_name, {"form": form})

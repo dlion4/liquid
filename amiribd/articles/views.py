@@ -99,3 +99,5 @@ class ArticleDetailView(DashboardViewMixin):
         context = super().get_context_data(**kwargs)
         context["article"] = self.get_object(**kwargs)
         return context
+
+
