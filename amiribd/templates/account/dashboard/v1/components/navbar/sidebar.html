@@ -386,18 +386,34 @@
         {% endif %}
         <hr/>
         <div class="nk-sidebar-footer">
-          <ul class="nk-menu nk-menu-footer">
-            <li class="nk-menu-item">
+          <ul class="nk-menu nk-menu-footer d-flex flex-wrap mb-3">
+            <li class="nk-menu-item me-3">
               <a href="#" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-help-alt"></em>
                 </span><span class="nk-menu-text">Support</span>
               </a>
             </li>
-            <li class="nk-menu-item ms-auto">
+            <li class="nk-menu-item me-3">
               <div class="dropup">
                 {% include "account/dashboard/v1/components/languages.html" %}
               </div>
+            </li>
+            <li class="nk-menu-item">
+              <a data-bs-toggle="modal" href="#covid-feedback" class="nk-menu-link">
+                <span class="nk-menu-icon">
+                  <em class="icon ni ni-chat-fill"></em>
+                </span>
+                <span class="nk-menu-text">Feedback</span>
+              </a>
+            </li>
+            <li class="nk-menu-item">
+              <a data-bs-toggle="modal" href="#covid-about" class="nk-menu-link">
+                <span class="nk-menu-icon">
+                  <em class="icon ni ni-info-fill"></em>
+                </span>
+                <span class="nk-menu-text">About Data</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -405,3 +421,5 @@
     </div>
   </div>
 </div>
+
+

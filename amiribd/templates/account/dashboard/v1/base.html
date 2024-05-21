@@ -114,4 +114,42 @@
     });
   </script>
 
+
+  {% comment %} About Site {% endcomment %}
+  <div class="modal fade" tabindex="-1" id="covid-about" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <em class="icon ni ni-cross"></em>
+        </a>
+        <div class="modal-body">
+          <h5 class="title mb-3">About this data</h5>
+          <h6 class="lead-text text-primary">It changes rapidly</h6>
+          <p>This data changes rapidly, so what’s shown may be out of date. Table totals may not always represent an accurate sum. Information about reported cases is also available on the
+            <a href="#">World Health Organization</a>
+            &amp;
+            <a href="#">WorldoMeters.info</a>
+            site.</p>
+          <h6 class="lead-text text-primary">It doesn’t include all cases</h6>
+          <p>Confirmed cases aren’t all cases. They only include people who tested positive. Testing rules and availability vary by country.</p>
+          <div class="note-text">Updated: March 27, 2024 12:30 (GMT +6)</div>
+        </div>
+        <div class="modal-footer bg-light justify-content-center py-1">
+          <div class="sub-text">Copyright by
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Liquid</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} comment and feedback {% endcomment %}
+  <div class="modal fade" tabindex="-1" id="covid-feedback" aria-modal="true" role="dialog"><div class="modal-dialog modal-sm" role="document"><div class="modal-content"><div class="modal-body"><div class="justify-between gx-5 mb-3"><div><h6 class="modal-title text-primary">What kind of feedback do you have about this tool?</h6></div><div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a></div></div><ul class="btn-list-vr g-2"><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-report"></em> <span>Report an issue</span><em class="indc icon ni ni-chevron-right"></em></a></li><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-bulb"></em> <span>Share an idea</span><em class="indc icon ni ni-chevron-right"></em></a></li><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-question-alt"></em> <span>Give a compliment</span><em class="indc icon ni ni-chevron-right"></em></a></li><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-policy"></em> <span>Legal or privacy concern</span><em class="indc icon ni ni-chevron-right"></em></a></li></ul></div><div class="modal-footer bg-light justify-content-center py-1"><div class="sub-text">Copyright by 
+    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Liquid</a>
+  </div></div></div></div></div>
+
+  <div class="modal fade" tabindex="-1" id="covid-feedback-form"  aria-hidden="true"><div class="modal-dialog modal-sm" role="document"><div class="modal-content"><div class="modal-body"><div class="justify-between gx-5 mb-1"><div><h6 class="modal-title text-primary">Tell us about the issue</h6></div><div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a></div></div><form action="#"><textarea class="form-control no-resize" placeholder="Enter feedback here. To help protect your privacy, don’t include personal info."></textarea><div class="align-center justify-between mt-3"><a href="#" class="link link-sm">Privacy Policy</a><ul class="btn-toolbar g-1"><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback" class="btn btn-light">Go Back</a></li><li><a href="#" class="btn btn-primary">Send</a></li></ul></div></form></div><div class="modal-footer bg-light justify-content-center py-1"><div class="sub-text">Copyright by 
+    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Liquid</a>
+  </div></div></div></div></div>
+
 {% endblock modals %}

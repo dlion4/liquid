@@ -6,11 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 
-
-
 client = Client()
-
-
 
 
 class AIGenerateContentView(View):
@@ -44,7 +40,7 @@ class AIGenerateContentView(View):
         for chunk in response:
             data = chunk.choices[0].delta.get("content", "")
             return JsonResponse({"content": data})
-        
+
         return JsonResponse(
             {
                 "message": "success",
