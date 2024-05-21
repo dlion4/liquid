@@ -10,18 +10,21 @@
           </a>
           <ul class="uk-navbar-nav uk-visible@m">
             <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
-              <a href="{% url 'investment' %}">Investment</a>
+              <a href="{% url 'home' %}">Home</a>
             </li>
+            <!-- <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
+              <a href="{% url 'investment' %}">Investment</a>
+            </li> -->
             <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
               <a href="{% url 'about' %}">About Us</a>
             </li>
-            <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
-              <a href="{% url 'learn' %}">Education</a>
+             <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
+              <a href="{% url 'help' %}">Help Center</a>
             </li>
-            <li class="{% if request.resolver_match.view_name == 'posts:posts' %} uk-active {% endif %}">
+           <!-- <li class="{% if request.resolver_match.view_name == 'posts:posts' %} uk-active {% endif %}">
               <a href="{% url 'posts:posts' %}">News</a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
               <a href="#">Resources<span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a>
               <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
                 <div class="uk-navbar-dropdown-grid uk-child-width-1-2" data-uk-grid="data-uk-grid">
@@ -55,7 +58,7 @@
                   </div>
                 </div>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="uk-navbar-right uk-width-auto">
@@ -63,7 +66,7 @@
             {% if request.user.is_authenticated %}
               <div class="in-optional-nav">
                 <a role="button" href="{% url 'dashboard:home' %}" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
-                  <span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a>
+                  </a>
 
               </div>
             {% else %}
@@ -82,7 +85,7 @@
             <div class="uk-grid uk-text-small" data-uk-grid="data-uk-grid">
               <div class="uk-width-3-4@m uk-visible@m">
                 <p>
-                  Trading involves substantial risk and may result in the loss of your invested/greater that your invested capital, respectively.
+                  The power of earning is in your hands, you have to take advantage of the opportunity while it lasts.
                 </p>
               </div>
               <div class="uk-width-expand@m uk-text-center uk-text-right@m">
