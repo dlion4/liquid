@@ -340,11 +340,11 @@
 {% endblock navbar %}
 <div class="nk-msg-body bg-white mt-5">
   <div class="nk-msg-head mt-3">
-    <h4 class="title d-none d-lg-block">
+    <h4 class="title d-block">
       Unable to select currency when order
     </h4>
     <div class="nk-msg-head-meta">
-      <div class="d-none d-lg-block">
+      <div class="d-block">
         <ul class="nk-msg-tags">
           <li>
             <span class="label-tag"
@@ -395,6 +395,9 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div class="d-lg-none">
+    You'll need a tablet resolution for this to work
   </div>
   <div class="nk-msg-reply nk-reply" data-simplebar="init">
     <div class="simplebar-wrapper" style="margin: 0px">
@@ -577,7 +580,7 @@ supportForm.addEventListener("submit", (e)=>{
 supportWebsocket.addEventListener("message",async (data)=>{
   const response = await JSON.parse(data.data);
   console.log(response)
-  
+
 })
 </script>
 
