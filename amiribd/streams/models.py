@@ -111,11 +111,8 @@ class Message(models.Model):
     class Meta:
         get_latest_by = "created_at"
 
+class InboxAbstract(models.Model):
 
-class Inbox(models.Model):
-    message = models.ForeignKey(
-        Message, on_delete=models.CASCADE, related_name="inbox_message"
-    )
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -123,6 +120,18 @@ class Inbox(models.Model):
 
     class Meta:
         get_latest_by = "created_at"
+        abstract=True
+
+class Inbox(InboxAbstract):
+    message = models.ForeignKey(
+        Message, on_delete=models.CASCADE, related_name="inbox_message"
+    )
+
+class AdminInbox(InboxAbstract):
+    message = models.ForeignKey(
+        Message, on_delete=models.CASCADE, related_name="admin_inbox_message"
+    )
+
 
 
 class Archive(models.Model):

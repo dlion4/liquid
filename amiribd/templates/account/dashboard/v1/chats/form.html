@@ -54,6 +54,9 @@
 <script>
   const chatDiv = document.getElementById("stream_room_chat_messages");
   const roomSlug = "{{ room.slug }}";
+  if (!roomSlug) {
+    return
+  }
   const ws = new WebSocket(`ws://${window.location.host}/ws/streams/${roomSlug}`);
 
   const messageForm = document.getElementById("stream-message-form");
@@ -77,71 +80,70 @@
     console.log(data)
     const message = data.message.message;
     /*const timeSent = new Date(data.message.inbox.created_at).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: true
-                })
-            */
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true
+                    })
+                */
 
     const timeSent = new Date()
 
     if (data.message.sender === "{{request.user.profile_user}}") {
       chatDiv.innerHTML += `
-      <div class="fade-in-up">
-        <div class="chat is-me">
-          <div class="chat-content">
-            <div class="chat-bubbles">
-              <div class="chat-bubble">
-              <div class="chat-msg">${message}</div>
-              <ul class="chat-msg-more">
-                  <li class="d-none d-sm-block">
-                    <a href="#" class="btn btn-icon btn-sm btn-trigger">
-                      <em class="icon ni ni-reply-fill"></em>
+    <div class="fade-in-up">
+      <div class="chat is-me">
+        <div class="chat-content">
+          <div class="chat-bubbles">
+            <div class="chat-bubble">
+            <div class="chat-msg">${message}</div>
+            <ul class="chat-msg-more">
+                <li class="d-none d-sm-block">
+                  <a href="#" class="btn btn-icon btn-sm btn-trigger">
+                    <em class="icon ni ni-reply-fill"></em>
+                  </a>
+                </li>
+                <li>
+                  <div class="dropdown">
+                    <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
+                      <em class="icon ni ni-more-h"></em>
                     </a>
-                  </li>
-                  <li>
-                    <div class="dropdown">
-                      <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
-                        <em class="icon ni ni-more-h"></em>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-sm">
-                        <ul class="link-list-opt no-bdr">
-                          <li class="d-sm-none">
-                            <a href="#">
-                              <em class="icon ni ni-reply-fill"></em>
-                              Reply</a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <em class="icon ni ni-pen-alt-fill"></em>
-                              Edit</a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <em class="icon ni ni-trash-fill"></em>
-                              Remove</a>
-                          </li>
-                        </ul>
-                      </div>
+                    <div class="dropdown-menu dropdown-menu-sm">
+                      <ul class="link-list-opt no-bdr">
+                        <li class="d-sm-none">
+                          <a href="#">
+                            <em class="icon ni ni-reply-fill"></em>
+                            Reply</a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <em class="icon ni ni-pen-alt-fill"></em>
+                            Edit</a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <em class="icon ni ni-trash-fill"></em>
+                            Remove</a>
+                        </li>
+                      </ul>
                     </div>
-                  </li>
-                </ul>
-  
-              </div>
+                  </div>
+                </li>
+              </ul>
+
             </div>
-            <ul class="chat-meta">
-              <li>${timeSent}</li>
-            </ul>
           </div>
-        </div> 
-        </div> 
-        `;
+          <ul class="chat-meta">
+            <li>${timeSent}</li>
+          </ul>
+        </div>
+      </div> 
+      </div> 
+      `;
       scrollToBottom();
 
     } else {}
 
   })
-
   const messageBodyContent = document.getElementById("messageBodyContent");
 
   function scrollToBottom() {

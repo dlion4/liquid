@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Inbox, Room, RoomMessage, Favorite, Message, Archive
+from .models import Inbox, Room, RoomMessage, Favorite, Message, Archive, AdminInbox
 
 
 class RoomMessageInline(admin.StackedInline):
@@ -60,3 +60,8 @@ class MessageAdmin(admin.ModelAdmin):
         ArchiveInline,
         InboxMessageInline,
     ]
+
+
+@admin.register(AdminInbox)
+class AdminInboxAdmin(admin.ModelAdmin):
+    list_display = ['message', ]

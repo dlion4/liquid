@@ -413,7 +413,11 @@
               <div class="nk-reply-item">
                 <div class="nk-reply-header">
                   <div class="user-card">
-                    <div class="user-avatar sm bg-blue"><span>{{profile.full_name|generate_initials|default:profile.initials}}</span></div>
+                    <div class="user-avatar sm bg-blue">
+                      <span>
+                      {{profile.full_name|generate_initials|default:profile.initials}}
+                    </span>
+                  </div>
                     <div class="user-name">{{profile.full_name}}</div>
                   </div>
                   <div class="date-time">14 Jan, 2020</div>
@@ -529,202 +533,7 @@
                   </div>
                 </div>
               </div>
-              <div class="nk-reply-form">
-                <div class="nk-reply-form-header">
-                  <ul class="nav nav-tabs-s2 nav-tabs nav-tabs-sm">
-                    <li class="nav-item">
-                      <a
-                        class="nav-link active"
-                        data-toggle="tab"
-                        href="#reply-form"
-                        >Reply</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#note-form"
-                        >Private Note</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="nk-reply-form-title">
-                    <div class="title">Reply as:</div>
-                    <div class="user-avatar xs bg-purple"><span>{{profile.full_name|generate_initials|default:profile.initials}}</span></div>
-                  </div>
-                </div>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="reply-form">
-                    <div class="nk-reply-form-editor">
-                      <div class="nk-reply-form-field">
-                        <textarea
-                          class="form-control form-control-simple no-resize"
-                          placeholder="Hello"
-                        ></textarea>
-                      </div>
-                      <div class="nk-reply-form-tools">
-                        <ul class="nk-reply-form-actions g-1">
-                          <li class="me-2">
-                            <button class="btn btn-primary" type="submit">
-                              Reply
-                            </button>
-                          </li>
-                          <li>
-                            <div class="dropdown">
-                              <a
-                                class="btn btn-icon btn-sm"
-                                data-bs-toggle="dropdown"
-                                href="#"
-                                ><em
-                                  class="icon ni ni-hash"
-                                  data-bs-toggle="tooltip"
-                                  data-bs-placement="top"
-                                  aria-label="Template"
-                                  data-bs-original-title="Template"
-                                ></em
-                              ></a>
-                              <div class="dropdown-menu">
-                                <ul
-                                  class="link-list-opt no-bdr link-list-template"
-                                >
-                                  <li class="opt-head">
-                                    <span>Quick Insert</span>
-                                  </li>
-                                  <li>
-                                    <a href="#"
-                                      ><span>Thank you message</span></a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a href="#"
-                                      ><span>Your issues solved</span></a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a href="#"
-                                      ><span>Thank you message</span></a
-                                    >
-                                  </li>
-                                  <li class="divider"></li>
-                                  <li>
-                                    <a href="#"
-                                      ><em class="icon ni ni-file-plus"></em
-                                      ><span>Save as Template</span></a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a href="#"
-                                      ><em class="icon ni ni-notes-alt"></em
-                                      ><span>Manage Template</span></a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <a
-                              class="btn btn-icon btn-sm"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              href="#"
-                              aria-label="Upload Attachment"
-                              data-bs-original-title="Upload Attachment"
-                              ><em class="icon ni ni-clip-v"></em
-                            ></a>
-                          </li>
-                          <li>
-                            <a
-                              class="btn btn-icon btn-sm"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              href="#"
-                              aria-label="Insert Emoji"
-                              data-bs-original-title="Insert Emoji"
-                              ><em class="icon ni ni-happy"></em
-                            ></a>
-                          </li>
-                          <li>
-                            <a
-                              class="btn btn-icon btn-sm"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              href="#"
-                              aria-label="Upload Images"
-                              data-bs-original-title="Upload Images"
-                              ><em class="icon ni ni-img"></em
-                            ></a>
-                          </li>
-                        </ul>
-                        <div class="dropdown">
-                          <a
-                            href="#"
-                            class="dropdown-toggle btn-trigger btn btn-icon me-n2"
-                            data-bs-toggle="dropdown"
-                            ><em class="icon ni ni-more-v"></em
-                          ></a>
-                          <div class="dropdown-menu dropdown-menu-end">
-                            <ul class="link-list-opt no-bdr">
-                              <li>
-                                <a href="#"><span>Another Option</span></a>
-                              </li>
-                              <li>
-                                <a href="#"><span>More Option</span></a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="note-form">
-                    <div class="nk-reply-form-editor">
-                      <div class="nk-reply-form-field">
-                        <textarea
-                          class="form-control form-control-simple no-resize"
-                          placeholder="Type your private note, that only visible to internal team."
-                        ></textarea>
-                      </div>
-                      <div class="nk-reply-form-tools">
-                        <ul class="nk-reply-form-actions g-1">
-                          <li class="me-2">
-                            <button class="btn btn-primary" type="submit">
-                              Add Note
-                            </button>
-                          </li>
-                          <li>
-                            <a
-                              class="btn btn-icon btn-sm"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              href="#"
-                              aria-label="Upload Attachment"
-                              data-bs-original-title="Upload Attachment"
-                              ><em class="icon ni ni-clip-v"></em
-                            ></a>
-                          </li>
-                        </ul>
-                        <div class="dropdown">
-                          <a
-                            href="#"
-                            class="dropdown-toggle btn-trigger btn btn-icon me-n2"
-                            data-bs-toggle="dropdown"
-                            ><em class="icon ni ni-more-v"></em
-                          ></a>
-                          <div class="dropdown-menu dropdown-menu-end">
-                            <ul class="link-list-opt no-bdr">
-                              <li>
-                                <a href="#"><span>Another Option</span></a>
-                              </li>
-                              <li>
-                                <a href="#"><span>More Option</span></a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             {% include "account/dashboard/v1/components/assistance/admin.html" %}
             </div>
           </div>
         </div>
@@ -739,3 +548,38 @@
 </div>
 
 {% endblock content %}
+
+
+{% block js %}
+
+
+<script>
+  const supportRequestUser = '{{request.user.profile_user.id}}'
+
+
+
+let supportWebsocket = new WebSocket(`ws://${window.location.host}/ws/streams/support/${supportRequestUser}`);
+
+
+let supportForm = document.getElementById("support-form-reply")
+let messageTextArea = document.getElementById("supportmessage");
+
+supportForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
+  let message = messageTextArea.value;
+
+  supportWebsocket.send(
+    JSON.stringify({message, "sender": supportRequestUser, "receiver": "support@example.com"})
+    );
+    messageTextArea.value = ""
+})
+
+supportWebsocket.addEventListener("message",async (data)=>{
+  const response = await JSON.parse(data.data);
+  console.log(response)
+  
+})
+</script>
+
+
+{% endblock js %}

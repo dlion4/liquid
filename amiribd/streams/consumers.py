@@ -94,3 +94,38 @@ class StreamPrivateConsumer(AsyncWebsocketConsumer):
         return InboxSerializer(
             Inbox.objects.create(message=message_obj, body=data["message"])
         ).data
+
+
+class AsyncStreamSupportConsumer(AsyncWebsocketConsumer):
+
+    async def connet(self):
+        self.support_number = self.scope["url_route"]["kwargs"]["profile_id"]
+        print(self.support_number)
+        self.support_name = f"support_{self.support_number}"
+        print(self.support_name)
+        await self.channel_layer.group_add(self.support_name, self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, code):
+        await self.channel_layer.group_discard(self.support_name, self.channel_name)
+        await self.close(code)
+
+    async def receive(self, text_data=None, bytes_data=None):
+        data = json.loads(text_data)
+
+        event = {"type": "send_message", "message": data}
+
+        print(data)
+
+        await self.send_message(event)
+
+    async def send_message(self, event):
+        data = event["message"]
+
+        response = {
+            "sender": data["sender"],
+            "receiver": data["receiver"],
+            "message": data["message"],
+        }
+
+        await self.send(text_data=json.dumps({"message": response}))
