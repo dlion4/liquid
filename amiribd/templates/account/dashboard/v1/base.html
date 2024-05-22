@@ -1,5 +1,9 @@
 {% extends 'account/dashboard/v1/layout.html' %}
 
+{% block title %}
+Amiri Dashboard {{profile.user.email.username}}
+{% endblock title %}
+
 {% load static humanize %}
 
 {% block sidebar %}

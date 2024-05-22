@@ -12,53 +12,15 @@
             <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
               <a href="{% url 'home' %}">Home</a>
             </li>
-            <!-- <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
-              <a href="{% url 'investment' %}">Investment</a>
-            </li> -->
+            <!-- <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}"> <a href="{% url 'investment' %}">Investment</a> </li> -->
             <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
               <a href="{% url 'about' %}">About Us</a>
             </li>
-             <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
+            <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
               <a href="{% url 'help' %}">Help Center</a>
             </li>
-           <!-- <li class="{% if request.resolver_match.view_name == 'posts:posts' %} uk-active {% endif %}">
-              <a href="{% url 'posts:posts' %}">News</a>
-            </li> -->
-            <!-- <li>
-              <a href="#">Resources<span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a>
-              <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
-                <div class="uk-navbar-dropdown-grid uk-child-width-1-2" data-uk-grid="data-uk-grid">
-                  <div>
-                    <ul class="uk-nav uk-navbar-dropdown-nav">
-                      <li class="{% if request.resolver_match.view_name == 'help' %} uk-active {% endif %}">
-                        <a href="{% url 'help' %}">Help Center</a>
-                      </li>
-                      <li class="{% if request.resolver_match.view_name == 'customers' %} uk-active {% endif %}">
-                        <a href="{% url 'customers' %}">Customers</a>
-                      </li>
-                      <li class="{% if request.resolver_match.view_name == 'guide' %} uk-active {% endif %}">
-                        <a href="{% url 'guide' %}">Guide</a>
-                      </li>
-                      <li class="{% if request.resolver_match.view_name == 'career' %} uk-active {% endif %}">
-                        <a href="{% url 'career' %}">Career
-                        </a>
-                      </li>
-                      <li class="{% if request.resolver_match.view_name == 'policies' %} uk-active {% endif %}">
-                        <a href="{% url 'policies' %}">Policies<i class="fas fa-gavel fa-sm"></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <ul class="uk-nav uk-navbar-dropdown-nav">
-                      <li>
-                        <a class="uk-disabled" href="#">Do you have any question about our platform. Get your guestion unswered in minutes and start earning!</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li> -->
+            <!-- <li class="{% if request.resolver_match.view_name == 'posts:posts' %} uk-active {% endif %}"> <a href="{% url 'posts:posts' %}">News</a> </li> -->
+            <!-- <li> <a href="#">Resources<span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a> <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2"> <div class="uk-navbar-dropdown-grid uk-child-width-1-2" data-uk-grid="data-uk-grid"> <div> <ul class="uk-nav uk-navbar-dropdown-nav"> <li class="{% if request.resolver_match.view_name == 'help' %} uk-active {% endif %}"> <a href="{% url 'help' %}">Help Center</a> </li> <li class="{% if request.resolver_match.view_name == 'customers' %} uk-active {% endif %}"> <a href="{% url 'customers' %}">Customers</a> </li> <li class="{% if request.resolver_match.view_name == 'guide' %} uk-active {% endif %}"> <a href="{% url 'guide' %}">Guide</a> </li> <li class="{% if request.resolver_match.view_name == 'career' %} uk-active {% endif %}"> <a href="{% url 'career' %}">Career </a> </li> <li class="{% if request.resolver_match.view_name == 'policies' %} uk-active {% endif %}"> <a href="{% url 'policies' %}">Policies<i class="fas fa-gavel fa-sm"></i> </a> </li> </ul> </div> <div> <ul class="uk-nav uk-navbar-dropdown-nav"> <li> <a class="uk-disabled" href="#">Do you have any question about our platform. Get your guestion unswered in minutes and start earning!</a> </li> </ul> </div> </div> </div> </li> -->
           </ul>
         </div>
         <div class="uk-navbar-right uk-width-auto">
@@ -66,7 +28,7 @@
             {% if request.user.is_authenticated %}
               <div class="in-optional-nav">
                 <a role="button" href="{% url 'dashboard:home' %}" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
-                  </a>
+                </a>
 
               </div>
             {% else %}
@@ -96,11 +58,11 @@
               </div>
             </div>
           </div>
-          </div>
-
-          {% block breadcrumb %}{% endblock breadcrumb %}
         </div>
+
+        {% block breadcrumb %}{% endblock breadcrumb %}
       </div>
     </div>
   </div>
+</div>
 </header>
