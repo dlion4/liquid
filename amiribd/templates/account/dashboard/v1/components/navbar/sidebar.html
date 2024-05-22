@@ -214,7 +214,7 @@
               </a>
             </li>
             <li class="nk-menu-item">
-              <a href="/chats.html/" class="nk-menu-link">
+              <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-chat-circle"></em>
                 </span><span class="nk-menu-text">Chats</span>
