@@ -86,6 +86,7 @@ class PlanAdmin(admin.ModelAdmin):
         "plan_profile",
         "payment_method",
         "mpesa_transaction_code",
+        "payment_phone_number",
     ]
 
     actions = [

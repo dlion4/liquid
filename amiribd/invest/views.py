@@ -195,7 +195,11 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
         discountPrice = Decimal(Decimal("0.2") * Decimal(totalInvestment))
 
-        mpesa_code = data.get("'mpesa_transaction_code", None)
+        mpesa_code = data.get("mpesa_transaction_code")
+        phone_number = data.get("phone_number")
+        print(phone_number)
+
+        print(mpesa_code)
 
         transaction = Transaction.objects.create(
             profile=profile,
@@ -205,10 +209,12 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             discount=discountPrice,
             source="Account Registration",
             payment_phone=phone_number,
-            mpesa_transaction_code=mpesa_code
+            mpesa_transaction_code=mpesa_code,
+            payment_phone_number=phone_number,
         )
         # plan.is_paid = True
         plan.mpesa_transaction_code=mpesa_code
+        plan.payment_phone_number = phone_number
         plan.save()
 
         account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
@@ -217,13 +223,13 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         # look for the referrer
         profile = pool.profile
 
-        self.__get_referrer_and_update_account(profile, mpesa_code)
+        self.__get_referrer_and_update_account(profile, mpesa_code, phone_number)
 
         return JsonResponse(
             {"success": True, "url": reverse_lazy("subscriptions:list")}
         )
 
-    def __get_referrer_and_update_account(self, profile, mpesa_code=None):
+    def __get_referrer_and_update_account(self, profile, mpesa_code, phone_number):
         if referrer := profile.referred_by:
             # update the referrer account
 
@@ -241,6 +247,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
                 discount=Decimal("0.00"),
                 source="Referral Earnings",
                 mpesa_transaction_code=mpesa_code,
+                payment_phone_number=phone_number,
             )
             transaction.save()
             referrer_profile_account.balance += transaction.paid

@@ -42,6 +42,7 @@ class Transaction(models.Model):
     source = models.CharField(max_length=255, blank=True, null=True)
     payment_phone = models.CharField(max_length=255, blank=True, null=True)
     mpesa_transaction_code = models.CharField(max_length=1000, blank=True, null=True)
+    payment_phone_number = models.CharField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return f"{self.type} Transaction"

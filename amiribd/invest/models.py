@@ -197,6 +197,7 @@ class Plan(models.Model):
     sku = models.CharField(max_length=100, blank=True, null=True)
     is_paid = models.BooleanField(default=False)
     mpesa_transaction_code = models.CharField(max_length=1000, blank=True, null=True)
+    payment_phone_number = models.CharField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return f"{self.type} Plan"
