@@ -1,159 +1,227 @@
 {% extends 'account/dashboard/v1/layout.html' %}
 
 {% block title %}
-Amiri Dashboard {{profile.user.email.username}}
+Earnkraft Dashboard {{profile.user.email.username}}
 {% endblock title %}
 
 {% load static humanize %}
 
 {% block sidebar %}
-  {% include "account/dashboard/v1/components/navbar/sidebar.html" %}
+{% include "account/dashboard/v1/components/navbar/sidebar.html" %}
 {% endblock sidebar %}
 
 {% block content %}
 
-  {% include "account/dashboard/v1/components/navbar.html" %}
+{% include "account/dashboard/v1/components/navbar.html" %}
 
-  <div class="nk-content nk-content-fluid">
-    <div class="container-xl wide-lg">
-      <div class="nk-content-body">
+<div class="nk-content nk-content-fluid">
+  <div class="container-xl wide-lg">
+    <div class="nk-content-body">
 
-        {% block heading %}{% endblock heading %}
+      {% block heading %}{% endblock heading %}
 
-        {% block main %}{% endblock main %}
+      {% block main %}{% endblock main %}
 
-      </div>
     </div>
   </div>
+</div>
 
-  {% include "account/dashboard/v1/components/footer.html" %}
+{% include "account/dashboard/v1/components/footer.html" %}
 
 {% endblock content %}
 
 {% block modals %}
 
-  <div class="modal fade" id="withdrawalPopupForm" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Withdrawal Form</h5>
-          <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <em class="icon ni ni-cross"></em>
-          </a>
-        </div>
-        <div class="modal-body">
-          {% include "account/dashboard/v1/investment/components/schemes/withdrawal_form.html" %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="addPlanPopupForm" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Add plan To Your Pool</h5>
-          <a href="#" role="button"  class="close" data-bs-dismiss="modal" aria-label="Close" id="closeAddPlanPopupForm">
-            <em class="icon ni ni-cross"></em>
-          </a>
-        </div>
-        <div class="modal-body">
-          {% include "account/dashboard/v1/investment/components/schemes/add_plan_form.html" %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let submitBtn = document.getElementById("updateEvent")
-    let swapArea = document.getElementById("id_available_amount")
-
-    function handleSubmit() {
-
-      const errorId = document.querySelector("span.errorlist")
-      const successId = document.querySelector("span.text-success")
-
-      if (errorId) {
-        submitBtn.setAttribute("disabled", "disabled")
-      }
-      if (successId) {
-        if (submitBtn.getAttribute("disabled")) {
-          submitBtn.removeAttribute("disabled")
-        }
-      }
-
-    }
-    swapArea.addEventListener('htmx:afterSwap', function (event) {
-      handleSubmit()
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
-
-      form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData(form);
-
-        fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
-          method: 'POST',
-          body: formData
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Withdrawal Initiated Successfully!');
-            } else {
-              // Handle errors, display them on the form
-              console.error('Errors:', data);
-              alert('Failed to process withdrawal: ' + JSON.stringify(data));
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-          })
-          . finally(window.location.reload());
-      });
-    });
-  </script>
-
-
-  {% comment %} About Site {% endcomment %}
-  <div class="modal fade" tabindex="-1" id="covid-about" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+<div class="modal fade" id="withdrawalPopupForm" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Withdrawal Form</h5>
+        <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal"
+          aria-label="Close">
           <em class="icon ni ni-cross"></em>
         </a>
-        <div class="modal-body">
-          <h5 class="title mb-3">About this data</h5>
-          <h6 class="lead-text text-primary">It changes rapidly</h6>
-          <p>This data changes rapidly, so what’s shown may be out of date. Table totals may not always represent an accurate sum. Information about reported cases is also available on the
-            <a href="#">World Health Organization</a>
-            &amp;
-            <a href="#">WorldoMeters.info</a>
-            site.</p>
-          <h6 class="lead-text text-primary">It doesn’t include all cases</h6>
-          <p>Confirmed cases aren’t all cases. They only include people who tested positive. Testing rules and availability vary by country.</p>
-          <div class="note-text">Updated: March 27, 2024 12:30 (GMT +6)</div>
-        </div>
-        <div class="modal-footer bg-light justify-content-center py-1">
-          <div class="sub-text">Copyright by
-            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
-          </div>
+      </div>
+      <div class="modal-body">
+        {% include "account/dashboard/v1/investment/components/schemes/withdrawal_form.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addPlanPopupForm" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add plan To Your Pool</h5>
+        <a href="#" role="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="closeAddPlanPopupForm">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+      <div class="modal-body">
+        {% include "account/dashboard/v1/investment/components/schemes/add_plan_form.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let submitBtn = document.getElementById("updateEvent")
+  let swapArea = document.getElementById("id_available_amount")
+
+  function handleSubmit() {
+
+    const errorId = document.querySelector("span.errorlist")
+    const successId = document.querySelector("span.text-success")
+
+    if (errorId) {
+      submitBtn.setAttribute("disabled", "disabled")
+    }
+    if (successId) {
+      if (submitBtn.getAttribute("disabled")) {
+        submitBtn.removeAttribute("disabled")
+      }
+    }
+
+  }
+  swapArea.addEventListener('htmx:afterSwap', function (event) {
+    handleSubmit()
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      const formData = new FormData(form);
+
+      fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Withdrawal Initiated Successfully!');
+          } else {
+            // Handle errors, display them on the form
+            console.error('Errors:', data);
+            alert('Failed to process withdrawal: ' + JSON.stringify(data));
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        })
+        .finally(window.location.reload());
+    });
+  });
+</script>
+
+
+{% comment %} Tips to Earn {% endcomment %}
+<div class="modal fade" tabindex="-1" id="covid-about" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <em class="icon ni ni-cross"></em>
+      </a>
+      <div class="modal-body">
+        <h5 class="title mb-3">Tips to Earn</h5>
+        <h6 class="lead-text text-primary">Free tips to increase your income</h6>
+        <p>Select the best packages with many pools of earning and high commission rates as you see best</p>
+        <p>Advertize to platforms with many people willing to earn through online means</p>
+        <p>Focus on promoting to people genuinely interested in the product or service</p>
+        <p>Use social media platforms like Facebook, Twitter, and Instagram to share your referral links and affiliate
+          content</p>
+        <p>Creat videos, screenshots, summary and steps that guide new users to sign up and activate</p>
+        <p>Provide incentives such as discounts, bonuses, or exclusive content to people who join through your referral
+          link.</p>
+        <p>Offer guidance and support to your referrals to help them succeed on the platform</p>
+        <p>On a daily basis, save new contacts, join many groups in many social media platforms and Mentor your
+          downlines</p>
+
+        <div class="note-text">Updated: June 18, 2024 12:30 (GMT +6)</div>
+      </div>
+      <div class="modal-footer bg-light justify-content-center py-1">
+        <div class="sub-text">Copyright by
+          <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true"
+            hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  {% comment %} comment and feedback {% endcomment %}
-  <div class="modal fade" tabindex="-1" id="covid-feedback" aria-modal="true" role="dialog"><div class="modal-dialog modal-sm" role="document"><div class="modal-content"><div class="modal-body"><div class="justify-between gx-5 mb-3"><div><h6 class="modal-title text-primary">What kind of feedback do you have about this tool?</h6></div><div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a></div></div><ul class="btn-list-vr g-2"><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-report"></em> <span>Report an issue</span><em class="indc icon ni ni-chevron-right"></em></a></li><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-bulb"></em> <span>Share an idea</span><em class="indc icon ni ni-chevron-right"></em></a></li><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-question-alt"></em> <span>Give a compliment</span><em class="indc icon ni ni-chevron-right"></em></a></li><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback-form" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary ni ni-policy"></em> <span>Legal or privacy concern</span><em class="indc icon ni ni-chevron-right"></em></a></li></ul></div><div class="modal-footer bg-light justify-content-center py-1"><div class="sub-text">Copyright by 
-    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
-  </div></div></div></div></div>
+{% comment %} comment and feedback {% endcomment %}
+<div class="modal fade" tabindex="-1" id="covid-feedback" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="justify-between gx-5 mb-3">
+          <div>
+            <h6 class="modal-title text-primary">You can navigate to our external pages or join our social platforms</h6>
+          </div>
+          <div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em
+                class="icon ni ni-cross"></em></a></div>
+        </div>
+        <ul class="btn-list-vr g-2">
+          <li><a href="https://example.com/blog" target="_blank" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary fas fa-file-alt"></em> <span>Blog and Articles website</span><em class="indc icon ni ni-chevron-right"></em></a></li>
+          <li><a href="https://t.me/officialchannel" target="_blank" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary fab fa-telegram-plane"></em> <span>Official Telegram Channel</span><em class="indc icon ni ni-chevron-right"></em></a></li>
+          <li><a href="https://chat.whatsapp.com/invite/community" target="_blank" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary fab fa-whatsapp"></em> <span>Whatsapp Groups</span><em class="indc icon ni ni-chevron-right"></em></a></li>
+          <li><a href="https://www.facebook.com/groups/yourgroup" target="_blank" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary fab fa-facebook"></em> <span>Facebook Group</span><em class="indc icon ni ni-chevron-right"></em></a></li>
+          <li><a href="https://www.instagram.com/yourpage" target="_blank" class="btn btn-round btn-indc btn-lighter">
+            <em class="icon text-primary fab fa-instagram"></em> <span>Instagram Page</span>
+            <em class="indc icon ni ni-chevron-right"></em></a>
+        </li>
+          <li><a href="https://www.linkedin.com/company/yourpage" target="_blank" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary fab fa-linkedin"></em> <span>Linkedin Page</span><em class="indc icon ni ni-chevron-right"></em></a></li>
+          <li><a href="https://example.com/livechat" target="_blank" class="btn btn-round btn-indc btn-lighter"><em class="icon text-primary fas fa-comments"></em> <span>Live Chat</span><em class="indc icon ni ni-chevron-right"></em></a></li>
+      </ul>
+      </div>
+      <div class="modal-footer bg-light justify-content-center py-1">
+        <div class="sub-text">Copyright by
+          <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true"
+            hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <div class="modal fade" tabindex="-1" id="covid-feedback-form"  aria-hidden="true"><div class="modal-dialog modal-sm" role="document"><div class="modal-content"><div class="modal-body"><div class="justify-between gx-5 mb-1"><div><h6 class="modal-title text-primary">Tell us about the issue</h6></div><div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a></div></div><form action="#"><textarea class="form-control no-resize" placeholder="Enter feedback here. To help protect your privacy, don’t include personal info."></textarea><div class="align-center justify-between mt-3"><a href="#" class="link link-sm">Privacy Policy</a><ul class="btn-toolbar g-1"><li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback" class="btn btn-light">Go Back</a></li><li><a href="#" class="btn btn-primary">Send</a></li></ul></div></form></div><div class="modal-footer bg-light justify-content-center py-1"><div class="sub-text">Copyright by 
-    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
-  </div></div></div></div></div>
+<!--
+<div class="modal fade" tabindex="-1" id="covid-feedback-form" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="justify-between gx-5 mb-1">
+          <div>
+            <h6 class="modal-title text-primary">Tell us about the issue</h6>
+          </div>
+          <div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em
+                class="icon ni ni-cross"></em></a></div>
+        </div>
+        <form action="#"><textarea class="form-control no-resize"
+            placeholder="Enter feedback here. To help protect your privacy, don’t include personal info."></textarea>
+          <div class="align-center justify-between mt-3"><a href="#" class="link link-sm">Privacy Policy</a>
+            <ul class="btn-toolbar g-1">
+              <li><a data-bs-dismiss="modal" data-bs-toggle="modal" href="#covid-feedback" class="btn btn-light">Go
+                  Back</a></li>
+              <li><a href="#" class="btn btn-primary">Send</a></li>
+            </ul>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light justify-content-center py-1">
+        <div class="sub-text">Copyright by
+          <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true"
+            hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+-->
 
 {% endblock modals %}

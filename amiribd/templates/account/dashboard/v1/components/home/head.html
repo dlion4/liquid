@@ -7,7 +7,11 @@
     <div class="nk-block-head-content">
       <h2 class="nk-block-title fw-normal">{{profile.full_name|title}}</h2>
       <div class="nk-block-des">
+        {% if plans %}
         <p>A summary of your account. Have fun!</p>
+        {% else %}
+        <p>Account have no plan. Purchase a plan by subscribing to start earning</p>
+        {% endif %}
       </div>
     </div>
     <div class="nk-block-head-content">

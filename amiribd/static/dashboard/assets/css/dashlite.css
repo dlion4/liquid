@@ -3605,7 +3605,7 @@ fieldset:disabled .dual-listbox .dual-listbox__button {
 
 .btn-secondary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #364a63;
+    --bs-btn-bg: #fd7d1e;
     --bs-btn-border-color: #364a63;
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #2e3f54;
@@ -15866,7 +15866,7 @@ svg {
 }
 
 .bg-purple {
-    background-color: #816bff !important
+    /* background-color: #816bff !important */
 }
 
 .text-purple {
@@ -39710,7 +39710,7 @@ p>span>.icon.ni {
 .project-meta {
     display: flex;
     align-items: center;
-    justify-content: space-between
+    /* justify-content: space-between */
 }
 
 .project-users {
@@ -48225,9 +48225,9 @@ div.dataTables_wrapper div.dataTables_filter .nk-chat-editor-form input {
     margin: -.75rem
 }
 
-.preview-item {
+/* .preview-item {
     padding: .75rem
-}
+} */
 
 .preview-btn-list {
     display: flex;
@@ -51521,7 +51521,7 @@ div.dataTables_wrapper div.dataTables_filter .dark-mode input {
 }
 
 .nk-opt-item-bg>span:not(.nk-opt-item-name).skin-blue {
-    background: linear-gradient(90deg, #0144a0 0, #0144a0 30%, #0971fe 30%, #0971fe 72%, #cee3ff 72%, #cee3ff 100%) !important
+    background: linear-gradient(90deg, #0144a0 0, #0144a0 30%, #fd7d1e 30%, #fd7d1e 72%, #cee3ff 72%, #cee3ff 100%) !important
 }
 
 .nk-opt-item-bg>span:not(.nk-opt-item-name).skin-egyptian {

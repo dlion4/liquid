@@ -98,7 +98,7 @@ class DashboardViewMixin(TemplateView):
 
     def get_profile_plans(self, **kwargs):
         return Plan.objects.filter(
-            account__pool__profile=self.__get_user().profile_user
+            account__pool__profile=self.__get_user().profile_user,
         ).all()
 
     def _get_profile_active_plans(self, **kwargs):
@@ -166,6 +166,7 @@ welcome = WelcomeView.as_view()
 
 class SupportView(DashboardViewMixin):
     template_name = "account/dashboard/v1/support.html"
+    queryset = Account
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

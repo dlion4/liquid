@@ -1,7 +1,8 @@
 import contextlib
 import json
 from typing import Any
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.views.generic import FormView, TemplateView
@@ -178,6 +179,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
 
+
         profile = request.user.profile_user
         data = json.loads(request.body)
         phone_number = data.get("phone_number")
@@ -193,6 +195,8 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
         discountPrice = Decimal(Decimal("0.2") * Decimal(totalInvestment))
 
+        mpesa_code = data.get("'mpesa_transaction_code", None)
+
         transaction = Transaction.objects.create(
             profile=profile,
             account=account,
@@ -201,8 +205,10 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             discount=discountPrice,
             source="Account Registration",
             payment_phone=phone_number,
+            mpesa_transaction_code=mpesa_code
         )
-        plan.is_paid = True
+        # plan.is_paid = True
+        plan.mpesa_transaction_code=mpesa_code
         plan.save()
 
         account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
@@ -211,13 +217,13 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         # look for the referrer
         profile = pool.profile
 
-        self.__get_referrer_and_update_account(profile)
+        self.__get_referrer_and_update_account(profile, mpesa_code)
 
         return JsonResponse(
-            {"success": True, "url": reverse_lazy("dashboard:invest:plans")}
+            {"success": True, "url": reverse_lazy("subscriptions:list")}
         )
 
-    def __get_referrer_and_update_account(self, profile):
+    def __get_referrer_and_update_account(self, profile, mpesa_code=None):
         if referrer := profile.referred_by:
             # update the referrer account
 
@@ -234,6 +240,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
                 amount=interest_earned,
                 discount=Decimal("0.00"),
                 source="Referral Earnings",
+                mpesa_transaction_code=mpesa_code,
             )
             transaction.save()
             referrer_profile_account.balance += transaction.paid
@@ -254,29 +261,39 @@ def fetch_amount_tobe_paid_plus_discount(request):
 
 
 class HandleRegistrationPaymentView(LoginRequiredMixin, View):
+
+    @method_decorator(csrf_exempt, name="dispatch")
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
     def get(self, request, *args, **kwargs):
-        service = MpesaStkPushSetUp().mpesa_stk_push_service()
-        phone = request.GET.get("phone")
-        amount = request.GET.get("amount")
-        profile = Profile.objects.get(pk=request.GET.get("profile"))
-        plan = Plan.objects.filter(account__pool__profile=profile).latest()
+        # service = MpesaStkPushSetUp().mpesa_stk_push_service()
+        # phone = request.GET.get("phone")
+        # amount = request.GET.get("amount")
+        # profile = Profile.objects.get(pk=request.GET.get("profile"))
+        # plan = Plan.objects.filter(account__pool__profile=profile).latest()
 
-        response = service.collect.mpesa_stk_push(
-            phone_number=str(phone),
-            email=str(profile.user.email),
-            amount=amount,
-            narrative="Package Purchase Payment",
-        )
+        # response = service.collect.mpesa_stk_push(
+        #     phone_number=str(phone),
+        #     email=str(profile.user.email),
+        #     amount=amount,
+        #     narrative="Package Purchase Payment",
+        # )
 
-        return JsonResponse(
-            {
-                "success": True,
-                "status": 200,
-                "response": response,
-                "plan": PlanSerializer(plan).data,
-            }
-        )
+        # return JsonResponse(
+        #     {
+        #         "success": True,
+        #         "status": 200,
+        #         "response": response,
+        #         "plan": PlanSerializer(plan).data,
+        #     }
+        # )
+        pass
 
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        print(data)
+
+        return JsonResponse({"success": True})
 
 def check_payment_status(request):
     service = MpesaStkPushSetUp().mpesa_stk_push_service()
@@ -349,7 +366,12 @@ plan = InvestmentPlanView.as_view()
 # modified view way of creting views
 
 
-class WidsthdrawView(DashboardViewMixin):
+class InvestmentViewMixin(DashboardViewMixin):
+    queryset = Account
+
+
+
+class WidsthdrawView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/withdrawal.html"
     template_name = "account/dashboard/v1/investment/withdrawal.html"
 
@@ -357,14 +379,14 @@ class WidsthdrawView(DashboardViewMixin):
 modified_widthdrawal_view = WidsthdrawView.as_view()
 
 
-class WalletView(DashboardViewMixin):
+class WalletView(InvestmentViewMixin):
     template_name = "account/dashboard/v1/investment/wallet.html"
 
 
 modified_wallet_view = WalletView.as_view()
 
 
-class ReferalView(DashboardViewMixin):
+class ReferalView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/referal.html"
     template_name = "account/dashboard/v1/investment/referal.html"
 
@@ -372,7 +394,7 @@ class ReferalView(DashboardViewMixin):
 modified_referal_view = ReferalView.as_view()
 
 
-class BonusView(DashboardViewMixin):
+class BonusView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/bonus.html"
     template_name = "account/dashboard/v1/investment/bonus.html"
 
@@ -380,7 +402,7 @@ class BonusView(DashboardViewMixin):
 modified_bonus_view = BonusView.as_view()
 
 
-class WhatsappView(DashboardViewMixin):
+class WhatsappView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/whatsapp.html"
     template_name = "account/dashboard/v1/investment/whatsapp.html"
 
@@ -388,7 +410,7 @@ class WhatsappView(DashboardViewMixin):
 modified_whatsapp_view = WhatsappView.as_view()
 
 
-class JobsView(DashboardViewMixin):
+class JobsView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/jobs.html"
     template_name = "account/dashboard/v1/investment/jobs.html"
 
@@ -396,7 +418,7 @@ class JobsView(DashboardViewMixin):
 modified_jobs_view = JobsView.as_view()
 
 
-class InvestplanView(DashboardViewMixin):
+class InvestplanView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_plan.html"
     template_name = "account/dashboard/v1/investment/investment_plan.html"
 
@@ -404,7 +426,7 @@ class InvestplanView(DashboardViewMixin):
 modified_investplan_view = InvestplanView.as_view()
 
 
-class InvestorderView(DashboardViewMixin):
+class InvestorderView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_order.html"
     template_name = "account/dashboard/v1/investment/investment_order.html"
 
@@ -412,7 +434,7 @@ class InvestorderView(DashboardViewMixin):
 modified_investorder_view = InvestorderView.as_view()
 
 
-class InvestrecordView(DashboardViewMixin):
+class InvestrecordView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_record.html"
     template_name = "account/dashboard/v1/investment/investment_record.html"
 
@@ -420,7 +442,7 @@ class InvestrecordView(DashboardViewMixin):
 modified_investrecord_view = InvestrecordView.as_view()
 
 
-class AcademicView(DashboardViewMixin):
+class AcademicView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/academic_writing_accounts.html"
     template_name = "account/dashboard/v1/investment/academic_writing_accounts.html"
 
@@ -428,7 +450,7 @@ class AcademicView(DashboardViewMixin):
 modified_academic_view = AcademicView.as_view()
 
 
-class LoansView(DashboardViewMixin):
+class LoansView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/loans.html"
     template_name = "account/dashboard/v1/investment/loans.html"
 
@@ -436,7 +458,7 @@ class LoansView(DashboardViewMixin):
 modified_loans_view = LoansView.as_view()
 
 
-class VipView(DashboardGuard, DashboardViewMixin):
+class VipView(DashboardGuard, InvestmentViewMixin):
     # template_name = "account/dashboard/investment/vip.html"
     template_name = "account/dashboard/v1/investment/vip.html"
     form_class = AgentForm

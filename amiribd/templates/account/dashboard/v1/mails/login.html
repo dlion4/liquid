@@ -1,68 +1,68 @@
 {% load static %}
 <style>
-* {
+  * {
     box-sizing: border-box;
-}
+  }
 
-.wrapper {
+  .wrapper {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-}
+  }
 
-h1 {
+  h1 {
     text-transform: uppercase;
-}
+  }
 
-button {
+  button {
     width: 200px;
     padding: 20px;
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
     border: none;
-}
+  }
 
-.button-box-special {
+  .button-box-special {
     background: #383b3a;
-}
+  }
 
-button:focus {
+  button:focus {
     outline: none;
-}
+  }
 
-/* Button Styles */
+  /* Button Styles */
 
 
-.seven {
+  .seven {
     background: darkblue;
     color: white;
     border-radius: 5px;
     transition: all 300ms;
-}
+  }
 
-.seven:hover {
+  .seven:hover {
     transform: scale(1.1);
     letter-spacing: 2px;
     background: white;
     color: darkblue;
-    box-shadow: 2px 2px 3px rgba(0,0,0,0.57);
-}
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.57);
+  }
 
 
 
-/* Layout */
+  /* Layout */
 
-.layout {
+  .layout {
     max-width: 900px;
     margin: 0 auto;
     /* border: 2px solid red; */
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-}
+  }
 
-.button-box,
-.button-box-special {
+  .button-box,
+  .button-box-special {
     width: 250px;
     height: 150px;
     /* border: 1px solid black; */
@@ -70,7 +70,7 @@ button:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 </style>
 <table class="email-wraper">
   <tbody>
@@ -81,7 +81,7 @@ button:focus {
           <tbody>
             <tr>
               <td class="px-3 px-sm-5 pt-3 pt-sm-5 pb-3">
-                <h2 class="email-heading">Login Link From
+                <h2 class="email-heading">Earnkraft Login to Dashboard
                   {{ team }}</h2>
               </td>
             </tr>
@@ -92,20 +92,20 @@ button:focus {
                 <p>Welcome to Earnkraft
                   <br>
                   Thank you for registering on our site. To activate your
-                  Earnkraft account, please click the link below:</p>
+                  Earnkraft account, please click the link below:
+                </p>
                 <p>Click the link below to active your Earnkraft account.</p>
                 <p class="mb-4">This link will expire in 15 minutes and can only
                   be used once.</p>
-                <a href="{{link}}" class="button3" target="_blank"
-                  rel="noopener">click to login</a>
-                  
+                <a href="{{link}}" class="button3" target="_blank" rel="noopener">click to login</a>
+
               </td>
             </tr>
             <div class="button-box">
               <button class="seven">Login to Account</button>
-          </div>
-          <a href="{{link}}" class="seven btn btn-primary button3" target="_blank" rel="noopener">Click to login</a>
-          
+            </div>
+            <a href="{{link}}" class="seven btn btn-primary button3" target="_blank" rel="noopener">Click to login</a>
+
             <tr>
               <td class="px-3 px-sm-5 pt-4">
                 <h4 class="email-heading-s2">or</h4>
@@ -114,8 +114,8 @@ button:focus {
                 <a href="{{link}}" class="link-block">{{link}}</a>
                 <div class="container">
                   <div class="buttonz">
-                    
-                    <a href="https://jacoblisic.com" class="button3" target="_blank" rel="noopener">Hover Me</a>
+
+                   
                   </div>
                 </div>
               </td>
@@ -126,7 +126,7 @@ button:focus {
                   this message.</p>
                 <p class="email-note">This is an automatically generated email
                   please do not reply to this email. If you face any issues,
-                  please contact us at help@dashlite.com</p>
+                  please contact us at support@earnkraft.com</p>
               </td>
             </tr>
           </tbody>

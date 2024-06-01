@@ -2,271 +2,232 @@
 {% load static %}
 
 {% block heading %}
-  <div class="nk-block-head nk-block-head-sm">
-    <div class="nk-block-between">
-      <div class="nk-block-head-content">
-        <h3 class="nk-block-title page-title">Jobs</h3>
-        <div class="nk-block-des text-soft">
-          <p>We have a total of 100<span>+</span>
-            jobs.</p>
-        </div>
+<div class="nk-block-head nk-block-head-sm">
+  <div class="nk-block-between">
+    <div class="nk-block-head-content">
+      <h3 class="nk-block-title page-title">Jobs</h3>
+      <div class="nk-block-des text-soft">
+        <p>We have a total of 100<span>+</span>
+          jobs.</p>
       </div>
-      <div class="nk-block-head-content">
-        <div class="toggle-wrap nk-block-tools-toggle">
-          <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
-            <em class="icon ni ni-menu-alt-r"></em>
-          </a>
-          <div class="toggle-expand-content" data-content="pageMenu">
-            <ul class="nk-block-tools g-3">
-              <li>
-                <div class="drodown">
-                  <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown">
-                    <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
-                    <span>Filtered By</span>
-                    <em class="dd-indc icon ni ni-chevron-right"></em>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-end">
-                    <ul class="link-list-opt no-bdr">
-                      <li>
-                        <a href="#">
-                          <span>Open</span></a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <span>Closed</span></a>
-                      </li>
-
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              <li class="nk-block-tools-opt d-none d-sm-block">
-                <a href="#" class="btn btn-primary">
-                  <em class="icon ni ni-plus"></em>
-                  <span>Add Project</span></a>
-              </li>
-              <li class="nk-block-tools-opt d-block d-sm-none">
-                <a href="#" class="btn btn-icon btn-primary">
-                  <em class="icon ni ni-plus"></em>
+    </div>
+    <div class="nk-block-head-content">
+      <div class="toggle-wrap nk-block-tools-toggle">
+        <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+          <em class="icon ni ni-menu-alt-r"></em>
+        </a>
+        <div class="toggle-expand-content" data-content="pageMenu">
+          <ul class="nk-block-tools g-3">
+            <li>
+              <div class="drodown">
+                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown">
+                  <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
+                  <span>Filtered By</span>
+                  <em class="dd-indc icon ni ni-chevron-right"></em>
                 </a>
-              </li>
-            </ul>
-          </div>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <ul class="link-list-opt no-bdr">
+                    <li>
+                      <a href="#">
+                        <span>Open</span></a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <span>Closed</span></a>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li class="nk-block-tools-opt d-none d-sm-block">
+              <a href="#" class="btn btn-primary">
+                <em class="icon ni ni-share"></em>
+                <span>Share</span></a>
+            </li>
+            <li class="nk-block-tools-opt d-block d-sm-none">
+              <a href="#" class="btn btn-icon btn-primary">
+                <em class="icon ni ni-plus"></em>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock heading %}
 {% block main %}
-  <div class="nk-block">
-    <div class="row g-gs">
-      <div class="col-sm-6 col-lg-4 col-xxl-3">
-        <div class="card card-bordered h-100">
-          <div class="card-inner">
-            <div class="project">
-              <div class="project-head">
-                <a href="" class="project-title">
-                  <div class="user-avatar sq bg-purple">KE
-                  </div>
-                  <div class="project-info">
-                    <h6 class="title">Dashlite Development</h6>
-                    <span class="sub-text">Softnio LTD</span>
-                  </div>
-                </a>
-                <div class="drodown">
-                  <li>
-                    <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt="" class="language-flag">
-                      <span class="language-name">Kenya</span></a>
-                  </li>
-
+<div class="nk-block">
+  <div class="row g-gs">
+    <div class="col-sm-6 col-lg-4 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="project">
+            <div class="project-head">
+              <a href="" class="project-title">
+                <div class="user-avatar sq bg-purple">KE
                 </div>
-              </div>
-              <div class="project-details">
-                <p>Design and develop the DashLite template for Envato Marketplace.</p>
-              </div>
-              <div class="project-progress">
-                <div class="project-progress-details">
-                  <div class="project-progress-task">
-                    <em class="icon ni ni-check-round-cut"></em>
-                    <span>3 Capacity Required</span></div>
-
+                <div class="project-info">
+                  <h6 class="title">Dashlite Development</h6>
+                  <span class="sub-text">Softnio LTD</span>
                 </div>
+              </a>
+              <div class="drodown">
+                <li>
+                  <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt=""
+                      class="language-flag">
+                    <span class="language-name">Kenya</span></a>
+                </li>
 
-              </div>
-              <div class="project-meta">
-                <div class="card card-preview">
-                  <div class="card-inner">
-                    <ul class="preview-list ">
-
-                      <li class="preview-item">
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTabs">View Job
-                        </div>
-                      </div>
-                      <span class="badge badge-dim bg-warning">
-                        <em class="icon ni ni-clock"></em>Deadline:
-                        <span>11/11/1111</span></span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
+            <div class="project-details">
+              <p>Design and develop the DashLite template for Envato Marketplace.</p>
+            </div>
+            <div class="project-progress">
+              <div class="project-progress-details">
+                <div class="project-progress-task">
+                  <em class="icon ni ni-check-round-cut"></em>
+                  <span>309 Capacity Required</span>
+                </div>
 
-            <div class="col-sm-6 col-lg-4 col-xxl-3">
-              <div class="card card-bordered h-100">
+              </div>
+
+            </div>
+            <div class="project-meta">
+              <div class="card card-preview">
                 <div class="card-inner">
-                  <div class="project">
-                    <div class="project-head">
-                      <a href="" class="project-title">
-                        <div class="user-avatar sq bg-purple">UG
-                        </div>
-                        <div class="project-info">
-                          <h6 class="title">Dashlite Development</h6>
-                          <span class="sub-text">Softnio LTD</span>
-                        </div>
-                      </a>
-                      <div class="drodown">
-                        <li>
-                          <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt="" class="language-flag">
-                            <span class="language-name">Uganda</span></a>
-                        </li>
+                  <ul class="preview-list ">
+                    <li class="preview-item">
+                      <button type="button" class="btn btn-secondary btn-outline-primary text-white">View Job
+                </div>
+              </div>
+              <span class="badge badge-dim bg-warning"
+                style="display: flex; flex-direction: column; align-items: center;">
+                <em class="icon ni ni-clock"> Deadline</em>
+                <span>11/11/2028</span>
+              </span>
 
-                      </div>
-                    </div>
-                    <div class="project-details">
-                      <p>Design and develop the DashLite template for Envato Marketplace.</p>
-                    </div>
-                    <div class="project-progress">
-                      <div class="project-progress-details">
-                        <div class="project-progress-task">
-                          <em class="icon ni ni-check-round-cut"></em>
-                          <span>3 Capacity Required</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                      </div>
+    <div class="col-sm-6 col-lg-4 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="project">
+            <div class="project-head">
+              <a href="" class="project-title">
+                <div class="user-avatar sq bg-purple">UG
+                </div>
+                <div class="project-info">
+                  <h6 class="title">Dashlite Development</h6>
+                  <span class="sub-text">Softnio LTD</span>
+                </div>
+              </a>
+              <div class="drodown">
+                <li>
+                  <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt=""
+                      class="language-flag">
+                    <span class="language-name">Uganda</span></a>
+                </li>
 
-                    </div>
-                    <div class="project-meta">
-                      <div class="card card-preview">
-                        <div class="card-inner">
-                          <ul class="preview-list ">
+              </div>
+            </div>
+            <div class="project-details">
+              <p>Design and develop the DashLite template for Envato Marketplace.</p>
+            </div>
+            <div class="project-progress">
+              <div class="project-progress-details">
+                <div class="project-progress-task">
+                  <em class="icon ni ni-check-round-cut"></em>
+                  <span>3 Capacity Required</span>
+                </div>
 
-                            <li class="preview-item">
-                              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTabs">View Job
-                              </div>
-                            </div>
-                            <span class="badge badge-dim bg-warning">
-                              <em class="icon ni ni-clock"></em>Deadline:
-                              <span>11/11/1111</span></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              </div>
 
-                  <div class="col-sm-6 col-lg-4 col-xxl-3">
-                    <div class="card card-bordered h-100">
-                      <div class="card-inner">
-                        <div class="project">
-                          <div class="project-head">
-                            <a href="" class="project-title">
-                              <div class="user-avatar sq bg-purple">TZ
-                              </div>
-                              <div class="project-info">
-                                <h6 class="title">Dashlite Development</h6>
-                                <span class="sub-text">Softnio LTD</span>
-                              </div>
-                            </a>
-                            <div class="drodown">
-                              <li>
-                                <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt="" class="language-flag">
-                                  <span class="language-name">Tanzania</span></a>
-                              </li>
+            </div>
+            <div class="project-meta">
+              <div class="card card-preview">
+                <div class="card-inner">
+                  <ul class="preview-list ">
 
-                            </div>
-                          </div>
-                          <div class="project-details">
-                            <p>Design and develop the DashLite template for Envato Marketplace.</p>
-                          </div>
-                          <div class="project-progress">
-                            <div class="project-progress-details">
-                              <div class="project-progress-task">
-                                <em class="icon ni ni-check-round-cut"></em>
-                                <span>3 Capacity Required</span></div>
+                    <li class="preview-item">
+                      <button type="button" class="btn btn-secondary btn-outline-primary text-white">View Job
+                </div>
+              </div>
+              <span class="badge badge-dim bg-warning"
+                style="display: flex; flex-direction: column; align-items: center;">
+                <em class="icon ni ni-clock"> Deadline</em>
+                <span>11/11/2028</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                            </div>
+    <div class="col-sm-6 col-lg-4 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="project">
+            <div class="project-head">
+              <a href="" class="project-title">
+                <div class="user-avatar sq bg-purple">TZ
+                </div>
+                <div class="project-info">
+                  <h6 class="title">Dashlite Development</h6>
+                  <span class="sub-text">Softnio LTD</span>
+                </div>
+              </a>
+              <div class="drodown">
+                <li>
+                  <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt=""
+                      class="language-flag">
+                    <span class="language-name">Tanzania</span></a>
+                </li>
 
-                          </div>
-                          <div class="project-meta">
-                            <div class="card card-preview">
-                              <div class="card-inner">
-                                <ul class="preview-list ">
+              </div>
+            </div>
+            <div class="project-details">
+              <p>Design and develop the DashLite template for Envato Marketplace.</p>
+            </div>
+            <div class="project-progress">
+              <div class="project-progress-details">
+                <div class="project-progress-task">
+                  <em class="icon ni ni-check-round-cut"></em>
+                  <span>3 Capacity Required</span>
+                </div>
 
-                                  <li class="preview-item">
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTabs">View Job
-                                    </div>
-                                  </div>
-                                  <span class="badge badge-dim bg-warning">
-                                    <em class="icon ni ni-clock"></em>Deadline:
-                                    <span>11/11/1111</span></span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+              </div>
 
-                        <div class="col-sm-6 col-lg-4 col-xxl-3">
-                          <div class="card card-bordered h-100">
-                            <div class="card-inner">
-                              <div class="project">
-                                <div class="project-head">
-                                  <a href="" class="project-title">
-                                    <div class="user-avatar sq bg-purple">RW
-                                    </div>
-                                    <div class="project-info">
-                                      <h6 class="title">Dashlite Development</h6>
-                                      <span class="sub-text">Softnio LTD</span>
-                                    </div>
-                                  </a>
-                                  <div class="drodown">
-                                    <li>
-                                      <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt="" class="language-flag">
-                                        <span class="language-name">Rwanda</span></a>
-                                    </li>
+            </div>
+            <div class="project-meta">
+              <div class="card card-preview">
+                <div class="card-inner">
+                  <ul class="preview-list ">
+                    <li class="preview-item">
+                      <button type="button" class="btn btn-secondary btn-outline-primary text-white">View Job
+                </div>
+              </div>
+              <span class="badge badge-dim bg-warning"
+                style="display: flex; flex-direction: column; align-items: center;">
+                <em class="icon ni ni-clock"> Deadline</em>
+                <span>11/11/2028</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                                  </div>
-                                </div>
-                                <div class="project-details">
-                                  <p>Design and develop the DashLite template for Envato Marketplace.</p>
-                                </div>
-                                <div class="project-progress">
-                                  <div class="project-progress-details">
-                                    <div class="project-progress-task">
-                                      <em class="icon ni ni-check-round-cut"></em>
-                                      <span>3 Capacity Required</span></div>
 
-                                  </div>
-
-                                </div>
-                                <div class="project-meta">
-                                  <div class="card card-preview">
-                                    <div class="card-inner">
-                                      <ul class="preview-list ">
-
-                                        <li class="preview-item">
-                                          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTabs">View Job
-                                          </div>
-                                        </div>
-                                        <span class="badge badge-dim bg-warning">
-                                          <em class="icon ni ni-clock"></em>Deadline:
-                                          <span>11/11/1111</span></span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  {% endblock main %}
+  </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock main %}

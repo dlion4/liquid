@@ -85,7 +85,21 @@ class PlanAdmin(admin.ModelAdmin):
         "status",
         "plan_profile",
         "payment_method",
+        "mpesa_transaction_code",
     ]
+
+    actions = [
+        "verified_mpesa_code_transaction",
+        "unverified_mpesa_code_transaction",
+    ]
+
+    @admin.action(description="Mark selected as paid")
+    def verified_mpesa_code_transaction(self, request, queryset):
+        queryset.update(is_paid=True)
+
+    @admin.action(description="Mark selected as unpaid")
+    def unverified_mpesa_code_transaction(self, request, queryset):
+        queryset.update(is_paid=False)
 
 
 @admin.register(AccountWithdrawalAction)

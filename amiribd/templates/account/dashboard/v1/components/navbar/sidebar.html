@@ -5,7 +5,7 @@
 <div class="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
   <div class="nk-sidebar-element nk-sidebar-head">
     <div class="nk-sidebar-brand">
-      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:home' %}" class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="{% static 'images/logo.png' %}" srcset="{% static 'images/logo2x.png' %} 2x" alt="logo"><img class="logo-dark logo-img" src="{% static 'images/logo-dark.png' %}" srcset="{% static 'images/logo-dark2x.png' %} 2x" alt="logo-dark">
+      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:home' %}" class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo"><img class="logo-dark logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo-dark">
         <span class="nio-version">Earnkraft</span></a>
     </div>
     <div class="nk-menu-trigger me-n2">
@@ -52,7 +52,7 @@
             <div class="user-account-actions">
               <ul class="g-3">
                 <li>
-                  <a href="#" class="btn btn-lg btn-primary">
+                  <a href="#" class="btn btn-lg btn-primary me-2">
                     <span>Deposit</span>
                     <em class="icon ni ni-wallet-saving"></em>
                   </a>
@@ -66,7 +66,7 @@
                   </li>
                 {% else %}
                   <li>
-                    <a href="#" class="btn btn-lg btn-warning disabled">
+                    <a href="#" class="btn btn-lg btn-warning disabled me-3">
                       <span>Withdraw</span>
                       <em class="icon ni ni-wallet-out"></em>
                     </a>
@@ -192,27 +192,27 @@
                 </span><span class="nk-menu-text">Wallets</span>
               </a>
             </li>
-            <li class="nk-menu-item">
-              <a href="/buy-sell/" class="nk-menu-link">
+            {% comment %} <li class="nk-menu-item">
+              <a role="button" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-coins"></em>
                 </span><span class="nk-menu-text">Buy / Sell</span>
               </a>
             </li>
             <li class="nk-menu-item">
-              <a href="/order-history/" class="nk-menu-link">
+              <a role="button" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-repeat"></em>
                 </span><span class="nk-menu-text">Orders</span>
               </a>
             </li>
             <li class="nk-menu-item">
-              <a href="/articles/" class="nk-menu-link">
+              <a role="button" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-article"></em>
                 </span><span class="nk-menu-text">Articles</span>
               </a>
-            </li>
+            </li> {% endcomment %}
             
             <li class="nk-menu-item">
               <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:referals' %}" class="nk-menu-link">
@@ -292,7 +292,7 @@
             <div class="widget-title">
               <h6 class="overline-title">Active Plan
                 <span>({{plans.count}})</span></h6>
-              <a href="#" class="link">Manage</a>
+              <a href="{% url 'subscriptions:list' %}" class="link">Manage</a>
             </div>
             <ul class="wallet-list">
               {% for plan in plans %}
@@ -315,7 +315,10 @@
                     <em class="icon ni ni-plus"></em>
                   </div>
                   <div class="wallet-text">
-                    <h6 class="wallet-name" role="button" data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal">Add another plan</h6>
+                    <h6 class="wallet-name" role="button" >Add another plan</h6>
+                    <!--
+                      data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal"
+                    -->
                   </div>
                 </a>
               </li>
@@ -338,7 +341,7 @@
               <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-user-c"></em>
-                </span><span class="nk-menu-text">My Account</span>
+                </span><span class="nk-menu-text">Account</span>
               </a>
             </li>
             <li class="nk-menu-item">
@@ -417,7 +420,7 @@
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-chat-fill"></em>
                 </span>
-                <span class="nk-menu-text">Feedback</span>
+                <span class="nk-menu-text">Community</span>
               </a>
             </li>
             <li class="nk-menu-item">
@@ -425,7 +428,7 @@
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-info-fill"></em>
                 </span>
-                <span class="nk-menu-text">About Data</span>
+                <span class="nk-menu-text">Earning Tips</span>
               </a>
             </li>
           </ul>

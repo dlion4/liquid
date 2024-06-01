@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from amiribd.dashboard.views import DashboardViewMixin
 from django.views.generic import View
+from amiribd.invest.models import Account
 from amiribd.profilesettings.forms import NotificationForm
 from amiribd.profilesettings.models import (
     Notification,
@@ -24,6 +25,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 class ProfileHtmxSetupView(DashboardViewMixin):
     template_name = "account/profile/index.html"
     htmx_template_name = ""
+    queryset = Account
 
     def dispatch(
         self, request: http.HttpRequest, *args: Any, **kwargs: Any

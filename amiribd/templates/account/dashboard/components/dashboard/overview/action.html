@@ -100,11 +100,15 @@
 
   loadingBtn.style.display = "none";
 
-  generateBtn.addEventListener("click", (e) => {
-    loadingBtn.style.display = "inline-block";
-    generateBtn.style.display = "none";
-  });
+  
+  if(document.getElementById("generateBtn")){
+    generateBtn.addEventListener("click", (e) => {
+      loadingBtn.style.display = "inline-block";
+      generateBtn.style.display = "none";
+    });
+  } 
 
+  
   function handleHtmxAfterRequest() {
     loadingBtn.style.display = "none";
     generateBtn.style.display = "inline-block";

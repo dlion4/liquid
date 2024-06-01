@@ -5,7 +5,7 @@
     <ul class="uk-slideshow-items uk-light">
       <li>
         <div class="uk-position-cover">
-          <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/in-slideshow-image-1.jpg' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img">
+          <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/user/marketing.jpg' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img" style="filter: brightness(50%) blur(2px);">
         </div>
         <span></span>
         <div class="uk-container">
@@ -15,7 +15,7 @@
                 <h1>All Possible ways of Earning</h1>
                 <p class="uk-text-lead uk-visible@m">With Access to the internet, we bring you various ways of earning income from you smartphone</p>
                 <p class="uk-text-lead uk-visible@m">You can now use chatGPT to earn with us</p>
-                <a href="#" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
                   <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
               </div>
             </div>
@@ -24,16 +24,16 @@
       </li>
       <li>
         <div class="uk-position-cover">
-          <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/in-slideshow-image-2.jpg' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img">
+          <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/user/landslide.jpg' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img" style="filter: brightness(50%) blur(2px);">
         </div>
         <span></span>
         <div class="uk-container">
           <div class="uk-grid" data-uk-grid="data-uk-grid">
             <div class="uk-width-3-5@m">
               <div class="uk-overlay">
-                <h1>We Delver What We Promise</h1>
+                <h1>We Deliver What We Promise</h1>
                 <p class="uk-text-lead uk-visible@m">You can earn from afflient marketing, commisions, bonuses, investiment returns, Blogs and so much more. Better earn small returns constanly daily with little capital to start with</p>
-                <a href="#" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
                   <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
               </div>
             </div>
@@ -42,7 +42,7 @@
       </li>
       <li>
         <div class="uk-position-cover">
-          <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/in-slideshow-image-3.jpg' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img">
+          <img src="{% static 'img/in-lazy.gif' %}" data-src="{% static 'img/user/20058510_6242682.jpg' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img" style="filter: brightness(50%) blur(2px);">
         </div>
         <span></span>
         <div class="uk-container">
@@ -50,8 +50,8 @@
             <div class="uk-width-3-5@m">
               <div class="uk-overlay">
                 <h1>No Risk No Reward</h1>
-                <p class="uk-text-lead uk-visible@m">With our packages, Artificial Intelligence and the internet, the more you push beyond your limit, the greater the reward</p>
-                <a href="#" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                <p class="uk-text-lead uk-visible@m">With our packages, Artificial Intelligence and the internet, the more you push beyond your limits, the greater the reward</p>
+                <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
                   <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
               </div>
             </div>
@@ -64,3 +64,4 @@
     </div>
   </div>
 </div>
+

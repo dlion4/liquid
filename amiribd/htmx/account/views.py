@@ -2,7 +2,7 @@ from typing import Any
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from amiribd.invest.forms import AccountEventWithdrawalForm, AddPlanForm, CancelPlanForm
-from amiribd.invest.models import Account, Plan, PlanType
+from amiribd.invest.models import Account, Plan, PlanType, Pool
 from amiribd.invest.serializers import PlanTypeSerializer
 from amiribd.transactions.models import Transaction
 from amiribd.users.models import Profile
@@ -271,3 +271,13 @@ class HandlePlanPaymentSuccessView(HtmxDispatchView):
             source="Plan purchase",
             payment_phone=payment_phone,
         )
+
+
+
+class HandleClosePaymentFormView(HtmxDispatchView):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        profile = get_object_or_404(Profile, pk=data.get("profile_id"))
+        pool = get_object_or_404(Pool,profile=profile, pk=data.get("pool_id"))
+        pool.delete()
+        return JsonResponse({"success": True,})

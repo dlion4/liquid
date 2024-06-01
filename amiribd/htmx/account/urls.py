@@ -29,4 +29,5 @@ urlpatterns = [
         views.HandlePlanPaymentSuccessView.as_view(),
         name="handle-payment-success",
     ),
+    path("handle-close-payment-form-view/", views.HandleClosePaymentFormView.as_view(), name="handle-close-payment-form-view",)
 ]

@@ -1,57 +1,583 @@
 {% load static %}
 
- <br />
- <br />
+<style>
+    // Color variables
+    $blue: #2e7ad1;
+    $gray-light: #f5f5f5;
+    $gray-dark: #ebeced;
+    $green: #00b478;
+    $red: #bb0613;
+    $steel: #505e67;
+    $white: #ffffff;
+
+    h1 {
+        font-family: "Bree Serif", "Source Sans Pro", sans-serif;
+        text-align: center;
+        margin: 50px 20px 10px;
+    }
+
+    .row {
+        margin: auto;
+        max-width: 1140px;
+        overflow: hidden;
+        padding: 0 10px;
+        width: 95%;
+
+        .feature-table {
+            margin: 20px 0 10px;
+            text-align: center;
+
+            &.hide-550 {
+                display: block;
+
+                .feature-row-header {
+                    font-family: "Bree Serif", "Source Sans Pro", sans-serif;
+                }
+            }
+
+            &.show-550 {
+                display: none;
+
+                #sticky {
+                    width: 100%;
+                    background-color: #fff;
+
+                    &.stick {
+                        margin: 0 auto;
+                        margin-top: 0 !important;
+                        position: fixed;
+                        top: 0;
+                        width: 95%;
+                        z-index: 10000;
+
+                        .feature-row-header {
+                            font-size: 18px;
+
+                            &:first-child {
+                                border-right: 2px solid #ebeced;
+                            }
+                        }
+                    }
+                }
+            }
+
+            td {
+                color: #505e67;
+                font-family: "Source Sans Pro", sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+                padding: 20px;
+                text-align: center;
+            }
+
+            table {
+                width: 100%;
+                margin: 0 auto;
+
+                .feature-row-1 {
+                    background-color: #ebeced;
+                }
+
+                .feature-row-2 {
+                    background-color: #f5f5f5;
+                }
+
+                span.check-mark {
+                    &:after {
+                        content: "\2714";
+                        color: #00b478;
+                        display: block;
+                        font-weight: 600;
+                        font-size: 24px;
+                        display: inline;
+                    }
+                }
+
+                span.x-mark {
+                    &:after {
+                        content: "\2718";
+                        color: #bb0613;
+                        font-weight: 800;
+                        font-size: 24px;
+                    }
+                }
+
+                .feature-label p {
+                    color: #505e67;
+                    font-weight: 600;
+                    font-size: 16px;
+                    margin: 0 auto;
+                    text-align: left;
+                }
+            }
+
+            &.show-550 {
+                .feature-row-header {
+                    font-size: 20px;
+                    font-family: "Bree Serif", "Source Sans Pro", sans-serif;
+                    width: 47%;
+                    margin: 0;
+                    display: inline-block;
+                    padding: 20px 0 30px;
+                    vertical-align: middle;
+                    text-align: center;
+                }
+
+                .feature-row-wrap {
+                    border-bottom: 3px solid $white;
+
+                    .feature-row-1 {
+                        border-bottom: 2px solid $white;
+                        background-color: #ebeced;
+
+                        div {
+                            display: inline-block;
+                            margin: 0;
+                            padding: 20px 0;
+                            width: 47%;
+                            vertical-align: middle;
+
+                            &:first-child {
+                                border-right: 2px solid $white;
+                            }
+
+                            span.check-mark {
+                                &:after {
+                                    content: "\2714";
+                                    color: #00b478;
+                                    display: inline;
+                                    font-weight: 600;
+                                    font-size: 24px;
+                                }
+                            }
+
+                            span.x-mark {
+                                &:after {
+                                    content: "\2718";
+                                    color: #bb0613;
+                                    font-weight: 800;
+                                    font-size: 24px;
+                                }
+                            }
+                        }
+                    }
+
+                    .feature-row-2 {
+                        border-bottom: 2px solid $white;
+                        background-color: #f5f5f5;
+
+                        div {
+                            display: inline-block;
+                            margin: 0;
+                            padding: 20px 0;
+                            width: 49%;
+                            vertical-align: middle;
+
+                            &:first-child {
+                                border-right: 2px solid $white;
+                            }
+
+                            span.check-mark {
+                                &:after {
+                                    content: "\2714";
+                                    color: #00b478;
+                                    display: block;
+                                    font-weight: 600;
+                                    font-size: 24px;
+                                }
+                            }
+
+                            span.x-mark {
+                                &:after {
+                                    content: "\2718";
+                                    color: #bb0613;
+                                    font-weight: 800;
+                                    font-size: 24px;
+                                }
+                            }
+                        }
+                    }
+
+                    .feature-label p {
+                        color: #505e67;
+                        font-size: 16px;
+                        font-weight: 600;
+                        line-height: 1.5;
+                        margin: 0 auto;
+                        padding: 20px 0;
+                    }
+                }
+            }
+        }
+
+        .footer {
+            font-family: "Source Sans Pro", sans-serif;
+            font-size: 14px;
+            font-style: italic;
+            padding-top: 5px;
+            text-align: right;
+        }
+    }
+
+    @media (max-width: 550px) {
+        h1 {
+            font-size: 25px;
+        }
+
+        .feature-table {
+            &.hide-550 {
+                display: none !important;
+            }
+
+            &.show-550 {
+                display: block !important;
+            }
+        }
+    }
+</style>
+<br />
 <!--ne styles-->
 
 
-    <!-- section content begin -->
-    <div class="uk-section in-liquid-16">
-      <div class="uk-container">
-          <div class="uk-grid uk-flex uk-flex-center">
-              <div class="uk-width-1-2@m uk-text-center">
-                  <h2>Our <span class="in-highlight">Stats</span> </h2>
-              </div>
-          </div>
-          <div class="uk-grid uk-child-width-1-2@s uk-child-width-1-4@m uk-text-center" data-uk-grid="">
-              <div class="uk-first-column">
-                  <div class="in-liquid-16-counter">
+<!-- section content begin -->
+<div class="uk-section in-liquid-16">
+    <div class="uk-container">
+        <div class="uk-grid uk-flex uk-flex-center">
+            <div class="uk-width-1-2@m uk-text-center">
+                <h2>Our <span class="in-highlight">Stats</span> </h2>
+            </div>
+        </div>
+        <div class="uk-grid uk-child-width-1-2@s uk-child-width-1-4@m uk-text-center" data-uk-grid="">
+            <div class="uk-first-column">
+                <div class="in-liquid-16-counter">
                     <p class="uk-margin-small-top">Experience</p>
-                      <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
-                          <span class="count" data-counter-end="150932" data-counter-append="">hours</span>
-                      </h1>
-                      <p class="uk-margin-small-top">Hours</p>
-                  </div>
-              </div>
-              <div>
-                  <div class="in-liquid-16-counter">
+                    <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
+                        <span class="count" data-counter-end="150932" data-counter-append="">hours</span>
+                    </h1>
+                    <p class="uk-margin-small-top">Hours</p>
+                </div>
+            </div>
+            <div>
+                <div class="in-liquid-16-counter">
                     <p class="uk-margin-small-top">Active Users</p>
-                      <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
-                          <span class="count" data-counter-end="158739" data-counter-append=""></span>
-                      </h1>
-                      <p class="uk-margin-small-top">  Users</p>
-                  </div>
-              </div>
-              <div class="uk-grid-margin uk-first-column">
-                  <div class="in-liquid-16-counter">
+                    <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
+                        <span class="count" data-counter-end="158739" data-counter-append=""></span>
+                    </h1>
+                    <p class="uk-margin-small-top"> Users</p>
+                </div>
+            </div>
+            <div class="uk-grid-margin uk-first-column">
+                <div class="in-liquid-16-counter">
                     <p class="uk-margin-small-top">Paid Commisions</p>
-                      <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
-                          <span class="count" data-counter-end="1823334" data-counter-append=""></span>
-                      </h1>
-                      <p class="uk-margin-small-top">Ksh</p>
-                  </div>
-              </div>
-              <div class="uk-grid-margin">
-                  <div class="in-liquid-16-counter">
+                    <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
+                        <span class="count" data-counter-end="1823334" data-counter-append=""></span>
+                    </h1>
+                    <p class="uk-margin-small-top">Ksh</p>
+                </div>
+            </div>
+            <div class="uk-grid-margin">
+                <div class="in-liquid-16-counter">
                     <p class="uk-margin-small-top">Customer supports</p>
-                      <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
-                          <span class="count" data-counter-end="24" data-counter-append="/7">24/7</span>
-                      </h1>
-                      <p class="uk-margin-small-top"> </p>
-                  </div>
-              </div>
-          </div>
-          
-      </div>
-  </div>
-    <!-- section content end -->
+                    <h1 class="uk-text-muted uk-margin-top uk-margin-remove-bottom">
+                        <span class="count" data-counter-end="24" data-counter-append="/7">24/7</span>
+                    </h1>
+                    <p class="uk-margin-small-top"> </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- section content end -->
+<!-- section content end -->
+<!-- section content end -->
+<!-- section content end -->
+<!-- section content end -->
+<!-- section content end -->
+<!-- section content end -->
+
+<div class="uk-container">
+    <!-- <div class="uk-width-1-2@m uk-text-center"> -->
+    <h1 class="uk-margin-remove">Other Affliet Marketing Platforms vs
+        <span class="in-highlight">Earnkraft </span>Platform
+    </h1>
+    <!-- </div> -->
+    <div class="row">
+        <div class="feature-table hide-550 pb0">
+            <table>
+                <tr>
+                    <td class="feature-row-header">&nbsp;</td>
+                    <td class="feature-row-header">Other Affliet Marketing Platforms</td>
+                    <td class="feature-row-header">Earnkraft Platform</td>
+                </tr>
+                <tr class="feature-row-1">
+                    <td>
+                        <span class="feature-label">
+                            <p>Free Registration</p>
+                        </span>
+                    </td>
+                    <td><span class="x-mark"></span></td>
+                    <td><span class="check-mark"></span></td>
+                </tr>
+                <tr class="feature-row-2">
+                    <td>
+                        <span class="feature-label">
+                            <p>Multiple ways of earning</p>
+                        </span>
+                    </td>
+                    <td><span class="check-mark"></span></td>
+                    <td><span class="check-mark"></span></td>
+
+                </tr>
+                <tr class="feature-row-1">
+                    <td>
+                        <span class="feature-label">
+                            <p>VIP Bonus (weekly)</p>
+                        </span>
+                    </td>
+                    <td><span class="x-mark"></span></td>
+                    <td><span class="check-mark"></span></td>
+                </tr>
+                <tr class="feature-row-2">
+                    <td>
+                        <span class="feature-label">
+                            <p>Providing Job opportunities</p>
+                        </span>
+                    </td>
+                    <td><span class="x-mark"></span></td>
+                    <td><span class="check-mark"></span></td>
+                </tr>
+                <tr class="feature-row-1">
+                    <td>
+                        <span class="feature-label">
+                            <p>Fast Withdrawals</p>
+                        </span>
+                    </td>
+                    <td><span class="check-mark"></span></td>
+                    <td><span class="check-mark"></span></td>
+
+                </tr>
+                <tr class="feature-row-2">
+                    <td>
+                        <span class="feature-label">
+                            <p>Automated Payouts</p>
+                        </span>
+                    </td>
+                    <td><span class="x-mark"></span></td>
+                    <td><span class="check-mark"></span> ⭐</td>
+                </tr>
+                <tr class="feature-row-1">
+                    <td>
+                        <span class="feature-label">
+                            <p>Earn with AI & chatGPT</p>
+                        </span>
+                    </td>
+                    <td><span class="x-mark"></span></td>
+                    <td><span class="check-mark"></span> ⭐</td>
+                </tr>
+                <tr class="feature-row-2">
+                    <td>
+                        <span class="feature-label">
+                            <p>Referal Bonuses</p>
+                        </span>
+                    </td>
+
+                    <td><span class="check-mark"></span> </td>
+                    <td><span class="check-mark"></span> ⭐</td>
+                </tr>
+                <tr class="feature-row-1">
+                    <td>
+                        <span class="feature-label">
+                            <p>Earn from Articles & blogging</p>
+                        </span>
+                    </td>
+                    <td><span class="x-mark"></span></td>
+                    <td><span class="check-mark"></span> ⭐</td>
+                </tr>
+                <tr class="feature-row-2">
+                    <td>
+                        <span class="feature-label">
+                            <p>Registered Platform</p>
+                        </span>
+                    </td>
+                    <td><span class="check-mark"></span></td>
+                    <td><span class="check-mark"></span></td>
+
+                </tr>
+                <tr class="feature-row-1">
+                    <td>
+                        <span class="feature-label">
+                            <p>Referal comissions</p>
+                        </span>
+                    </td>
+                    <td>40%</td>
+                    <td>60%</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <div class="feature-table show-550 pb0">
+            <table>
+                <div id="sticky-anchor"></div>
+                <div id="sticky">
+                    <div class="feature-row-header">Other Affliet Marketing Platforms</div>
+                    <div class="feature-row-header">Earnkraft Platform</div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-1">
+                        <span class="feature-label">
+                            <p>Free Registration</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-2">
+                        <div><span class="x-mark"></span></div>
+                        <div><span class="check-mark"></span></div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-1">
+                        <span class="feature-label">
+                            <p>Multiple ways of earning</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-2">
+                        <div><span class="check-mark"></span></div>
+                        <div><span class="check-mark"></span></div>
+
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-2">
+                        <span class="feature-label">
+                            <p>VIP Bonus (weekly)</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-1">
+                        <div><span class="x-mark"></span></div>
+                        <div><span class="check-mark"></span></div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-2">
+                        <span class="feature-label">
+                            <p>Providing Job opportunities</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-1">
+                        <div><span class="x-mark"></span></div>
+                        <div><span class="check-mark"></span></div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-2">
+                        <span class="feature-label">
+                            <p>Fast Withdrawals</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-1">
+                        <div><span class="check-mark"></span></div>
+                        <div><span class="check-mark"></span></div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-2">
+                        <span class="feature-label">
+                            <p>Automated Payouts</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-1">
+                        <div><span class="x-mark"></span></div>
+                        <div><span class="check-mark"></span>⭐</div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-2">
+                        <span class="feature-label">
+                            <p>Earn with AI & chatGPT</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-1">
+                        <div><span class="x-mark"></span></div>
+                        <div><span class="check-mark"></span>⭐</div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-2">
+                        <span class="feature-label">
+                            <p>Referal Bonuses</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-2">
+                        <div><span class="check-mark"></span></div>
+                        <div><span class="check-mark"></span>⭐</div>
+
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-1">
+                        <span class="feature-label">
+                            <p>Earn from Articles & blogging</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-2">
+                        <div><span class="x-mark"></span></div>
+                        <div><span class="check-mark"></span>⭐</div>
+                    </div>
+                </div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-1">
+                        <span class="feature-label">
+                            <p>Registered Platform</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-2">
+
+                        <div><span class="check-mark"></span></div>
+                        <div><span class="check-mark"></span></div>
+                    </div>
+                </div>
+
+                <div id="sticky-end"></div>
+                <div class="feature-row-wrap">
+                    <div class="feature-row-1">
+                        <span class="feature-label">
+                            <p>Referal comissions</p>
+                        </span>
+                    </div>
+                    <div class="feature-row-2 border">
+                        <div>40%</div>
+                        <div>60%</div>
+                    </div>
+                </div>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</div>
+<!--scripts-->
+<!--scripts-->
+
+<script>
+    function sticky_relocate() {
+        var window_top = $(window).scrollTop();
+        var div_top = $('#sticky-anchor').offset().top;
+        var div_bottom = $('#sticky-end').offset().top;
+        if (window_top > div_top && window_top < div_bottom) {
+            $('#sticky').addClass('stick');
+            $('#sticky-anchor').height($('#sticky').outerHeight());
+        } else {
+            $('#sticky').removeClass('stick');
+            $('#sticky-anchor').height(0);
+        }
+    }
+
+    $(function () {
+        $(window).scroll(sticky_relocate);
+        sticky_relocate();
+    });
+</script>

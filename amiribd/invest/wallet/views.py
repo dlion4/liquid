@@ -7,17 +7,17 @@ class WalletViewMixin(DashboardViewMixin):
     queryset = Account
 
 
-class WalletView(TemplateView):
+class WalletView(WalletViewMixin, TemplateView):
     template_name = "account/dashboard/v1/investment/wallet/main.html"
 
 
-class WalletSendMoneyView(TemplateView):
+class WalletSendMoneyView(WalletViewMixin, TemplateView):
     template_name = "account/dashboard/v1/investment/wallet/send.html"
 
 
-class WalletWithdrawMoneyView(TemplateView):
+class WalletWithdrawMoneyView(WalletViewMixin, TemplateView):
     template_name = "account/dashboard/v1/investment/wallet/withdraw.html"
 
 
-class WalletDepositMoneyView(TemplateView):
+class WalletDepositMoneyView(WalletViewMixin, TemplateView):
     template_name = "account/dashboard/v1/investment/wallet/deposit.html"
