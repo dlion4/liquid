@@ -26906,3 +26906,9 @@ footer .social-media-list div a .fab {
   background-color: #fd7d1e;
   margin-top: -18px;
 }
+
+@media (max-width:500px) {
+.uk-background-cover{
+  display:none!important;
+  }
+}

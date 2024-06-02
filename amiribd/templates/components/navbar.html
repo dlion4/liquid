@@ -1,8 +1,11 @@
 {% load static %}
 
 <header>
+  <style>
+   
+  </style>
   <div class="{% if request.resolver_path.view_name == 'home' %}uk-section{% else %} uk-background-cover uk-background-top-center {% endif %}" style="background-image: url({% static 'img/in-wave-background-1.png' %})">
-    <nav class="uk-navbar-container uk-navbar-transparent" data-uk-sticky="show-on-up: true; top: 80; animation: uk-animation-fade">
+    <nav class="uk-navbar-container uk-navbar-transparent" data-uk-sticky="show-on-up: true; top: 0; animation: uk-animation-fade">
       <div class="uk-container" data-uk-navbar="data-uk-navbar">
         <div class="uk-navbar-left uk-width-expand uk-flex uk-flex-between">
           <a class="uk-navbar-item uk-logo" href="{% url 'home' %}">
@@ -54,7 +57,7 @@
                 <a class="uk-margin-right" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">
                   <i class="fas fa-comment-alt uk-margin-small-right"></i>Live Chat</a>
                 <a href="#">
-                  <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>0113000799</a>
+                  <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a>
                   <!-- <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a> -->
               </div>
             </div>

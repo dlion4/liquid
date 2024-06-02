@@ -90,7 +90,7 @@ class PlanRegistrationForm(forms.ModelForm):
                 "name": "plan-type",
             }
         ),
-        label="Plan Seelction",
+        label="Plan Selction",
         help_text="Select a suitable plan that fits your pocket",
     )
 

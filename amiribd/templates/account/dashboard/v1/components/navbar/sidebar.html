@@ -35,15 +35,15 @@
             <ul class="user-account-data gy-1">
               <li>
                 <div class="user-account-label">
-                  <span class="sub-text">Profit/(1d)</span></div>
+                  <span class="sub-text">Profit</span></div>
                 <div class="user-account-value">
-                  <span class="lead-text">+ 0.0526
-                    <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">3.1%
+                  <span class="lead-text">+ 0
+                    <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">0%
                     <em class="icon ni ni-arrow-long-up"></em></span></div>
               </li>
               <li>
                 <div class="user-account-label">
-                  <span class="sub-text">Deposit in orders</span></div>
+                  <span class="sub-text">Deposits</span></div>
                 <div class="user-account-value">
                   <span class="sub-text">{{deposit_amount}}
                     <span class="currency currency-btc">KES</span></span></div>
@@ -113,7 +113,7 @@
               <ul class="user-account-data">
                 <li>
                   <div class="user-account-label">
-                    <span class="sub-text">Profit/(1d)</span></div>
+                    <span class="sub-text">Profits</span></div>
                   <div class="user-account-value">
                     <span class="lead-text">+ 0.0526
                       <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">3.1%
@@ -121,7 +121,7 @@
                 </li>
                 <li>
                   <div class="user-account-label">
-                    <span class="sub-text">Deposit in orders</span></div>
+                    <span class="sub-text">Deposits</span></div>
                   <div class="user-account-value">
                     <span class="sub-text text-base">{{deposit_amount}}
                       <span class="currency currency-btc">KES</span></span></div>
@@ -199,7 +199,8 @@
                 </span><span class="nk-menu-text">Buy / Sell</span>
               </a>
             </li>
-            <li class="nk-menu-item">
+            {% endcomment %}
+            {% comment %} <li class="nk-menu-item">
               <a role="button" class="nk-menu-link">
                 <span class="nk-menu-icon">
                   <em class="icon ni ni-repeat"></em>
@@ -212,7 +213,7 @@
                   <em class="icon ni ni-article"></em>
                 </span><span class="nk-menu-text">Articles</span>
               </a>
-            </li> {% endcomment %}
+            </li>  {% endcomment %}
             
             <li class="nk-menu-item">
               <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:referals' %}" class="nk-menu-link">
@@ -310,7 +311,7 @@
                 </li>
               {% endfor %}
               <li class="wallet-item wallet-item-add">
-                <a href="#">
+                <a href="{% url 'dashboard:invest:invest' %}">
                   <div class="wallet-icon">
                     <em class="icon ni ni-plus"></em>
                   </div>

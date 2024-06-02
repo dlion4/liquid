@@ -173,7 +173,7 @@ class ProfileAddressForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control form-control-lg",
-                "placeholder": "Address Line 2",
+                "placeholder": "Optional",
             }
         ),
     )
