@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('transactions', '0005_alter_transaction_type'),
+        ("transactions", "0005_alter_transaction_type"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='transaction',
-            options={'get_latest_by': ['created_at']},
+            name="transaction",
+            options={"get_latest_by": ["created_at"]},
         ),
     ]

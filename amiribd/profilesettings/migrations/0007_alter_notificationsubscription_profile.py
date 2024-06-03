@@ -7,14 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profilesettings', '0006_notificationsubscription_is_active_and_more'),
-        ('users', '0024_profile_referred_by'),
+        ("profilesettings", "0006_notificationsubscription_is_active_and_more"),
+        ("users", "0024_profile_referred_by"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='notificationsubscription',
-            name='profile',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='notification_profile_subscription', to='users.profile'),
+            model_name="notificationsubscription",
+            name="profile",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="notification_profile_subscription",
+                to="users.profile",
+            ),
         ),
     ]

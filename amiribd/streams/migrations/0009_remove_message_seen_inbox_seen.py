@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('streams', '0008_alter_message_options_remove_message_message_inbox'),
+        ("streams", "0008_alter_message_options_remove_message_message_inbox"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='message',
-            name='seen',
+            model_name="message",
+            name="seen",
         ),
         migrations.AddField(
-            model_name='inbox',
-            name='seen',
+            model_name="inbox",
+            name="seen",
             field=models.BooleanField(default=False),
         ),
     ]

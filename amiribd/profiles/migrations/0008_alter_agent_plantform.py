@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0007_alter_plantformtype_options_alter_agent_plantform'),
+        ("profiles", "0007_alter_plantformtype_options_alter_agent_plantform"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='agent',
-            name='plantform',
-            field=models.ManyToManyField(blank=True, related_name='plantforms', to='profiles.plantform'),
+            model_name="agent",
+            name="plantform",
+            field=models.ManyToManyField(
+                blank=True, related_name="plantforms", to="profiles.plantform"
+            ),
         ),
     ]

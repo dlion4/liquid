@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0010_remove_account_fee_alter_accounttype_type'),
+        ("invest", "0010_remove_account_fee_alter_accounttype_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='account',
-            name='pool',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='account_pool', to='invest.pool'),
+            model_name="account",
+            name="pool",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="account_pool",
+                to="invest.pool",
+            ),
         ),
     ]

@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('streams', '0003_alter_room_icon'),
+        ("streams", "0003_alter_room_icon"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='room',
-            name='theme',
-            field=models.CharField(choices=[('P', 'primary'), ('S', 'secondary'), ('D', 'default'), ('L', 'light'), ('I', 'info'), ('W', 'warning')], default='P', max_length=1),
+            model_name="room",
+            name="theme",
+            field=models.CharField(
+                choices=[
+                    ("P", "primary"),
+                    ("S", "secondary"),
+                    ("D", "default"),
+                    ("L", "light"),
+                    ("I", "info"),
+                    ("W", "warning"),
+                ],
+                default="P",
+                max_length=1,
+            ),
         ),
     ]

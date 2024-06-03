@@ -23,5 +23,3 @@ class PlanStatus(models.TextChoices):
     RUNNING = "RUNNING", "Running"
     STOPPED = "STOPPED", "Stopped"
     CANCELLED = "CANCELLED", "Cancelled"
-
-

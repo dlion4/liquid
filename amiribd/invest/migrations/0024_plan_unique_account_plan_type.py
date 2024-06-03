@@ -6,12 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0023_rename_accounteventwithdrawal_accountwithdrawalaction'),
+        ("invest", "0023_rename_accounteventwithdrawal_accountwithdrawalaction"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='plan',
-            constraint=models.UniqueConstraint(fields=('account', 'type'), name='unique_account_plan_type'),
+            model_name="plan",
+            constraint=models.UniqueConstraint(
+                fields=("account", "type"), name="unique_account_plan_type"
+            ),
         ),
     ]

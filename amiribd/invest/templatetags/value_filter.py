@@ -10,7 +10,6 @@ def strip_filter(value):
     return re.sub(r"^None", "", value)
 
 
-
 @register.filter
 def last_three_digits(value):
     """Returns the last three digits of the phone number."""

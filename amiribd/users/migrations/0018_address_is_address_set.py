@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0017_alter_profile_date_of_birth'),
+        ("users", "0017_alter_profile_date_of_birth"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='address',
-            name='is_address_set',
+            model_name="address",
+            name="is_address_set",
             field=models.BooleanField(default=False),
         ),
     ]

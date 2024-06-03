@@ -1,0 +1,40 @@
+{% load static %}
+{% load widget_tweaks %}
+<form action="{% url 'htmx:account:available_amount_for_transfer' profile.pk %}" id="transferMoneyForm" class="form-validate is-alter" method="post">
+    {% csrf_token %}
+  <div class="row gx-4 gy-3">
+    <div class="col-12">
+      <div class="form-group">
+        <div style="margin-top:10px!important">
+          <label class="form-label">Destination Account</label>
+          <div class="form-control-wrap">
+           {{transfer_money_form.destination_account}}
+            <small id="id_destination_account" style="padding-top:10px!important"></small>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Amount to transfer</label>
+        <div class="form-control-wrap">
+          {{transfer_money_form.amount_to_transfer|attr:"hx-get=/htmx/account/available_amount/"|attr:"hx-target=#id_available_amount"|attr:"hx-trigger=keyup changed delay:1s"|attr:"hx-swap=innerHTML"|attr:"hx-swap-oob=true"}}
+            <small id="id_available_amount" style="padding-top:10px!important"></small>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <ul class="d-flex justify-content-between gx-4 mt-1">
+        <li>
+          <button id="submitBtnTransfer" type="submit" class="btn btn-primary">Confirm and Proceed</button>
+        </li>
+        <li>
+          <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Payment</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>
+

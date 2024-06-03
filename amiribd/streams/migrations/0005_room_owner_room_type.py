@@ -7,19 +7,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('streams', '0004_room_theme'),
-        ('users', '0024_profile_referred_by'),
+        ("streams", "0004_room_theme"),
+        ("users", "0024_profile_referred_by"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='room',
-            name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='room_owner', to='users.profile', verbose_name='owner'),
+            model_name="room",
+            name="owner",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="room_owner",
+                to="users.profile",
+                verbose_name="owner",
+            ),
         ),
         migrations.AddField(
-            model_name='room',
-            name='type',
-            field=models.CharField(choices=[('Pb', 'public'), ('P', 'private'), ('T', 'Temporary')], default='Pb', max_length=2),
+            model_name="room",
+            name="type",
+            field=models.CharField(
+                choices=[("Pb", "public"), ("P", "private"), ("T", "Temporary")],
+                default="Pb",
+                max_length=2,
+            ),
         ),
     ]

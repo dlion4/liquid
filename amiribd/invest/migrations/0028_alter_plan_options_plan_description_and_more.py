@@ -6,22 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0027_plan_is_paid'),
+        ("invest", "0027_plan_is_paid"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='plan',
-            options={'get_latest_by': ['created_at']},
+            name="plan",
+            options={"get_latest_by": ["created_at"]},
         ),
         migrations.AddField(
-            model_name='plan',
-            name='description',
-            field=models.TextField(blank=True, help_text='Description', max_length=300, null=True),
+            model_name="plan",
+            name="description",
+            field=models.TextField(
+                blank=True, help_text="Description", max_length=300, null=True
+            ),
         ),
         migrations.AddField(
-            model_name='plantype',
-            name='interval',
-            field=models.CharField(blank=True, default='Unlimited', help_text='Interval ie Monthly, Yearly, Unlimited', max_length=100, null=True),
+            model_name="plantype",
+            name="interval",
+            field=models.CharField(
+                blank=True,
+                default="Unlimited",
+                help_text="Interval ie Monthly, Yearly, Unlimited",
+                max_length=100,
+                null=True,
+            ),
         ),
     ]

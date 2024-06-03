@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('transactions', '0004_transaction_discount_transaction_paid'),
+        ("transactions", "0004_transaction_discount_transaction_paid"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='transaction',
-            name='type',
-            field=models.CharField(choices=[('DEPOSIT', 'Deposit'), ('WITHDRAWAL', 'Withdrawal')], max_length=22, verbose_name='Transaction'),
+            model_name="transaction",
+            name="type",
+            field=models.CharField(
+                choices=[("DEPOSIT", "Deposit"), ("WITHDRAWAL", "Withdrawal")],
+                max_length=22,
+                verbose_name="Transaction",
+            ),
         ),
     ]

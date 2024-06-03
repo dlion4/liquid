@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0006_alter_pool_profile_alter_pool_type'),
+        ("invest", "0006_alter_pool_profile_alter_pool_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='accounttype',
-            name='type',
-            field=models.CharField(choices=[('B', 'Basic'), ('S', 'Standard')], default='B', max_length=10, unique=True),
+            model_name="accounttype",
+            name="type",
+            field=models.CharField(
+                choices=[("B", "Basic"), ("S", "Standard")],
+                default="B",
+                max_length=10,
+                unique=True,
+            ),
         ),
     ]

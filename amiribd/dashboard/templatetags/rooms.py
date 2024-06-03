@@ -3,6 +3,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter(name="generate_initials")
 def generate_initials(value):
     """Generates the initials of a given name. If the name has multiple parts, it returns the first letter of the first and last parts. If it's a single name, it returns the first two letters."""

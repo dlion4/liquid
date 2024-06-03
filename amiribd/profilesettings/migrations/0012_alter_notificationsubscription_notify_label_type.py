@@ -7,13 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profilesettings', '0011_alter_notificationsubscription_notify_label_type'),
+        ("profilesettings", "0011_alter_notificationsubscription_notify_label_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='notificationsubscription',
-            name='notify_label_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='notify_label_type', to='profilesettings.notificationtype'),
+            model_name="notificationsubscription",
+            name="notify_label_type",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="notify_label_type",
+                to="profilesettings.notificationtype",
+            ),
         ),
     ]

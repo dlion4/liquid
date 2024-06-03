@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0018_address_is_address_set'),
+        ("users", "0018_address_is_address_set"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='address',
-            name='is_address_set',
+            model_name="address",
+            name="is_address_set",
         ),
         migrations.AddField(
-            model_name='profile',
-            name='is_address_set',
+            model_name="profile",
+            name="is_address_set",
             field=models.BooleanField(default=False),
         ),
     ]

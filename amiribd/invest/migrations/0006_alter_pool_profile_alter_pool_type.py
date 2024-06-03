@@ -7,19 +7,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0005_rename_plan_plan_type'),
-        ('users', '0024_profile_referred_by'),
+        ("invest", "0005_rename_plan_plan_type"),
+        ("users", "0024_profile_referred_by"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='pool',
-            name='profile',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='pool_account_profile', to='users.profile'),
+            model_name="pool",
+            name="profile",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pool_account_profile",
+                to="users.profile",
+            ),
         ),
         migrations.AlterField(
-            model_name='pool',
-            name='type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pool_type', to='invest.pooltype', verbose_name='pool_type'),
+            model_name="pool",
+            name="type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pool_type",
+                to="invest.pooltype",
+                verbose_name="pool_type",
+            ),
         ),
     ]

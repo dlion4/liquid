@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profilesettings', '0003_alter_notify_notify_label_type'),
+        ("profilesettings", "0003_alter_notify_notify_label_type"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='notification',
-            name='description',
-            field=models.CharField(default='You will get only those email notification what you want.', help_text='News', max_length=255),
+            model_name="notification",
+            name="description",
+            field=models.CharField(
+                default="You will get only those email notification what you want.",
+                help_text="News",
+                max_length=255,
+            ),
         ),
     ]

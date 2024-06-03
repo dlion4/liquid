@@ -9,25 +9,58 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('users', '0024_profile_referred_by'),
+        ("users", "0024_profile_referred_by"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Notification',
+            name="Notification",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(help_text='News', max_length=255, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(help_text="News", max_length=255, unique=True),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='NotificationType',
+            name="NotificationType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('label', models.CharField(blank=True, max_length=255, null=True)),
-                ('notify', models.BooleanField(default=False)),
-                ('notification', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='notifications', to='profilesettings.notification')),
-                ('profile', models.ManyToManyField(related_name='profile_notifications', to='users.profile')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("label", models.CharField(blank=True, max_length=255, null=True)),
+                ("notify", models.BooleanField(default=False)),
+                (
+                    "notification",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="notifications",
+                        to="profilesettings.notification",
+                    ),
+                ),
+                (
+                    "profile",
+                    models.ManyToManyField(
+                        related_name="profile_notifications", to="users.profile"
+                    ),
+                ),
             ],
         ),
     ]

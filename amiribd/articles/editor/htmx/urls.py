@@ -13,5 +13,7 @@ urlpatterns = [
     #     "<int:pk>/publish/", views.ArticlePublishView.as_view(), name="article-publish"
     # ),
     # path("<int:pk>/unpublish/", views.ArticleUnpublishView.as_view, name="article"),
-    path("edit-create-title/", views.update_article_title_view, name="create-edit-title"),
+    path(
+        "edit-create-title/", views.update_article_title_view, name="create-edit-title"
+    ),
 ]

@@ -7,13 +7,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0012_remove_plan_percentage_return_and_more'),
+        ("invest", "0012_remove_plan_percentage_return_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='plan',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, populate_from='type.type'),
+            model_name="plan",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True, editable=False, populate_from="type.type"
+            ),
         ),
     ]

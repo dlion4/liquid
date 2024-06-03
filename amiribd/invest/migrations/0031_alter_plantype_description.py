@@ -6,13 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0030_remove_plan_description_plantype_description'),
+        ("invest", "0030_remove_plan_description_plantype_description"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='plantype',
-            name='description',
-            field=models.CharField(blank=True, default='Unlimited access with priority support, 99.95% uptime, powerfull features and more...', help_text='Description', max_length=500, null=True),
+            model_name="plantype",
+            name="description",
+            field=models.CharField(
+                blank=True,
+                default="Unlimited access with priority support, 99.95% uptime, powerfull features and more...",
+                help_text="Description",
+                max_length=500,
+                null=True,
+            ),
         ),
     ]

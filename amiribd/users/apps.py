@@ -8,4 +8,5 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         import amiribd.users.signals  # noqa: F401
+
         return super().ready()

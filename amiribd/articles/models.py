@@ -36,6 +36,7 @@ class Article(models.Model):
                 "tm__day": self.created_at.day,
             },
         )
+
     def get_update_url(self):
         return reverse(
             "dashboard:articles:article-detail-edit",

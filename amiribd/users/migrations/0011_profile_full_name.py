@@ -7,13 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0010_profile_first_name_profile_last_name_user_first_name_and_more'),
+        ("users", "0010_profile_first_name_profile_last_name_user_first_name_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='full_name',
-            field=models.GeneratedField(db_persist=True, expression=amiribd.users.models.ConcatFiels('first_name', models.Value(' '), 'last_name'), output_field=models.TextField()),
+            model_name="profile",
+            name="full_name",
+            field=models.GeneratedField(
+                db_persist=True,
+                expression=amiribd.users.models.ConcatFiels(
+                    "first_name", models.Value(" "), "last_name"
+                ),
+                output_field=models.TextField(),
+            ),
         ),
     ]

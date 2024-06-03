@@ -16,14 +16,34 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Token',
+            name="Token",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('token', models.UUIDField(default=uuid.UUID('c1a6614d-30ce-4a95-b8e4-b39bd48861d3'), editable=False)),
-                ('is_active', models.BooleanField(default=True)),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('expires', models.DateTimeField(blank=True, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "token",
+                    models.UUIDField(
+                        default=uuid.UUID("c1a6614d-30ce-4a95-b8e4-b39bd48861d3"),
+                        editable=False,
+                    ),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                ("timestamp", models.DateTimeField(auto_now_add=True)),
+                ("expires", models.DateTimeField(blank=True, null=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

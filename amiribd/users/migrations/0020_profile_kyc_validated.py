@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0019_remove_address_is_address_set_profile_is_address_set'),
+        ("users", "0019_remove_address_is_address_set_profile_is_address_set"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='kyc_validated',
+            model_name="profile",
+            name="kyc_validated",
             field=models.BooleanField(default=False),
         ),
     ]

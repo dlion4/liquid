@@ -133,6 +133,12 @@ class Profile(models.Model):
         super(Profile, self).save(*args, **kwargs)
         self.initials = self.generate_initials()
 
+    @property
+    def profile_identity(self):
+        if self.full_name:
+            return self.full_name.title()
+        return self.user.email[: self.user.email.index("@")].title()
+
     # for websocket url generation
     @property
     def get_ws_sender_url(self):

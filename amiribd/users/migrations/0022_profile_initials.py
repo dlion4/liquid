@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0021_profile_is_document_set'),
+        ("users", "0021_profile_is_document_set"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='initials',
-            field=models.CharField(blank=True, default='AB', max_length=2, null=True),
+            model_name="profile",
+            name="initials",
+            field=models.CharField(blank=True, default="AB", max_length=2, null=True),
         ),
     ]

@@ -9,18 +9,35 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('users', '0002_profile'),
+        ("users", "0002_profile"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('content', models.TextField()),
-                ('date_posted', models.DateTimeField(auto_now_add=True)),
-                ('author', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.profile', verbose_name='')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("content", models.TextField()),
+                ("date_posted", models.DateTimeField(auto_now_add=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="users.profile",
+                        verbose_name="",
+                    ),
+                ),
             ],
         ),
     ]

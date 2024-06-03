@@ -49,6 +49,108 @@ Earnkraft Dashboard {{profile.user.email.username}}
   </div>
 </div>
 
+
+<div class="modal fade" id="sendAndTransferMoneyPopupForm" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Suprice A friend</h5>
+        <a href="#" role="button" onclick="window.location.reload()" class="close" data-bs-dismiss="modal"
+          aria-label="Close">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+      <div class="modal-body">
+        {% comment %} content goes here {% endcomment %}
+        {% include "account/dashboard/v1/investment/components/schemes/send_money_form.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+ 
+
+    const submitBtnTransfer = document.getElementById("submitBtnTransfer")
+    const amountToBeSentInput = document.getElementById("id_amount_to_transfer")
+
+    amountToBeSentInput.setAttribute("disabled", "disabled")
+
+    submitBtnTransfer.setAttribute("disabled", "disabled")
+
+    const destinationAccountMoneyTransfer = document.getElementById("id_destination_account")
+
+
+    destinationAccountMoneyTransfer.addEventListener("change", function(e) {
+      e.preventDefault();
+
+      if (e.target.value == ''){
+        submitBtnTransfer.setAttribute("disabled", "disabled")
+        amountToBeSentInput.setAttribute("disabled", "disabled")
+        amountToBeSentInput.value=""
+        return false
+      }
+
+      // user account lookup if he/has enought money to transfer
+
+      checkIfUserAccountHasEnoughMoneyToTransfer(Number.parseInt("{{profile.pk}}"), e.target.textContent)
+
+      submitBtnTransfer.removeAttribute("disabled")
+      
+    })
+
+    destinationAccountMoneyTransfer.removeEventListener("change", function(e) {
+      e.preventDefault();
+    })
+
+
+    async function checkIfUserAccountHasEnoughMoneyToTransfer(profile_id, account=null){
+      const url = `/htmx/account/balance/${profile_id}`
+      const response = await fetch(url)
+      const data = await response.json()
+
+      if (!data.success){
+        alert(`You have insufficient amount to send to ${account}`)
+        amountToBeSentInput.setAttribute("disabled", "disabled")
+        amountToBeSentInput.value=""
+        submitBtnTransfer.setAttribute("disabled", "disabled")
+        return false
+      }
+
+      amountToBeSentInput.removeAttribute("disabled")
+
+      submitBtnTransfer.removeAttribute("disabled")
+
+    }
+
+
+    amountToBeSentInput.addEventListener("keyup", async function(event){
+      event.preventDefault();
+
+      const profile__id = Number.parseInt("{{ profile.id }}");
+
+      const url = `/htmx/account/balance/input/${profile__id}?amount_to_transfer=${event.target.value}`
+
+      const response = await fetch(url)
+
+      const data = await response.json();
+
+
+      if(!data.success){
+        submitBtnTransfer.setAttribute("disabled", "disabled")
+        return false;
+      }
+
+      submitBtnTransfer.removeAttribute("disabled")
+
+    })
+
+    
+
+
+</script>
+
+
 <div class="modal fade" id="addPlanPopupForm" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">

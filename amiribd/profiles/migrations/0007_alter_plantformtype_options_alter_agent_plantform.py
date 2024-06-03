@@ -6,17 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0006_plantformtype_alter_plantform_options_and_more'),
+        ("profiles", "0006_plantformtype_alter_plantform_options_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='plantformtype',
-            options={'verbose_name': 'PlantformType', 'verbose_name_plural': 'PlantformTypes'},
+            name="plantformtype",
+            options={
+                "verbose_name": "PlantformType",
+                "verbose_name_plural": "PlantformTypes",
+            },
         ),
         migrations.AlterField(
-            model_name='agent',
-            name='plantform',
-            field=models.ManyToManyField(blank=True, related_name='agent_plantforms', to='profiles.plantform'),
+            model_name="agent",
+            name="plantform",
+            field=models.ManyToManyField(
+                blank=True, related_name="agent_plantforms", to="profiles.plantform"
+            ),
         ),
     ]

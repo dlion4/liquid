@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0021_alter_plan_status'),
+        ("invest", "0021_alter_plan_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='accounteventwithdrawal',
-            name='paid',
+            model_name="accounteventwithdrawal",
+            name="paid",
             field=models.BooleanField(default=False),
         ),
     ]

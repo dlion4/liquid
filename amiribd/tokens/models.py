@@ -22,6 +22,7 @@ class Token(models.Model):
             self.expires = timezone.now() + timedelta(hours=1)
         super(Token, self).save(*args, **kwargs)
 
+
 class AuthToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     code = models.IntegerField()
@@ -30,4 +31,3 @@ class AuthToken(models.Model):
 
     def __str__(self):
         return str(self.code)
-

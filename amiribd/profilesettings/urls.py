@@ -6,5 +6,9 @@ from . import views
 app_name = "settings"
 
 urlpatterns = [
-    path("notifications/", include("amiribd.profilesettings.htmx.urls"), name="notifications"),
+    path(
+        "notifications/",
+        include("amiribd.profilesettings.htmx.urls"),
+        name="notifications",
+    ),
 ]

@@ -9,36 +9,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('articles', '0002_alter_article_title'),
-        ('users', '0026_remove_profile_plans'),
+        ("articles", "0002_alter_article_title"),
+        ("users", "0026_remove_profile_plans"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='article',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=datetime.datetime(2024, 5, 21, 12, 25, 12, 547327, tzinfo=datetime.timezone.utc)),
+            model_name="article",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=datetime.datetime(
+                    2024, 5, 21, 12, 25, 12, 547327, tzinfo=datetime.timezone.utc
+                ),
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='article',
-            name='profile',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.profile'),
+            model_name="article",
+            name="profile",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="users.profile",
+            ),
         ),
         migrations.AddField(
-            model_name='article',
-            name='slug',
-            field=models.SlugField(default='textint-initial-file', max_length=200),
+            model_name="article",
+            name="slug",
+            field=models.SlugField(default="textint-initial-file", max_length=200),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='article',
-            name='updated_at',
+            model_name="article",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.AlterField(
-            model_name='article',
-            name='content',
-            field=django_ckeditor_5.fields.CKEditor5Field(blank=True, null=True, verbose_name='Text'),
+            model_name="article",
+            name="content",
+            field=django_ckeditor_5.fields.CKEditor5Field(
+                blank=True, null=True, verbose_name="Text"
+            ),
         ),
     ]

@@ -64,4 +64,6 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(AdminInbox)
 class AdminInboxAdmin(admin.ModelAdmin):
-    list_display = ['message', ]
+    list_display = [
+        "message",
+    ]

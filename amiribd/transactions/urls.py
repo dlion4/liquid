@@ -1,7 +1,7 @@
 from django.urls import reverse, path
 
 app_name = "transaction"
-from  . import views
+from . import views
 
 
 urlpatterns = [

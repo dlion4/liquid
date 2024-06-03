@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0007_remove_user_registration_completed'),
+        ("users", "0007_remove_user_registration_completed"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='status',
-            field=models.CharField(choices=[('PENDING', 'pending'), ('COMPLETED', 'completed'), ('BLOCKED', 'blocked'), ('SUSPENDED', 'suspended'), ('REPORTED', 'reported')], default='PENDING', max_length=255),
+            model_name="user",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("PENDING", "pending"),
+                    ("COMPLETED", "completed"),
+                    ("BLOCKED", "blocked"),
+                    ("SUSPENDED", "suspended"),
+                    ("REPORTED", "reported"),
+                ],
+                default="PENDING",
+                max_length=255,
+            ),
         ),
     ]

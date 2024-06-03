@@ -7,58 +7,111 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0001_initial'),
+        ("invest", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PlanType',
+            name="PlanType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(choices=[('BRONZE', '  Bronze'), ('SILVER', '  Silver'), ('DIAMOND', '  Diamond')], default='BRONZE', max_length=15)),
-                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=15)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("BRONZE", "  Bronze"),
+                            ("SILVER", "  Silver"),
+                            ("DIAMOND", "  Diamond"),
+                        ],
+                        default="BRONZE",
+                        max_length=15,
+                    ),
+                ),
+                (
+                    "price",
+                    models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='PoolType',
+            name="PoolType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(choices=[('INDIVIDUAL', 'Individual'), ('FAMILY', 'Family'), ('JOINT', 'Joint'), ('INSTITUTON', 'Instituton')], default='INDIVIDUAL', max_length=10)),
-                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=15)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("INDIVIDUAL", "Individual"),
+                            ("FAMILY", "Family"),
+                            ("JOINT", "Joint"),
+                            ("INSTITUTON", "Instituton"),
+                        ],
+                        default="INDIVIDUAL",
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "price",
+                    models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
+                ),
             ],
         ),
         migrations.RemoveField(
-            model_name='pool',
-            name='fee',
+            model_name="pool",
+            name="fee",
         ),
         migrations.AlterField(
-            model_name='account',
-            name='balance',
+            model_name="account",
+            name="balance",
             field=models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
         ),
         migrations.AlterField(
-            model_name='account',
-            name='fee',
+            model_name="account",
+            name="fee",
             field=models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
         ),
         migrations.AlterField(
-            model_name='plan',
-            name='max_amount',
+            model_name="plan",
+            name="max_amount",
             field=models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
         ),
         migrations.AlterField(
-            model_name='plan',
-            name='min_amount',
+            model_name="plan",
+            name="min_amount",
             field=models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
         ),
         migrations.AlterField(
-            model_name='plan',
-            name='plan',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='plan_type', to='invest.plantype'),
+            model_name="plan",
+            name="plan",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="plan_type",
+                to="invest.plantype",
+            ),
         ),
         migrations.AlterField(
-            model_name='pool',
-            name='type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pool_type', to='invest.pooltype'),
+            model_name="pool",
+            name="type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pool_type",
+                to="invest.pooltype",
+            ),
         ),
     ]

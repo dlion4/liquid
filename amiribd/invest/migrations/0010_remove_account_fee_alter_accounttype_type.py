@@ -6,17 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0009_alter_pooltype_type'),
+        ("invest", "0009_alter_pooltype_type"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='account',
-            name='fee',
+            model_name="account",
+            name="fee",
         ),
         migrations.AlterField(
-            model_name='accounttype',
-            name='type',
-            field=models.CharField(choices=[('Basic', 'Basic'), ('Standard', 'Standard')], default='Basic', max_length=10),
+            model_name="accounttype",
+            name="type",
+            field=models.CharField(
+                choices=[("Basic", "Basic"), ("Standard", "Standard")],
+                default="Basic",
+                max_length=10,
+            ),
         ),
     ]

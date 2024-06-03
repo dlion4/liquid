@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0031_alter_plantype_description'),
+        ("invest", "0031_alter_plantype_description"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='plantype',
-            name='svg',
-            field=models.FileField(blank=True, null=True, upload_to='icons/'),
+            model_name="plantype",
+            name="svg",
+            field=models.FileField(blank=True, null=True, upload_to="icons/"),
         ),
     ]

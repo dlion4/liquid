@@ -6,13 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0008_alter_accounttype_type'),
+        ("invest", "0008_alter_accounttype_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='pooltype',
-            name='type',
-            field=models.CharField(choices=[('INDIVIDUAL', 'Individual'), ('FAMILY', 'Family'), ('JOINT', 'Joint'), ('INSTITUTON', 'Instituton')], default='INDIVIDUAL', max_length=10, unique=True),
+            model_name="pooltype",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("INDIVIDUAL", "Individual"),
+                    ("FAMILY", "Family"),
+                    ("JOINT", "Joint"),
+                    ("INSTITUTON", "Instituton"),
+                ],
+                default="INDIVIDUAL",
+                max_length=10,
+                unique=True,
+            ),
         ),
     ]

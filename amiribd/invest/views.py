@@ -1,4 +1,5 @@
 import contextlib
+from django.contrib import messages
 import json
 from typing import Any
 from django.http import HttpRequest, JsonResponse
@@ -22,6 +23,7 @@ from .forms import (
     PlanRegistrationForm,
     PaymentOptionForm,
 )
+from django.contrib.auth import get_user
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -179,7 +181,6 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
     @transaction.atomic
     def post(self, request, *args, **kwargs):
 
-
         profile = request.user.profile_user
         data = json.loads(request.body)
         phone_number = data.get("phone_number")
@@ -197,9 +198,6 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
         mpesa_code = data.get("mpesa_transaction_code")
         phone_number = data.get("phone_number")
-        print(phone_number)
-
-        print(mpesa_code)
 
         transaction = Transaction.objects.create(
             profile=profile,
@@ -213,7 +211,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             payment_phone_number=phone_number,
         )
         # plan.is_paid = True
-        plan.mpesa_transaction_code=mpesa_code
+        plan.mpesa_transaction_code = mpesa_code
         plan.payment_phone_number = phone_number
         plan.save()
 
@@ -272,6 +270,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
     @method_decorator(csrf_exempt, name="dispatch")
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         # service = MpesaStkPushSetUp().mpesa_stk_push_service()
         # phone = request.GET.get("phone")
@@ -301,6 +300,7 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         print(data)
 
         return JsonResponse({"success": True})
+
 
 def check_payment_status(request):
     service = MpesaStkPushSetUp().mpesa_stk_push_service()
@@ -376,6 +376,8 @@ plan = InvestmentPlanView.as_view()
 class InvestmentViewMixin(DashboardViewMixin):
     queryset = Account
 
+    def get_profile(self):
+        return get_user(self.request).profile_user
 
 
 class WidsthdrawView(InvestmentViewMixin):
@@ -408,10 +410,66 @@ class BonusView(InvestmentViewMixin):
 
 modified_bonus_view = BonusView.as_view()
 
+from amiribd.schemes.forms import WhatsAppEarningSchemeForm
+from amiribd.schemes.models import WhatsAppEarningScheme
+from django.db import models
+from django.db.models import Sum
+
 
 class WhatsappView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/whatsapp.html"
     template_name = "account/dashboard/v1/investment/whatsapp.html"
+
+    form_class = WhatsAppEarningSchemeForm
+
+    success_url = "dashboard:invest:whatsapp"
+
+    def get_total_whatsapp_earnings(self):
+        earnings = (
+            WhatsAppEarningScheme.objects.prefetch_related("profile")
+            .filter(profile=self.get_profile(), approved=True)
+            .aggregate(total=Sum(models.F("views") * models.F("price")))
+        )
+
+        if earnings["total"]:
+            return Decimal(earnings["total"])
+        return Decimal("0.00")
+
+    def get_whatsapp_earning_schemes(self):
+        return (
+            WhatsAppEarningScheme.objects.prefetch_related("profile")
+            .filter(
+                profile=self.get_profile(),
+            )
+            .order_by("-id")
+        )
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        self.get_total_whatsapp_earnings()
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form_class()
+        context["earnings"] = self.get_total_whatsapp_earnings()
+        context["whatsappschemestate"] = self.get_whatsapp_earning_schemes()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+
+            instance.profile = self.get_profile()
+            instance.save()
+            form.save()
+
+            messages.success(
+                self.request, "Upload submitted successfully. Wait for approval!"
+            )
+
+            return redirect(self.success_url)
+
+        else:
+            messages.error(self.request, "Upload failed. Please try again!")
+            return redirect(self.success_url)
 
 
 modified_whatsapp_view = WhatsappView.as_view()

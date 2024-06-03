@@ -7,13 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tokens', '0003_alter_token_token'),
+        ("tokens", "0003_alter_token_token"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='token',
-            name='token',
-            field=models.UUIDField(default=uuid.UUID('9c371d24-6161-4ee9-9085-d9da62117cc4'), editable=False),
+            model_name="token",
+            name="token",
+            field=models.UUIDField(
+                default=uuid.UUID("9c371d24-6161-4ee9-9085-d9da62117cc4"),
+                editable=False,
+            ),
         ),
     ]

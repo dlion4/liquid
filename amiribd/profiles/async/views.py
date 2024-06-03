@@ -89,7 +89,7 @@ class ProfileFilterAgentView(ProfileAgentMixinView):
             #  return the position id that the user is assigned
             return JsonResponse({"position": agent.position.pk})
         return JsonResponse({"message": "success", "success": False})
-    
+
 
 class ProfileFilterAgentPlatformView(ProfileAgentMixinView):
     def _get_profile(self):
@@ -99,7 +99,15 @@ class ProfileFilterAgentPlatformView(ProfileAgentMixinView):
         profile = self._get_profile()
         if agent := Agent.objects.filter(profile=profile).first():
             if agent.plantform.exists():
-                return JsonResponse({"platforms": [platform.plantform_type.pk for platform in agent.plantform.all()], "success": True})
+                return JsonResponse(
+                    {
+                        "platforms": [
+                            platform.plantform_type.pk
+                            for platform in agent.plantform.all()
+                        ],
+                        "success": True,
+                    }
+                )
             return JsonResponse({"message": "success", "success": False})
         return JsonResponse({"message": "success", "success": False})
 
@@ -107,7 +115,6 @@ class ProfileFilterAgentPlatformView(ProfileAgentMixinView):
 class ProfileAgentPlantFormSelectionView(ProfileAgentMixinView):
     def _get_profile(self):
         return self.request.user.profile_user
-
 
     def delete(self, request, *args, **kwargs):
         return JsonResponse({"message": "success", "success": True})

@@ -7,21 +7,43 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0002_plantype_pooltype_remove_pool_fee_and_more'),
+        ("invest", "0002_plantype_pooltype_remove_pool_fee_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AccountType',
+            name="AccountType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(choices=[('BASIC', 'Basic'), ('STANDARD', 'Standard')], default='BASIC', max_length=10)),
-                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=15)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[("BASIC", "Basic"), ("STANDARD", "Standard")],
+                        default="BASIC",
+                        max_length=10,
+                    ),
+                ),
+                (
+                    "price",
+                    models.DecimalField(decimal_places=2, default=0.0, max_digits=15),
+                ),
             ],
         ),
         migrations.AlterField(
-            model_name='account',
-            name='type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='account_type', to='invest.accounttype'),
+            model_name="account",
+            name="type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="account_type",
+                to="invest.accounttype",
+            ),
         ),
     ]

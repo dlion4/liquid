@@ -8,13 +8,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0023_profile_referral_code'),
+        ("users", "0023_profile_referral_code"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='referred_by',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='profile_referred_by', to=settings.AUTH_USER_MODEL),
+            model_name="profile",
+            name="referred_by",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="profile_referred_by",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

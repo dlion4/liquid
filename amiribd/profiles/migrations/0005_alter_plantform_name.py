@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0004_alter_agent_plantform'),
+        ("profiles", "0004_alter_agent_plantform"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='plantform',
-            name='name',
+            model_name="plantform",
+            name="name",
             field=models.CharField(max_length=255, unique=True),
         ),
     ]

@@ -7,32 +7,45 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0005_alter_plantform_name'),
+        ("profiles", "0005_alter_plantform_name"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PlantformType',
+            name="PlantformType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, unique=True)),
             ],
             options={
-                'verbose_name': 'Plantform',
-                'verbose_name_plural': 'Plantforms',
+                "verbose_name": "Plantform",
+                "verbose_name_plural": "Plantforms",
             },
         ),
         migrations.AlterModelOptions(
-            name='plantform',
+            name="plantform",
             options={},
         ),
         migrations.RemoveField(
-            model_name='plantform',
-            name='name',
+            model_name="plantform",
+            name="name",
         ),
         migrations.AddField(
-            model_name='plantform',
-            name='plantform_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='profiles.plantformtype'),
+            model_name="plantform",
+            name="plantform_type",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="profiles.plantformtype",
+            ),
         ),
     ]

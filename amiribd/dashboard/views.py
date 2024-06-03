@@ -1,6 +1,7 @@
 from itertools import groupby
 from django.views.generic import TemplateView
 
+from amiribd.schemes.models import WhatsAppEarningScheme
 from amiribd.streams.models import Room, RoomMessage, Message
 
 from .guard import DashboardGuard
@@ -13,6 +14,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q, Sum
 from django.utils.timezone import localtime
+from django.db import models
 
 
 # Create your views here.
@@ -25,6 +27,20 @@ class DashboardViewMixin(TemplateView):
     # )  # Cache for 1 minute, adjust as needed
     def __get_user(self):
         return self.request.user
+
+    def get_profile(self):
+        return self.__get_user().profile_user
+
+    def get_total_whatsapp_earnings(self):
+        earnings = (
+            WhatsAppEarningScheme.objects.prefetch_related("profile")
+            .filter(profile=self.get_profile(), approved=True)
+            .aggregate(total=Sum(models.F("views") * models.F("price")))
+        )
+
+        if earnings["total"]:
+            return Decimal(earnings["total"])
+        return Decimal("0.00")
 
     def __pure_referral_earnings(self):
         __referral_profit = Decimal("0.00")
@@ -137,6 +153,7 @@ class DashboardViewMixin(TemplateView):
         context["referral_earnings"] = self.__pure_referral_earnings()
         context["transactions"] = self.get_account_transactions()
         context["is_premium"] = self.__premium_user()
+        context["earnings"] = self.get_total_whatsapp_earnings()
         return context
 
 
@@ -197,8 +214,8 @@ class SupportView(DashboardViewMixin):
 support = SupportView.as_view()
 
 
-
 class AssistanceView(SupportView):
     template_name = "account/dashboard/v1/assistance.html"
+
 
 assistance = AssistanceView.as_view()

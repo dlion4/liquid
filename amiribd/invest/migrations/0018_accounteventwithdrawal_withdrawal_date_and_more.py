@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0017_accounteventwithdrawal'),
+        ("invest", "0017_accounteventwithdrawal"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='accounteventwithdrawal',
-            name='withdrawal_date',
+            model_name="accounteventwithdrawal",
+            name="withdrawal_date",
             field=models.DateField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='accounteventwithdrawal',
-            name='withdrawal_time',
+            model_name="accounteventwithdrawal",
+            name="withdrawal_time",
             field=models.TimeField(blank=True, null=True),
         ),
     ]

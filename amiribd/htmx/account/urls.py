@@ -7,6 +7,16 @@ app_name = "account"
 
 urlpatterns = [
     path("available_amount/", views.AvailableAmount.as_view(), name="available_amount"),
+    path(
+        "balance/<profile_id>",
+        views.AvailableAmountForTransferView.as_view(),
+        name="available_amount_for_transfer",
+    ),
+    path(
+        "balance/input/<profile_id>",
+        views.input_check_money_to_transfer,
+        name="input_amount_for_transfer",
+    ),
     path("withdrawal/", views.AccountEventWithdrawalView.as_view(), name="withdrawal"),
     path("cancel-plan/", views.CancelPlanView.as_view(), name="cancel_plan"),
     path(
@@ -29,5 +39,9 @@ urlpatterns = [
         views.HandlePlanPaymentSuccessView.as_view(),
         name="handle-payment-success",
     ),
-    path("handle-close-payment-form-view/", views.HandleClosePaymentFormView.as_view(), name="handle-close-payment-form-view",)
+    path(
+        "handle-close-payment-form-view/",
+        views.HandleClosePaymentFormView.as_view(),
+        name="handle-close-payment-form-view",
+    ),
 ]

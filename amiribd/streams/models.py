@@ -111,6 +111,7 @@ class Message(models.Model):
     class Meta:
         get_latest_by = "created_at"
 
+
 class InboxAbstract(models.Model):
 
     body = models.TextField()
@@ -120,18 +121,19 @@ class InboxAbstract(models.Model):
 
     class Meta:
         get_latest_by = "created_at"
-        abstract=True
+        abstract = True
+
 
 class Inbox(InboxAbstract):
     message = models.ForeignKey(
         Message, on_delete=models.CASCADE, related_name="inbox_message"
     )
 
+
 class AdminInbox(InboxAbstract):
     message = models.ForeignKey(
         Message, on_delete=models.CASCADE, related_name="admin_inbox_message"
     )
-
 
 
 class Archive(models.Model):

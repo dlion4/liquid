@@ -6,17 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0002_position_description'),
+        ("profiles", "0002_position_description"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='plantform',
-            name='agent',
+            model_name="plantform",
+            name="agent",
         ),
         migrations.AddField(
-            model_name='agent',
-            name='plantform',
-            field=models.ManyToManyField(blank=True, null=True, related_name='agent_plantform', to='profiles.plantform'),
+            model_name="agent",
+            name="plantform",
+            field=models.ManyToManyField(
+                blank=True,
+                null=True,
+                related_name="agent_plantform",
+                to="profiles.plantform",
+            ),
         ),
     ]

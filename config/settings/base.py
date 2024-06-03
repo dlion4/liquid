@@ -95,6 +95,8 @@ THIRD_PARTY_APPS = [
     # "ckeditor",  # https://pypi.org/project/django-ckeditor/#installation
     "django_ckeditor_5",
     "ckeditor_uploader",  # https://pypi.org/project/django-ckeditor-uploader/#installation
+    "widget_tweaks",
+
 ]
 LOCAL_APPS = [
     "amiribd.users",
@@ -120,6 +122,7 @@ LOCAL_APPS = [
     "amiribd.streams",
     # articles
     "amiribd.articles",
+    "amiribd.schemes",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

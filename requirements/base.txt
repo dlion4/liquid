@@ -16,3 +16,6 @@ django-crispy-forms # https://github.com/django-crispy-forms/django-crispy-forms
 crispy-bootstrap5 #  # https://github.com/django-crispy-forms/crispy-bootstrap5
 django-compressor # https://github.com/django-compressor/django-compressor
 django-redis # # https://github.com/jazzband/django-redis
+
+django-widget-tweaks
+

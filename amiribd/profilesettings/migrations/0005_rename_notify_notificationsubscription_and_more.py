@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profilesettings', '0004_notification_description'),
-        ('users', '0024_profile_referred_by'),
+        ("profilesettings", "0004_notification_description"),
+        ("users", "0024_profile_referred_by"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Notify',
-            new_name='NotificationSubscription',
+            old_name="Notify",
+            new_name="NotificationSubscription",
         ),
         migrations.AlterField(
-            model_name='notificationtype',
-            name='notification',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='notification_types', to='profilesettings.notification'),
+            model_name="notificationtype",
+            name="notification",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="notification_types",
+                to="profilesettings.notification",
+            ),
         ),
     ]

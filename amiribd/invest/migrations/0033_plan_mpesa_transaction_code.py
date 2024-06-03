@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0032_plantype_svg'),
+        ("invest", "0032_plantype_svg"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='plan',
-            name='mpesa_transaction_code',
+            model_name="plan",
+            name="mpesa_transaction_code",
             field=models.CharField(blank=True, max_length=1000, null=True),
         ),
     ]

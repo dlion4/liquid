@@ -66,6 +66,7 @@ class AccountAdmin(admin.ModelAdmin):
         "balance",
         "invite_profit",
         "latest_invite_interest",
+        "account_ssid",
     ]
 
 

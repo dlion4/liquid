@@ -7,23 +7,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('streams', '0009_remove_message_seen_inbox_seen'),
+        ("streams", "0009_remove_message_seen_inbox_seen"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AdminInbox',
+            name="AdminInbox",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('body', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('seen', models.BooleanField(default=False)),
-                ('message', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='admin_inbox_message', to='streams.message')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("body", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("seen", models.BooleanField(default=False)),
+                (
+                    "message",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="admin_inbox_message",
+                        to="streams.message",
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
+                "get_latest_by": "created_at",
+                "abstract": False,
             },
         ),
     ]

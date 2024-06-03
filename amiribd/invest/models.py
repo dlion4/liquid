@@ -7,6 +7,7 @@ from .types import (
     PlanStatus,
     AccountTypeObjects,
 )
+from django.utils.timezone import now
 from django.core.validators import RegexValidator
 from django.db.models import Sum
 from django.urls import reverse
@@ -19,6 +20,25 @@ from decimal import Decimal
 from django.db.models import F, OuterRef, Q, Subquery, DecimalField
 from django.db.models.functions import Coalesce
 from django_extensions.db.fields import AutoSlugField
+import random
+import string
+
+
+def generate_ssid(instance, k=10):
+
+    char = "".join(
+        random.choices(
+            str(
+                str(instance.pk)
+                + str(instance.pool.profile.pk)
+                + string.ascii_uppercase
+                + string.digits
+            ),
+            k=k,
+        )
+    )
+
+    return char
 
 
 class PoolType(models.Model):
@@ -93,6 +113,7 @@ class Account(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     # interest = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    account_ssid = models.CharField(max_length=200, blank=True, null=True)
 
     @property
     def account_owner(self):
@@ -118,7 +139,9 @@ class Account(models.Model):
             ).aggregate(total=Sum("paid"))["total"]
         )
 
-        return total if total is not None else Decimal("0.0")
+        if total:
+            return total
+        return Decimal("0.00")
 
     @property
     def withdrawable_investment(self):
@@ -142,7 +165,12 @@ class Account(models.Model):
         return round((self.latest_invite_interest / self.invite_profit) * 100, 1)
 
     def __str__(self):
-        return self.type.type
+        return f"{self.pool.profile.profile_identity} ~ {self.account_ssid}"
+
+    def save(self, *args, **kwargs):
+        if not self.account_ssid:
+            self.account_ssid = generate_ssid(self, 18)
+        super().save(*args, **kwargs)
 
 
 class PlanType(models.Model):
