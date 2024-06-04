@@ -1,233 +1,446 @@
-{% extends "account/dashboard/v1/base.html" %}
-{% load static %}
-
-{% block heading %}
+{% extends "account/dashboard/v1/base.html" %} {% load static %} {% block heading %}
 <div class="nk-block-head nk-block-head-sm">
-  <div class="nk-block-between">
-    <div class="nk-block-head-content">
-      <h3 class="nk-block-title page-title">Jobs</h3>
-      <div class="nk-block-des text-soft">
-        <p>We have a total of 100<span>+</span>
-          jobs.</p>
-      </div>
-    </div>
-    <div class="nk-block-head-content">
-      <div class="toggle-wrap nk-block-tools-toggle">
-        <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
-          <em class="icon ni ni-menu-alt-r"></em>
-        </a>
-        <div class="toggle-expand-content" data-content="pageMenu">
-          <ul class="nk-block-tools g-3">
-            <li>
-              <div class="drodown">
-                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown">
-                  <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
-                  <span>Filtered By</span>
-                  <em class="dd-indc icon ni ni-chevron-right"></em>
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title page-title">Jobs</h3>
+            <div class="nk-block-des text-soft">
+                <p>We have a total of 100
+                    <span>+</span> jobs.
+                </p>
+            </div>
+        </div>
+        <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+                    <em class="icon ni ni-menu-alt-r"></em>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <ul class="link-list-opt no-bdr">
+                <div class="toggle-expand-content" data-content="pageMenu">
+                    <ul class="nk-block-tools g-3">
+                        <li>
+                            <div class="form-control-wrap">
+                                <div class="form-icon form-icon-right">
+                                    <em class="icon ni ni-search"></em>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Search jobs">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="drodown">
+                                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown">
+                                    <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
+                                    <span>Filtered By</span>
+                                    <em class="dd-indc icon ni ni-chevron-right"></em>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <ul class="link-list-opt no-bdr">
+                                        <li>
+                                            <a href="#">
+                                                <span>Online</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span>Local</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span>Abroad</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nk-block-tools-opt d-none d-sm-block">
+                            <a href="#" class="btn btn-primary">
+                                <em class="icon ni ni-share"></em>
+                                <span>Share</span>
+                            </a>
+                        </li>
+                        <li class="nk-block-tools-opt d-block d-sm-none">
+                            <a href="#" class="btn btn-icon btn-primary">
+                                <em class="icon ni ni-plus"></em>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock heading %} {% block main %}
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<style>
+    /* Existing styles for cards and tags */
+    
+    .with-border {
+        border: 1px solid #ddd;
+        /* Customize the border color as needed */
+        border-radius: 5px;
+        /* Optional: add border radius */
+        padding: 10px;
+        /* Optional: add padding */
+    }
+    
+    .tag {
+        display: inline-block;
+        background-color: #fd7d1e;
+        /* Customize the background color as needed */
+        color: white;
+        padding: 2px 8px;
+        font-size: 12px;
+        border-radius: 12px;
+        margin-right: 5px;
+        /* Space between tags */
+    }
+    
+    .price-tag {
+        background-color: #28a745;
+        /* Customize the background color for the price tag */
+    }
+    
+    .date-tag {
+        background-color: #007bff;
+        /* Customize the background color for the date tag */
+    }
+    
+    .academic-level-tag {
+        background-color: #6f42c1;
+        /* Customize the background color for the academic level tag */
+    }
+    
+    .filter-button.active {
+        font-weight: bold;
+    }
+</style>
+<style>
+    /* General Card Styles */
+    
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+    /* Card Inner Content */
+    
+    .card-inner {
+        position: relative;
+    }
+    /* Tag Styles
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    border-radius: 3px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.tag.price-tag, .tag.date-tag, .tag.academic-level-tag {
+    margin-top: 10px;
+}
+
+.tag[style*="background-color: black; color: white;"] {
+    background-color: black;
+    color: white;
+} */
+    /* Button Styles */
+    
+    .btn-primary {
+        display: inline-block;
+        margin-top: 10px;
+    }
+    /* Ensure Card Adjusts to Content */
+    
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .card-inner {
+        flex: 1;
+    }
+    /* Responsive Adjustments */
+    
+    @media (max-width: 576px) {
+        .card {
+            padding: 10px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .card {
+            margin-bottom: 15px;
+        }
+    }
+</style>
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<div class="nk-content nk-content-fluid">
+    <div class="container-xl wide-xl">
+        <div class="nk-content-body">
+            <div class="nk-block">
+                <ul class="filter-button-group mb-4 pb-1">
                     <li>
-                      <a href="#">
-                        <span>Open</span></a>
+                        <button class="filter-button active" type="button" data-filter="*">All</button>
                     </li>
                     <li>
-                      <a href="#">
-                        <span>Closed</span></a>
+                        <button class="filter-button" type="button" data-filter=".blog-content">Online/Remote</button>
                     </li>
-
-                  </ul>
+                    <li>
+                        <button class="filter-button" type="button" data-filter=".social-media">Physical</button>
+                    </li>
+                    <li>
+                        <button class="filter-button" type="button" data-filter=".website-copy-seo">Abroad</button>
+                    </li>
+                </ul>
+                <div class="row g-gs filter-container" data-animation="true">
+                    <!-- online and remoteee Content Cards -->
+                    <div class="col-sm-6 col-xxl-3 filter-item blog-content" data-category="blog-content">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <span class="tag" style="background-color: black; color: white;">Online</span>
+                                <h5 class="title">Blog Ideas</h5>
+                                <p class="sub-text">Produce trendy blog ideas for your business that engages.</p>
+                                <span class="tag price-tag">$29</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Intermediate</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item blog-content" data-category="blog-content">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+                                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+                                </div>
+                                <span class="tag" style="background-color: black; color: white;">Online</span>
+                                <h5 class="title">Blog Post Outline</h5>
+                                <p class="sub-text">Create lists and outlines for your articles that perform best.</p>
+                                <span class="tag price-tag">$19</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Beginner</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item blog-content" data-category="blog-content">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+                                    <div class="badge border-0 text-white bg-pink rounded-pill text-uppercase">Popular</div>
+                                </div>
+                                <span class="tag" style="background-color: black; color: white;">Online</span>
+                                <h5 class="title">Blog Post Writer</h5>
+                                <p class="sub-text">Write blog articles in minutes with the most advanced AI writing pilot.</p>
+                                <span class="tag price-tag">$39</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Advanced</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item blog-content" data-category="blog-content">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <span class="tag" style="background-color: black; color: white;">Online</span>
+                                <h5 class="title">Blog Paragraph Writer</h5>
+                                <p class="sub-text">Write human-centric paragraphs based on your blog subheading.</p>
+                                <span class="tag price-tag">$25</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Intermediate</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item blog-content" data-category="blog-content">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <span class="tag" style="background-color: black; color: white;">Online</span>
+                                <h5 class="title">Pros & Cons</h5>
+                                <p class="sub-text">Write the pros and cons of a product, service, or website for your blog article.</p>
+                                <span class="tag price-tag">$20</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Beginner</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item blog-content" data-category="blog-content">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <span class="tag" style="background-color: black; color: white;">Online</span>
+                                <h5 class="title">Blog Conclusions</h5>
+                                <p class="sub-text">End your blog articles with an engaging conclusion paragraph.</p>
+                                <span class="tag price-tag">$15</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Intermediate</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- physical Cards -->
+                    <div class="col-sm-6 col-xxl-3 filter-item social-media" data-category="social-media">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+                                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+                                </div>
+                                <span class="tag" style="background-color: black; color: white;">Nairobi</span>
+                                <h5 class="title">Social Media Ideas</h5>
+                                <p class="sub-text">Generate creative social media post ideas for your business.</p>
+                                <span class="tag price-tag">salary 30k</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">receptionist</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item social-media" data-category="social-media">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+                                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+                                </div>
+                                <span class="tag" style="background-color: black; color: white;">Darislama</span>
+                                <h5 class="title">Social Media Calendar</h5>
+                                <p class="sub-text">Plan and schedule your social media posts with ease.</p>
+                                <span class="tag price-tag">salary 20k</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">sales</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item social-media" data-category="social-media">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+                                    <div class="badge border-0 text-white bg-pink rounded-pill text-uppercase">Popular</div>
+                                </div>
+                                <span class="tag" style="background-color: black; color: white;">Abuja</span>
+                                <h5 class="title">Engaging Social Media Posts</h5>
+                                <p class="sub-text">Create engaging social media posts that drive interaction.</p>
+                                <span class="tag price-tag">salary 40k</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">nurse</span>
+                                <a href="#" class="btn btn-primary ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item social-media" data-category="social-media">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <span class="tag" style="background-color: black; color: white;">Kisumu</span>
+                                <h5 class="title">Social Media Comments</h5>
+                                <p class="sub-text">Write comments that engage and interact with your audience.</p>
+                                <span class="tag price-tag">salary 50k</span>
+                                <span class="tag date-tag">June 2024</span>
+                                <span class="tag academic-level-tag">Manager</span>
+                                <a href=" # " class="btn btn-primary  ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item social-media " data-category="social-media ">
+                        <div class="card card-full ">
+                            <div class="card-inner ">
+                                <span class="tag" style="background-color: black; color: white;">Uganda</span>
+                                <h5 class="title ">Social Media Engagement</h5>
+                                <p class="sub-text ">Boost engagement on your social media platforms.</p>
+                                <span class="tag price-tag ">salary 10k</span>
+                                <span class="tag date-tag ">June 2024</span>
+                                <span class="tag academic-level-tag ">ECD teacher</span>
+                                <a href="# " class="btn btn-primary  ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Abroad jobs Cards -->
+                    <div class="col-sm-6 col-xxl-3 filter-item website-copy-seo " data-category="website-copy-seo ">
+                        <div class="card card-full ">
+                            <div class="card-inner ">
+                                <span class="tag" style="background-color: black; color: white;">Canada</span>
+                                <h5 class="title ">SEO Website Copy</h5>
+                                <p class="sub-text ">Create SEO-friendly copy for your website.</p>
+                                <span class="tag price-tag ">comission 150k</span>
+                                <span class="tag date-tag ">June 2024</span>
+                                <span class="tag academic-level-tag ">Manual</span>
+                                <a href="# " class="btn btn-primary  ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item website-copy-seo " data-category="website-copy-seo ">
+                        <div class="card card-full ">
+                            <div class="card-inner ">
+                                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
+                                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase ">New</div>
+                                </div>
+                                <span class="tag" style="background-color: black; color: white;">Turkey</span>
+                                <h5 class="title ">SEO Blog Post</h5>
+                                <p class="sub-text ">Write blog posts that rank high in search engines.</p>
+                                <span class="tag price-tag ">comission 50k</span>
+                                <span class="tag date-tag ">June 2024</span>
+                                <span class="tag academic-level-tag ">Manual</span>
+                                <a href="# " class="btn btn-primary  ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item website-copy-seo " data-category="website-copy-seo ">
+                        <div class="card card-full ">
+                            <div class="card-inner ">
+                                <span class="tag" style="background-color: black; color: white;">Qatar</span>
+                                <h5 class="title ">Meta Descriptions</h5>
+                                <p class="sub-text ">Create compelling meta descriptions for your web pages.</p>
+                                <span class="tag price-tag ">comission 50k</span>
+                                <span class="tag date-tag ">June 2024</span>
+                                <span class="tag academic-level-tag ">Non-career</span>
+                                <a href="# " class="btn btn-primary  ">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xxl-3 filter-item website-copy-seo " data-category="website-copy-seo ">
+                        <div class="card card-full ">
+                            <div class="card-inner ">
+                                <span class="tag" style="background-color: black; color: white;">Qatar</span>
+                                <h5 class="title ">SEO Article Writing</h5>
+                                <p class="sub-text ">Write SEO-friendly articles for your website.</p>
+                                <span class="tag price-tag ">comission 50k</span>
+                                <span class="tag date-tag ">June 2024</span>
+                                <span class="tag academic-level-tag ">non-career</span>
+                                <a href="# " class="btn btn-primary  ">View</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </li>
-            <li class="nk-block-tools-opt d-none d-sm-block">
-              <a href="#" class="btn btn-primary">
-                <em class="icon ni ni-share"></em>
-                <span>Share</span></a>
-            </li>
-            <li class="nk-block-tools-opt d-block d-sm-none">
-              <a href="#" class="btn btn-icon btn-primary">
-                <em class="icon ni ni-plus"></em>
-              </a>
-            </li>
-          </ul>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-{% endblock heading %}
-{% block main %}
-<div class="nk-block">
-  <div class="row g-gs">
-    <div class="col-sm-6 col-lg-4 col-xxl-3">
-      <div class="card card-bordered h-100">
-        <div class="card-inner">
-          <div class="project">
-            <div class="project-head">
-              <a href="" class="project-title">
-                <div class="user-avatar sq bg-purple">KE
-                </div>
-                <div class="project-info">
-                  <h6 class="title">Dashlite Development</h6>
-                  <span class="sub-text">Softnio LTD</span>
-                </div>
-              </a>
-              <div class="drodown">
-                <li>
-                  <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt=""
-                      class="language-flag">
-                    <span class="language-name">Kenya</span></a>
-                </li>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const filterItems = document.querySelectorAll('.filter-item');
 
-              </div>
-            </div>
-            <div class="project-details">
-              <p>Design and develop the DashLite template for Envato Marketplace.</p>
-            </div>
-            <div class="project-progress">
-              <div class="project-progress-details">
-                <div class="project-progress-task">
-                  <em class="icon ni ni-check-round-cut"></em>
-                  <span>309 Capacity Required</span>
-                </div>
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filterValue = this.getAttribute('data-filter');
 
-              </div>
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
 
-            </div>
-            <div class="project-meta">
-              <div class="card card-preview">
-                <div class="card-inner">
-                  <ul class="preview-list ">
-                    <li class="preview-item">
-                      <button type="button" class="btn btn-secondary btn-outline-primary text-white">View Job
-                </div>
-              </div>
-              <span class="badge badge-dim bg-warning"
-                style="display: flex; flex-direction: column; align-items: center;">
-                <em class="icon ni ni-clock"> Deadline</em>
-                <span>11/11/2028</span>
-              </span>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-4 col-xxl-3">
-      <div class="card card-bordered h-100">
-        <div class="card-inner">
-          <div class="project">
-            <div class="project-head">
-              <a href="" class="project-title">
-                <div class="user-avatar sq bg-purple">UG
-                </div>
-                <div class="project-info">
-                  <h6 class="title">Dashlite Development</h6>
-                  <span class="sub-text">Softnio LTD</span>
-                </div>
-              </a>
-              <div class="drodown">
-                <li>
-                  <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt=""
-                      class="language-flag">
-                    <span class="language-name">Uganda</span></a>
-                </li>
-
-              </div>
-            </div>
-            <div class="project-details">
-              <p>Design and develop the DashLite template for Envato Marketplace.</p>
-            </div>
-            <div class="project-progress">
-              <div class="project-progress-details">
-                <div class="project-progress-task">
-                  <em class="icon ni ni-check-round-cut"></em>
-                  <span>3 Capacity Required</span>
-                </div>
-
-              </div>
-
-            </div>
-            <div class="project-meta">
-              <div class="card card-preview">
-                <div class="card-inner">
-                  <ul class="preview-list ">
-
-                    <li class="preview-item">
-                      <button type="button" class="btn btn-secondary btn-outline-primary text-white">View Job
-                </div>
-              </div>
-              <span class="badge badge-dim bg-warning"
-                style="display: flex; flex-direction: column; align-items: center;">
-                <em class="icon ni ni-clock"> Deadline</em>
-                <span>11/11/2028</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-4 col-xxl-3">
-      <div class="card card-bordered h-100">
-        <div class="card-inner">
-          <div class="project">
-            <div class="project-head">
-              <a href="" class="project-title">
-                <div class="user-avatar sq bg-purple">TZ
-                </div>
-                <div class="project-info">
-                  <h6 class="title">Dashlite Development</h6>
-                  <span class="sub-text">Softnio LTD</span>
-                </div>
-              </a>
-              <div class="drodown">
-                <li>
-                  <a href="#" class="language-item"><img src="{% static 'images/flags/english.png' %}" alt=""
-                      class="language-flag">
-                    <span class="language-name">Tanzania</span></a>
-                </li>
-
-              </div>
-            </div>
-            <div class="project-details">
-              <p>Design and develop the DashLite template for Envato Marketplace.</p>
-            </div>
-            <div class="project-progress">
-              <div class="project-progress-details">
-                <div class="project-progress-task">
-                  <em class="icon ni ni-check-round-cut"></em>
-                  <span>3 Capacity Required</span>
-                </div>
-
-              </div>
-
-            </div>
-            <div class="project-meta">
-              <div class="card card-preview">
-                <div class="card-inner">
-                  <ul class="preview-list ">
-                    <li class="preview-item">
-                      <button type="button" class="btn btn-secondary btn-outline-primary text-white">View Job
-                </div>
-              </div>
-              <span class="badge badge-dim bg-warning"
-                style="display: flex; flex-direction: column; align-items: center;">
-                <em class="icon ni ni-clock"> Deadline</em>
-                <span>11/11/2028</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-</div>
-</div>
-</div>
-</div>
+                filterItems.forEach(item => {
+                    if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock main %}
