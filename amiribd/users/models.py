@@ -113,6 +113,11 @@ class Profile(models.Model):
         on_delete=models.SET_NULL,
         related_name="profile_referred_by",
     )
+    job_applications = models.ManyToManyField(
+        "jobs.Job",
+        blank=True,
+        related_name="profile_job_applications",
+    )
 
     def __str__(self):
         return f"{self.user.username}"

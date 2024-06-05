@@ -1,309 +1,318 @@
-{% extends "account/dashboard/v1/base.html" %}
-{% load static %}
+{% extends "account/dashboard/v1/base.html" %} {% load static %} {% block heading %}
+<!--  -->
 
-{% block heading %}
+{% load humanize %}
 <div class="nk-block-head nk-block-head-sm">
-  <div class="nk-block-between">
-    <div class="nk-block-head-content">
-      <h3 class="nk-block-title page-title">Online Writing Accounts & Services</h3>
-    </div>
-    <div class="nk-block-head-content">
-      <div class="toggle-wrap nk-block-tools-toggle">
-        <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
-          <em class="icon ni ni-more-v"></em>
-        </a>
-        <div class="toggle-expand-content" data-content="pageMenu">
-          <ul class="nk-block-tools g-3">
-            <li>
-              <div class="form-control-wrap">
-                <div class="form-icon form-icon-right">
-                  <em class="icon ni ni-search"></em>
-                </div><input type="text" class="form-control" id="default-04" placeholder="Quick search by id">
-              </div>
-            </li>
-            <li>
-              <div class="drodown">
-                <a href="#" class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
-                  data-bs-toggle="dropdown">Type</a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <ul class="link-list-opt no-bdr">
-                    <li>
-                      <a href="#">
-                        <span>Accounts</span></a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span>Tasks</span></a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span>Direct Clients</span></a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span>Services</span></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            <li class="nk-block-tools-opt">
-              <a href="#" data-target="addProduct" class="toggle btn btn-icon btn-primary d-md-none">
-                <em class="icon ni ni-plus"></em>
-              </a>
-              <a href="#" data-target="addProduct" class="toggle btn btn-primary d-none d-md-inline-flex">
-                <em class="icon ni ni-plus"></em>
-                <span>Add Product</span></a>
-            </li>
-          </ul>
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title page-title">
+                Online Writing Accounts & Services
+            </h3>
         </div>
-      </div>
+        <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+                    <em class="icon ni ni-more-v"></em>
+                </a>
+                <div class="toggle-expand-content" data-content="pageMenu">
+                    <ul class="nk-block-tools g-3">
+                        <li>
+                            <div class="form-control-wrap">
+                                <div class="form-icon form-icon-right">
+                                    <em class="icon ni ni-search"></em>
+                                </div>
+                                <input type="text" class="form-control" id="default-04" placeholder="Quick search by id" />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="drodown">
+                                <a href="#" class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white" data-bs-toggle="dropdown">Type</a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <ul class="link-list-opt no-bdr">
+                                        <li>
+                                            <a href="#"> <span>Accounts</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> <span>Tasks</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> <span>Direct Clients</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> <span>Services</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nk-block-tools-opt">
+                            <a href="#" data-target="addProduct" class="toggle btn btn-icon btn-primary d-md-none">
+                                <em class="icon ni ni-plus"></em>
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#addProduct" class="toggle btn btn-primary d-none d-md-inline-flex">
+                                <em class="icon ni ni-plus"></em>
+                                <span>Add Product</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 {% endblock heading %}
-
+<!--  -->
 {% block main %}
 
+<!--  -->
+{% if shop_items %}
 <div class="row g-gs mt-3">
-  <div class="col-xxl-3 col-lg-4 col-sm-6">
-    <div class="card card-bordered product-card">
-      <div class="product-thumb">
-        <ul class="product-badges">
-          <li>
-            <span class="badge badge bg-danger">John Juma</span> <span class="badge bg-success">Verified Seller</span>
-          </li>
-
-        </ul>
-        <br>
-
-        <!-- <ul class="product-actions">
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-cart"></em>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-heart"></em>
-                </a>
-              </li>
-            </ul> -->
-      </div>
-      <div class="card-inner text-center">
-        <ul class="product-tags">
-          <li>
-            <a href="#">Account</a>
-          </li>
-        </ul>
-        <h5 class="product-title">
-          <a href="#">Writerbay Newbie Esl
-          </a>
-        </h5>
-        <div class="col-lg-12">
-          <div class="card card-bordered">
-
-            <div class="card-body">
-
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional content With supporting text below as a
-                natural lead-in to additional content .</p>
+    {% for item in shop_items %}
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card card-bordered product-card">
+            <div class="product-thumb">
+                <ul class="product-badges my-2 d-flex d-md-flex flex-md-row">
+                    <li>
+                        <span class="badge badge bg-danger">{{item.profile}}</span>
+                        <span class="badge bg-success">Verified Seller</span>
+                    </li>
+                    <li class="flex-grow-1 product-price text-primary h6">
+                        <small class="text-muted del fs-13px me-1">ksh
+                            {{item.regular_price|floatformat:2|intcomma}}</small>{{item.sales_price|floatformat:2|intcomma}}
+                    </li>
+                </ul>
+                <br />
             </div>
+            <div class="card-inner mt-3 ">
+                <h5 class="product-title pt-4 pb-2 ">
+                    <a href="# ">{{item.title|title}}</a>
+                </h5>
+                <div class="border border border-1 mb-3 "></div>
+                <div class="col-lg-12 ">
+                    <div class=" ">
+                        <p class="card-text ">
+                            {{item.description}}
+                        </p>
+                    </div>
+                </div>
 
-          </div>
-        </div>
+                <div class="border border border-1 my-3 "></div>
 
-        <div class="product-price text-primary h5">
-          <small class="text-muted del fs-13px">ksh 20000</small>
-          ksh 18000
-        </div>
-        <a href="#" class="btn btn-primary">Purchase</a>
-      </div>
-      <div class="card-footer border-top text-muted">2 days ago</div>
-    </div>
-  </div>
-  <div class="col-xxl-3 col-lg-4 col-sm-6">
-    <div class="card card-bordered product-card">
-      <div class="product-thumb">
-        <ul class="product-badges">
-          <li>
-            <span class="badge badge bg-danger">John Juma</span> <span class="badge bg-success">Verified Seller</span>
-          </li>
-
-        </ul>
-        <br>
-
-        <!-- <ul class="product-actions">
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-cart"></em>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-heart"></em>
-                </a>
-              </li>
-            </ul> -->
-      </div>
-      <div class="card-inner text-center">
-        <ul class="product-tags">
-          <li>
-            <a href="#">Account</a>
-          </li>
-        </ul>
-        <h5 class="product-title">
-          <a href="#">Writerbay Newbie Esl
-          </a>
-        </h5>
-        <div class="col-lg-12">
-          <div class="card card-bordered">
-
-            <div class="card-body">
-
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional content With supporting text below as a
-                natural lead-in to additional content .</p>
+                <div class="product-price text-primary h5 ">
+                    <input type="hidden" name="shop_item_id" value="{{item.id}}">
+                    <input type="hidden" name="shop_item_buyer_id" value="{{request.user.profile_user.id}}">
+                    <a id="place_offer_btn" class="btn btn-primary" data-bs-target="#placeOfferPopUpForm" role="button" data-bs-toggle="modal" data-bs-dismiss="modal">Place Offer Now
+                    </a>
+                </div>
             </div>
-
-          </div>
+            <div class="card-footer border-top text-muted ">{{item.created_at|timesince}} ago</div>
         </div>
-
-        <div class="product-price text-primary h5">
-          <small class="text-muted del fs-13px">ksh 20000</small>
-          ksh 18000
-        </div>
-        <a href="#" class="btn btn-primary">Purchase</a>
-      </div>
-      <div class="card-footer border-top text-muted">2 days ago</div>
     </div>
-  </div>
-  <div class="col-xxl-3 col-lg-4 col-sm-6">
-    <div class="card card-bordered product-card">
-      <div class="product-thumb">
-        <ul class="product-badges">
-          <li>
-            <span class="badge badge bg-danger">John Juma</span> <span class="badge bg-success">Verified Seller</span>
-          </li>
-
-        </ul>
-        <br>
-
-        <!-- <ul class="product-actions">
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-cart"></em>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-heart"></em>
-                </a>
-              </li>
-            </ul> -->
-      </div>
-      <div class="card-inner text-center">
-        <ul class="product-tags">
-          <li>
-            <a href="#">Account</a>
-          </li>
-        </ul>
-        <h5 class="product-title">
-          <a href="#">Writerbay Newbie Esl
-          </a>
-        </h5>
-        <div class="col-lg-12">
-          <div class="card card-bordered">
-
-            <div class="card-body">
-
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional content With supporting text below as a
-                natural lead-in to additional content .</p>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="product-price text-primary h5">
-          <small class="text-muted del fs-13px">ksh 20000</small>
-          ksh 18000
-        </div>
-        <a href="#" class="btn btn-primary">Purchase</a>
-      </div>
-      <div class="card-footer border-top text-muted">2 days ago</div>
-    </div>
-  </div>
-
-
-  <!--new item-->
-
+    {% endfor %}
 </div>
-<div class="nk-add-product toggle-slide toggle-slide-right" data-content="addProduct" data-toggle-screen="any"
-  data-toggle-overlay="true" data-toggle-body="true" data-simplebar="data-simplebar">
-  <div class="nk-block-head">
-    <div class="nk-block-head-content">
-      <h5 class="nk-block-title">New Product</h5>
-      <div class="nk-block-des">
-        <p>Add information and add new product.</p>
-      </div>
-    </div>
-  </div>
-  <div class="nk-block">
-    <div class="row g-3">
-      <div class="col-12">
-        <div class="form-group">
-          <label class="form-label" for="product-title">Product Title</label>
-          <div class="form-control-wrap"><input type="text" class="form-control" id="product-title"></div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          <label class="form-label" for="category">Category</label>
-          <div class="form-control-wrap"><input type="text" class="form-control" id="category"></div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="form-label" for="stock">Stock Quantity</label>
-          <div class="form-control-wrap"><input type="text" class="form-control" id="stock"></div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="form-label" for="regular-price">Regular Price</label>
-          <div class="form-control-wrap"><input type="number" class="form-control" id="regular-price"></div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="form-label" for="sale-price">Sale Price</label>
-          <div class="form-control-wrap"><input type="number" class="form-control" id="sale-price"></div>
-        </div>
-      </div>
+{% endif %}
 
-      <div class="col-12">
-        <div class="form-group">
-          <label class="form-label" for="tags">Tags</label>
-          <div class="form-control-wrap"><input type="text" class="form-control" id="tags"></div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-control-wrap">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Extra Info</span>
+<div class="nk-add-product modal" id="addProduct">
+    <form action="{% url 'shops:add-product-item' %}" method="post">
+        {% csrf_token %}
+        <div class="nk-block-head ">
+            <div class="nk-block-head-content ">
+                <h5 class="nk-block-title ">New Item</h5>
+                <div class="nk-block-des ">
+                    <p>Add information and add new product.</p>
+                </div>
             </div>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
-          </div>
         </div>
-      </div>
-      <div class="col-12">
-        <button class="btn btn-primary">
-          <em class="icon ni ni-plus"></em>
-          <span>Add New</span></button>
-      </div>
-    </div>
-  </div>
+        <div class="nk-block ">
+            <div class="row g-3 ">
+                <div class="col-12 ">
+                    <div class="form-group ">
+                        <label class="form-label " for="{{shop_item_form.title.id_for_label}}">{{shop_item_form.title.label}}</label>
+                        <div class="form-control-wrap ">
+                            {{shop_item_form.title}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label class="form-label " for="{{shop_item_form.regular_price.id_for_label}}">{{shop_item_form.regular_price.label}}</label>
+                        <div class="form-control-wrap ">
+                            {{shop_item_form.regular_price}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label class="form-label " for="{{shop_item_form.sales_price.id_for_label}}">{{shop_item_form.sales_price.label}}</label>
+                        <div class="form-control-wrap ">
+                            {{shop_item_form.sales_price}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-12 ">
+                <div class="form-group ">
+                    <label class="form-label " for="tags ">Tags</label>
+                    <div class="form-control-wrap ">
+                        <input type="text " class="form-control " id="tags " />
+                    </div>
+                </div>
+            </div> -->
+                <div class="col-12 ">
+                    <div class="form-control-wrap ">
+                        <div class="input-group ">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text ">{{shop_item_form.description.label}}</span>
+                            </div>
+                            {{shop_item_form.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4 col-sm-12">
+                        <button class="btn btn-primary ">
+                            <em class="icon ni ni-plus "></em>
+                            <span>Add New</span>
+                        </button>
+                    </div>
+                    <div class="col-md-4 col-sm-12 inline-flex ms-3">
+                        <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+
+
+
+
+
+
+
+<div class="modal fade" tabindex="-1" id="placeOfferPopUpForm" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="justify-between gx-5 mb-1">
+                    <div>
+                        <h6 class="modal-title text-primary">Tell us about the issue</h6>
+                    </div>
+                    <div><a href="#" class="btn btn-icon btn-trigger me-n2 mt-n1" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a></div>
+                </div>
+
+                <div class="justify-between gx-5 mb-1">
+                    <div id="server_response_message"></div>
+                </div>
+                <form>
+                    <div class="form-group ">
+                        <label class="form-label " for="{{shop_item_offer_form.price_offer.id_for_label}}">{{shop_item_offer_form.price_offer.label}}</label>
+                        <div class="form-control-wrap ">
+                            {{shop_item_offer_form.price_offer}}
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="form-label " for="{{shop_item_offer_form.email_or_phone.id_for_label}}">{{shop_item_offer_form.email_or_phone.label}}</label>
+                        <div class="form-control-wrap ">
+                            {{shop_item_offer_form.email_or_phone}}
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="form-control-wrap">
+                            {{shop_item_offer_form.message}}
+                        </div>
+                    </div>
+                    <div class="align-center justify-between mt-3">
+                        <a href="#" class="link link-sm">Privacy Policy</a>
+                        <ul class="btn-toolbar g-1">
+                            <li>
+                                <a data-bs-dismiss="modal" data-bs-toggle="modal" role="button" class="btn btn-light">
+                                    Go Back
+                                </a>
+                            </li>
+                            <li>
+                                <button type="button" id="shop_item_offer_btn" class="btn btn-primary">Submit</button>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light justify-content-center py-1">
+                <div class="sub-text">Copyright by
+                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'home' %}" target="_blank">Earnkraft</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    if (document.querySelector("[name='shop_item_id']")) {
+        let shopItemId = document.querySelector("[name='shop_item_id']").value;
+        let shopItemBuyerId = document.querySelector("[name='shop_item_buyer_id']").value;
+
+        const placeOfferBtn = document.getElementById('place_offer_btn');
+
+        if (document.getElementById("shop_item_offer_btn")) {
+            const placeItemOfferSubmitBtn = document.getElementById("shop_item_offer_btn");
+            const serverResponseMessageBox = document.getElementById("server_response_message")
+            placeItemOfferSubmitBtn.addEventListener("click", async() => {
+                const offerMessage = document.querySelector("[name='message']").value;
+                const priceOfferValue = document.querySelector("[name='price_offer']").value;
+                const EmailOrPhone = document.querySelector("[name='email_or_phone']").value;
+
+                const offerMessageData = {
+                    itemItd: shopItemId,
+                    buyerId: shopItemBuyerId,
+                    message: offerMessage,
+                    price_offer: priceOfferValue,
+                    email_or_phone: EmailOrPhone
+                }
+
+
+                const url = `/shops/place-offer/${shopItemId}/`
+
+
+                const response = await fetch(
+                    url, {
+                        method: "POST",
+                        contentType: "application/json",
+                        body: JSON.stringify(offerMessageData)
+                    }
+                )
+
+                const data = await response.json()
+
+                if (!data.success) {
+                    serverResponseMessageBox.classList.add("text-danger")
+
+                    serverResponseMessageBox.textContent = data.msg
+
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 4000);
+                }
+                serverResponseMessageBox.classList.add("text-success")
+
+                serverResponseMessageBox.textContent = data.msg
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 4000);
+
+
+            })
+        }
+    }
+</script>
+
+
+
 {% endblock main %}
+
+<!--  -->

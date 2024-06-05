@@ -125,7 +125,7 @@ urlpatterns = [
         name="invest-record",
     ),
     path(
-        "academic_writing_accounts/",
+        "academic-writing-accounts/",
         modified_academic_view,
         name="academic_writing_accounts",
     ),

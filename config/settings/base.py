@@ -123,6 +123,10 @@ LOCAL_APPS = [
     # articles
     "amiribd.articles",
     "amiribd.schemes",
+    # shops for sales of items fro the members
+    "amiribd.shops",
+    # jobs
+    "amiribd.jobs",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

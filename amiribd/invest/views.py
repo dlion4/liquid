@@ -11,8 +11,10 @@ from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from intasend import APIService
+from amiribd.jobs.forms import JobApplicationForm
 from amiribd.payments.helpers import MpesaStkPushSetUp
 from amiribd.profiles.models import PlantformType
+from amiribd.shops.models import ShopItem
 from amiribd.users.models import Profile
 from .forms import (
     AccountEventWithdrawalForm,
@@ -474,10 +476,26 @@ class WhatsappView(InvestmentViewMixin):
 
 modified_whatsapp_view = WhatsappView.as_view()
 
+from amiribd.jobs.models import Job
 
 class JobsView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/jobs.html"
     template_name = "account/dashboard/v1/investment/jobs.html"
+    jobs =Job
+    job_application_form = JobApplicationForm
+
+    def get_jobs(self):
+        return self.jobs.objects.select_related("author").filter(is_active=True).order_by("?")
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['jobs'] = self.get_jobs()
+        context["job_application_form"] = self.job_application_form(job_id=1, applicant_id=1)
+        return context
+    
+ 
+
+    
 
 
 modified_jobs_view = JobsView.as_view()
@@ -507,9 +525,24 @@ class InvestrecordView(InvestmentViewMixin):
 modified_investrecord_view = InvestrecordView.as_view()
 
 
+from amiribd.shops.forms import ShopItemForm, ShopItemOfferForm
+
 class AcademicView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/academic_writing_accounts.html"
     template_name = "account/dashboard/v1/investment/academic_writing_accounts.html"
+    shop_item_form = ShopItemForm
+    shop_item_offer_form = ShopItemOfferForm
+
+    def get_shop_items(self):
+        return ShopItem.objects.select_related("profile").filter(is_sold=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['shop_item_form'] = self.shop_item_form()
+        context['shop_item_offer_form'] = self.shop_item_offer_form()
+        context['shop_items'] = self.get_shop_items()
+        return context
+    
 
 
 modified_academic_view = AcademicView.as_view()

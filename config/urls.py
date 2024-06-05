@@ -84,6 +84,10 @@ urlpatterns = [
     ),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path("ai/", include("amiribd.ai.urls", namespace="ai")),
+    # shops urls
+    path("shops/", include("amiribd.shops.urls", namespace="shops")),
+    # jobs urls
+    path("jobs/", include("amiribd.jobs.urls", namespace="jobs")),
 ]
 
 
