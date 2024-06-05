@@ -4,8 +4,8 @@
         <div class="nk-block-head-content">
             <h3 class="nk-block-title page-title">Jobs</h3>
             <div class="nk-block-des text-soft">
-                <p>We have a total of 100
-                    <span>+</span> jobs.
+                <p>
+                    We have a total of {{jobs.count}}<span>+</span> Active job{{jobs.count|pluralize}}.
                 </p>
             </div>
         </div>
@@ -36,17 +36,17 @@
                                     <ul class="link-list-opt no-bdr">
                                         <li>
                                             <a href="#">
-                                                <span>Online</span>
+                                                <span id="filterItem">Online</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <span>Local</span>
+                                                <span id="filterItem">Local</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <span>Abroad</span>
+                                                <span id="filterItem">Abroad</span>
                                             </a>
                                         </li>
                                     </ul>

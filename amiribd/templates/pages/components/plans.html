@@ -3,7 +3,6 @@
 <style>
   body {
     font: 12px/1.5 'PT Sans', serif;
-    margin: 5px;
   }
 
   .tags {
@@ -186,17 +185,29 @@
   }
 
   .card__header-subtitle {
-    display: block;
+    display: inline-flex;
+    flex-grow: 1;
     font-size: var(--smaller-font-size);
     color: var(--text-color-light);
     text-transform: uppercase;
     margin-bottom: var(--mb-0-25);
+    margin-left: var(--mb-1-25);
+    width: 100%;
   }
 
   .card__header-title {
     font-size: var(--biggest-font-size);
     color: var(--title-color);
     margin-bottom: var(--mb-1);
+  }
+
+  .card__header-circle {
+    margin-top: var(--mb-1);
+  }
+
+  .card__header-circle,
+  .card__header-title {
+    margin-left: var(--mb-1-25);
   }
 
   .card__pricing {
@@ -254,6 +265,12 @@
     top: 0;
     left: -14px;
     clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+
+  .card__pricing.active {
+    background: crimson !important;
+    box-shadow: 0 12px 24px hsla(var(--hue-color), 97%, 54%, 0.2);
   }
 
   .card__list {
@@ -316,6 +333,8 @@
     }
   }
 
+
+
   /* For large devices */
   @media screen and (min-width: 968px) {
     .container {
@@ -334,6 +353,10 @@
 
     .card__header-circle {
       margin-bottom: var(--mb-1-25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+
     }
 
     .card__header-subtitle {
@@ -346,7 +369,7 @@
 <div class="uk-section in-wave-4">
 
   <div class="uk-container">
-    
+
     <div class="uk-grid uk-flex uk-flex-center">
       <div class="uk-width-1-1 uk-text-center">
         <h1 class="uk-margin-medium-bottom">
@@ -365,7 +388,6 @@
               <p class="uk-text-lead uk-text-muted uk-margin-remove-top">Benefits for this package</p>
               <hr>
               <ul class="uk-list in-list-check">
-
                 <li>Chat with admin and your downlines</li>
                 <li>Free deposits any time</li>
                 <li>Earn from whatsapp status</li>
@@ -414,7 +436,7 @@
 <!-- section content end -->
 
 <section class="card container grid">
-  
+
   <h1 class="uk-margin-medium-bottom">
     <span class="in-highlight">Ways</span> of
     Generating Income
@@ -431,12 +453,9 @@
 
       <header class="card__header">
         <div class="card__header-circle grid">
-          <img
-            src="https://fadzrinmadu.github.io/hosted-assets/responsive-pricing-card-using-html-and-css/free-coin.png"
-            alt="" class="card__header-img">
+          <img src="{% static 'img/free-coin.png' %}" alt="free coing image" class="card__header-img">
+          <span class="card__header-subtitle">Free plan</span>
         </div>
-
-        <span class="card__header-subtitle">Free plan</span>
         <h1 class="card__header-title">Limited</h1>
       </header>
 
@@ -460,12 +479,12 @@
 
       </ul>
 
-      
+
     </article>
 
     <!--==================== CARD 2 ====================-->
     <article class="card__content grid">
-      <div class="card__pricing">
+      <div class="card__pricing active">
         <div class="card__pricing-number">
           <span class="card__pricing-symbol"></span>1000
         </div>
@@ -474,11 +493,9 @@
 
       <header class="card__header">
         <div class="card__header-circle grid">
-          <img src="https://fadzrinmadu.github.io/hosted-assets/responsive-pricing-card-using-html-and-css/pro-coin.png"
-            alt="" class="card__header-img">
+          <img src="{% static 'img/pro-coin.png' %}" alt="card__header-img" class="card__header-img">
+          <span class="card__header-subtitle">Most popular</span>
         </div>
-
-        <span class="card__header-subtitle">Most popular</span>
         <h1 class="card__header-title">Moderate</h1>
       </header>
 
@@ -518,12 +535,9 @@
 
       <header class="card__header">
         <div class="card__header-circle grid">
-          <img
-            src="https://fadzrinmadu.github.io/hosted-assets/responsive-pricing-card-using-html-and-css/enterprise-coin.png"
-            alt="" class="card__header-img">
+          <img src="{% static 'img/enterprise-coin.png' %}" alt="card__header-img" class="card__header-img">
+          <span class="card__header-subtitle">For Merchants</span>
         </div>
-
-        <span class="card__header-subtitle">For Merchants</span>
         <h1 class="card__header-title">Unlimited</h1>
       </header>
 
@@ -557,8 +571,7 @@
     </article>
   </div>
 </section>
-<br/>
-<br/>
-<br/>
-<br/>
-
+<br />
+<br />
+<br />
+<br />

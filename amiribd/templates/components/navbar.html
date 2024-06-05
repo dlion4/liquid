@@ -1,43 +1,57 @@
-{% load static %}
+{% load static humanize %}
+
+<style>
+  @media (max-width: 732px) {
+    .d-uk-nav-sm {
+      display: none;
+    }
+  }
+
+
+
+  @media (min-width: 768px) {
+    .in-mobile-nav {
+      display: none;
+    }
+  }
+</style>
 
 <header>
-  <style>
-   
-  </style>
-  <div class="{% if request.resolver_path.view_name == 'home' %}uk-section{% else %} uk-background-cover uk-background-top-center {% endif %}" style="background-image: url({% static 'img/in-wave-background-1.png' %})">
-    <nav class="uk-navbar-container uk-navbar-transparent" data-uk-sticky="show-on-up: true; top: 0; animation: uk-animation-fade">
+  <div class="uk-section uk-padding-remove-vertical in-header-inverse ">
+    <nav class="uk-navbar-container uk-navbar-transparent uk-sticky"
+      data-uk-sticky="show-on-up: true; top: 80; animation: uk-animation-fade">
       <div class="uk-container" data-uk-navbar="data-uk-navbar">
         <div class="uk-navbar-left uk-width-expand uk-flex uk-flex-between">
           <a class="uk-navbar-item uk-logo" href="{% url 'home' %}">
-            <img src="{% static 'img/earnkraftfull2.png' %}" alt="logo" width="134" height="23"/>
+            <img src="{% static 'img/earnkraftfull2.png' %}" alt="logo" width="134" height="23" />
           </a>
-          <ul class="uk-navbar-nav uk-visible@m">
+          <ul class="uk-navbar-nav uk-visible@m d-uk-nav-sm d-md-flex">
             <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
               <a href="{% url 'home' %}">Home</a>
             </li>
-            <!-- <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}"> <a href="{% url 'investment' %}">Investment</a> </li> -->
             <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
               <a href="{% url 'about' %}">About Us</a>
             </li>
             <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
               <a href="{% url 'help' %}">Help Center</a>
             </li>
-            <!-- <li class="{% if request.resolver_match.view_name == 'posts:posts' %} uk-active {% endif %}"> <a href="{% url 'posts:posts' %}">News</a> </li> -->
-            <!-- <li> <a href="#">Resources<span data-uk-navbar-parent-icon="data-uk-navbar-parent-icon"></span></a> <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2"> <div class="uk-navbar-dropdown-grid uk-child-width-1-2" data-uk-grid="data-uk-grid"> <div> <ul class="uk-nav uk-navbar-dropdown-nav"> <li class="{% if request.resolver_match.view_name == 'help' %} uk-active {% endif %}"> <a href="{% url 'help' %}">Help Center</a> </li> <li class="{% if request.resolver_match.view_name == 'customers' %} uk-active {% endif %}"> <a href="{% url 'customers' %}">Customers</a> </li> <li class="{% if request.resolver_match.view_name == 'guide' %} uk-active {% endif %}"> <a href="{% url 'guide' %}">Guide</a> </li> <li class="{% if request.resolver_match.view_name == 'career' %} uk-active {% endif %}"> <a href="{% url 'career' %}">Career </a> </li> <li class="{% if request.resolver_match.view_name == 'policies' %} uk-active {% endif %}"> <a href="{% url 'policies' %}">Policies<i class="fas fa-gavel fa-sm"></i> </a> </li> </ul> </div> <div> <ul class="uk-nav uk-navbar-dropdown-nav"> <li> <a class="uk-disabled" href="#">Do you have any question about our platform. Get your guestion unswered in minutes and start earning!</a> </li> </ul> </div> </div> </div> </li> -->
           </ul>
         </div>
         <div class="uk-navbar-right uk-width-auto">
           <div class="uk-navbar-item">
             {% if request.user.is_authenticated %}
-              <div class="in-optional-nav">
-                <a role="button" href="{% url 'dashboard:home' %}" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
-                </a>
+            <div class="in-optional-nav">
+              <a role="button" href="{% url 'dashboard:home' %}"
+                class="uk-button uk-button-primary uk-button-small uk-border"
+                style="margin-left: 10px !important">{{request.user.username}}
+              </a>
 
-              </div>
+            </div>
             {% else %}
-              <div class="in-optional-nav">
-                <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-button-small uk-border-pill" style="margin-left: 10px !important">Sign up</a>
-              </div>
+            <div class="in-optional-nav">
+              <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-button-small uk-border-pill"
+                style="margin-left: 10px !important">Sign up</a>
+            </div>
             {% endif %}
           </div>
         </div>
@@ -50,23 +64,24 @@
             <div class="uk-grid uk-text-small" data-uk-grid="data-uk-grid">
               <div class="uk-width-3-4@m uk-visible@m">
                 <p>
-                  The power of earning is in your hands, you have to take advantage of the opportunity while it lasts.
+                  The power of earning is in your hands, you have to take advantage of the opportunity
+                  while
+                  it lasts.
                 </p>
               </div>
               <div class="uk-width-expand@m uk-text-center uk-text-right@m">
-                <a class="uk-margin-right" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">
+                <a class="uk-margin-right" href="#" data-bs-whatever="@getbootstrap">
+                  <!-- modal for live chat TODO: implement later data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" -->
                   <i class="fas fa-comment-alt uk-margin-small-right"></i>Live Chat</a>
-                <a href="#">
+                <a href="tel:{{officephone}}">
                   <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a>
-                  <!-- <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a> -->
               </div>
             </div>
           </div>
         </div>
-
         {% block breadcrumb %}{% endblock breadcrumb %}
       </div>
     </div>
   </div>
-</div>
 </header>

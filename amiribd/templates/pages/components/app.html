@@ -1,242 +1,17 @@
 {% load static %}
 
 <style>
-    // Color variables
-    $blue: #2e7ad1;
-    $gray-light: #f5f5f5;
-    $gray-dark: #ebeced;
-    $green: #00b478;
-    $red: #bb0613;
-    $steel: #505e67;
-    $white: #ffffff;
-
-    h1 {
-        font-family: "Bree Serif", "Source Sans Pro", sans-serif;
-        text-align: center;
-        margin: 50px 20px 10px;
+    td.uk-center {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
-    .row {
-        margin: auto;
-        max-width: 1140px;
-        overflow: hidden;
-        padding: 0 10px;
-        width: 95%;
-
-        .feature-table {
-            margin: 20px 0 10px;
-            text-align: center;
-
-            &.hide-550 {
-                display: block;
-
-                .feature-row-header {
-                    font-family: "Bree Serif", "Source Sans Pro", sans-serif;
-                }
-            }
-
-            &.show-550 {
-                display: none;
-
-                #sticky {
-                    width: 100%;
-                    background-color: #fff;
-
-                    &.stick {
-                        margin: 0 auto;
-                        margin-top: 0 !important;
-                        position: fixed;
-                        top: 0;
-                        width: 95%;
-                        z-index: 10000;
-
-                        .feature-row-header {
-                            font-size: 18px;
-
-                            &:first-child {
-                                border-right: 2px solid #ebeced;
-                            }
-                        }
-                    }
-                }
-            }
-
-            td {
-                color: #505e67;
-                font-family: "Source Sans Pro", sans-serif;
-                font-size: 16px;
-                font-weight: 400;
-                padding: 20px;
-                text-align: center;
-            }
-
-            table {
-                width: 100%;
-                margin: 0 auto;
-
-                .feature-row-1 {
-                    background-color: #ebeced;
-                }
-
-                .feature-row-2 {
-                    background-color: #f5f5f5;
-                }
-
-                span.check-mark {
-                    &:after {
-                        content: "\2714";
-                        color: #00b478;
-                        display: block;
-                        font-weight: 600;
-                        font-size: 24px;
-                        display: inline;
-                    }
-                }
-
-                span.x-mark {
-                    &:after {
-                        content: "\2718";
-                        color: #bb0613;
-                        font-weight: 800;
-                        font-size: 24px;
-                    }
-                }
-
-                .feature-label p {
-                    color: #505e67;
-                    font-weight: 600;
-                    font-size: 16px;
-                    margin: 0 auto;
-                    text-align: left;
-                }
-            }
-
-            &.show-550 {
-                .feature-row-header {
-                    font-size: 20px;
-                    font-family: "Bree Serif", "Source Sans Pro", sans-serif;
-                    width: 47%;
-                    margin: 0;
-                    display: inline-block;
-                    padding: 20px 0 30px;
-                    vertical-align: middle;
-                    text-align: center;
-                }
-
-                .feature-row-wrap {
-                    border-bottom: 3px solid $white;
-
-                    .feature-row-1 {
-                        border-bottom: 2px solid $white;
-                        background-color: #ebeced;
-
-                        div {
-                            display: inline-block;
-                            margin: 0;
-                            padding: 20px 0;
-                            width: 47%;
-                            vertical-align: middle;
-
-                            &:first-child {
-                                border-right: 2px solid $white;
-                            }
-
-                            span.check-mark {
-                                &:after {
-                                    content: "\2714";
-                                    color: #00b478;
-                                    display: inline;
-                                    font-weight: 600;
-                                    font-size: 24px;
-                                }
-                            }
-
-                            span.x-mark {
-                                &:after {
-                                    content: "\2718";
-                                    color: #bb0613;
-                                    font-weight: 800;
-                                    font-size: 24px;
-                                }
-                            }
-                        }
-                    }
-
-                    .feature-row-2 {
-                        border-bottom: 2px solid $white;
-                        background-color: #f5f5f5;
-
-                        div {
-                            display: inline-block;
-                            margin: 0;
-                            padding: 20px 0;
-                            width: 49%;
-                            vertical-align: middle;
-
-                            &:first-child {
-                                border-right: 2px solid $white;
-                            }
-
-                            span.check-mark {
-                                &:after {
-                                    content: "\2714";
-                                    color: #00b478;
-                                    display: block;
-                                    font-weight: 600;
-                                    font-size: 24px;
-                                }
-                            }
-
-                            span.x-mark {
-                                &:after {
-                                    content: "\2718";
-                                    color: #bb0613;
-                                    font-weight: 800;
-                                    font-size: 24px;
-                                }
-                            }
-                        }
-                    }
-
-                    .feature-label p {
-                        color: #505e67;
-                        font-size: 16px;
-                        font-weight: 600;
-                        line-height: 1.5;
-                        margin: 0 auto;
-                        padding: 20px 0;
-                    }
-                }
-            }
-        }
-
-        .footer {
-            font-family: "Source Sans Pro", sans-serif;
-            font-size: 14px;
-            font-style: italic;
-            padding-top: 5px;
-            text-align: right;
-        }
-    }
-
-    @media (max-width: 550px) {
-        h1 {
-            font-size: 25px;
-        }
-
-        .feature-table {
-            &.hide-550 {
-                display: none !important;
-            }
-
-            &.show-550 {
-                display: block !important;
-            }
-        }
+    .fa-ml-3 {
+        margin-left: 30px !important;
     }
 </style>
-<br />
-<!--ne styles-->
+
 
 
 <!-- section content begin -->
@@ -289,35 +64,35 @@
     </div>
 </div>
 <!-- section content end -->
-<!-- section content end -->
-<!-- section content end -->
-<!-- section content end -->
-<!-- section content end -->
-<!-- section content end -->
-<!-- section content end -->
 
-<div class="uk-container">
+
+<div class="uk-container py-3">
     <!-- <div class="uk-width-1-2@m uk-text-center"> -->
-    <h1 class="uk-margin-remove">Other Affliet Marketing Platforms vs
+    <h1 class="uk-margin-remove py-3">Affiliate Marketing Platforms vs
         <span class="in-highlight">Earnkraft </span>Platform
     </h1>
-    <!-- </div> -->
-    <div class="row">
-        <div class="feature-table hide-550 pb0">
-            <table>
+    <div class="row py-2">
+        <table class="uk-table uk-table-hover uk-table-divider">
+            <thead>
                 <tr>
-                    <td class="feature-row-header">&nbsp;</td>
-                    <td class="feature-row-header">Other Affliet Marketing Platforms</td>
-                    <td class="feature-row-header">Earnkraft Platform</td>
+                    <th>#Features</th>
+                    <th>Other Platforms</th>
+                    <th>Earnkraft Platform</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr class="feature-row-1">
                     <td>
                         <span class="feature-label">
                             <p>Free Registration</p>
                         </span>
                     </td>
-                    <td><span class="x-mark"></span></td>
-                    <td><span class="check-mark"></span></td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
                 </tr>
                 <tr class="feature-row-2">
                     <td>
@@ -325,8 +100,12 @@
                             <p>Multiple ways of earning</p>
                         </span>
                     </td>
-                    <td><span class="check-mark"></span></td>
-                    <td><span class="check-mark"></span></td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
 
                 </tr>
                 <tr class="feature-row-1">
@@ -335,17 +114,26 @@
                             <p>VIP Bonus (weekly)</p>
                         </span>
                     </td>
-                    <td><span class="x-mark"></span></td>
-                    <td><span class="check-mark"></span></td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
                 </tr>
                 <tr class="feature-row-2">
                     <td>
                         <span class="feature-label">
-                            <p>Providing Job opportunities</p>
+                            <p>Providing Job opportunities<span class="px-1">⭐</span></p>
                         </span>
                     </td>
-                    <td><span class="x-mark"></span></td>
-                    <td><span class="check-mark"></span></td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+
+                    </td>
                 </tr>
                 <tr class="feature-row-1">
                     <td>
@@ -353,8 +141,12 @@
                             <p>Fast Withdrawals</p>
                         </span>
                     </td>
-                    <td><span class="check-mark"></span></td>
-                    <td><span class="check-mark"></span></td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
 
                 </tr>
                 <tr class="feature-row-2">
@@ -363,17 +155,27 @@
                             <p>Automated Payouts</p>
                         </span>
                     </td>
-                    <td><span class="x-mark"></span></td>
-                    <td><span class="check-mark"></span> ⭐</td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
                 </tr>
-                <tr class="feature-row-1">
+
+                <tr class="feature-row-2">
                     <td>
                         <span class="feature-label">
                             <p>Earn with AI & chatGPT</p>
                         </span>
                     </td>
-                    <td><span class="x-mark"></span></td>
-                    <td><span class="check-mark"></span> ⭐</td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
+
                 </tr>
                 <tr class="feature-row-2">
                     <td>
@@ -381,188 +183,65 @@
                             <p>Referal Bonuses</p>
                         </span>
                     </td>
-
-                    <td><span class="check-mark"></span> </td>
-                    <td><span class="check-mark"></span> ⭐</td>
-                </tr>
-                <tr class="feature-row-1">
                     <td>
-                        <span class="feature-label">
-                            <p>Earn from Articles & blogging</p>
-                        </span>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
                     </td>
-                    <td><span class="x-mark"></span></td>
-                    <td><span class="check-mark"></span> ⭐</td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
                 </tr>
                 <tr class="feature-row-2">
                     <td>
                         <span class="feature-label">
+                            <p>Earn from Articles & blogging</p>
+                        </span>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-xmark fa-beat fa-2xl fa-ml-3" style="color: #dd2754;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
+                </tr>
+                <tr class="feature-row-2">
+
+
+                    <td>
+                        <span class="feature-label">
                             <p>Registered Platform</p>
                         </span>
                     </td>
-                    <td><span class="check-mark"></span></td>
-                    <td><span class="check-mark"></span></td>
-
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
+                    <td>
+                        <i class="fa-solid fa-check  fa-beat fa-2xl fa-ml-3" style="color:#4760e1;"></i>
+                    </td>
                 </tr>
-                <tr class="feature-row-1">
+
+                <tr class="feature-row-2">
                     <td>
                         <span class="feature-label">
                             <p>Referal comissions</p>
                         </span>
                     </td>
-                    <td>40%</td>
-                    <td>60%</td>
+                    <div><span class="check-mark"></span></div>
+                    <td>
+                        <span class="check-mark fa-ml-3"><b>40%</b></span>
+                    </td>
+                    <td>
+                        <span class="check-mark fa-ml-3"><b>60%</b></span>
+                    </td>
                 </tr>
-            </table>
-        </div>
 
-
-
-        <div class="feature-table show-550 pb0">
-            <table>
-                <div id="sticky-anchor"></div>
-                <div id="sticky">
-                    <div class="feature-row-header">Other Affliet Marketing Platforms</div>
-                    <div class="feature-row-header">Earnkraft Platform</div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-1">
-                        <span class="feature-label">
-                            <p>Free Registration</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-2">
-                        <div><span class="x-mark"></span></div>
-                        <div><span class="check-mark"></span></div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-1">
-                        <span class="feature-label">
-                            <p>Multiple ways of earning</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-2">
-                        <div><span class="check-mark"></span></div>
-                        <div><span class="check-mark"></span></div>
-
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-2">
-                        <span class="feature-label">
-                            <p>VIP Bonus (weekly)</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-1">
-                        <div><span class="x-mark"></span></div>
-                        <div><span class="check-mark"></span></div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-2">
-                        <span class="feature-label">
-                            <p>Providing Job opportunities</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-1">
-                        <div><span class="x-mark"></span></div>
-                        <div><span class="check-mark"></span></div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-2">
-                        <span class="feature-label">
-                            <p>Fast Withdrawals</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-1">
-                        <div><span class="check-mark"></span></div>
-                        <div><span class="check-mark"></span></div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-2">
-                        <span class="feature-label">
-                            <p>Automated Payouts</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-1">
-                        <div><span class="x-mark"></span></div>
-                        <div><span class="check-mark"></span>⭐</div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-2">
-                        <span class="feature-label">
-                            <p>Earn with AI & chatGPT</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-1">
-                        <div><span class="x-mark"></span></div>
-                        <div><span class="check-mark"></span>⭐</div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-2">
-                        <span class="feature-label">
-                            <p>Referal Bonuses</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-2">
-                        <div><span class="check-mark"></span></div>
-                        <div><span class="check-mark"></span>⭐</div>
-
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-1">
-                        <span class="feature-label">
-                            <p>Earn from Articles & blogging</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-2">
-                        <div><span class="x-mark"></span></div>
-                        <div><span class="check-mark"></span>⭐</div>
-                    </div>
-                </div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-1">
-                        <span class="feature-label">
-                            <p>Registered Platform</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-2">
-
-                        <div><span class="check-mark"></span></div>
-                        <div><span class="check-mark"></span></div>
-                    </div>
-                </div>
-
-                <div id="sticky-end"></div>
-                <div class="feature-row-wrap">
-                    <div class="feature-row-1">
-                        <span class="feature-label">
-                            <p>Referal comissions</p>
-                        </span>
-                    </div>
-                    <div class="feature-row-2 border">
-                        <div>40%</div>
-                        <div>60%</div>
-                    </div>
-                </div>
-            </table>
-        </div>
-
-
+            </tbody>
+        </table>
     </div>
 </div>
-</div>
-</div>
 <!--scripts-->
 <!--scripts-->
 
-<script>
+<!-- <script>
     function sticky_relocate() {
         var window_top = $(window).scrollTop();
         var div_top = $('#sticky-anchor').offset().top;
@@ -580,4 +259,4 @@
         $(window).scroll(sticky_relocate);
         sticky_relocate();
     });
-</script>
+</script> -->

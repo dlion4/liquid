@@ -3,81 +3,80 @@
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>
-      {% block title %}
-        EarnKraft Dashboard
-      {% endblock title %}
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="investment app"/>
-    <meta name="author" content="kwasa"/>
-    <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
-     {% compress css %}
-      <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
-      <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>
+    {% block title %}
+    EarnKraft Dashboard
+    {% endblock title %}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="investment app" />
+  <meta name="author" content="kwasa" />
+  <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
+  {% compress css %}
+  <link rel="stylesheet" href="{% static 'dashboard/assets/css/dashlite.css' %}?ver=3.2.3">
+  <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
 
-      <style>
-  .errorlist{
-    color:red!important;
-  }
+  <link rel="stylesheet" href="{% static 'css/fontawesome.all.min.css' %}">
+  <style>
+    .errorlist {
+      color: red !important;
+    }
+  </style>
+  {% endcompress css %}
 
-</style>
-      {% endcompress css %} 
-
-      {% block css %}{% endblock css %}
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    
-
-  </head>
-
-  <body class="nk-body npc-invest bg-lighter">
-
-    {% block body %}
-
-      <div class="nk-app-root">
-        <div class="nk-wrap ">
-          {% block navbar %}{% endblock navbar %}
-            {% comment %}  {% endcomment %}
-          {% block content %}{% endblock content %}
-          {% comment %}  {% endcomment %}
-          {% block footer %}{% endblock footer %}
-        </div>
-      </div>
+  {% block css %}{% endblock css %}
 
 
 
-    {% block modals %}
-    {% endblock modals %}
+</head>
 
-    {% comment %}  {% endcomment %}
-    {% endblock body %}
+<body class="nk-body npc-invest bg-lighter">
 
-    {% block javascript %}
-     {% compress js %} 
-  
-        <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
-        <script src="{% static 'js/vendors/axios.min.js' %}"></script>
-        <script src="{% static 'dashboard/assets/js/bundle.js' %}?ver=3.2.3"></script>
-        <script src="{% static 'dashboard/assets/js/scripts.js' %}?ver=3.2.3"></script>
-        <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
-        <script src="{% static 'dashboard/assets/js/charts/chart-invest.js' %}?ver=3.2.3"></script>
-        
-       
-  
-  
-        {% endcompress %} 
+  {% block body %}
 
-       
+  <div class="nk-app-root">
+    <div class="nk-wrap ">
+      {% block navbar %}{% endblock navbar %}
+      {% comment %} {% endcomment %}
+      {% block content %}{% endblock content %}
+      {% comment %} {% endcomment %}
+      {% block footer %}{% endblock footer %}
+    </div>
+  </div>
 
-        {% endblock javascript %}
 
-        {% block js %}{% endblock js %}
 
-    
-  </body>
+  {% block modals %}
+  {% endblock modals %}
+
+  {% comment %} {% endcomment %}
+  {% endblock body %}
+
+  {% block javascript %}
+  {% compress js %}
+
+  <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
+  <script src="{% static 'js/vendors/axios.min.js' %}"></script>
+  <script src="{% static 'dashboard/assets/js/bundle.js' %}?ver=3.2.3"></script>
+  <script src="{% static 'dashboard/assets/js/scripts.js' %}?ver=3.2.3"></script>
+  <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
+  <script src="{% static 'dashboard/assets/js/charts/chart-invest.js' %}?ver=3.2.3"></script>
+
+
+
+
+  {% endcompress %}
+
+
+
+  {% endblock javascript %}
+
+  {% block js %}{% endblock js %}
+
+
+</body>
 
 </html>
