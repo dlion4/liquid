@@ -12,6 +12,7 @@ from .actions import send_email_after_response
 
 class HomeView(TemplateView):
     template_name = "pages/home.html"
+    
 
 
 class AboutView(TemplateView):
@@ -65,3 +66,35 @@ class CareerView(TemplateView):
 
 class PolicyView(TemplateView):
     template_name = "pages/policies.html"
+
+
+
+
+
+from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404
+from mimetypes import guess_type
+from .models import CompanyTermsAndPolicy
+
+def view_policy(request, pk):
+    # Get the latest policy file
+    policy = CompanyTermsAndPolicy.objects.get(pk=pk)
+    file_path = policy.file.path
+
+    # Try to open the file
+    try:
+        with open(file_path, 'rb') as f:
+            file_content = f.read()
+    except FileNotFoundError:
+        raise Http404("File does not exist")
+
+    # Guess the content type of the file
+    content_type, encoding = guess_type(file_path)
+    if content_type is None:
+        content_type = 'application/octet-stream'
+
+    # Create the response
+    response = HttpResponse(file_content, content_type=content_type)
+    response['Content-Disposition'] = 'inline; filename=' + policy.file.name
+
+    return response

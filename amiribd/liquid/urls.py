@@ -13,4 +13,5 @@ urlpatterns = [
     path("customers/", views.CustomersView.as_view(), name="customers"),
     path("career/", views.CareerView.as_view(), name="career"),
     path("policies/", views.PolicyView.as_view(), name="policies"),
+    path('view-policy/<pk>/', views.view_policy, name='view_policy'),
 ]

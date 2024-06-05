@@ -72,7 +72,7 @@ class Job(models.Model):
     
 
 def upload_application_resume(instance, filename):
-    return f"applications/aplicant-{instance.applicant.pk}/{instance.job.pk}/{instance.pk}/{timezone.now().year}/{timezone.now().month}/{timezone.now().day}/{filename}"
+    return f"applications/aplicant-{instance.applicant.pk}/{instance.job.pk}/application/{timezone.now().year}/{timezone.now().month}/{timezone.now().day}/{filename}"
     
 class ApplicationStatus(models.TextChoices):
     PENDING = "PENDING", "Pending"
