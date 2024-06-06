@@ -513,6 +513,14 @@ class InvestorderView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_order.html"
     template_name = "account/dashboard/v1/investment/investment_order.html"
 
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not self.get_profile_plans(**kwargs):
+
+            return redirect("dashboard:invest:invest")
+            
+
+        return super().dispatch(request, *args, **kwargs)
+
 
 modified_investorder_view = InvestorderView.as_view()
 

@@ -22,32 +22,32 @@
         padding: 10px;
         cursor: pointer;
     }
-    
+
     .coin-item:hover {
         background-color: #f8f9fa;
     }
-    
+
     .coin-icon {
         margin-right: 10px;
     }
-    
+
     .coin-info {
         display: flex;
         flex-direction: column;
     }
-    
+
     .coin-name {
         font-weight: bold;
     }
-    
+
     .coin-text {
         font-size: 0.875rem;
     }
-    
+
     .dropdown-menu {
         width: 100%;
     }
-    
+
     .dropdown-menu .coin-item {
         padding: 10px;
     }
@@ -57,75 +57,165 @@
 <!--styles-->
 {% block main %}
 <div class="nk-block invest-block">
-    <form action="#" class="invest-form">
-        <div class="row g-gs">
-            <div class="col-lg-7">
+    <div class="row g-gs">
+        <div class="col-lg-7">
+            <form action="#" class="invest-form">
                 <div class="col-lg-12 col-sm-12">
-                    <div class="form-group">
-                        <div class="form-control-wrap"><select class="form-select js-select2" data-ui="xl" id="outlined-select"><option value="default_option">Default Option</option><option value="option_select_name">Option select name</option><option value="option_select_name">Option select name</option></select>
-                            <label class="form-label-outlined" for="outlined-select">Outlined Select</label>
+                    <div class="invest-field form-group">
+                        <input type="hidden" value="silver" name="iv-plan" id="invest-choose-plan">
+                        <div class="dropdown invest-cc-dropdown">
+                            <a role="button" id="selected-plan-type" class="invest-cc-chosen dropdown-indicator"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="coin-item">
+                                    <div class="coin-icon"><em class="fs-20px far fa-hand-scissors"></em></div>
+                                    <div class="coin-info"><span class="coin-name">Select Investment Plan</span>
+                                        <span class="coin-text">Invest for 21 days and get daily profit 4.76%</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-auto dropdown-menu-mxh">
+                                <ul class="invest-cc-list">
+                                    <li class="invest-type-cc-item selected pt-2">
+                                        <a href="#" class="invest-type-cc-opt" data-investment-option="investment">
+                                            <div class="coin-item">
+                                                <div class="coin-icon"><em class="fs-20px fa-brands fa-hackerrank"></em>
+                                                </div>
+                                                <div class="coin-info"><span class="coin-name">Investment</span>
+                                                    <span class="coin-text">
+                                                        Invest and earn from the returns invested
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <hr />
+                                    <li class="invest-type-cc-item selected pb-2">
+                                        <a href="#" class="invest-type-cc-opt" data-investment-option="savings">
+                                            <div class="coin-item">
+                                                <div class="coin-icon">
+                                                    <em class="fs-20px far fa-solid fa-piggy-bank"></em>
+                                                </div>
+                                                <div class="coin-info"><span class="coin-name">Savings</span>
+                                                    <span class="coin-text">
+                                                        Save for 21 days and get daily profit
+                                                        4.76%
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="invest-field form-group">
-                    <div class="form-label-group">
-                        <label class="form-label">Choose Quick Amount to Invest</label>
+                    <div class="invest-field form-group" id="savings-duration">
+                        <div class="form-label-group"><label class="form-label">For how long do you want to
+                                save?</label>
+                        </div>
+                        <div class="invest-amount-group g-2">
+                            <div class="invest-amount-item">
+                                <input type="radio" class="invest-amount-control" name="save-duration" value="1-day"
+                                    id="iv-amount-1">
+                                <label class="invest-amount-label" for="iv-amount-1">1 Day</label>
+                            </div>
+                            <div class="invest-amount-item">
+                                <input type="radio" class="invest-amount-control" name="save-duration" value="1-week"
+                                    id="iv-amount-2">
+                                <label class="invest-amount-label" for="iv-amount-2">1 Week</label>
+                            </div>
+                            <div class="invest-amount-item">
+                                <input type="radio" class="invest-amount-control" name="save-duration" value="2-weeks"
+                                    id="iv-amount-3">
+                                <label class="invest-amount-label" for="iv-amount-3">2 Weeks</label>
+                            </div>
+                            <div class="invest-amount-item">
+                                <input type="radio" class="invest-amount-control" name="save-duration" value="1-month"
+                                    id="iv-amount-4">
+                                <label class="invest-amount-label" for="iv-amount-4">1 Month</label>
+                            </div>
+                            <div class="invest-amount-item">
+                                <input type="radio" class="invest-amount-control" name="save-duration" value="3-months"
+                                    id="iv-amount-5">
+                                <label class="invest-amount-label" for="iv-amount-5">3 Months</label>
+                            </div>
+                            <div class="invest-amount-item">
+                                <input type="radio" class="invest-amount-control" name="save-duration" value="custom"
+                                    id="iv-amount-6" role="button" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                    data-bs-target="#custom-input-modal">
+                                <label class="invest-amount-label" for="iv-amount-6">Custom</label>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="invest-field form-group">
                         <div class="form-label-group">
-                            <label class="form-label">Your Amount</label>
+                            <label class="form-label"><span id="amount-label">Amount</span></label>
                             <div class="dropdown">
-                                <a href="#" class="link py-1" data-bs-toggle="dropdown">Max Amout 10,000 KSH</a>
+                                <a href="#" class="link py-1" data-bs-toggle="dropdown" id="slider-max-money"></a>
                                 <div class="#">
                                     <ul class="link-list-plain sm text-center"></ul>
                                 </div>
                             </div>
                         </div>
                         <div class="form-control-group">
-                            <div class="form-info">KSH</div><input type="text" class="form-control form-control-amount form-control-lg" id="custom-amount" value="500">
+                            <div class="form-info">KSH</div>
+
+                            <input type="text" class="form-control form-control-amount py-4 form-control-lg" disabled
+                                id="custom-amount">
                             <div class="form-range-slider" id="amount-step"></div>
                         </div>
-                        <div class="form-note pt-2">Note: Minimum invest 1000 ksh and upto 1000 ksh</div>
+                        <div class="form-note pt-1">Note: Minimum <span id="form-note-slider-help-slider"></span></div>
+                        <div id="savings-limit"></div>
                     </div>
+
                     <div class="invest-field form-group">
                         <div class="form-label-group">
                             <label class="form-label">Choose Payment Method</label>
-                        </div><input type="hidden" value="wallet" name="iv-wallet" id="invest-choose-wallet">
-                        <div class="dropdown invest-cc-dropdown">
-                            <a href="#" class="invest-cc-chosen dropdown-indicator" data-bs-toggle="dropdown">
+                        </div>
+
+                        <div class="dropdown invest-cc-dropdown" id="invest-payment-selection-box">
+                            <a role="button" id="selected-payment-option" class="invest-cc-chosen dropdown-indicator"
+                                data-bs-toggle="dropdown">
                                 <div class="coin-item">
                                     <div class="coin-icon">
                                         <em class="icon ni ni-wallet-alt"></em>
                                     </div>
                                     <div class="coin-info">
-                                        <span class="coin-name">Account Balance</span><span class="coin-text">Current balance: 0.00</span></div>
+                                        <span class="coin-name">Investment Amount</span>
+                                        <span class="coin-text">Total Amount: <span id="invest-cc-amount"></span></span>
+                                    </div>
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-auto dropdown-menu-mxh">
                                 <ul class="invest-cc-list">
                                     <li class="invest-cc-item selected">
-                                        <a href="#" class="invest-cc-opt" data-plan="silver">
+                                        <a role="button" class="invest-cc-opt" data-payment-option="mpesastkpush">
                                             <div class="coin-item">
                                                 <div class="coin-icon">
                                                     <em class="icon ni ni-exchange"></em>
                                                 </div>
                                                 <div class="coin-info">
-                                                    <span class="coin-name">Mpesa STK Push</span>
-                                                    <span class="coin-text"></span></div>
+                                                    <span class="coin-name" data-bs-pay-text="coin-pay-select">Mpesa STK
+                                                        Push</span>
+                                                    <span class="coin-text"></span>
+                                                </div>
                                             </div>
                                         </a>
                                     </li>
                                     <li class="invest-cc-item selected">
-                                        <a href="#" class="invest-cc-opt" data-plan="starter">
+                                        <a role="button" class="invest-cc-opt" data-payment-option="manual">
                                             <div class="coin-item">
                                                 <div class="coin-icon">
                                                     <em class="icon ni ni-money"></em>
                                                 </div>
                                                 <div class="coin-info">
-                                                    <span class="coin-name">Manual
-                          </span><span class="coin-text">Current
-                          </span>
+                                                    <span class="coin-name"
+                                                        data-bs-pay-text="coin-pay-select">Manual</span>
+                                                    <span class="coin-text">Current</span>
                                                 </div>
                                             </div>
                                         </a>
@@ -136,90 +226,495 @@
                         </div>
                     </div>
                     <div class="invest-field form-group">
-                        <div class="custom-control custom-control-xs custom-checkbox"><input type="checkbox" class="custom-control-input" id="checkbox">
+                        <div class="custom-control custom-control-xs custom-checkbox"><input type="checkbox"
+                                class="custom-control-input" id="checkbox">
                             <label class="custom-control-label" for="checkbox">I agree the
-                <a href="#">terms and &amp; conditions.</a>
-              </label>
+                                <a href="#">terms and &amp; conditions.</a>
+                            </label>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-5 offset-xl-1">
-                    <div class="card card-bordered ms-lg-4 ms-xl-0">
-                        <div class="nk-iv-wg4">
-                            <div class="nk-iv-wg4-sub">
-                                <h6 class="nk-iv-wg4-title title">Your Investment Details</h6>
-                                <ul class="nk-iv-wg4-overview g-2">
-                                    <li>
-                                        <div class="sub-text">Name of scheme</div>
-                                        <div class="lead-text">Silver Plan</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Term of the scheme</div>
-                                        <div class="lead-text">7 days</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Daily profit</div>
-                                        <div class="lead-text">ksh 100</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Daily profit %</div>
-                                        <div class="lead-text">2.76 %</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Total net profit</div>
-                                        <div class="lead-text">ksh 20000</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Total Return</div>
-                                        <div class="lead-text">ksh 25000</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Term start at</div>
-                                        <div class="lead-text">Today (12-04-2019)</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Term end at</div>
-                                        <div class="lead-text">12 - 25 - 2019</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="nk-iv-wg4-sub">
-                                <ul class="nk-iv-wg4-list">
-                                    <li>
-                                        <div class="sub-text">Payment Method</div>
-                                        <div class="lead-text">Account Wallet</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="nk-iv-wg4-sub">
-                                <ul class="nk-iv-wg4-list">
-                                    <li>
-                                        <div class="sub-text">Amount to invest</div>
-                                        <div class="lead-text">ksh 20000.00</div>
-                                    </li>
-                                    <li>
-                                        <div class="sub-text">Cost Fee
-                                            <span>(0.5%)</span>
-                                        </div>
-                                        <div class="lead-text">ksh 125</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="nk-iv-wg4-sub">
-                                <ul class="nk-iv-wg4-list">
-                                    <li>
-                                        <div class="lead-text">Total Charge</div>
-                                        <div class="caption-text text-primary">ksh 20125.00</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="nk-iv-wg4-sub text-center bg-lighter">
-                                <a class="btn btn-lg btn-primary ttu" data-bs-toggle="modal" href="#invest-plan">Confirm &amp; proceed</a>
-                            </div>
+            </form>
+        </div>
+
+
+
+        <div class="col-lg-5">
+            <div class="card card-bordered ms-lg-4 ms-xl-0">
+                <form action="" method="post">
+                    <input type="hidden" name="iv-wallet" id="invest-choose-wallet">
+                    <input type="hidden" name="investment-amount" id="custom-amount-value">
+                    <input type="hidden" name="themeType" id="overal-invest-type">
+                    <div class="nk-iv-wg4">
+                        <div class="nk-iv-wg4-sub">
+                            <ul class="nk-iv-wg4-list">
+                                <li>
+                                    <div class="sub-text">Payment Method</div>
+                                    <div class="lead-text" id="selected-cc-payment-option">Account Wallet</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="nk-iv-wg4-sub">
+                            <ul class="nk-iv-wg4-list">
+                                <li>
+                                    <div class="sub-text">Amount <span id="amount-summary-label"></span></div>
+                                    <div class="lead-text">ksh <span id="select-cc-price-summary"></span></div>
+                                </li>
+                                <li>
+                                    <div class="sub-text">Daily Return <span id="daily-rate">(0.5%)</span></div>
+                                    <div class="lead-text">ksh <span id="select-cc-price-summary-cost-fee"></span></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="nk-iv-wg4-sub" id="savings-duration-sumary" style="display: none;">
+                            <ul class="nk-iv-wg4-list">
+                                <li>
+                                    <div class="sub-text">Saving Duration</div>
+                                    <div class="lead-text" id="selected-cc-saving-duration">Nil</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="nk-iv-wg4-sub">
+                            <ul class="nk-iv-wg4-list">
+                                <li>
+                                    <div class="lead-text">Total Investment</div>
+                                    <div class="caption-text text-primary">ksh <span id="total-investment"></span></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="nk-iv-wg4-sub text-center bg-lighter">
+                            <a class="btn btn-lg btn-primary ttu" data-bs-toggle="modal" href="">
+                                Confirm &amp; proceed.
+                            </a>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-    </form>
+        </div>
+
+
+
     </div>
-    {% endblock main %}
+</div>
+
+
+
+
+
+
+<div aria-modal="true" class="modal fade" id="custom-input-modal" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Custom Saving Duration</h5>
+                <a aria-label="Close" class="close" data-bs-dismiss="modal" href="#" role="button">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body">
+
+
+                <form action="" id="custom-save-duration-form" class="form-validate is-alter" method="post"
+                    novalidate="novalidate">
+                    {% csrf_token %}
+                    <div class="row gx-4 gy-3">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div style="margin-top:10px!important">
+                                    <label class="form-label">For How long do you want to save?</label>
+                                    <div class="form-control-wrap">
+                                        <input type="number" name="duration_in_days"
+                                            class="form-control form-control-lg" placeholder="Duration to save in days"
+                                            value="">
+                                        <small id="id_save_duration" style="padding-top:10px!important">Provide the
+                                            duration for which you want to save in days</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <div class="form-control-wrap">
+                                    <textarea class="form-control no-resize" name="custom_save_description" rows="2"
+                                        id="duration-summary"></textarea>
+                                    <small id="id_duration_summary" style="padding-top:10px!important">Any message you'd
+                                        like to share?</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <ul class="d-flex justify-content-between gx-4 mt-1">
+                                <li>
+                                    <button id="" type="submit" class="btn btn-primary" disabled="disabled">Confirm and
+                                        Proceed</button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-danger btn-dim" aria-label="Close"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock main %}
+
+{% block js %}
+
+
+
+
+
+
+
+<script>
+    const investmentRate = parseFloat("0.005")
+    document.getElementById("daily-rate").innerHTML = `(${investmentRate}%)`
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const investmentPriceSlider = document.getElementById("amount-step");
+        const investmentAmount = document.getElementById("custom-amount");
+        const investmentAmountPaymentHiddenInput = document.getElementById("custom-amount-value");
+
+        const investAmountSum = document.getElementById("invest-cc-amount")
+        const investAmountSummaryDisplay = document.getElementById("select-cc-price-summary")
+        const investmentAmountSummaryCostFee = document.getElementById("select-cc-price-summary-cost-fee")
+
+        const investmentPaymentChoiceSummary = document.getElementById("selected-cc-payment-option")
+
+        investmentAmount.value = "0.00"
+        investmentAmountPaymentHiddenInput.value = "0.00"
+        investAmountSum.innerHTML = "0.00"
+        investAmountSummaryDisplay.innerHTML = "0.00"
+        investmentAmountSummaryCostFee.innerHTML = parseInt((investmentRate) * parseFloat(investmentAmount.value))
+
+
+        investmentPriceSlider.addEventListener("mouseover", updateSliderValue)
+        investmentPriceSlider.addEventListener("click", updateSliderValue)
+
+
+        function updateSliderValue() {
+            const sliderValue = document.querySelector(".noUi-handle-lower")
+            const value = sliderValue.getAttribute("aria-valuenow");
+            const priceValue = parseFloat(Number.parseInt(value) * 100).toFixed(2);
+            investmentAmount.value = priceValue;
+            investmentAmountPaymentHiddenInput.value = priceValue;
+            investAmountSum.innerHTML = priceValue;
+            investAmountSummaryDisplay.innerHTML = priceValue;
+            calculateTheRateInvestment(priceValue);
+            totalInvestment.textContent = priceValue;
+        }
+
+        function calculateTheRateInvestment(amount) {
+            investmentAmountSummaryCostFee.innerHTML = parseInt(investmentRate * amount)
+        }
+
+        const paymentSelectionBox = document.getElementById("invest-payment-selection-box")
+        const paymentOptions = document.querySelectorAll("li.invest-cc-item")
+        let selectedPaymentOption = document.getElementById("selected-payment-option")
+
+
+        const paymentOptionInput = document.getElementById("invest-choose-wallet")
+
+        paymentOptions.forEach(option => {
+            option.addEventListener("click", (e) => {
+                const selection = option.innerHTML;
+                selectedPaymentOption.innerHTML = selection
+                // Use querySelector to find the .coin-name span within the clicked option
+                const coinNameSpan = option.querySelector('.coin-name[data-bs-pay-text="coin-pay-select"]');
+
+                if (coinNameSpan) {
+                    // Perform actions with the coinNameSpan if needed
+                    console.log(coinNameSpan);
+                    // Example action
+                    investmentPaymentChoiceSummary.innerHTML = coinNameSpan.textContent;
+                }
+
+                // option selected for the input
+
+                const coinWalletOption = option.querySelector('.invest-cc-opt').getAttribute('data-payment-option')
+
+
+                paymentOptionInput.value = coinWalletOption
+            })
+        })
+
+
+        const totalInvestment = document.getElementById("total-investment")
+
+
+
+
+
+
+        const amountLabel = document.getElementById('amount-label')
+        const amountSummaryLabel = document.getElementById('amount-summary-label')
+
+        /// slider summary
+        const formNoteHelpSliderId = document.getElementById("form-note-slider-help-slider");
+        const floatingMaxAmountLabel = document.getElementById("slider-max-money")
+
+
+        let investmentPlanOptionBox = document.getElementById("selected-plan-type")
+        const investTypeOptions = document.querySelectorAll(".invest-type-cc-item")
+        const savingsDuration = document.getElementById("savings-duration")
+
+        const overalInvestType = document.getElementById("overal-invest-type")
+
+
+        savingsDuration.style.display = "none"
+
+
+        const savingsDurationObject = {
+            "1D": "1-day",
+            "1W": "1-week",
+            "2W": "2-weeks",
+            "1M": "1-month",
+            "3M": "3-months",
+            "C": "custom",
+        }
+
+        const savingsPricing = {
+            "1D": {
+                min: 100,
+                max: 1000
+            },
+            "1W": {
+                min: 500,
+                max: 1500
+            },
+            "2W": {
+                min: 1000,
+                max: 3000
+            },
+            "1M": {
+                min: 2000,
+                max: 6000
+            },
+            "3M": {
+                min: 6000,
+                max: 12000
+            },
+        }
+
+
+        investTypeOptions.forEach(investTypeOption => {
+            investTypeOption.addEventListener("click", () => {
+                investmentPlanOptionBox.innerHTML = investTypeOption.innerHTML
+
+                const investTypePlan = investTypeOption.querySelector(".invest-type-cc-opt")
+                const savingDurationSummary = document.getElementById("savings-duration-sumary")
+                const savingDurationSummaryValue = document.getElementById("selected-cc-saving-duration")
+
+                if (investTypePlan) {
+                    const investTypePlanOption = investTypePlan.getAttribute("data-investment-option")
+
+                    if (investTypePlanOption.toLowerCase() === 'savings') {
+
+
+                        overalInvestType.value = "save"
+
+
+                        const SavingLimitDiv = document.getElementById("savings-limit")
+
+                        savingDurationSummary.style.display = "block"
+
+                        // remove the slider btn for the price range
+                        investmentPriceSlider.style.display = "none"
+                        // activate the input field
+                        investmentAmount.removeAttribute("disabled")
+                        investmentAmount.type = "number"
+
+                        savingsDuration.style.display = "block";
+                        amountLabel.innerHTML = "Principal Savings"
+                        amountSummaryLabel.innerHTML = "to Saving"
+                        // the savings buttons are there 
+                        const saveDurations = document.querySelectorAll(".invest-amount-control")
+
+                        saveDurations.forEach(saveDuration => {
+                            saveDuration.addEventListener("click", () => {
+                                if (saveDuration.checked) {
+                                    if (Object.values(savingsDurationObject).includes(saveDuration.value)) {
+                                        if (saveDuration.value === 'custom') {
+                                            const summaryForm = document.getElementById("custom-save-duration-form")
+                                        }
+
+                                        function updateMinMaxValue(minValue, maxValue) {
+                                            const savingValue = document.querySelector(".noUi-handle-lower");
+                                            savingValue.setAttribute("aria-valuemin", parseFloat(minValue))
+                                            savingValue.setAttribute("aria-valuemax", parseFloat(maxValue))
+                                        }
+
+                                        function updateTheMinMaxHelpTextValue(minValue, maxValue) {
+                                            // const formNoteId = document.getElementById("form-note-id");
+                                            // invest 1000 ksh and upto 1000 ksh
+                                            formNoteHelpSliderId.innerHTML = `invest ${parseFloat(minValue).toFixed(2)} ksh and upto ${parseFloat(maxValue).toFixed(2)} ksh`;
+                                            // floating summary
+                                            floatingMaxAmountLabel.innerHTML = `Max Amout ${maxValue.toLocaleString()} KSH`;
+
+                                        }
+
+                                        function updateTheValueAndText(index) {
+                                            updateMinMaxValue(savingsPricing[index].min, savingsPricing[index].max)
+                                            updateTheMinMaxHelpTextValue(savingsPricing[index].min, savingsPricing[index].max)
+                                            investmentAmount.setAttribute("min", savingsPricing[index].min)
+                                            investmentAmount.setAttribute("max", savingsPricing[index].max)
+                                            investmentAmount.value = savingsPricing[index].min;
+                                            InputSavingListenerFunction(savingsPricing[index].min, savingsPricing[index].max)
+                                        }
+
+                                        function InputSavingListenerFunction(min, max) {
+
+
+                                            investAmountSummaryDisplay.innerHTML = min
+                                            investmentAmountPaymentHiddenInput.value = min
+                                            totalInvestment.textContent = min
+
+                                            investmentAmountSummaryCostFee.innerHTML = parseInt((investmentRate) * parseFloat(investmentAmount.value))
+
+
+
+                                            investmentAmount.addEventListener("keyup", function (e) {
+
+                                                investmentAmount.value = e.target.value;
+                                                calculateTheRateInvestment(investmentAmount.value);
+
+                                                investAmountSummaryDisplay.innerHTML = investmentAmount.value
+                                                investmentAmountPaymentHiddenInput.value = investmentAmount.value
+                                                totalInvestment.textContent = investmentAmountPaymentHiddenInput.value
+
+                                                investmentAmountSummaryCostFee.innerHTML = parseInt((investmentRate) * parseFloat(investmentAmount.value))
+
+                                                totalInvestment.textContent = parseInt((investmentRate) * parseFloat(investmentAmount.value))
+
+                                                if (
+                                                    parseInt(investmentAmount.value) < min ||
+                                                    parseInt(investmentAmount.value) > max ||
+                                                    investmentAmount.value == '' ||
+                                                    investmentAmount.value == undefined ||
+                                                    investmentAmount.value == null
+                                                ) {
+                                                    SavingLimitDiv.classList.add("text-danger", "form-note", "pt-1")
+                                                    SavingLimitDiv.innerHTML = `Amount can only be between ${min} and ${max} for the ${saveDuration.value} saving duration`
+                                                    // investmentAmount.value = min;
+                                                    return false;
+                                                } else {
+                                                    SavingLimitDiv.classList.remove("text-danger")
+                                                    SavingLimitDiv.innerHTML = ""
+                                                }
+                                            })
+                                        }
+
+                                        function updateSaveDurationValue(value) {
+
+                                            if (value.includes("-")) {
+                                                const parts = value.split("-");
+                                                const part1 = parts[0]
+                                                const formattedValue = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+                                                savingDurationSummaryValue.innerHTML = part1 + " " + formattedValue;
+                                            } else {
+                                                savingDurationSummaryValue.innerHTML = value;
+                                            }
+                                        }
+
+                                        switch (saveDuration.value) {
+                                            case "1-day":
+                                                updateTheValueAndText('1D')
+                                                updateSaveDurationValue(saveDuration.value)
+                                                break;
+                                            case "1-week":
+                                                updateTheValueAndText('1W')
+                                                updateSaveDurationValue(saveDuration.value)
+                                                break;
+                                            case "2-weeks":
+                                                updateTheValueAndText('2W')
+                                                updateSaveDurationValue(saveDuration.value)
+                                                break;
+                                            case "1-month":
+                                                updateTheValueAndText('1M')
+                                                updateSaveDurationValue(saveDuration.value)
+                                                break;
+                                            case "3-months":
+                                                updateTheValueAndText('3M')
+                                                updateSaveDurationValue(saveDuration.value)
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    else {
+                                        console.log(Object.values(savingsDurationObject))
+                                    }
+                                }
+
+                            })
+
+
+                        })
+
+                        console.log(savingsDurationObject)
+                    }
+                    else if (investTypePlanOption.toLowerCase() === 'investment') {
+                        savingsDuration.style.display = "none"
+                        amountLabel.innerHTML = "Principal Investment"
+                        amountSummaryLabel.innerHTML = "to Investment"
+
+                        formNoteHelpSliderId.innerHTML = `invest 1000 ksh and upto 10,000 ksh`;
+                        // floating summary
+                        floatingMaxAmountLabel.innerHTML = `Max Amout 10,000 KSH`;
+
+                        // remove the slider btn for the price range
+                        investmentPriceSlider.style.display = "block"
+                        // activate the input field
+                        investmentAmount.setAttribute("disabled", "disabled");
+                        investmentAmount.type = "number"
+                        // remove the summary section on the summary form
+
+                        savingDurationSummary.style.display = "none";
+
+                        overalInvestType.value = "invest"
+
+                    }
+
+                    else {
+                        savingsDuration.style.display = "none"
+                    }
+                }
+            })
+        })
+
+
+
+
+    });
+
+</script>
+
+
+
+<script>
+
+</script>
+
+
+{% endblock js %}

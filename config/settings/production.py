@@ -7,7 +7,7 @@ from .local import ALLOWED_HOSTS
 
 # Debug mode on
 # ------------------------------------------------------------------------------
-# DEBUG = True
+DEBUG = True
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key

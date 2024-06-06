@@ -58,6 +58,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "config.urls"
+# INVEST,ENT UR;LS
+# ------------------------------------------------------------------------------
+FIRST_INVESTMENT_URL = "dashboard:invest:invest"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
@@ -797,3 +800,5 @@ CKEDITOR_5_CONFIGS = {
 CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
+
+
