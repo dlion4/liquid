@@ -91,6 +91,26 @@ class AddressAdmin(admin.ModelAdmin):
     ]
 
 
+# for handling aws file download requests
+from boto3.session import Session
+import boto3
+
+
+
+session = Session(
+    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    region_name=settings.AWS_S3_REGION_NAME,
+)
+
+s3_files_resource = session.resource('s3',) 
+
+s3_bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+
+s3_project_bucket_name = s3_files_resource.Bucket(s3_bucket_name)
+
+
+
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = [
@@ -105,3 +125,17 @@ class DocumentAdmin(admin.ModelAdmin):
         "document",
         "document_type",
     )
+
+    actions = [
+        'download_kyc_document'
+    ]
+
+
+    @admin.action(description="Download Document")
+    def download_kyc_document(self, request, queryset):
+        s3_p_files = s3_project_bucket_name.objects.all()
+        for doc in queryset:
+            # s3_project_bucket_name.download_file(doc.document.name, doc.document.name)
+            pass
+
+
