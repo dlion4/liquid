@@ -20,6 +20,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "liquid-investment-c119b5140660.herokuapp.com",
     "liquid-v1-7563c1f6c59d.herokuapp.com",
+    "b6f8-5-180-179-19.ngrok-free.app"
 ]  # noqa: S104
 
 # CACHES

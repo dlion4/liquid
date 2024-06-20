@@ -186,6 +186,8 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         profile = request.user.profile_user
         data = json.loads(request.body)
         phone_number = data.get("phone_number")
+        currency=data.get("currency", "KES")
+        country = data.get("country", "Kenya")
         pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool_id"))
         account = Account.objects.get(
             pool=pool, pool__profile=profile, pk=kwargs.get("account_id")
@@ -211,6 +213,8 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             payment_phone=phone_number,
             mpesa_transaction_code=mpesa_code,
             payment_phone_number=phone_number,
+            currency=currency,
+            country=country,
         )
         # plan.is_paid = True
         plan.mpesa_transaction_code = mpesa_code
@@ -223,13 +227,13 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         # look for the referrer
         profile = pool.profile
 
-        self.__get_referrer_and_update_account(profile, mpesa_code, phone_number)
+        self.__get_referrer_and_update_account(profile, mpesa_code, phone_number, currency)
 
         return JsonResponse(
             {"success": True, "url": reverse_lazy("subscriptions:list")}
         )
 
-    def __get_referrer_and_update_account(self, profile, mpesa_code, phone_number):
+    def __get_referrer_and_update_account(self, profile, mpesa_code, phone_number, currency="KES", country="Kenya"):
         if referrer := profile.referred_by:
             # update the referrer account
 
@@ -248,6 +252,8 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
                 source="Referral Earnings",
                 mpesa_transaction_code=mpesa_code,
                 payment_phone_number=phone_number,
+                currency=currency,
+                country=country,
             )
             transaction.save()
             referrer_profile_account.balance += transaction.paid
@@ -274,27 +280,6 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        # service = MpesaStkPushSetUp().mpesa_stk_push_service()
-        # phone = request.GET.get("phone")
-        # amount = request.GET.get("amount")
-        # profile = Profile.objects.get(pk=request.GET.get("profile"))
-        # plan = Plan.objects.filter(account__pool__profile=profile).latest()
-
-        # response = service.collect.mpesa_stk_push(
-        #     phone_number=str(phone),
-        #     email=str(profile.user.email),
-        #     amount=amount,
-        #     narrative="Package Purchase Payment",
-        # )
-
-        # return JsonResponse(
-        #     {
-        #         "success": True,
-        #         "status": 200,
-        #         "response": response,
-        #         "plan": PlanSerializer(plan).data,
-        #     }
-        # )
         pass
 
     def post(self, request, *args, **kwargs):

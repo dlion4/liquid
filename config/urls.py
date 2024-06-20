@@ -88,6 +88,9 @@ urlpatterns = [
     path("shops/", include("amiribd.shops.urls", namespace="shops")),
     # jobs urls
     path("jobs/", include("amiribd.jobs.urls", namespace="jobs")),
+
+    # payments
+    path("payments/", include("amiribd.payments.urls", namespace="payments")),
 ]
 
 

@@ -40,13 +40,13 @@
           <li class="dropdown language-dropdown d-none d-sm-block me-n1">
             <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
               <div class="quick-icon border border-light">
-                <img class="icon" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt="" />
+                <img class="icon" id="selectedCountryFlag" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt="" />
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-s1">
               <ul class="language-list">
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/english.png' %}" alt=""
+                  <a href="#" class="language-item"><img id="countryFlag" src="{% static 'dashboard/images/flags/english.png' %}" alt=""
                       class="language-flag" />
                     <span class="language-name">English</span></a>
                 </li>

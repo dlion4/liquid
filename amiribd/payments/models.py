@@ -17,3 +17,15 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.channel} - {self.account}"
+
+
+class PaystackPaymentStatus(models.Model):
+    email = models.EmailField(max_length=100)
+    status = models.CharField(max_length=100)
+    reference = models.CharField(max_length=1000)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.email} - {self.status} - {self.reference}"

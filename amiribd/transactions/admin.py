@@ -29,4 +29,6 @@ class TransactionAdmin(admin.ModelAdmin):
         "is_payment_success",
         "mpesa_transaction_code",
         "payment_phone_number",
+        "currency",
+        "country",
     ]

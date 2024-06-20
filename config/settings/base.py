@@ -129,6 +129,8 @@ LOCAL_APPS = [
     "amiribd.shops",
     # jobs
     "amiribd.jobs",
+    # convaersion rates
+    "amiribd.rates",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -261,6 +263,7 @@ TEMPLATES = [
                 "amiribd.liquid.context_processors.liquid_site_data",
                 "amiribd.invest.context_processors.withdrawal_form_action",
                 "amiribd.htmx.context_processors.display_add_plan_form",
+                "amiribd.payments.context_processors.payment_context_data",
             ],
         },
     },
@@ -801,3 +804,7 @@ CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://b6f8-5-180-179-19.ngrok-free.app",
+]

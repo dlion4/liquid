@@ -139,4 +139,7 @@ urlpatterns = [
         modified_vip_view,
         name="vip",  # vip
     ),
+
+    # paystack callback urls
+    
 ]

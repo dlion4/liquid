@@ -32,6 +32,8 @@
   {% block editorcss %}{% endblock editorcss %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+
+
 </head>
 
 <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
@@ -71,24 +73,177 @@
   {% endblock javascript %}
   {% endcompress %}
 
+  <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script>
   {% block js %}{% endblock js %}
 
+  <script defer="defer">
 
-  <script>
-    if (typeof (Storage) !== "undefined") {
-      // Code for localStorage
-      let deviceLocation = localStorage.getItem("deviceLocation");
-      if (deviceLocation == null) {
-        // localStorage.setItem("deviceLocation", "desktop");
-        // console.log("Device location	")
+
+    // Example code to get the user's public IP address using an external API
+
+    async function fetchUserIpAddress(url) {
+      const response = await fetch(`${url}?format=json`)
+      const data = await response.json()
+      localStorage.setItem("ipAddressStorageKey", JSON.stringify(data.ip));
+      return data.ip;
+    }
+
+    async function fetchUserLocationByLocation(url, ipAddress, storageKey) {
+      const apiKey = "ec05d0535a1e4fc3a81309703896c8bf"
+      const responseCall = await fetch(`${url}?api_key=${apiKey}&ip_address=${ipAddress}`)
+      const data = await responseCall.json()
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      return data
+    }
+
+    function updateLocationData(data) {
+      try {
+        document.getElementById("countryFlag").src = data.flag.png
+        document.getElementById("selectedCountryFlag").src = data.flag.png
+        if (document.querySelector(".country-currency")) {
+          document.querySelector(".country-currency").value = data.currency.currency_code
+        }
+      } catch (error) {
+        console.log(error)
+        if (document.querySelector(".country-currency")) {
+          document.querySelector(".country-currency").value = "KES"
+
+        }
       }
-    } else {
-      // No web storage Support.
-      console.log("no web storage support")
     }
 
 
+    // const currencyConversionRate
+
+    async function loadCurrencyConversionRate(storageKey) {
+      const url = "{% url 'apis:conversion' %}"
+      const response = await fetch(url)
+      const data = await response.json()
+      if (data.results) {
+        localStorage.setItem(storageKey, JSON.stringify(data.results));
+      }
+      return data
+    }
+
+
+
+    (async function () {
+      const countryCurrencyCode = document.querySelectorAll(".currency")
+
+      const storageKey = 'geoData';
+      const conversionStorageKey = "conversionStorageKey";
+      const ipAddressStorageKey = "ipAddressStorageKey";
+
+      const apiAddress = await fetchUserIpAddress('https://api.ipify.org');
+
+      let geoData = localStorage.getItem(storageKey);
+      let conversionRateData = localStorage.getItem(conversionStorageKey)
+      let localIpAddress = localStorage.getItem(ipAddressStorageKey)
+
+      // if (ipAddress && ipAddress === localIpAddress)
+
+      if (geoData && JSON.parse(localIpAddress) === apiAddress) {
+        geoData = JSON.parse(geoData);
+        console.log("Ip aleady registered")
+        updateLocationData(geoData)
+        if (conversionRateData) {
+          console.log('present geo 1')
+          updatePayableAmountAndCurrency(conversionRateData, geoData)
+        } else {
+          console.log('present geo 2')
+          const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
+          updatePayableAmountAndCurrency(storageKey, geoData)
+        }
+      } else {
+        console.log("Fetched new ip address")
+        const apiLocation = await fetchUserLocationByLocation('https://ipgeolocation.abstractapi.com/v1', JSON.parse(localIpAddress), storageKey);
+        updateLocationData(apiLocation)
+        if (conversionRateData) {
+          console.log('absent geo 1')
+          updatePayableAmountAndCurrency(conversionRateData, apiLocation)
+        } else {
+          console.log('absent geo 2')
+          const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
+          updatePayableAmountAndCurrency(storageKey, apiLocation)
+        }
+      }
+
+      function updatePayableAmountAndCurrency(data, location) {
+
+        const amountToBePaid = document.querySelector(".currencyRate")
+        let amount;
+        let dataArray = JSON.parse(data)
+        // locate the value input
+        const currencyCode = location.currency.currency_code
+        document.querySelector(".currency-code").value = currencyCode
+
+        document.getElementById("client-country-name").value = location.country
+
+        // update the currecny display on the screeen
+        countryCurrencyCode.forEach(currency => {
+          currency.innerHTML = currencyCode
+        })
+
+        for (const country of dataArray[0]['countries']) {
+          if (country.currency_code === currencyCode) {
+            amount = country.amount
+          } else {
+            amount = 1
+          }
+        }
+        amountToBePaid.value = amount;
+      }
+
+      document.querySelectorAll('.amount').forEach(amountElement => {
+        // get the inet text data of the prices
+        const amountElementContext = amountElement.childNodes[0].textContent.trim();
+        // create a span element to encapsulate this information
+        const amountSpanElement = document.createElement('span');
+        // asign a class name to this span element
+        amountSpanElement.className = 'amountvalue';
+        // inser the amount into the span element
+        amountSpanElement.textContent = amountElementContext;
+        // get the inner content of the amount wrapper
+        amountElementInnerHTML = amountElement.querySelector('span.currency');
+
+        amountElement.innerHTML = ''; //
+
+
+        amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
+          parseFloat(amountElementContext) *
+          parseFloat(document.querySelector(".currencyRate").value)
+        ).toFixed(2))
+
+        // console.log(spanElement)
+
+        // append the span element to the amount wrapper
+        amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
+        // margin styling
+
+        const spanHtml = document.createElement('span');
+        spanHtml.style.margin = "0px 10px!important";
+
+        amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
+        // styling the link
+        amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
+      });
+
+      function formatNumberWithCommas(number) {
+        return new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(number);
+      };
+
+
+
+    })()
+
   </script>
+  <input type="hidden" name="currencyRate" class="currencyRate">
+  <input type="hidden" name="country" class="client-country-name" id="client-country-name" />
+  <input type="hidden" name="currecny" class="currency-code" id="currency-code" />
+
 </body>
 
 </html>
