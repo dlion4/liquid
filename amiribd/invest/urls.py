@@ -7,6 +7,7 @@ from .views import (
     HandlePlanSelectionView,
     HandlePoolSelectionView,
     HandleRegistrationPaymentView,
+    HandleAddPlanPaymentView,
     check_payment_status,
     # fetch_amount_tobe_paid_minus_discount,
     fetch_amount_tobe_paid_plus_discount,
@@ -42,6 +43,11 @@ urlpatterns = [
         "handle-payment/",
         HandleRegistrationPaymentView.as_view(),
         name="handle-payment",
+    ),
+    path(
+        "handle-add-plan-payment/",
+        HandleAddPlanPaymentView.as_view(),
+        name="handle-add-plan-payment",
     ),
     path(
         "handle-pool-selection/",

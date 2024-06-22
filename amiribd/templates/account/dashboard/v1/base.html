@@ -137,6 +137,99 @@
         </div>
     </div>
 </div>
+
+
+<!-- add plan form popup -->
+
+
+<div class="modal fade zoom" id="modalZoomMpesaPayment" aria-modal="true" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Payment Procedure </h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" id="closeAddPlanPopupForm-subscribe">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#manual-payment">
+                            <em class="icon ni ni-user"></em>
+                            <span>Manual Payment</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#automated-payment">
+                            <em class="icon ni ni-link"></em>
+                            <span>Automated Payment</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- payment option tabs -->
+                <div class="tab-content">
+                    <!-- manua payment -->
+                    <div class="tab-pane active" id="manual-payment">
+                        <form action="#" class="form-validate is-alter" novalidate="novalidate" id="addPlanForm-base-file">
+                            <div class="form-group">
+                                <div id="accordion-1" class="accordion accordion-s2" style="background-color: transparent;">
+                                    {% include 'account/dashboard/v1/investment/components/payments/mpesa/steps/lipanampesasteps.html' %}
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone-no">Phone No</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no" />
+                                </div>
+                                <span id="phone-error" class="errorlist"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone-no">Transaction code</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="SF112Z2HIH" class="form-control" id="transactioncode" name="transactioncode" />
+                                </div>
+                                <span id="phone-error" class="errorlist"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="pay-amount">Amount to be paid</label>
+                                <div class="form-control-wrap">
+                                    <input disabled type="text" class="form-control" id="add-pay-amount" name="pay_amount" value="{{payment_amount}}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup-base-file">
+                                    <!-- <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
+                                    <span id="payment-text">Confirm to pay</span>
+                                </button>
+                                <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
+
+                                <style>
+                                    .center-justify {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                    }
+                                </style>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- automated payment -->
+                    <div class="tab-pane" id="automated-payment">
+                        <input type="hidden" name="currency" value="UGH" class="country-currency">
+                        <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn">click to pay</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script defer="defer">
     let submitBtn = document.getElementById("updateEvent")
     let swapArea = document.getElementById("id_available_amount")
@@ -159,14 +252,82 @@
 
     const addPlanBtn = document.getElementById("suitable-plan-btn");
 
+    const addPlanAmountToBePaid = document.getElementById("add-pay-amount");
+
+    function getAddPlanPrice() {
+        try {
+            return document.getElementById("id_price").value
+        } catch (error) {
+            return null;
+        }
+    }
+
+
+
     if (addPlanBtn) {
         addPlanBtn.addEventListener('click', function (event) {
 
-            const mpesaPaystackPaymentModal = document.getElementById("modalZoomMpesaPayment")
+            const paymentBtnForm = document.getElementById("mpesa-payment-btn-popup-base-file");
+            const phoneNo = document.getElementById("phone-no");
+            const transactioncode = document.getElementById("transactioncode")
+            // paymentBtnForm.setAttribute("disabled", "disabled");
 
-            mpesaPaystackPaymentModal.classList.add("show")
+            addPlanAmountToBePaid.value = `KES: ${parseFloat(cleanCurrency(getAddPlanPrice())).toFixed(2)}`;
 
-            console.log(mpesaPaystackPaymentModal)
+            console.log(cleanCurrency(getAddPlanPrice()))
+
+            // mpesaPaystackPaymentModal.classList.add("show")
+            $('#modalZoomMpesaPayment').modal('show');
+
+            // call the endpoint to save the plan selected
+
+
+            paymentBtnForm.addEventListener("click", async (event) => {
+                event.preventDefault();
+                addPlanAmountToBePaid.value = parseFloat(cleanCurrency(getAddPlanPrice())).toFixed(2)
+
+                const data = {
+                    pay_amount: addPlanAmountToBePaid.value,
+                    transactioncode: transactioncode.value,
+                    phone_no: phoneNo.value,
+                    profile: '{{profile.id}}'
+                }
+
+                addPlanPaymentFn(data);
+
+                addPlanAmountToBePaid.value = `KES: ${parseFloat(cleanCurrency(getAddPlanPrice())).toFixed(2)}`;
+            })
+
+
+            function addPlanPaymentFn(data) {
+                // const url = `{% url 'dashboard:invest:handle-add-plan-payment' %}?phone=${phone_number}&amount=${currency_amount}&currency=${currency_type}&profile=${profile}`
+                const url = `{% url 'dashboard:invest:handle-add-plan-payment' %}`
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{csrf_token}}',
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Withdrawal Initiated Successfully!');
+                        } else {
+                            // Handle errors, display them on the form
+                            console.error('Errors:', data);
+                            alert('Failed to process withdrawal: ' + JSON.stringify(data));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+
+
         })
     }
     function handleAddPlanPaymentBtn() {
@@ -349,93 +510,7 @@
 
 
 
-<!-- add plan form popup -->
 
-
-<div class="modal fade zoom" id="modalZoomMpesaPayment" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Payment Procedure </h5>
-                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" id="closeAddPlanPopupForm-subscribe">
-                    <em class="icon ni ni-cross"></em>
-                </a>
-            </div>
-            <div class="modal-body">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#manual-payment">
-                            <em class="icon ni ni-user"></em>
-                            <span>Manual Payment</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#automated-payment">
-                            <em class="icon ni ni-link"></em>
-                            <span>Automated Payment</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- payment option tabs -->
-                <div class="tab-content">
-                    <!-- manua payment -->
-                    <div class="tab-pane active" id="manual-payment">
-                        <form action="#" class="form-validate is-alter" novalidate="novalidate">
-                            <div class="form-group">
-                                <div id="accordion-1" class="accordion accordion-s2" style="background-color: transparent;">
-                                    {% include 'account/dashboard/v1/investment/components/payments/mpesa/steps/lipanampesasteps.html' %}
-                                </div>
-                                <hr />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="phone-no">Phone No</label>
-                                <div class="form-control-wrap">
-                                    <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no" />
-                                </div>
-                                <span id="phone-error" class="errorlist"></span>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="phone-no">Transaction code</label>
-                                <div class="form-control-wrap">
-                                    <input type="text" placeholder="SF112Z2HIH" class="form-control" id="transactioncode" name="transactioncode" />
-                                </div>
-                                <span id="phone-error" class="errorlist"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="pay-amount">Amount to be paid</label>
-                                <div class="form-control-wrap">
-                                    <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
-                                    <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                    <span id="payment-text">Confirm to pay</span>
-                                </button>
-                                <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
-
-                                <style>
-                                    .center-justify {
-                                        display: flex;
-                                        justify-content: space-between;
-                                        align-items: center;
-                                    }
-                                </style>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- automated payment -->
-                    <div class="tab-pane" id="automated-payment">
-                        <input type="hidden" name="currency" value="UGH" class="country-currency">
-                        <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn">click to pay</button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer bg-light"></div>
-        </div>
-    </div>
-</div>
 
 
 

@@ -58,7 +58,7 @@
           </div>
           <div class="form-group">
             <button type="button" class="btn btn-lg btn-primary center-justify" id="suitable-plan-btn">
-              <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              <!-- <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
               <span id="payment-text">Confirm to pay</span>
             </button>
             <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
@@ -193,7 +193,9 @@
   const paymentBtnText = document.getElementById("payment-text");
 
   function removeLoaderState() {
-    paymentBtnSpinner.style.display = "none"
+    if (paymentBtnSpinner) {
+      paymentBtnSpinner.style.display = "none"
+    }
   }
 
   function addSpinner() {
@@ -207,7 +209,9 @@
     profileId = Number.parseInt(document.getElementById("profileId").value);
 
     const paymentBtnForm = document.getElementById("mpesa-payment-btn-popup");
-    paymentBtnForm.setAttribute("disabled", "disabled");
+    if (paymentBtnForm) {
+      paymentBtnForm.setAttribute("disabled", "disabled");
+    }
 
     const phoneNo = document.getElementById("phone-no");
     const payAmount = document.getElementById("pay-amount");
@@ -240,137 +244,122 @@
         document
           .getElementById('phone-error')
           .textContent = ''; // Clear any error message
+        if (paymentBtnForm) {
+          paymentBtnForm.removeAttribute("disabled");
 
-        paymentBtnForm.removeAttribute("disabled");
+          paymentBtnForm.addEventListener("click", () => {
+            const url = `{% url 'dashboard:invest:handle-payment' %}?phone=${phoneNo.value}&amount=${cleanedCurrency}&currency=KES&profile=${profileId}`;
+            async function handlePayment() {
+              const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              });
 
-        paymentBtnForm.addEventListener("click", () => {
-          const url = `{% url 'dashboard:invest:handle-payment' %}?phone=${phoneNo.value}&amount=${cleanedCurrency}&currency=KES&profile=${profileId}`;
-          async function handlePayment() {
-            const response = await fetch(url, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json"
+              const data = await response.json();
+              planSelectionId = data.plan.id
+
+              handleClosePlanSelection(profileId, data.plan.id);
+
+              if (data.success) {
+                // window.location.href = data.url;
+
+                // if (data.response.invoice.state == "PENDING") {
+
+                //   paymentBtnSpinner.style.display = "block";
+                //   paymentBtnText.textContent = "Payment in progress...";
+                //   paymentBtnForm.setAttribute("disabled", "disabled");
+
+                //   let invoice_id = data.response.invoice.invoice_id;
+
+                //   console.log(invoice_id)
+
+                //   let intervalId = setInterval(async () => {
+                //     console.log(data)
+                //     const res = await checkPaymentStatus(invoice_id);
+
+                //     if (res.response.invoice.state === "PROCESSING") {
+                //       paymentBtnText.textContent = "Received. Validating payment ...";
+                //     } else if (res.response.invoice.state === "COMPLETE") {
+                //       clearInterval(intervalId);
+                //       paymentBtnSpinner.style.display = "none";
+                //       paymentBtnText.textContent = "Payment Completed successfully.";
+                //       paymentBtnForm.removeAttribute("disabled");
+                //       document
+                //         .getElementById("payment-btn-help-text")
+                //         .innerHTML = "Payment was successful";
+                //       setTimeout(() => {
+                //         handlePlanPaymentSuccess(profileId, res.plan.id, phoneNo.value);
+                //       }, 3000); // Adjusted to 3 seconds for consistency
+                //     } else if (res.response.invoice.state === "FAILED") {
+                //       clearInterval(intervalId);
+                //       paymentBtnSpinner.style.display = "none";
+                //       paymentBtnText.textContent = "Payment cancelled.";
+                //       paymentBtnForm.removeAttribute("disabled");
+                //       document
+                //         .getElementById("payment-btn-help-text")
+                //         .innerHTML = "You cancelled the payment. Redirecting in 3 seconds ...";
+                //       setTimeout(() => {
+                //         handlePlanPaymentFailed(profileId, data.plan.id);
+                //         handleClosePlanSelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
+                //       }, 3000); // Adjusted to 3 seconds for consistency
+                //     } else if (res.response.invoice.state === "RETRY") {
+                //       clearInterval(intervalId);
+                //       paymentBtnSpinner.style.display = "none";
+                //       paymentBtnText.textContent = "Payment Failed ";
+                //       paymentBtnForm.removeAttribute("disabled");
+                //       document
+                //         .getElementById("payment-btn-help-text")
+                //         .innerHTML = "Failed to initiate transaction. Retry";
+                //     }
+                //   }, 15000); // Check every 15 seconds
+
+                //   // Set a timeout to clear the interval after 40 seconds
+                //   setTimeout(() => {
+                //     clearInterval(intervalId);
+                //     paymentBtnSpinner.style.display = "none";
+                //     paymentBtnText.textContent = `Server timeout. Please try again later`;
+                //     document
+                //       .getElementById("payment-btn-help-text")
+                //       .innerHTML = "Payment is taking too long to complete. Please contact support";
+                //     paymentBtnForm.removeAttribute("disabled");
+
+                //     setTimeout(() => {
+                //       clearInterval(intervalId);
+                //       handlePlanPaymentFailed(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
+
+                //       // Remove this payment screen and then return the plan screen modal
+                //       reloadAndDisplayPlanSelectionForm();
+
+                //       handleClosePlanSelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
+
+                //     }, 3000); // process the handlepayment failed and then process the ui after one second of informating the user of the failure
+                //   }, 40000); // Stop checking after 40 seconds
+                // }
+
+                // async function checkPaymentStatus(id) {
+                //   // Implement the logic to check the payment status
+                //   // You might need to make another API call here to check the status
+                //   const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${id}`, {
+                //     method: "GET",
+                //     headers: {
+                //       "Content-Type": "application/json"
+                //     }
+                //   });
+
+                //   const data = await response.json();
+                //   return data;
+
+                // }
+
               }
-            });
-
-            const data = await response.json();
-            planSelectionId = data.plan.id
-
-            handleClosePlanSelection(profileId, data.plan.id);
-
-            if (data.success) {
-              // window.location.href = data.url;
-
-              // if (data.response.invoice.state == "PENDING") {
-
-              //   paymentBtnSpinner.style.display = "block";
-              //   paymentBtnText.textContent = "Payment in progress...";
-              //   paymentBtnForm.setAttribute("disabled", "disabled");
-
-              //   let invoice_id = data.response.invoice.invoice_id;
-
-              //   console.log(invoice_id)
-
-              //   let intervalId = setInterval(async () => {
-              //     console.log(data)
-              //     const res = await checkPaymentStatus(invoice_id);
-
-              //     if (res.response.invoice.state === "PROCESSING") {
-              //       paymentBtnText.textContent = "Received. Validating payment ...";
-              //     } else if (res.response.invoice.state === "COMPLETE") {
-              //       clearInterval(intervalId);
-              //       paymentBtnSpinner.style.display = "none";
-              //       paymentBtnText.textContent = "Payment Completed successfully.";
-              //       paymentBtnForm.removeAttribute("disabled");
-              //       document
-              //         .getElementById("payment-btn-help-text")
-              //         .innerHTML = "Payment was successful";
-              //       setTimeout(() => {
-              //         handlePlanPaymentSuccess(profileId, res.plan.id, phoneNo.value);
-              //       }, 3000); // Adjusted to 3 seconds for consistency
-              //     } else if (res.response.invoice.state === "FAILED") {
-              //       clearInterval(intervalId);
-              //       paymentBtnSpinner.style.display = "none";
-              //       paymentBtnText.textContent = "Payment cancelled.";
-              //       paymentBtnForm.removeAttribute("disabled");
-              //       document
-              //         .getElementById("payment-btn-help-text")
-              //         .innerHTML = "You cancelled the payment. Redirecting in 3 seconds ...";
-              //       setTimeout(() => {
-              //         handlePlanPaymentFailed(profileId, data.plan.id);
-              //         handleClosePlanSelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
-              //       }, 3000); // Adjusted to 3 seconds for consistency
-              //     } else if (res.response.invoice.state === "RETRY") {
-              //       clearInterval(intervalId);
-              //       paymentBtnSpinner.style.display = "none";
-              //       paymentBtnText.textContent = "Payment Failed ";
-              //       paymentBtnForm.removeAttribute("disabled");
-              //       document
-              //         .getElementById("payment-btn-help-text")
-              //         .innerHTML = "Failed to initiate transaction. Retry";
-              //     }
-              //   }, 15000); // Check every 15 seconds
-
-              //   // Set a timeout to clear the interval after 40 seconds
-              //   setTimeout(() => {
-              //     clearInterval(intervalId);
-              //     paymentBtnSpinner.style.display = "none";
-              //     paymentBtnText.textContent = `Server timeout. Please try again later`;
-              //     document
-              //       .getElementById("payment-btn-help-text")
-              //       .innerHTML = "Payment is taking too long to complete. Please contact support";
-              //     paymentBtnForm.removeAttribute("disabled");
-
-              //     setTimeout(() => {
-              //       clearInterval(intervalId);
-              //       handlePlanPaymentFailed(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
-
-              //       // Remove this payment screen and then return the plan screen modal
-              //       reloadAndDisplayPlanSelectionForm();
-
-              //       handleClosePlanSelection(profileId, data.plan.id); // Ensure `data.plan.id` is correctly defined in this scope
-
-              //     }, 3000); // process the handlepayment failed and then process the ui after one second of informating the user of the failure
-              //   }, 40000); // Stop checking after 40 seconds
-              // }
-
-              // async function checkPaymentStatus(id) {
-              //   // Implement the logic to check the payment status
-              //   // You might need to make another API call here to check the status
-              //   const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${id}`, {
-              //     method: "GET",
-              //     headers: {
-              //       "Content-Type": "application/json"
-              //     }
-              //   });
-
-              //   const data = await response.json();
-              //   return data;
-
-              // }
-
-
-              // call the pop up modal form so that we can imput the figures fro both the manual and the real payment
-
-              const mpesaAddPlanForm = document.getElementById("modalZoomMpesaPayment")
-
-              console.log(mpesaAddPlanForm)
-
-              // const paymentBtn = document.getElementById("mpesa-payment-btn-popup");
-
-              // document.getElementById("modalZoomMpesaPayment").classList.add("show")
-
-              // let elementPaymentBtn = document.getElementById("mpesa-payment")
-
-              // elementPaymentBtn.click();
-
-
             }
-          }
 
-          handlePayment();
+            handlePayment();
 
-        });
+          })
+        };
 
         // call the payment here
       }

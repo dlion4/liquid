@@ -273,7 +273,8 @@ def fetch_amount_tobe_paid_plus_discount(request):
     return JsonResponse({"amount": amount_to_be_paid})
 
 
-class HandleRegistrationPaymentView(LoginRequiredMixin, View):
+class HandlePaymentView(LoginRequiredMixin, View):
+
 
     @method_decorator(csrf_exempt, name="dispatch")
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
@@ -285,10 +286,20 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         plan = PlanSerializer(plan).data
         return JsonResponse({"success": True, 'plan': plan})
 
+
+class HandleRegistrationPaymentView(HandlePaymentView):
+
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         print(data)
         return JsonResponse({"success": True})
+    
+class HandleAddPlanPaymentView(HandlePaymentView):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        print(data)
+        return JsonResponse({"success": True})
+
 
 
 def check_payment_status(request):

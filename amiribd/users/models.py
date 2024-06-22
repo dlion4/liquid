@@ -119,6 +119,7 @@ class Profile(models.Model):
         blank=True,
         related_name="profile_job_applications",
     )
+    plans = models.ManyToManyField("invest.Plan", blank=True)
 
     def __str__(self):
         return f"{self.user.username}"
