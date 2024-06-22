@@ -3580,8 +3580,8 @@ fieldset:disabled .btn,
 fieldset:disabled .dual-listbox .dual-listbox__button {
     color: var(--bs-btn-disabled-color);
     pointer-events: none;
-    background-color: var(--bs-btn-disabled-bg);
-    border-color: var(--bs-btn-disabled-border-color);
+    background-color: #05720c;
+    border-color: #05720c;
     opacity: var(--bs-btn-disabled-opacity)
 }
 
@@ -34513,8 +34513,8 @@ body.nav-shown {
 
 .nk-sidebar-footer {
     background-color: #f5f6fa;
-    margin-top: auto;
-    padding: 1.75rem 24px 1.75rem
+    /* margin-top: auto; */
+    padding: 1.75rem 64px 1.75rem
 }
 
 .is-light .nk-sidebar-footer {

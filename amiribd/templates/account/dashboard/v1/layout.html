@@ -133,16 +133,19 @@
       const storageKey = 'geoData';
       const conversionStorageKey = "conversionStorageKey";
       const ipAddressStorageKey = "ipAddressStorageKey";
+      let localIpAddress = localStorage.getItem(ipAddressStorageKey)
 
       const apiAddress = await fetchUserIpAddress('https://api.ipify.org');
 
       let geoData = localStorage.getItem(storageKey);
       let conversionRateData = localStorage.getItem(conversionStorageKey)
-      let localIpAddress = localStorage.getItem(ipAddressStorageKey)
 
       // if (ipAddress && ipAddress === localIpAddress)
 
-      if (geoData && JSON.parse(localIpAddress) === apiAddress) {
+      if (
+        geoData && JSON.parse(localIpAddress) &&
+        JSON.parse(localIpAddress) === apiAddress
+      ) {
         geoData = JSON.parse(geoData);
         console.log("Ip aleady registered")
         updateLocationData(geoData)
@@ -194,39 +197,43 @@
         amountToBePaid.value = amount;
       }
 
-      document.querySelectorAll('.amount').forEach(amountElement => {
-        // get the inet text data of the prices
-        const amountElementContext = amountElement.childNodes[0].textContent.trim();
-        // create a span element to encapsulate this information
-        const amountSpanElement = document.createElement('span');
-        // asign a class name to this span element
-        amountSpanElement.className = 'amountvalue';
-        // inser the amount into the span element
-        amountSpanElement.textContent = amountElementContext;
-        // get the inner content of the amount wrapper
-        amountElementInnerHTML = amountElement.querySelector('span.currency');
+      if (document.querySelectorAll('.amount')) {
+        document.querySelectorAll('.amount').forEach(amountElement => {
+          // get the inet text data of the prices
+          const amountElementContext = amountElement.childNodes[0].textContent.trim();
+          // create a span element to encapsulate this information
+          const amountSpanElement = document.createElement('span');
+          // asign a class name to this span element
+          amountSpanElement.className = 'amountvalue';
+          // inser the amount into the span element
+          amountSpanElement.textContent = amountElementContext;
+          // get the inner content of the amount wrapper
+          amountElementInnerHTML = amountElement.querySelector('span.currency');
 
-        amountElement.innerHTML = ''; //
+          amountElement.innerHTML = ''; //
 
 
-        amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
-          parseFloat(amountElementContext) *
-          parseFloat(document.querySelector(".currencyRate").value)
-        ).toFixed(2))
+          amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
+            parseFloat(amountElementContext) *
+            parseFloat(document.querySelector(".currencyRate").value)
+          ).toFixed(2))
 
-        // console.log(spanElement)
+          // console.log(spanElement)
 
-        // append the span element to the amount wrapper
-        amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
-        // margin styling
+          if (amountSpanElement && amountElementInnerHTML) {
+            // append the span element to the amount wrapper
+            amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
+            // margin styling
 
-        const spanHtml = document.createElement('span');
-        spanHtml.style.margin = "0px 10px!important";
+            const spanHtml = document.createElement('span');
+            spanHtml.style.margin = "0px 10px!important";
 
-        amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
-        // styling the link
-        amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
-      });
+            amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
+            // styling the link
+            amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
+          }
+        })
+      };
 
       function formatNumberWithCommas(number) {
         return new Intl.NumberFormat('en-US', {
@@ -235,7 +242,15 @@
         }).format(number);
       };
 
-
+      // Select the script element based on its src attribute
+      const scriptToRemove = document.querySelector('script[src="https://www.googletagmanager.com/gtag/js?id=G-0WCTF5FP66"]');
+      // Remove the script element from the DOM if it exists
+      if (scriptToRemove) {
+        scriptToRemove.remove();
+        console.log('Script removed');
+      } else {
+        console.log('Script not found');
+      }
 
     })()
 

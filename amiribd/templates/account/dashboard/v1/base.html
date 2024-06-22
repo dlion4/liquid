@@ -1,11 +1,11 @@
 {% extends 'account/dashboard/v1/layout.html' %}
-<!---->{% block title %} Earnkraft Dashboard {{profile.user.email.username}}
+{% block title %} Earnkraft Dashboard {{profile.user.email.username}}
 <!---->{% endblock title %} {% load static humanize %} {% block sidebar %}
 <!---->{% include "account/dashboard/v1/components/navbar/sidebar.html" %}
 <!---->{% endblock sidebar %}
 <!---->{% block content %}
 <!---->{% include "account/dashboard/v1/components/navbar.html" %}
-<!---->
+
 <div class="nk-content nk-content-fluid">
     <div class="container-xl wide-lg">
         <div class="nk-content-body">
@@ -39,7 +39,9 @@
                 </a>
             </div>
             <div class="modal-body">
-                {% comment %} content goes here {% endcomment %} {% include "account/dashboard/v1/investment/components/schemes/send_money_form.html" %}
+                {% comment %} content goes here {% endcomment %}
+                <!--  -->
+                {% include "account/dashboard/v1/investment/components/schemes/send_money_form.html" %}
             </div>
         </div>
     </div>
@@ -55,7 +57,7 @@
         const destinationAccountMoneyTransfer = document.getElementById("id_destination_account")
 
 
-        destinationAccountMoneyTransfer.addEventListener("change", function(e) {
+        destinationAccountMoneyTransfer.addEventListener("change", function (e) {
             e.preventDefault();
 
             if (e.target.value == '') {
@@ -73,7 +75,7 @@
 
         })
 
-        destinationAccountMoneyTransfer.removeEventListener("change", function(e) {
+        destinationAccountMoneyTransfer.removeEventListener("change", function (e) {
             e.preventDefault();
         })
 
@@ -98,7 +100,7 @@
         }
 
 
-        amountToBeSentInput.addEventListener("keyup", async function(event) {
+        amountToBeSentInput.addEventListener("keyup", async function (event) {
             event.preventDefault();
 
             const profile__id = Number.parseInt("{{ profile.id }}");
@@ -135,7 +137,7 @@
         </div>
     </div>
 </div>
-<script>
+<script defer="defer">
     let submitBtn = document.getElementById("updateEvent")
     let swapArea = document.getElementById("id_available_amount")
 
@@ -154,22 +156,40 @@
         }
 
     }
-    swapArea.addEventListener('htmx:afterSwap', function(event) {
+
+    const addPlanBtn = document.getElementById("suitable-plan-btn");
+
+    if (addPlanBtn) {
+        addPlanBtn.addEventListener('click', function (event) {
+
+            const mpesaPaystackPaymentModal = document.getElementById("modalZoomMpesaPayment")
+
+            mpesaPaystackPaymentModal.classList.add("show")
+
+            console.log(mpesaPaystackPaymentModal)
+        })
+    }
+    function handleAddPlanPaymentBtn() {
+
+    }
+
+
+    swapArea.addEventListener('htmx:afterSwap', function (event) {
         handleSubmit()
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
 
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission
 
             const formData = new FormData(form);
 
             fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
-                    method: 'POST',
-                    body: formData
-                })
+                method: 'POST',
+                body: formData
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -189,7 +209,7 @@
     });
 </script>
 {% comment %} Tips to Earn {% endcomment %}
-<div aria-modal="true" class="modal fade" id="covid-about" role="dialog" tabindex="-1">
+<div aria-modal="true" class="modal fade" id="EarningTips" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <a aria-label="Close" class="close" data-bs-dismiss="modal" href="#">
@@ -210,19 +230,22 @@
                     Focus on promoting to people genuinely interested in the product or service
                 </p>
                 <p>
-                    Use social media platforms like Facebook, Twitter, and Instagram to share your referral links and affiliate content
+                    Use social media platforms like Facebook, Twitter, and Instagram to share your referral links and
+                    affiliate content
                 </p>
                 <p>
                     Creat videos, screenshots, summary and steps that guide new users to sign up and activate
                 </p>
                 <p>
-                    Provide incentives such as discounts, bonuses, or exclusive content to people who join through your referral link.
+                    Provide incentives such as discounts, bonuses, or exclusive content to people who join through your
+                    referral link.
                 </p>
                 <p>
                     Offer guidance and support to your referrals to help them succeed on the platform
                 </p>
                 <p>
-                    On a daily basis, save new contacts, join many groups in many social media platforms and Mentor your downlines
+                    On a daily basis, save new contacts, join many groups in many social media platforms and Mentor your
+                    downlines
                 </p>
                 <div class="note-text">Updated: June 18, 2024 12:30 (GMT +6)</div>
             </div>
@@ -238,7 +261,7 @@
     </div>
 </div>
 {% comment %} comment and feedback {% endcomment %}
-<div aria-modal="true" class="modal fade" id="covid-feedback" role="dialog" tabindex="-1">
+<div aria-modal="true" class="modal fade" id="Community" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -317,4 +340,103 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+<!-- add plan form popup -->
+
+
+<div class="modal fade zoom" id="modalZoomMpesaPayment" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Payment Procedure </h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" id="closeAddPlanPopupForm-subscribe">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#manual-payment">
+                            <em class="icon ni ni-user"></em>
+                            <span>Manual Payment</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#automated-payment">
+                            <em class="icon ni ni-link"></em>
+                            <span>Automated Payment</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- payment option tabs -->
+                <div class="tab-content">
+                    <!-- manua payment -->
+                    <div class="tab-pane active" id="manual-payment">
+                        <form action="#" class="form-validate is-alter" novalidate="novalidate">
+                            <div class="form-group">
+                                <div id="accordion-1" class="accordion accordion-s2" style="background-color: transparent;">
+                                    {% include 'account/dashboard/v1/investment/components/payments/mpesa/steps/lipanampesasteps.html' %}
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone-no">Phone No</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no" />
+                                </div>
+                                <span id="phone-error" class="errorlist"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone-no">Transaction code</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="SF112Z2HIH" class="form-control" id="transactioncode" name="transactioncode" />
+                                </div>
+                                <span id="phone-error" class="errorlist"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="pay-amount">Amount to be paid</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
+                                    <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    <span id="payment-text">Confirm to pay</span>
+                                </button>
+                                <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
+
+                                <style>
+                                    .center-justify {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                    }
+                                </style>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- automated payment -->
+                    <div class="tab-pane" id="automated-payment">
+                        <input type="hidden" name="currency" value="UGH" class="country-currency">
+                        <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn">click to pay</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light"></div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock modals %}

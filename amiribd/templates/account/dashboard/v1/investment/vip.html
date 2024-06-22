@@ -42,7 +42,7 @@
                 <div class="form-group">
                   <label class="form-label" for="phone-no-1">Phone No</label>
                   <div class="form-control-wrap">
-                    <input value="0{{ profile.phone_number|format_phone_number }}" type="text" class="form-control" id="phone-no-1">
+                    <input value="{{ profile.phone_number|format_phone_number }}" type="text" class="form-control" id="phone-no-1">
                   </div>
                 </div>
               </div>

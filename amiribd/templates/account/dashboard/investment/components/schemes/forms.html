@@ -14,7 +14,8 @@
     </div>
 
     <div class="text-center bg-lighter w-100">
-      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn" data-bs-profile="{{request.user.profile_user.id}}">
+      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn"
+        data-bs-profile="{{request.user.profile_user.id}}">
         Confirm &amp; proceed
       </button>
     </div>
@@ -35,7 +36,8 @@
           <div class="form-group">
             <label class="form-label" for="phone-no">Phone No</label>
             <div class="form-control-wrap">
-              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no"/>
+              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no"
+                name="phone_no" />
             </div>
             <span id="phone-error" class="errorlist"></span>
           </div>
@@ -43,12 +45,13 @@
           <div class="form-group">
             <label class="form-label" for="pay-amount">Amount</label>
             <div class="form-control-wrap">
-              <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}"/>
+              <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}" />
             </div>
           </div>
           <div class="form-group">
             <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
-              <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status"
+                aria-hidden="true"></span>
               <span id="payment-text">Confirm to pay</span>
             </button>
             <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
@@ -291,60 +294,60 @@
             if (data.success) {
               // window.location.href = data.url;
 
-              if (data.response.invoice.state === "PENDING") {
+              // if (data.response.invoice.state === "PENDING") {
 
-                paymentBtnSpinner.style.display = "block";
-                paymentBtnText.textContent = "Payment in progress...";
-                paymentBtnForm.setAttribute("disabled", "disabled");
+              //   paymentBtnSpinner.style.display = "block";
+              //   paymentBtnText.textContent = "Payment in progress...";
+              //   paymentBtnForm.setAttribute("disabled", "disabled");
 
-                let invoice_id = data.response.invoice.invoice_id;
+              //   let invoice_id = data.response.invoice.invoice_id;
 
-                let intervalId = setInterval(async () => {
-                  const res = await checkPaymentStatus(invoice_id);
-                  if (res.response.invoice.state === "PROCESSING") {
-                    // clearInterval(intervalId);  Stop checking when the invoice is no longer pending
-                    // paymentBtnSpinner.style.display = "none";
-                    //  paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
-                    // paymentBtnForm.removeAttribute("disabled");
-                    console.log("processing")
+              //   let intervalId = setInterval(async () => {
+              //     const res = await checkPaymentStatus(invoice_id);
+              //     if (res.response.invoice.state === "PROCESSING") {
+              //       // clearInterval(intervalId);  Stop checking when the invoice is no longer pending
+              //       // paymentBtnSpinner.style.display = "none";
+              //       //  paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
+              //       // paymentBtnForm.removeAttribute("disabled");
+              //       console.log("processing")
 
-                  } else if (res.response.invoice.state === "COMPLETE") {
-                    clearInterval(intervalId); // Stop checking when the invoice is no longer pending
-                    paymentBtnSpinner.style.display = "none";
-                    paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
-                    paymentBtnForm.removeAttribute("disabled");
-                    // Set a timeout to clear the interval after 40 seconds
-                    setTimeout(() => {
-                      document
-                        .getElementById("payment-btn-help-text")
-                        .innerHTML = "Your payment was successfully. You will be redirected to the next step in 2 minutes"
+              //     } else if (res.response.invoice.state === "COMPLETE") {
+              //       clearInterval(intervalId); // Stop checking when the invoice is no longer pending
+              //       paymentBtnSpinner.style.display = "none";
+              //       paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
+              //       paymentBtnForm.removeAttribute("disabled");
+              //       // Set a timeout to clear the interval after 40 seconds
+              //       setTimeout(() => {
+              //         document
+              //           .getElementById("payment-btn-help-text")
+              //           .innerHTML = "Your payment was successfully. You will be redirected to the next step in 2 minutes"
 
-                      setTimeout(() => {
-                        handleCreateTransaction(poolId, accountId, planId)
-                      }, 1000)
+              //         setTimeout(() => {
+              //           handleCreateTransaction(poolId, accountId, planId)
+              //         }, 1000)
 
-                    }, 30000); // Stop checking after 40 seconds
-                  }
-                }, 10000); // Check every 10 seconds
+              //       }, 30000); // Stop checking after 40 seconds
+              //     }
+              //   }, 10000); // Check every 10 seconds
 
-              }
+              // }
 
-              async function checkPaymentStatus(invoice_id) {
-                // Implement the logic to check the payment status
-                console.log("Checking payment status...");
-                // You might need to make another API call here to check the status
-                const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${invoice_id}`, {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json"
-                  }
-                });
+              // async function checkPaymentStatus(invoice_id) {
+              //   // Implement the logic to check the payment status
+              //   console.log("Checking payment status...");
+              //   // You might need to make another API call here to check the status
+              //   const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${invoice_id}`, {
+              //     method: "GET",
+              //     headers: {
+              //       "Content-Type": "application/json"
+              //     }
+              //   });
 
-                const data = await response.json();
+              //   const data = await response.json();
 
-                return data;
+              //   return data;
 
-              }
+              // }
 
               async function handleCreateTransaction(pool_id, account_id, plan_id) {
                 const response = await fetch(`/dashboard/invest/handle-payment-create-transaction/${pool_id}/${account_id}/${plan_id}/`, {
@@ -352,7 +355,7 @@
                   headers: {
                     "Content-Type": "application/json"
                   },
-                  body: JSON.stringify({phone_number: phoneNo.value})
+                  body: JSON.stringify({ phone_number: phoneNo.value })
                 });
 
                 console.log(phoneNo.value)

@@ -5,7 +5,17 @@
 {% block heading %}
 
 
-<div class="nk-block-head"><div class="nk-block-head-content"><div class="nk-block-head-sub"><span>Account Setting</span></div><h2 class="nk-block-title fw-normal">My Profile</h2><div class="nk-block-des"><p>You have full control to manage your own account setting. <span class="text-primary"><em class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tooltip on right" data-bs-original-title="Tooltip on right"></em></span></p></div></div></div>
+<div class="nk-block-head">
+  <div class="nk-block-head-content">
+    <div class="nk-block-head-sub"><span>Account Setting</span></div>
+    <h2 class="nk-block-title fw-normal">My Profile</h2>
+    <div class="nk-block-des">
+      <p>You have full control to manage your own account setting. <span class="text-primary"><em
+            class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tooltip on right"
+            data-bs-original-title="Tooltip on right"></em></span></p>
+    </div>
+  </div>
+</div>
 
 
 
@@ -22,118 +32,126 @@
 
 
 
-    
-
-                {% include "account/profile/components/personal.html" %}
 
 
+{% include "account/profile/components/personal.html" %}
 
-  <script>
-    function getTokens(user, token) {
-      // This function should return an object with tokens
-      // For example:
-      return {user: user.id, token: token};
-    }
 
-    async function fetchData() {
-      const baseUrl = "/users/profile/obtain-token/";
-      //const tokens = getTokens();
 
-      try {
-        const response = await fetch(baseUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        let data = await response.json();
+<script>
+  function getTokens(user, token) {
+    // This function should return an object with tokens
+    // For example:
+    return { user: user.id, token: token };
+  }
 
-        // chec if token user is null
+  async function fetchData() {
+    const baseUrl = "/users/profile/obtain-token/";
+    //const tokens = getTokens();
 
-        if (data.token.user == null || data.token.is_active == false) {
-          // call the create token endpoint to create a token using the users from this view
-
-          const postData = await fetch(`/users/profile/refresh-token/${data.user.id}/`, {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({"user": data.token.user})
-          })
-          const postdataResponse = await postData.json();
-          console.log(postdataResponse)
-          data=postdataResponse
-        }
-
-        // verify the token
-
-        const verifyData = await fetch(`/users/profile/verify-token/?token=${data.token.token}`)
-        const verifyDataResponse = await verifyData.json();
-        console.log(verifyDataResponse)
-
-        console.log(data);
-        return data;
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    try {
+      const response = await fetch(baseUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      let data = await response.json();
+
+      // chec if token user is null
+
+      if (data.token.user == null || data.token.is_active == false) {
+        // call the create token endpoint to create a token using the users from this view
+
+        const postData = await fetch(`/users/profile/refresh-token/${data.user.id}/`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ "user": data.token.user })
+        })
+        const postdataResponse = await postData.json();
+        console.log(postdataResponse)
+        data = postdataResponse
+      }
+
+      // verify the token
+
+      const verifyData = await fetch(`/users/profile/verify-token/?token=${data.token.token}`)
+      const verifyDataResponse = await verifyData.json();
+      console.log(verifyDataResponse)
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
+  }
 
-    // Call the function to perform the fetch operation
-    fetchData();
-  </script>
+  // Call the function to perform the fetch operation
+  fetchData();
+</script>
 
 
-  <style>
-    ul.link-list-menu > li > a {
-      cursor: pointer !important;
-    }
-  </style>
+<style>
+  ul.link-list-menu>li>a {
+    cursor: pointer !important;
+  }
+</style>
 
 
 
 
 <script type="text/javascript">
-  document
-    .body
-    .addEventListener('htmx:afterSwap', function (event) {
-      console.log(event.detail.target)
-      const serverResponse = event.detail.xhr.responseText;
 
-      // Use DOMParser to parse the HTML response
-      const parser = new DOMParser();
-      const html = parser.parseFromString(serverResponse, 'text/html');
+  (async function () {
+    document
+      .body
+      .addEventListener('htmx:afterSwap', function (event) {
+        console.log(event.detail.target)
+        const serverResponse = event.detail.xhr.responseText;
 
-      // Get the element with id profile-account
-      // loop through the type juu they are multple
-      const notificationForm = html.getElementById('profile-account').getAttribute('data-bs-id');
+        // Use DOMParser to parse the HTML response
+        const parser = new DOMParser();
+        const html = parser.parseFromString(serverResponse, 'text/html');
 
-      if (notificationForm === "notifications") {
+        // Get the element with id profile-account
+        // loop through the type juu they are multple
+        if (html.getElementById('profile-account')) {
 
-        setTimeout(() =>{
-          document.querySelectorAll('.custom-control-input').forEach(async function (event) {
-            // do the fetch headers
-            const notificationTypeId = event.getAttribute('data-id-notification-type')
-  
-            const profileId = event.getAttribute('data-profile')
+          const notificationForm = html.getElementById('profile-account').getAttribute('data-bs-id');
 
-            // do a fetch request
-            const response = await fetch(`/settings/notifications/subscribe/?notification_type_id=${notificationTypeId}&profile_id=${profileId}`)
-            const responseData = await response.json()
+          if (notificationForm === "notifications") {
+
+            setTimeout(() => {
+              document.querySelectorAll('.custom-control-input').forEach(async function (event) {
+                // do the fetch headers
+                const notificationTypeId = event.getAttribute('data-id-notification-type')
+
+                const profileId = event.getAttribute('data-profile')
+
+                // do a fetch request
+                const response = await fetch(`/settings/notifications/subscribe/?notification_type_id=${notificationTypeId}&profile_id=${profileId}`)
+                const responseData = await response.json()
 
 
-            if(responseData.success){
+                if (responseData.success) {
 
-              if(responseData.subscribed == notificationTypeId){
-                event.checked = true;
-              }else{
-                event.checked = false;
-              }
-             
-            }
-          })
-        }, 1000)
-       
-      }
-    });
+                  if (responseData.subscribed == notificationTypeId) {
+                    event.checked = true;
+                  } else {
+                    event.checked = false;
+                  }
+
+                }
+              })
+            }, 1000)
+
+          }
+
+        }
+      });
+
+  })()
 </script>
 
 
@@ -141,97 +159,114 @@
 
 {% block modals %}
 
-  {% comment %} <div class="modal fade" id="profile-edit" data-select2-id="profile-edit" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content" data-select2-id="8">
-        <a href="#" class="close" data-bs-dismiss="modal">
-          <em class="icon ni ni-cross-sm"></em>
-        </a>
-        <div class="modal-body modal-body-lg" data-select2-id="7">
-          <h5 class="title">Update Profile</h5>
-          <ul class="nk-nav nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" data-bs-toggle="tab" href="#personal" aria-selected="false" role="tab" tabindex="-1">Personal</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" data-bs-toggle="tab" href="#address" aria-selected="true" role="tab">Address</a>
-            </li>
-          </ul>
-          <div class="tab-content" data-select2-id="6">
-            <div class="tab-pane" id="personal" role="tabpanel">
-              <div class="row gy-4">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="full-name">Full Name</label><input type="text" class="form-control form-control-lg" id="full-name" value="Abu Bin Ishtiyak" placeholder="Enter Full name"></div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="display-name">Display Name</label><input type="text" class="form-control form-control-lg" id="display-name" value="Ishtiyak" placeholder="Enter display name"></div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="phone-no">Phone Number</label><input type="text" class="form-control form-control-lg" id="phone-no" value="" placeholder="Phone Number"></div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group focused">
-                    <label class="form-label" for="birth-day">Date of Birth</label><input type="text" class="form-control form-control-lg date-picker" id="birth-day" data-date-format="yyyy-mm-dd" placeholder="Enter your birth-date"></div>
-                </div>
-                <div class="col-12">
-                  <div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="latest-sale">
-                    <label class="custom-control-label" for="latest-sale">Use full name to display
-                    </label>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                    <li>
-                      <a href="#" data-bs-dismiss="modal" class="btn btn-lg btn-primary">Update Profile</a>
-                    </li>
-                    <li>
-                      <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
-                    </li>
-                  </ul>
+{% comment %} <div class="modal fade" id="profile-edit" data-select2-id="profile-edit" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content" data-select2-id="8">
+      <a href="#" class="close" data-bs-dismiss="modal">
+        <em class="icon ni ni-cross-sm"></em>
+      </a>
+      <div class="modal-body modal-body-lg" data-select2-id="7">
+        <h5 class="title">Update Profile</h5>
+        <ul class="nk-nav nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" data-bs-toggle="tab" href="#personal" aria-selected="false" role="tab"
+              tabindex="-1">Personal</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" data-bs-toggle="tab" href="#address" aria-selected="true" role="tab">Address</a>
+          </li>
+        </ul>
+        <div class="tab-content" data-select2-id="6">
+          <div class="tab-pane" id="personal" role="tabpanel">
+            <div class="row gy-4">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="full-name">Full Name</label><input type="text"
+                    class="form-control form-control-lg" id="full-name" value="Abu Bin Ishtiyak"
+                    placeholder="Enter Full name">
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="display-name">Display Name</label><input type="text"
+                    class="form-control form-control-lg" id="display-name" value="Ishtiyak"
+                    placeholder="Enter display name">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="phone-no">Phone Number</label><input type="text"
+                    class="form-control form-control-lg" id="phone-no" value="" placeholder="Phone Number">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group focused">
+                  <label class="form-label" for="birth-day">Date of Birth</label><input type="text"
+                    class="form-control form-control-lg date-picker" id="birth-day" data-date-format="yyyy-mm-dd"
+                    placeholder="Enter your birth-date">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input"
+                    id="latest-sale">
+                  <label class="custom-control-label" for="latest-sale">Use full name to display
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                  <li>
+                    <a href="#" data-bs-dismiss="modal" class="btn btn-lg btn-primary">Update Profile</a>
+                  </li>
+                  <li>
+                    <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="tab-pane active show" id="address" role="tabpanel" data-select2-id="address">
-              <div class="row gy-4" data-select2-id="5">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="address-l1">Address Line 1</label><input type="text" class="form-control form-control-lg" id="address-l1" value="2337 Kildeer Drive"></div>
+          </div>
+          <div class="tab-pane active show" id="address" role="tabpanel" data-select2-id="address">
+            <div class="row gy-4" data-select2-id="5">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="address-l1">Address Line 1</label><input type="text"
+                    class="form-control form-control-lg" id="address-l1" value="2337 Kildeer Drive">
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="address-l2">Address Line 2</label><input type="text" class="form-control form-control-lg" id="address-l2" value=""></div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="address-l2">Address Line 2</label><input type="text"
+                    class="form-control form-control-lg" id="address-l2" value="">
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="address-st">State</label>
-                    <input type="text" class="form-control form-control-lg" id="address-st" value="Kentucky">
-                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="address-st">State</label>
+                  <input type="text" class="form-control form-control-lg" id="address-st" value="Kentucky">
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label" for="address-st">State</label>
-                    <input type="text" class="form-control form-control-lg" id="address-st" value="Kentucky">
-                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="address-st">State</label>
+                  <input type="text" class="form-control form-control-lg" id="address-st" value="Kentucky">
                 </div>
-                <div class="col-12">
-                  <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                    <li>
-                      <a href="#" class="btn btn-lg btn-primary">Update Address</a>
-                    </li>
-                    <li>
-                      <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
-                    </li>
-                  </ul>
-                </div>
+              </div>
+              <div class="col-12">
+                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                  <li>
+                    <a href="#" class="btn btn-lg btn-primary">Update Address</a>
+                  </li>
+                  <li>
+                    <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div> {% endcomment %}
+  </div>
+</div> {% endcomment %}
 
 {% endblock modals %}

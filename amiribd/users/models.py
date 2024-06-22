@@ -16,6 +16,7 @@ from django.utils.functional import cached_property
 from django.db.models import QuerySet
 
 
+
 class ConcatFiels(models.Func):
     arg_joiner = " || "
     function = None
@@ -132,6 +133,12 @@ class Profile(models.Model):
     @cached_property
     def referrals(self) -> int:
         return self.user.referrals_count
+    
+    def get_referral_signup_url(self):
+        return reverse("users:referred-signup", kwargs={
+            "referral_code":self.referral_code
+        })
+
 
     def save(self, *args, **kwargs):
         self.referral_code = generate_referral_code(self.pk)

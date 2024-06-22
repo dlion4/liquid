@@ -114,10 +114,10 @@
 
                             <div class="user-account-main">
                                 <h6 class="overline-title-alt">Available Balance</h6>
-                                <div class="user-balance">{{available_amount}}
-                                    <small class="currency currency-btc">KES</small>
+                                <div class="amount user-balance">{{available_amount}}
+                                    <span class="currency currency-btc">KES</span>
                                 </div>
-                                <div class="user-balance-alt">{{locked_amount}}
+                                <div class="amount user-balance-alt">{{locked_amount}}
                                     <span class="currency currency-btc">KES</span>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                                     <span class="sub-text">Deposits</span>
                                 </div>
                                 <div class="user-account-value">
-                                    <span class="sub-text text-base">{{deposit_amount}}
+                                    <span class="amount sub-text text-base">{{deposit_amount}}
                                         <span class="currency currency-btc">KES</span></span>
                                 </div>
                             </li>
@@ -330,6 +330,17 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none"
+                                hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:wallet' %}"
+                                class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
+                                    </em></span>
+
+                                <span class="nk-menu-text">comming Soon
+                                </span>
+                            </a>
+                        </li>
 
                         <!-- <li class="nk-menu-item has-sub">
               <a href="#" class="nk-menu-link nk-menu-toggle">
@@ -366,7 +377,7 @@
                                 </div>
                                 <div class="wallet-text">
                                     <h6 class="wallet-name">{{plan.type}}</h6>
-                                    <span class="wallet-balance">{{plan.type.price}}
+                                    <span class="amount wallet-balance">{{plan.type.price}}
                                         <span class="currency currency-nio">KES</span></span>
                                 </div>
                             </a>
@@ -490,7 +501,7 @@
                             </div>
                         </li>
                         <li class="nk-menu-item">
-                            <a data-bs-toggle="modal" href="#covid-feedback" class="nk-menu-link">
+                            <a data-bs-toggle="modal" href="#Community" class="nk-menu-link">
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-chat-fill"></em>
                                 </span>
@@ -498,7 +509,7 @@
                             </a>
                         </li>
                         <li class="nk-menu-item">
-                            <a data-bs-toggle="modal" href="#covid-about" class="nk-menu-link">
+                            <a data-bs-toggle="modal" href="#EarningTips" class="nk-menu-link">
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-info-fill"></em>
                                 </span>
@@ -507,6 +518,7 @@
                         </li>
                     </ul>
                 </div>
+                <hr />
             </div>
         </div>
     </div>

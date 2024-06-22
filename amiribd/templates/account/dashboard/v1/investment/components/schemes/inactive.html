@@ -2,41 +2,48 @@
 
 <div class="nk-iv-scheme-list">
   {% for plan in inactive_plans %}
-    <div class="nk-iv-scheme-item">
-      <div class="nk-iv-scheme-icon is-running">
-        <em class="icon ni ni-update"></em>
-      </div>
-      <div class="nk-iv-scheme-info">
-        <div class="nk-iv-scheme-name">{{plan.type.get_type_display|title}}
-          - Interest
-          {{plan.percentage_return}}% Return</div>
-        <div class="nk-iv-scheme-desc">Invested Amount -
-          <span class="amount">{{plan.type.price|floatformat:2|intcomma}}
-            KES</span></div>
-      </div>
-      <div class="nk-iv-scheme-term">
-        <div class="nk-iv-scheme-start nk-iv-scheme-order">
-          <span class="nk-iv-scheme-label text-soft">Start Date</span><span class="nk-iv-scheme-value date">{{plan.created_at}}</span></div>
-        <div class="nk-iv-scheme-end nk-iv-scheme-order"></div>
-      </div>
-      <div class="nk-iv-scheme-amount">
-        <div class="nk-iv-scheme-amount-a nk-iv-scheme-order">
-          <span class="nk-iv-scheme-label text-soft">Total Return</span><span class="nk-iv-scheme-value amount">{{plan.interest_return|floatformat:2|intcomma}}
-            KES</span></div>
-        <div class="nk-iv-scheme-amount-b nk-iv-scheme-order">
-          <span class="nk-iv-scheme-label text-soft">Net Profit Earn</span><span class="nk-iv-scheme-value amount">{{plan.interest_return|floatformat:2|intcomma}}
-            KES
-            <span class="amount-ex">~
-              {{plan.type.price|floatformat:2|intcomma}}KES</span></span></div>
-      </div>
-      <div class="nk-iv-scheme-more">
-        <a class="btn btn-icon btn-lg btn-round btn-trans" href="{% url "dashboard:invest:plan" plan.slug plan.pk %}">
-          <em class="icon ni ni-forward-ios"></em>
-        </a>
-      </div>
-      <div class="nk-iv-scheme-progress">
-        <div class="progress-bar" data-progress="25"></div>
+  <div class="nk-iv-scheme-item">
+    <div class="nk-iv-scheme-icon is-running">
+      <em class="icon ni ni-update"></em>
+    </div>
+    <div class="nk-iv-scheme-info">
+      <div class="nk-iv-scheme-name">{{plan.type.get_type_display|title}}
+        - Interest
+        {{plan.percentage_return}}% Return</div>
+      <div class="nk-iv-scheme-desc">Invested Amount -
+        <span class="amount">{{plan.type.price|floatformat:2|intcomma}}
+          KES</span>
       </div>
     </div>
+    <div class="nk-iv-scheme-term">
+      <div class="nk-iv-scheme-start nk-iv-scheme-order">
+        <span class="nk-iv-scheme-label text-soft">Start Date</span><span
+          class="nk-iv-scheme-value date">{{plan.created_at}}</span>
+      </div>
+      <div class="nk-iv-scheme-end nk-iv-scheme-order"></div>
+    </div>
+    <div class="nk-iv-scheme-amount">
+      <div class="nk-iv-scheme-amount-a nk-iv-scheme-order">
+        <span class="nk-iv-scheme-label text-soft">Total Return</span><span
+          class="nk-iv-scheme-value amount">{{plan.interest_return|floatformat:2|intcomma}}
+          KES</span>
+      </div>
+      <div class="nk-iv-scheme-amount-b nk-iv-scheme-order">
+        <span class="nk-iv-scheme-label text-soft">Net Profit Earn</span><span
+          class="nk-iv-scheme-value amount">{{plan.interest_return|floatformat:2|intcomma}}
+          KES
+          <span class="amount-ex">~
+            {{plan.type.price|floatformat:2|intcomma}}KES</span></span>
+      </div>
+    </div>
+    <div class="nk-iv-scheme-more">
+      <a class="btn btn-icon btn-lg btn-round btn-trans" href="{% url 'dashboard:invest:plan' plan.slug plan.pk %}">
+        <em class="icon ni ni-forward-ios"></em>
+      </a>
+    </div>
+    <div class="nk-iv-scheme-progress">
+      <div class="progress-bar" data-progress="25"></div>
+    </div>
+  </div>
   {% endfor %}
 </div>

@@ -93,16 +93,36 @@ class DashboardViewMixin(TemplateView):
             return Decimal("0.00")
 
     def get_account_locked_amount(self, **kwargs):
+
         try:
-            if transaction := Transaction.objects.filter(
+            total_amount = Transaction.objects.filter(
+                Q(source="Account Registration") | Q(source="Plan Purchase") | Q(source="Upgrade"),
                 profile=self.__get_user().profile_user,
                 type="DEPOSIT",
-                source="Account Registration",
-            ).first():
-                return Decimal(transaction.paid)
+            ).aggregate(total=Sum('amount'))['total']
+
+            if total_amount is not None:
+                return Decimal(total_amount)
             return Decimal("0.00")
         except Transaction.DoesNotExist:
             return Decimal("0.00")
+        """try:
+            '''
+            Transaction.objects.filter(
+                profile=self.__get_user().profile_user,
+                type="DEPOSIT",
+                Q(source="Account Registration") | Q(source="Plan Purchase") | Q(source="Upgrade")
+            ).aggregate(total=Sum('amount'))['total']
+            '''
+            if transaction := Transaction.objects.filter(
+                Q(source="Account Registration") | Q(source="Plan Purchase") | Q(source="Upgrade"),
+                profile=self.__get_user().profile_user,
+                type="DEPOSIT",
+            ).aggregate(total=Sum('amount'))['total']:
+                return Decimal(transaction.paid)
+            return Decimal("0.00")
+        except Transaction.DoesNotExist:
+            return Decimal("0.00")"""
 
     def get_account_available_amount(self, **kwargs):
         try:

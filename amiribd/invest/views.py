@@ -280,12 +280,14 @@ class HandleRegistrationPaymentView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        pass
+        print(request.GET)
+        plan = Plan.objects.filter(account__pool__profile__id=request.GET.get('profile')).last()
+        plan = PlanSerializer(plan).data
+        return JsonResponse({"success": True, 'plan': plan})
 
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         print(data)
-
         return JsonResponse({"success": True})
 
 
