@@ -128,7 +128,7 @@
 
     (async function () {
       const countryCurrencyCode = document.querySelectorAll(".currency")
-
+      let currencyRate;
       let apiAddress;
       const storageKey = 'geoData';
       const conversionStorageKey = "conversionStorageKey";
@@ -206,15 +206,20 @@
       function updatePayableAmountAndCurrency(data, location) {
 
         const amountToBePaid = document.querySelector(".currencyRate")
+
         console.log(document.querySelector(".currency-code"))
         let amount;
         let dataArray = data
         console.log(dataArray)
         // locate the value input
         const currencyCode = location.currency.currency_code
-        document.querySelector(".currency-code").value = currencyCode
 
-        document.getElementById("client-country-name").value = location.country
+        if (document.querySelector(".currency-code") && document.getElementById("client-country-name")) {
+
+          document.querySelector(".currency-code").value = currencyCode
+
+          document.getElementById("client-country-name").value = location.country
+        }
 
         // update the currecny display on the screeen
         countryCurrencyCode.forEach(currency => {
@@ -224,11 +229,15 @@
         for (const country of dataArray[0]['countries']) {
           if (country.currency_code === currencyCode) {
             amount = country.amount
+            currencyRate = country.amount
           } else {
             amount = 1
+            currencyRate = 1
           }
         }
-        amountToBePaid.value = amount;
+        if (amountToBePaid) {
+          amountToBePaid.value = amount;
+        }
       }
 
       if (document.querySelectorAll('.amount')) {
@@ -249,7 +258,8 @@
 
           amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
             parseFloat(amountElementContext) *
-            parseFloat(document.querySelector(".currencyRate").value)
+            parseFloat(currencyRate)
+            // parseFloat(document.querySelector(".currencyRate").value)
           ).toFixed(2))
 
           // console.log(spanElement)

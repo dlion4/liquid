@@ -20,21 +20,25 @@
                 <li class="col-sm-4">
                   <p>
                     <span class="text-soft">Started On</span>
-                    <br/>
-                    {{plan.created_at}}</p>
+                    <br />
+                    {{plan.created_at}}
+                  </p>
                 </li>
                 <li class="col-sm-4">
                   <p>
                     <span class="text-soft">Price</span>
-                    <br/>
-                    KES
-                    {{plan.type.price}}
-                    Entrance Fee</p>
+                    <br />
+                    <span class="amount">
+                      {{plan.type.price}}
+                      <span class="currency">KES</span>
+                    </span>
+                    Entrance Fee
+                  </p>
                 </li>
                 <li class="col-sm-4">
                   <p>
                     <span class="text-soft">Access</span>
-                    <br/>
+                    <br />
                     Unlimited
                   </p>
                 </li>
@@ -48,17 +52,17 @@
               </div>
               <div class="sp-plan-amount">
                 {% if not plan.is_paid %}
-                  <span class="sp-plan-status text-warning">Due</span>
-                  <span class="amount">
-                    KES
-                    {{plan.type.price}}
-                  </span>
+                <span class="sp-plan-status text-warning">Due</span>
+                <span class="amount">
+                  {{plan.type.price}}
+                  <span class="currency">KES</span>
+                </span>
                 {% else %}
-                  <span class="sp-plan-status text-success">Paid</span>
-                  <span class="amount">
-                    KES
-                    {{plan.type.price}}
-                  </span>
+                <span class="sp-plan-status text-success">Paid</span>
+                <span class="amount">
+                  {{plan.type.price}}
+                  <span class="currency">KES</span>
+                </span>
                 {% endif %}
               </div>
             </div>
@@ -77,14 +81,14 @@
                   <li class="cc-pay-btn">
 
                     {% if not plan.is_paid %}
-                      <a href="#" class="btn btn-secondary">
-                        <span>Pay Now</span>
-                        <em class="icon ni ni-arrow-long-right"></em>
-                      </a>
+                    <a href="#" class="btn btn-secondary">
+                      <span>Pay Now</span>
+                      <em class="icon ni ni-arrow-long-right"></em>
+                    </a>
                     {% else %}
-                      <a type="button" role="button" class="btn btn-secondary">
-                        <span>Already Paid</span>
-                      </a>
+                    <a type="button" role="button" class="btn btn-secondary">
+                      <span>Already Paid</span>
+                    </a>
                     {% endif %}
                   </li>
                 </ul>
@@ -100,8 +104,10 @@
               </div>
               <div class="sp-plan-amount">
                 <span class="sp-plan-status text-success">Paid</span>
-                <span class="amount">KES
-                  {{plan.type.price|floatformat:2|intcomma}}</span>
+                <span class="amount">
+                  {{plan.type.price|floatformat:2|intcomma}}
+                  <span class="currency">KES</span>
+                </span>
               </div>
             </div>
           </div>
@@ -149,7 +155,7 @@
             <p class="text-soft">
               You can get additionally support for any issue regarding your account for
               <span class="ext-base">free</span>
-              
+
             </p>
           </div>
           <div class="nk-help-action">

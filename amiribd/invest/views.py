@@ -341,6 +341,8 @@ class HandleAddPlanPaymentView(HandlePaymentView):
         )
 
         profile.save()
+        account.balance += Decimal(amount)
+        account.save()
 
         return JsonResponse({"success": True, 'url': reverse("subscriptions:subscription", kwargs={
             "plan_slug":plan.slug,
