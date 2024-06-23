@@ -199,6 +199,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         totalInvestment = sum(instance.type.price for instance in [pool, account, plan])
 
         discountPrice = Decimal(Decimal("0.2") * Decimal(totalInvestment))
+        # discountPrice = Decimal(totalInvestment)
 
         mpesa_code = data.get("mpesa_transaction_code")
         phone_number = data.get("phone_number")
@@ -226,6 +227,10 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
         # look for the referrer
         profile = pool.profile
+
+        profile.plans.add(plan)
+
+        profile.save()
 
         self.__get_referrer_and_update_account(profile, mpesa_code, phone_number, currency)
 
@@ -295,10 +300,77 @@ class HandleRegistrationPaymentView(HandlePaymentView):
         return JsonResponse({"success": True})
     
 class HandleAddPlanPaymentView(HandlePaymentView):
+
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
-        print(data)
-        return JsonResponse({"success": True})
+
+        profile = get_object_or_404(Profile, pk=data.get("profile"))
+        account = get_object_or_404(Account, pool__profile=profile)
+        plan_type = get_object_or_404(PlanType, pk=data.get("plan"))
+        amount = data.get("actualAmount", "pay_amount")
+        transactioncode = data.get("transactioncode")
+        phone_number = data.get("phone_no")
+        # plan = get_object_or_404(Plan, type=plan_type)
+        plan, _ = Plan.objects.get_or_create(
+            account=account,
+            type=plan_type,
+            payment_method=data.get("payment_method", "PAYBILL"),
+            mpesa_transaction_code=transactioncode,
+            payment_phone_number=phone_number
+        )
+        # check if the the user has the plan already
+        is_in_profile = profile.plans
+
+        # Check if the user already has this plan
+        if profile.plans.filter(id=plan.id).exists():
+            return JsonResponse({'error': 'Plan already exists in the profile', 'success': False}, status=400)
+        
+        # Add the plan to the profile if it does not exist
+        profile.plans.add(plan)
+
+        self.handle_transaction_creation(
+            request,
+            profile=profile,
+            account=account,
+            amount=amount,
+            phone_number=phone_number,
+            transactioncode=transactioncode,
+            currency=data.get("currency", "KES"),
+            country=data.get("country", "Kenya"),
+        )
+
+        profile.save()
+
+        return JsonResponse({"success": True, 'url': reverse("subscriptions:subscription", kwargs={
+            "plan_slug":plan.slug,
+            "plan_id":plan.pk
+        })})
+    
+    def handle_transaction_creation(
+            self, 
+            request,
+            profile,
+            account,
+            amount,
+            phone_number,
+            transactioncode,
+            currency="KES",
+            country="Kenya"
+        )->None:
+         Transaction.objects.create(
+            profile=profile,
+            account=account,
+            type="DEPOSIT",
+            amount=amount,
+            is_payment_success=True,
+            source='Account Registration',
+            payment_phone=phone_number,
+            mpesa_transaction_code=transactioncode,
+            payment_phone_number=phone_number,
+            currency=currency,
+            country=country,
+        )
 
 
 

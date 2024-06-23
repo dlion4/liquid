@@ -48,4 +48,5 @@ class PayStackPaymentStatusView(View):
     def get(self, request, *args, **kwargs):
         payment_status_object = get_object_or_404(PaystackPaymentStatus, reference=request.GET.get("reference"))
         serialized_data = PaystackPaymentStatusSerializer(payment_status_object).data
+        print(serialized_data)
         return JsonResponse(serialized_data, safe=False)

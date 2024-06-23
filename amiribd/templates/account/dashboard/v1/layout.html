@@ -33,7 +33,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
-
 </head>
 
 <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
@@ -130,23 +129,56 @@
     (async function () {
       const countryCurrencyCode = document.querySelectorAll(".currency")
 
+      let apiAddress;
       const storageKey = 'geoData';
       const conversionStorageKey = "conversionStorageKey";
       const ipAddressStorageKey = "ipAddressStorageKey";
       let localIpAddress = localStorage.getItem(ipAddressStorageKey)
 
-      const apiAddress = await fetchUserIpAddress('https://api.ipify.org');
+      if (navigator.onLine && localIpAddress === null) {
+        apiAddress = await fetchUserIpAddress('https://api.ipify.org');
+      } else {
+        apiAddress = localIpAddress
+      }
+      console.log(navigator.onLine)
+
 
       let geoData = localStorage.getItem(storageKey);
-      let conversionRateData = localStorage.getItem(conversionStorageKey)
+      let conversionRateData = localStorage.getItem(conversionStorageKey) ?? '1';
 
       // if (ipAddress && ipAddress === localIpAddress)
 
+      /*
+        @ LocationPayload Dat
+        
+        */
+      // call the endpoint to save the plan selected
+
+      if (conversionRateData === '1') {
+        localStorage.setItem('conversionStorageKey', '1');
+      }
+
+      conversionRateData = JSON.parse(localStorage.getItem('conversionStorageKey'))
+
+      if (geoData === null) {
+        fetchUserLocationByLocation(
+          'https://ipgeolocation.abstractapi.com/v1',
+          JSON.parse(localIpAddress),
+          'geoData'
+        ).then(response => response.json().then(data => {
+          updateLocationData(data)
+        }));
+      }
+
+
+      console.log(JSON.parse(localIpAddress), apiAddress)
+
+
+      geoData = JSON.parse(localStorage.getItem('geoData'));
+
       if (
-        geoData && JSON.parse(localIpAddress) &&
-        JSON.parse(localIpAddress) === apiAddress
+        geoData && JSON.parse(localIpAddress)
       ) {
-        geoData = JSON.parse(geoData);
         console.log("Ip aleady registered")
         updateLocationData(geoData)
         if (conversionRateData) {
@@ -158,24 +190,26 @@
           updatePayableAmountAndCurrency(storageKey, geoData)
         }
       } else {
-        console.log("Fetched new ip address")
         const apiLocation = await fetchUserLocationByLocation('https://ipgeolocation.abstractapi.com/v1', JSON.parse(localIpAddress), storageKey);
-        updateLocationData(apiLocation)
+        geoData = localStorage.getItem("geoData")
+        updateLocationData(geoData)
         if (conversionRateData) {
           console.log('absent geo 1')
-          updatePayableAmountAndCurrency(conversionRateData, apiLocation)
+          updatePayableAmountAndCurrency(conversionRateData, geoData)
         } else {
           console.log('absent geo 2')
           const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
-          updatePayableAmountAndCurrency(storageKey, apiLocation)
+          updatePayableAmountAndCurrency(storageKey, geoData)
         }
       }
 
       function updatePayableAmountAndCurrency(data, location) {
 
         const amountToBePaid = document.querySelector(".currencyRate")
+        console.log(document.querySelector(".currency-code"))
         let amount;
-        let dataArray = JSON.parse(data)
+        let dataArray = data
+        console.log(dataArray)
         // locate the value input
         const currencyCode = location.currency.currency_code
         document.querySelector(".currency-code").value = currencyCode
@@ -258,6 +292,9 @@
   <input type="hidden" name="currencyRate" class="currencyRate">
   <input type="hidden" name="country" class="client-country-name" id="client-country-name" />
   <input type="hidden" name="currecny" class="currency-code" id="currency-code" />
+
+  {% block morejs %}
+  {% endblock morejs %}
 
 </body>
 

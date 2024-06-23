@@ -141,6 +141,8 @@
 
 <!-- add plan form popup -->
 
+<input type="hidden" id="add-plan-id-base-file">
+
 
 <div class="modal fade zoom" id="modalZoomMpesaPayment" aria-modal="true" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document">
@@ -178,9 +180,9 @@
                                 <hr />
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="phone-no">Phone No</label>
+                                <label class="form-label" for="phone-no">Phone Number</label>
                                 <div class="form-control-wrap">
-                                    <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no" />
+                                    <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no-base-file" name="phone-no-base-file" />
                                 </div>
                                 <span id="phone-error" class="errorlist"></span>
                             </div>
@@ -218,7 +220,7 @@
                     <!-- automated payment -->
                     <div class="tab-pane" id="automated-payment">
                         <input type="hidden" name="currency" value="UGH" class="country-currency">
-                        <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn">click to pay</button>
+                        <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn-base-file">click to pay</button>
                     </div>
                 </div>
             </div>
@@ -228,9 +230,20 @@
 </div>
 
 
-
+<input value="" type="hidden" name="plan_ty__id" id="plan_type__id">
 
 <script defer="defer">
+
+    currencyCode = geoData.currency.currency_code
+
+    let conversionRateData = localStorage.getItem('conversionStorageKey') ?? '1';
+
+    // normal file dealings starts here
+
+    let planIdBaseLine = document.getElementById("add-plan-id-base-file")
+
+    // console.log(planSelectionId)
+
     let submitBtn = document.getElementById("updateEvent")
     let swapArea = document.getElementById("id_available_amount")
 
@@ -250,7 +263,7 @@
 
     }
 
-    const addPlanBtn = document.getElementById("suitable-plan-btn");
+    const addPlanBtn = document.getElementById("updateEvent-add-pan");
 
     const addPlanAmountToBePaid = document.getElementById("add-pay-amount");
 
@@ -263,40 +276,155 @@
     }
 
 
-
     if (addPlanBtn) {
-        addPlanBtn.addEventListener('click', function (event) {
+        addPlanBtn.addEventListener('click', async function (event) {
+
+            let planSelectionId = document.getElementById("plan-type-choice")
+
 
             const paymentBtnForm = document.getElementById("mpesa-payment-btn-popup-base-file");
-            const phoneNo = document.getElementById("phone-no");
+            const phoneNo = document.getElementById("phone-no-base-file");
             const transactioncode = document.getElementById("transactioncode")
+
+
+
             // paymentBtnForm.setAttribute("disabled", "disabled");
 
-            addPlanAmountToBePaid.value = `KES: ${parseFloat(cleanCurrency(getAddPlanPrice())).toFixed(2)}`;
+            let AcctualAmountToBePaid = getAddPlanPrice();
 
-            console.log(cleanCurrency(getAddPlanPrice()))
+            addPlanAmountToBePaid.value = `${currencyCode}: ${parseFloat(cleanCurrency(AcctualAmountToBePaid)).toFixed(2)}`;
+
+            console.log(cleanCurrency(AcctualAmountToBePaid, currencyCode))
 
             // mpesaPaystackPaymentModal.classList.add("show")
             $('#modalZoomMpesaPayment').modal('show');
 
-            // call the endpoint to save the plan selected
 
+            let iterableConvRate;
+
+
+            if (conversionRateData === '1') {
+                iterableConvRate = [1]; // Creates an array with a single element 1
+            } else {
+                try {
+                    conversionRateData = JSON.parse(conversionRateData);
+                    if (Array.isArray(conversionRateData) && conversionRateData[0] && conversionRateData[0]['countries']) {
+                        iterableConvRate = conversionRateData[0]['countries'];
+                        // else convert everything to array with single elemen
+                    } else {
+                        // console.error('Unexpected structure of conversionRateData:', conversionRateData);
+                        iterableConvRate = [1];
+                    }
+                } catch (e) {
+                    // console.error('Failed to parse conversionRateData:', e);
+                    iterableConvRate = [1];
+                }
+            }
+
+
+
+            let countryRate;
+
+
+            for (const country of iterableConvRate) {
+                if (country.currency_code === geoData.currency.currency_code) {
+                    AcctualAmountToBePaid = parseFloat(parseFloat(AcctualAmountToBePaid) * parseFloat(country.amount)).toFixed(2)
+                    countryRate = country.amount;
+                } else {
+                    AcctualAmountToBePaid = AcctualAmountToBePaid;
+                    countryRate = 1;
+                }
+            }
+
+            addPlanAmountToBePaid.value = `${currencyCode}: ${parseFloat(cleanCurrency(AcctualAmountToBePaid, currencyCode)).toFixed(2)}`
+
+            console.log(addPlanAmountToBePaid.value)
+            console.log(geoData, conversionRateData)
+
+            addPlanAmountToBePaid.value = parseFloat(cleanCurrency(AcctualAmountToBePaid, currencyCode)).toFixed(2)
+            let actualAmountInKenyaShillings = parseFloat(parseFloat(addPlanAmountToBePaid.value) / parseFloat(countryRate)).toFixed(2)
 
             paymentBtnForm.addEventListener("click", async (event) => {
                 event.preventDefault();
-                addPlanAmountToBePaid.value = parseFloat(cleanCurrency(getAddPlanPrice())).toFixed(2)
 
                 const data = {
                     pay_amount: addPlanAmountToBePaid.value,
                     transactioncode: transactioncode.value,
                     phone_no: phoneNo.value,
-                    profile: '{{profile.id}}'
+                    profile: '{{profile.id}}',
+                    plan: planSelectionId.value,
+                    currency: currencyCode,
+                    country: geoData.country,
+                    actualAmount: actualAmountInKenyaShillings
                 }
 
                 addPlanPaymentFn(data);
 
-                addPlanAmountToBePaid.value = `KES: ${parseFloat(cleanCurrency(getAddPlanPrice())).toFixed(2)}`;
+                addPlanAmountToBePaid.value = `${currencyCode}: ${parseFloat(cleanCurrency(AcctualAmountToBePaid, currencyCode)).toFixed(2)}`;
             })
+
+            // paystack button
+
+
+
+            if (document.getElementById('paystackbtn-base-file')) {
+
+                let paystackBtn = document.getElementById('paystackbtn-base-file');
+                paystackBtn.addEventListener('click',
+                    function (event) {
+                        event.preventDefault();
+                        // the amount to be paid generated from the pool, account, and plan
+                        // const amountToBePaid = document.querySelector(".currencyRate").value
+
+                        // amount dispaly to the user for payment tothe paystack
+                        // const amountToBePaidAfterConversion = parseFloat(amountToBePaid) * parseFloat(ammountToBePaidBeforeConversion)
+                        // amount recived in our server in KShs
+                        let actualAmountInKenyaShillings = parseFloat(parseFloat(addPlanAmountToBePaid.value) / parseFloat(countryRate)).toFixed(2)
+
+                        // country currecny type
+                        const countryCurrencyCode = document.querySelector(".currency-code").value
+                        console.log(countryCurrencyCode)
+                        // country name 
+                        const countryName = document.querySelector(".client-country-name").value
+
+                        let handler = PaystackPop.setup({
+                            key: 'pk_test_78a97775962282ab2ad167cd5d34c3b28f349316', // Replace with your public key
+                            email: '{{request.user.email}}',
+                            amount: actualAmountInKenyaShillings * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+                            // amount: parseInt(amountToBePaidAfterConversion) * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+                            currency: "KES", // Use GHS for Ghana Cedis or USD for US Dollars
+                            ref: '', // Replace with a reference you generated
+                            callback: function (response) {
+                                //this happens after the payment is completed successfully
+                                var reference = response.reference;
+                                alert('Payment complete! Reference: ' + reference);
+                                // Make an AJAX call to your server with the reference to verify the transaction
+                                console.log('{{payment_webhook_status_url}}')
+                                //`{{payment_webhook_status_url}}?reference=${reference}`
+                                const url = `/payments/paystack/payment-status?reference=${reference}`
+                                fetch(url, { method: 'GET', }).then((response) => response.json()).then(data => {
+                                    if (data.status === 'success') {
+                                        console.log(data)
+                                    } else {
+                                        console.log(data)
+                                    }
+                                });
+                            },
+                            onClose: function (error) {
+                                alert('Transaction was not completed, window closed.');
+                                console.log(error);
+                            },
+                        });
+                        handler.openIframe();
+                    }
+
+                )
+            };
+
+
+
+
+
 
 
             function addPlanPaymentFn(data) {
@@ -314,18 +442,18 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            alert('Withdrawal Initiated Successfully!');
+                            alert('Plan added Successfully!');
+                            window.location.href = data.url;
                         } else {
                             // Handle errors, display them on the form
                             console.error('Errors:', data);
-                            alert('Failed to process withdrawal: ' + JSON.stringify(data));
+                            alert('Failed to process payment: ' + JSON.stringify(data));
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
                     });
             }
-
 
 
         })
@@ -367,7 +495,8 @@
                 })
                 .finally(window.location.reload());
         });
-    });
+    })
+
 </script>
 {% comment %} Tips to Earn {% endcomment %}
 <div aria-modal="true" class="modal fade" id="EarningTips" role="dialog" tabindex="-1">
@@ -515,3 +644,90 @@
 
 
 {% endblock modals %}
+
+
+
+{% block morejs %}
+<script>
+    if (document.getElementById("closeAddPlanPopupForm-subscribe")) {
+
+        let closePaymentForm = document.getElementById("closeAddPlanPopupForm-subscribe")
+
+        // check the poolId, chech the client and the check the pkan then delete these items
+
+        closePaymentForm.addEventListener("click", async (e) => {
+            e.preventDefault()
+
+            // handlePlanCreationDestruction(profileUserId, poolId)
+            console.log(e)
+
+        })
+    }
+    if (document.getElementById("closeAddPlanPopupForm")) {
+
+        let closePaymentForm = document.getElementById("closeAddPlanPopupForm")
+
+        // check the poolId, chech the client and the check the pkan then delete these items
+
+        closePaymentForm.addEventListener("click", async (e) => {
+            e.preventDefault()
+
+            // handlePlanCreationDestruction(profileUserId, poolId)
+            console.log(e)
+
+        })
+    }
+
+
+
+
+    async function handleCreateTransaction(
+        pool_id,
+        account_id,
+        plan_id,
+        phoneN,
+        cleanedCurrency,
+        profileId,
+        mpesa_code,
+        currency,
+        country) {
+        const response = await fetch(`/dashboard/invest/handle-payment-create-transaction/${pool_id}/${account_id}/${plan_id}/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                phone_number: phoneN,
+                amount: cleanedCurrency,
+                currency: currency,
+                profile: profileId,
+                mpesa_transaction_code: mpesa_code,
+                plan_id: planId,
+                country: country,
+            })
+        });
+
+
+        const data = await response.json()
+
+        if (!data.success) {
+            alert("Something went wrong. ")
+        }
+
+
+        window.location.href = data.url
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock morejs %}

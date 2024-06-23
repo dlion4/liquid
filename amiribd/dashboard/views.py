@@ -93,36 +93,18 @@ class DashboardViewMixin(TemplateView):
             return Decimal("0.00")
 
     def get_account_locked_amount(self, **kwargs):
-
+        # this is the amount for the account registration
+        # TODO: There are more optimization to be done
         try:
-            total_amount = Transaction.objects.filter(
-                Q(source="Account Registration") | Q(source="Plan Purchase") | Q(source="Upgrade"),
-                profile=self.__get_user().profile_user,
-                type="DEPOSIT",
-            ).aggregate(total=Sum('amount'))['total']
-
-            if total_amount is not None:
-                return Decimal(total_amount)
-            return Decimal("0.00")
-        except Transaction.DoesNotExist:
-            return Decimal("0.00")
-        """try:
-            '''
-            Transaction.objects.filter(
-                profile=self.__get_user().profile_user,
-                type="DEPOSIT",
-                Q(source="Account Registration") | Q(source="Plan Purchase") | Q(source="Upgrade")
-            ).aggregate(total=Sum('amount'))['total']
-            '''
             if transaction := Transaction.objects.filter(
-                Q(source="Account Registration") | Q(source="Plan Purchase") | Q(source="Upgrade"),
                 profile=self.__get_user().profile_user,
                 type="DEPOSIT",
-            ).aggregate(total=Sum('amount'))['total']:
-                return Decimal(transaction.paid)
+                source="Account Registration",
+            ).aggregate(total=Sum("paid")):
+                return Decimal(transaction['total'])
             return Decimal("0.00")
         except Transaction.DoesNotExist:
-            return Decimal("0.00")"""
+            return Decimal("0.00")
 
     def get_account_available_amount(self, **kwargs):
         try:
@@ -133,9 +115,10 @@ class DashboardViewMixin(TemplateView):
             return Decimal("0.00")
 
     def get_profile_plans(self, **kwargs):
-        return Plan.objects.filter(
-            account__pool__profile=self.__get_user().profile_user,
-        ).all()
+        # return Plan.objects.filter(
+        #     account__pool__profile=self.__get_user().profile_user,
+        # ).all()
+        return self.__get_user().profile_user.plans.all()
 
     def _get_profile_active_plans(self, **kwargs):
         return self.get_profile_plans().filter(status="RUNNING")

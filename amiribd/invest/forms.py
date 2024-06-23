@@ -253,15 +253,19 @@ class AddPlanForm(forms.ModelForm):
             self.request
             and self.request.user.is_authenticated
             and self.request.user.profile_user
+            and hasattr(self.request.user, 'profile_user')
         ):
-            user_selected_type_id = (
-                Plan.objects.filter(
-                    account__pool__profile=self.request.user.profile_user
-                )
-                .all()
-                .values_list("type_id", flat=True)
-            )
+            profile_user = self.request.user.profile_user
+            user_selected_type_ids = profile_user.plans.values_list("type_id", flat=True)
+            # user_selected_type_id = (
+            #     Plan.objects.filter(
+            #         account__pool__profile=self.request.user.profile_user,
+                    
+            #     )
+            #     .all()
+            #     .values_list("type_id", flat=True)
+            # )
 
             self.fields["type"].queryset = self.fields["type"].queryset.exclude(
-                id__in=user_selected_type_id
+                id__in=user_selected_type_ids
             )
