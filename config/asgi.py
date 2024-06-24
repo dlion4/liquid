@@ -23,6 +23,7 @@ from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.urls import path
+from starlette.requests import Request
 
 from channels.security.websocket import AllowedHostsOriginValidator
 
@@ -31,26 +32,64 @@ from channels.security.websocket import AllowedHostsOriginValidator
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 sys.path.append(str(BASE_DIR / "amiribd"))
 sys.path.append(str(BASE_DIR / "services"))
+
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "config.settings.production"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
+from services.apis.views import app as litestar_application
+from starlette.types import ASGIApp, Receive, Scope, Send
 
 # This application object is used by any WSGI server configured to use this
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 django_asgi_application = get_asgi_application()
-# Apply ASGI middleware here.
 
 from amiribd.streams import routing
 
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
-# app = application
+# Custom middleware to dispatch requests to Django or Litestar based on path
+# class DispatchLiteStartDjangoCustomRouteMiddleware:
+    # def __init__(self, django_app: ASGIApp, litestar_app: ASGIApp):
+    #     self.django_app = django_app
+    #     self.litestar_app = litestar_app
+
+    # async def __call__(self, scope: Scope, receive: Receive, send: Send):
+    #     if scope["type"] == "http":
+    #         request = Request(scope, receive)
+    #         if request.url.path.startswith('/apis/v1'):
+    #             await self.litestar_app(scope, receive, send)
+    #         else:
+    #             await self.django_app(scope, receive, send)
+    #     else:
+    #         await self.django_app(scope, receive, send)
+from starlette.middleware.base import BaseHTTPMiddleware
+
+# Custom middleware to dispatch requests to Django or Litestar based on path
+class DispatchLiteStartDjangoCustomRouteMiddleware(BaseHTTPMiddleware):
+    def __init__(self, django_app: ASGIApp, litestar_app: ASGIApp):
+        self.django_app = django_app
+        self.litestar_app = litestar_app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send):
+        if scope["type"] == "http":
+            request = Request(scope, receive)
+            if request.url.path.startswith('/apis/v1'):
+                await self.litestar_app(scope, receive, send)
+            else:
+                await self.django_app(scope, receive, send)
+        else:
+            await self.django_app(scope, receive, send)
+
+# Initialize the combined application
+combined_application = DispatchLiteStartDjangoCustomRouteMiddleware(
+    django_asgi_application, litestar_application
+)
+
 application = ProtocolTypeRouter(
     {
-        "http": django_asgi_application,
+        "http": combined_application,
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(URLRouter(routing.websocket_urlpatterns))
         ),
