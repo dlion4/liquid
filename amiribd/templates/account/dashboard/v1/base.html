@@ -397,14 +397,32 @@
                             callback: function (response) {
                                 //this happens after the payment is completed successfully
                                 var reference = response.reference;
+                                // alert('Payment complete! Reference:'+ reference);
                                 alert('Payment complete! Reference: ' + reference);
                                 // Make an AJAX call to your server with the reference to verify the transaction
-                                console.log('{{payment_webhook_status_url}}')
+                                // console.log('{{payment_webhook_status_url}}')
                                 //`{{payment_webhook_status_url}}?reference=${reference}`
-                                const url = `/payments/paystack/payment-status?reference=${reference}`
+                                // const url = `/payments/paystack/payment-status?reference=${reference}`
+                                // ~/payments/paystack/payment-status/?reference=${reference} || 'payments:paystack:paystack-webhook-status'
+                                const url = `{{payment_webhook_status_url}}?reference=${reference}`
+
+
+
                                 fetch(url, { method: 'GET', }).then((response) => response.json()).then(data => {
-                                    if (data.status === 'success') {
-                                        console.log(data)
+                                    if (data.success) {
+
+                                        const payloadData = {
+                                            pay_amount: addPlanAmountToBePaid.value,
+                                            transactioncode: reference,
+                                            phone_no: phoneNo.value,
+                                            profile: '{{profile.id}}',
+                                            plan: planSelectionId.value,
+                                            currency: currencyCode,
+                                            country: geoData.country,
+                                            actualAmount: actualAmountInKenyaShillings
+                                        }
+                                        addPlanPaymentFn(payloadData);
+
                                     } else {
                                         console.log(data)
                                     }

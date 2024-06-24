@@ -14,8 +14,7 @@
     </div>
 
     <div class="text-center bg-lighter w-100">
-      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn"
-        data-bs-profile="{{request.user.profile_user.id}}">
+      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn" data-bs-profile="{{request.user.profile_user.id}}">
         Confirm &amp; proceed
       </button>
     </div>
@@ -60,16 +59,14 @@
               <div class="form-group">
                 <label class="form-label" for="phone-no">Phone No</label>
                 <div class="form-control-wrap">
-                  <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no"
-                    name="phone_no" />
+                  <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no" />
                 </div>
                 <span id="phone-error" class="errorlist"></span>
               </div>
               <div class="form-group">
                 <label class="form-label" for="phone-no">Transaction code</label>
                 <div class="form-control-wrap">
-                  <input type="text" placeholder="SF112Z2HIH" class="form-control" id="transactioncode"
-                    name="transactioncode" />
+                  <input type="text" placeholder="SF112Z2HIH" class="form-control" id="transactioncode" name="transactioncode" />
                 </div>
                 <span id="phone-error" class="errorlist"></span>
               </div>
@@ -77,14 +74,12 @@
               <div class="form-group">
                 <label class="form-label" for="pay-amount">Amount to be paid</label>
                 <div class="form-control-wrap">
-                  <input type="text" class="form-control" id="pay-amount" name="pay_amount"
-                    value="{{payment_amount}}" />
+                  <input type="text" class="form-control" id="pay-amount" name="pay_amount" value="{{payment_amount}}" />
                 </div>
               </div>
               <div class="form-group">
                 <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
-                  <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status"
-                    aria-hidden="true"></span>
+                  <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                   <span id="payment-text">Confirm to pay</span>
                 </button>
                 <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
@@ -496,9 +491,10 @@
               var reference = response.reference;
               alert('Payment complete! Reference: ' + reference);
               // Make an AJAX call to your server with the reference to verify the transaction
-              fetch(`{{payment_webhook_status_url}}?reference=${reference}`,
-                { method: 'GET', }
-              ).then((response) => response.json()
+              ///payments/paystack/payment-status?reference=T663303636890038
+              const url = `/payments/paystack/payment-status/?reference=${reference}`
+              //{{payment_webhook_status_url}}?reference=${reference}
+              fetch(url, { method: 'GET', }).then((response) => response.json()
               ).then(data => {
                 if (data.status === 'success') {
                   // call the save method on the plan
@@ -513,6 +509,8 @@
                     countryCurrencyCode,
                     countryName
                   ).then(response => response.json()).then(data => data);
+                } else {
+                  handlePlanCreationDestruction(profileUserId, poolId)
                 }
               });
 
@@ -532,7 +530,7 @@
 
 
 
-    
+
 
   })()
 </script>

@@ -16,10 +16,14 @@ class PayStackPaymentCallbackView(View):
 
 
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        paystack_reference_data = data.get('data')
-        reference = paystack_reference_data.get('reference')
-        print(data)
+        print(request.body)
+        print(request.headers)
+        print(request.GET)
+        print(kwargs.items())
+        # data = json.loads(request.body)
+        # paystack_reference_data = data.get('data')
+        # reference = paystack_reference_data.get('reference')
+        # print(data)
         # status
         """
         1: success
@@ -27,15 +31,17 @@ class PayStackPaymentCallbackView(View):
         3: pending
         4: timeout
         """
-        payment_status, _ = PaystackPaymentStatus.objects.get_or_create(
-            email=paystack_reference_data.get('customer').get('email'),
-            status=paystack_reference_data.get('status'),
-            reference=reference,
-            amount=paystack_reference_data.get('amount')/100
-        )
+        # payment_status = PaystackPaymentStatus.objects.create(
+        #     email=paystack_reference_data.get('customer').get('email'),
+        #     status=paystack_reference_data.get('status'),
+        #     reference=reference,
+        #     amount=paystack_reference_data.get('amount')/100
+        # )
+        # print(payment_status)
+
         return JsonResponse({
-            "reference": reference,
-            "status":paystack_reference_data.get('status'),	
+            "reference": "reference",
+            "status":"paystack_reference_data.get('status')",	
         })
 
 
@@ -46,7 +52,7 @@ class PayStackPaymentStatusView(View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
-        payment_status_object = get_object_or_404(PaystackPaymentStatus, reference=request.GET.get("reference"))
-        serialized_data = PaystackPaymentStatusSerializer(payment_status_object).data
-        print(serialized_data)
-        return JsonResponse(serialized_data, safe=False)
+        # payment_status_object = get_object_or_404(PaystackPaymentStatus, reference=request.GET.get("reference"))
+        # serialized_data = PaystackPaymentStatusSerializer(payment_status_object).data
+        # print(serialized_data)
+        return JsonResponse({'data':'data', 'success': True}, safe=False)

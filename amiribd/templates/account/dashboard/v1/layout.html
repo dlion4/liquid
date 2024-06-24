@@ -125,178 +125,204 @@
     }
 
 
+    document.addEventListener("DOMContentLoaded",
 
-    (async function () {
-      const countryCurrencyCode = document.querySelectorAll(".currency")
-      let currencyRate;
-      let apiAddress;
-      const storageKey = 'geoData';
-      const conversionStorageKey = "conversionStorageKey";
-      const ipAddressStorageKey = "ipAddressStorageKey";
-      let localIpAddress = localStorage.getItem(ipAddressStorageKey)
+      async function handleSiteCurrencyLocation() {
+        const countryCurrencyCode = document.querySelectorAll(".currency")
+        let currencyRate;
+        let apiAddress;
+        const storageKey = 'geoData';
+        const conversionStorageKey = "conversionStorageKey";
+        const ipAddressStorageKey = "ipAddressStorageKey";
+        let localIpAddress = localStorage.getItem(ipAddressStorageKey)
 
-      if (navigator.onLine && localIpAddress === null) {
-        apiAddress = await fetchUserIpAddress('https://api.ipify.org');
-      } else {
-        apiAddress = localIpAddress
-      }
-      console.log(navigator.onLine)
-
-
-      let geoData = localStorage.getItem(storageKey);
-      let conversionRateData = localStorage.getItem(conversionStorageKey) ?? '1';
-
-      // if (ipAddress && ipAddress === localIpAddress)
-
-      /*
-        @ LocationPayload Dat
-        
-        */
-      // call the endpoint to save the plan selected
-
-      if (conversionRateData === '1') {
-        localStorage.setItem('conversionStorageKey', '1');
-      }
-
-      conversionRateData = JSON.parse(localStorage.getItem('conversionStorageKey'))
-
-      if (geoData === null) {
-        fetchUserLocationByLocation(
-          'https://ipgeolocation.abstractapi.com/v1',
-          JSON.parse(localIpAddress),
-          'geoData'
-        ).then(response => response.json().then(data => {
-          updateLocationData(data)
-        }));
-      }
-
-
-      console.log(JSON.parse(localIpAddress), apiAddress)
-
-
-      geoData = JSON.parse(localStorage.getItem('geoData'));
-
-      if (
-        geoData && JSON.parse(localIpAddress)
-      ) {
-        console.log("Ip aleady registered")
-        updateLocationData(geoData)
-        if (conversionRateData) {
-          console.log('present geo 1')
-          updatePayableAmountAndCurrency(conversionRateData, geoData)
+        if (navigator.onLine && localIpAddress === null) {
+          apiAddress = await fetchUserIpAddress('https://api.ipify.org');
         } else {
-          console.log('present geo 2')
-          const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
-          updatePayableAmountAndCurrency(storageKey, geoData)
+          apiAddress = localIpAddress
         }
-      } else {
-        const apiLocation = await fetchUserLocationByLocation('https://ipgeolocation.abstractapi.com/v1', JSON.parse(localIpAddress), storageKey);
-        geoData = localStorage.getItem("geoData")
-        updateLocationData(geoData)
-        if (conversionRateData) {
-          console.log('absent geo 1')
-          updatePayableAmountAndCurrency(conversionRateData, geoData)
-        } else {
-          console.log('absent geo 2')
-          const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
-          updatePayableAmountAndCurrency(storageKey, geoData)
-        }
-      }
+        console.log(navigator.onLine)
 
-      function updatePayableAmountAndCurrency(data, location) {
 
-        const amountToBePaid = document.querySelector(".currencyRate")
+        let geoData = localStorage.getItem(storageKey);
+        let conversionRateData = localStorage.getItem(conversionStorageKey) ?? '1';
 
-        console.log(document.querySelector(".currency-code"))
-        let amount;
-        let dataArray = data
-        console.log(dataArray)
-        // locate the value input
-        const currencyCode = location.currency.currency_code
+        // if (ipAddress && ipAddress === localIpAddress)
 
-        if (document.querySelector(".currency-code") && document.getElementById("client-country-name")) {
+        /*
+          @ LocationPayload Dat
+          
+          */
+        // call the endpoint to save the plan selected
 
-          document.querySelector(".currency-code").value = currencyCode
-
-          document.getElementById("client-country-name").value = location.country
+        if (conversionRateData === '1') {
+          localStorage.setItem('conversionStorageKey', '1');
         }
 
-        // update the currecny display on the screeen
-        countryCurrencyCode.forEach(currency => {
-          currency.innerHTML = currencyCode
-        })
+        conversionRateData = JSON.parse(localStorage.getItem('conversionStorageKey'))
 
-        for (const country of dataArray[0]['countries']) {
-          if (country.currency_code === currencyCode) {
-            amount = country.amount
-            currencyRate = country.amount
+        console.log(geoData)
+        console.log(conversionRateData)
+
+        if (geoData === null) {
+          fetchUserLocationByLocation(
+            'https://ipgeolocation.abstractapi.com/v1',
+            JSON.parse(localIpAddress),
+            'geoData'
+          ).then(response => response.json().then(data => {
+            updateLocationData(data)
+          }));
+        }
+
+
+        console.log(JSON.parse(localIpAddress), apiAddress)
+
+
+        geoData = JSON.parse(localStorage.getItem('geoData'));
+
+        console.log(geoData)
+
+        if (geoData) {
+          console.log("Ip aleady registered")
+          updateLocationData(geoData)
+          if (conversionRateData) {
+            console.log('present geo 1')
+            updatePayableAmountAndCurrency(conversionRateData, geoData)
           } else {
-            amount = 1
-            currencyRate = 1
+            console.log('present geo 2')
+            const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
+            updatePayableAmountAndCurrency(storageKey, geoData)
           }
+        } else {
+          setTimeout(async () => {
+            const apiLocation = await fetchUserLocationByLocation('https://ipgeolocation.abstractapi.com/v1', apiAddress, storageKey);
+            geoData = localStorage.getItem("geoData")
+            updateLocationData(geoData)
+            if (conversionRateData) {
+              console.log('absent geo 1')
+              updatePayableAmountAndCurrency(conversionRateData, geoData)
+            } else {
+              console.log('absent geo 2')
+              const storageKey = await loadCurrencyConversionRate('conversionStorageKey')
+              updatePayableAmountAndCurrency(storageKey, geoData)
+            }
+          }, 1000);
         }
-        if (amountToBePaid) {
-          amountToBePaid.value = amount;
+
+        function updatePayableAmountAndCurrency(data, location) {
+          console.log(location)
+
+          const countryCurrencyRate = document.querySelector(".currencyRate")
+          console.log(countryCurrencyRate)
+          // console.log(amountToBePaid)
+
+          console.log(document.querySelector(".currency-code"))
+          let amount;
+          let dataArray = data
+          console.log(dataArray)
+          // locate the value input
+          const currencyCode = location.currency.currency_code
+
+          if (document.querySelector(".currency-code") && document.getElementById("client-country-name")) {
+
+            document.querySelector(".currency-code").value = currencyCode
+
+            document.getElementById("client-country-name").value = location.country
+          }
+
+          // update the currecny display on the screeen
+          countryCurrencyCode.forEach(currency => {
+            currency.innerHTML = currencyCode
+          })
+
+
+          if (dataArray === '1') {
+            iterableConvRate = [1]; // Creates an array with a single element 1
+          } else {
+            try {
+              conversionRateData = JSON.parse(dataArray);
+              if (Array.isArray(conversionRateData) && conversionRateData[0] && conversionRateData[0]['countries']) {
+                iterableConvRate = conversionRateData[0]['countries'];
+                // else convert everything to array with single elemen
+              } else {
+                // console.error('Unexpected structure of conversionRateData:', conversionRateData);
+                iterableConvRate = [1];
+              }
+            } catch (e) {
+              // console.error('Failed to parse conversionRateData:', e);
+              iterableConvRate = [1];
+            }
+          }
+
+          let countryRate;
+
+
+          for (const country of iterableConvRate) {
+            if (country.currency_code === geoData.currency.currency_code) {
+              amount = parseFloat(parseFloat(AcctualAmountToBePaid) * parseFloat(country.amount)).toFixed(2)
+              countryRate = country.amount;
+            } else {
+              countryRate = 1;
+              // amount = amount;
+            }
+          }
+
+          countryCurrencyRate.value = countryRate;
+
+
+
+
+          if (document.querySelectorAll('.amount')) {
+            document.querySelectorAll('.amount').forEach(amountElement => {
+              // get the inet text data of the prices
+              const amountElementContext = amountElement.childNodes[0].textContent.trim();
+              console.log(amountElementContext)
+              // create a span element to encapsulate this information
+              const amountSpanElement = document.createElement('span');
+              // asign a class name to this span element
+              amountSpanElement.className = 'amountvalue';
+              // inser the amount into the span element
+              amountSpanElement.textContent = amountElementContext;
+              // get the inner content of the amount wrapper
+              amountElementInnerHTML = amountElement.querySelector('span.currency');
+
+              amountElement.innerHTML = ''; //
+
+
+              amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
+                parseFloat(amountElementContext) *
+                parseFloat(countryCurrencyRate.value)
+                // parseFloat(document.querySelector(".currencyRate").value)
+              ).toFixed(2))
+
+              // console.log(spanElement)
+
+              if (amountSpanElement && amountElementInnerHTML) {
+                // append the span element to the amount wrapper
+                amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
+                // margin styling
+
+                const spanHtml = document.createElement('span');
+                spanHtml.style.margin = "0px 10px!important";
+
+                amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
+                // styling the link
+                amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
+              }
+            })
+          };
+
+          function formatNumberWithCommas(number) {
+            return new Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }).format(number);
+          };
+
         }
       }
 
-      if (document.querySelectorAll('.amount')) {
-        document.querySelectorAll('.amount').forEach(amountElement => {
-          // get the inet text data of the prices
-          const amountElementContext = amountElement.childNodes[0].textContent.trim();
-          // create a span element to encapsulate this information
-          const amountSpanElement = document.createElement('span');
-          // asign a class name to this span element
-          amountSpanElement.className = 'amountvalue';
-          // inser the amount into the span element
-          amountSpanElement.textContent = amountElementContext;
-          // get the inner content of the amount wrapper
-          amountElementInnerHTML = amountElement.querySelector('span.currency');
-
-          amountElement.innerHTML = ''; //
-
-
-          amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
-            parseFloat(amountElementContext) *
-            parseFloat(currencyRate)
-            // parseFloat(document.querySelector(".currencyRate").value)
-          ).toFixed(2))
-
-          // console.log(spanElement)
-
-          if (amountSpanElement && amountElementInnerHTML) {
-            // append the span element to the amount wrapper
-            amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
-            // margin styling
-
-            const spanHtml = document.createElement('span');
-            spanHtml.style.margin = "0px 10px!important";
-
-            amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
-            // styling the link
-            amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
-          }
-        })
-      };
-
-      function formatNumberWithCommas(number) {
-        return new Intl.NumberFormat('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }).format(number);
-      };
-
-      // Select the script element based on its src attribute
-      const scriptToRemove = document.querySelector('script[src="https://www.googletagmanager.com/gtag/js?id=G-0WCTF5FP66"]');
-      // Remove the script element from the DOM if it exists
-      if (scriptToRemove) {
-        scriptToRemove.remove();
-        console.log('Script removed');
-      } else {
-        console.log('Script not found');
-      }
-
-    })()
+    )
 
   </script>
   <input type="hidden" name="currencyRate" class="currencyRate">

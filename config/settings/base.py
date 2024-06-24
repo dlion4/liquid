@@ -199,8 +199,12 @@ MIDDLEWARE = [
     # "django.middleware.cache.UpdateCacheMiddleware",
     # "django.middleware.common.CommonMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",
+    # to check authentication status
+    "amiribd.users.middleware.AuthenticationStateCheckMiddleware",
+    # 
     # account status middleware
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
+   
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
 ]
 
@@ -806,5 +810,6 @@ CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://b6f8-5-180-179-19.ngrok-free.app",
+    "https://*.ngrok-free.app",
+    # "https://ebc9-102-0-8-22.ngrok-free.app",
 ]
