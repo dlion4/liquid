@@ -120,6 +120,7 @@ class Profile(models.Model):
         related_name="profile_job_applications",
     )
     plans = models.ManyToManyField("invest.Plan", blank=True)
+    adverts = models.ManyToManyField("adverts.Advert", blank=True)
 
     def __str__(self):
         return f"{self.user.username}"

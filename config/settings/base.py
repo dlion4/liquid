@@ -11,6 +11,8 @@ load_dotenv()
 
 # amiribd/
 APPS_DIR = BASE_DIR / "amiribd"
+SERVICE_DIR = BASE_DIR / "services"
+
 env = environ.Env()
 
 # READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
@@ -131,6 +133,16 @@ LOCAL_APPS = [
     "amiribd.jobs",
     # convaersion rates
     "amiribd.rates",
+    # apis
+    "amiribd.apis",
+
+    # application for running and registering adverst for display in other 
+    # appwebsites will depoend on the apis app for external websites to access the adverst registered by the users of our
+    # platforms
+    "amiribd.adverts",
+
+    # market apps fro the disferenet packages 
+    "amiribd.markets"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

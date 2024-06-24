@@ -1,25 +1,46 @@
-version: "3.8"
 
+# version: "3.8"
 services:
-  django: &django
-    build:
-      context: .
-    ports:
-      - "8200:8200"
 
-    command: ["sh", "./compose/start.sh"]
-    depends_on:
-      - db
+  redis:
+    image: redis:alpine
+    container_name: redis
+
   db:
     image: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+     - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=liquid
-      - POSTGRES_HOST=localhost
-      - POSTGRES_USER=debug
-      - POSTGRES_PASSWORD=debug
-      - DATABASE_URL=postgres://postgres:1234@localhost:5432/amiribd
-      # - DATABASE_URL=postgresql://amiribd_owner:vIlVOSJ0hs3C@ep-empty-sun-a5o1i2jp-pooler.us-east-2.aws.neon.tech/amiribd?sslmode=require
+     - POSTGRES_DB=liquid
+     - POSTGRES_HOST=localhost
+     - POSTGRES_USER=debug
+     - POSTGRES_PASSWORD=debug
+    container_name: postgres_db
+
+  app:
+   build:
+     context: .
+   ports:
+    - "8000:8000"
+   volumes:
+    - .:/app
+   command: python manage.py runserver 0.0.0.0:8000
+   depends_on:
+    - db
+
+  # celery worker
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A core worker -l DEBUG
+    container_name: celery
+    depends_on:
+      - db
+      - redis
+      - app
+
+
+
 volumes:
   postgres_data:

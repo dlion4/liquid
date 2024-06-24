@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ApisConfig(AppConfig):
+class AdvertsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "amiribd.apis"
+    name = "amiribd.adverts"
