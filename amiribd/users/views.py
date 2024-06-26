@@ -120,7 +120,7 @@ class SignupView(AuthenticationGuard, FormView):
         # TODO: email magic link to user.
         try:
             user = User.objects.get(email=email)
-            self.email_submitted(user.email)
+            self.email_submitted(user)
             return redirect("users:login")
 
         except User.DoesNotExist:
@@ -138,12 +138,10 @@ class SignupView(AuthenticationGuard, FormView):
         
 
     def email_submitted(self, user):
-        send_welcome_email.after_response(user,
-                "account/dashboard/v1/mails/welcome.html",
-                {"profile": user.profile_user,"register_url": self.request.build_absolute_uri(
-                    reverse("dashboard:home")),
-                },
-            )
+        send_welcome_email.after_response(
+            user,"account/dashboard/v1/mails/welcome.html",
+            {"profile": user.profile_user,"register_url": self.request.build_absolute_uri(reverse("dashboard:home"))},
+        )
 
 
 
