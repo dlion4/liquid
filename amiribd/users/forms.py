@@ -5,6 +5,7 @@ from django.forms import EmailField
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from .models import User, Profile, Address, Document
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminEmailInputWidget
 
 
 class UserAdminChangeForm(admin_forms.UserChangeForm):
@@ -25,6 +26,9 @@ class UserAdminCreationForm(admin_forms.UserCreationForm):
         field_classes = {"email": EmailField}
         error_messages = {
             "email": {"unique": _("This email has already been taken.")},
+        }
+        widgets = {
+            "email": UnfoldAdminEmailInputWidget()
         }
 
 

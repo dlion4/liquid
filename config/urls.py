@@ -91,6 +91,8 @@ urlpatterns = [
 
     # payments
     path("payments/", include("amiribd.payments.urls", namespace="payments")),
+    # silk interface
+    path("silk/", include('silk.urls', namespace="silk")),
 ]
 
 

@@ -69,6 +69,15 @@ ASGI_APPLICATION = "config.asgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
+
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -101,6 +110,10 @@ THIRD_PARTY_APPS = [
     "ckeditor_uploader",  # https://pypi.org/project/django-ckeditor-uploader/#installation
     "widget_tweaks",
 
+    "django_celery_beat",
+
+    # for monitaring application healths
+    "silk",
 ]
 LOCAL_APPS = [
     "amiribd.users",
@@ -216,8 +229,12 @@ MIDDLEWARE = [
     # 
     # account status middleware
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
+    "silk.middleware.SilkyMiddleware",
    
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
+
+    # middleware for silk
+    # "silk.middleware.SilkyMiddleware",
 ]
 
 # CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.

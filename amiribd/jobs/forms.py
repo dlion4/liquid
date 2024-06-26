@@ -1,8 +1,34 @@
 from django.shortcuts import get_object_or_404
 
-from amiribd.users.models import Profile
-from .models import Job, JobApplication
+from amiribd.users.models import Profile, User
+from .models import Job, JobApplication, JobLevel, LocationTypeChoice
 from django import forms
+from unfold.widgets import (
+     UnfoldAdminTextInputWidget,
+     UnfoldAdminSelectWidget,
+     UnfoldAdminDecimalFieldWidget,
+     UnfoldForeignKeyRawIdWidget,
+     UnfoldBooleanSwitchWidget
+)
+from django.contrib.admin.sites import AdminSite
+from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
+
+
+class AddJobForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = "__all__"
+        widgets = {
+            "title": UnfoldAdminTextInputWidget(),
+            "location": UnfoldAdminTextInputWidget(),
+            'location_type':UnfoldAdminSelectWidget(choices=LocationTypeChoice.choices),
+            "description": UnfoldAdminTextInputWidget(),
+            "content":WysiwygWidget(),
+            "salary_offer":UnfoldAdminDecimalFieldWidget(),
+            "level":UnfoldAdminSelectWidget(choices=JobLevel.choices),
+            "is_active":UnfoldBooleanSwitchWidget()
+        }
+
 
 
 class JobApplicationForm(forms.ModelForm):

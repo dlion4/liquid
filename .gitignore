@@ -279,3 +279,7 @@ amiribd/media/
 .envs/*
 !.envs/.local/
 
+
+# xipped files and folders
+
+advertisemain.zip

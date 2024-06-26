@@ -3,10 +3,12 @@ from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
-
+from unfold.admin import ModelAdmin
 from .forms import UserAdminChangeForm
 from .forms import UserAdminCreationForm
 from .models import User, Profile, Address, Document
+from unfold.widgets import UnfoldAdminTextInputWidget
+
 
 if settings.DJANGO_ADMIN_FORCE_ALLAUTH:
     # Force the `admin` sign in process to go through the `django-allauth` workflow:
@@ -15,7 +17,7 @@ if settings.DJANGO_ADMIN_FORCE_ALLAUTH:
 
 
 @admin.register(User)
-class UserAdmin(auth_admin.UserAdmin):
+class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
     fieldsets = (

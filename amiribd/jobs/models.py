@@ -44,7 +44,7 @@ class Job(models.Model):
     author = models.ForeignKey(
         Profile, verbose_name=_("Job Author"), on_delete=models.SET_NULL, null=True, blank=True
     )
-    level = models.CharField(choices=JobLevel, default=JobLevel.B, max_length=1)
+    level = models.CharField(choices=JobLevel.choices, default=JobLevel.B, max_length=1)
     is_active = models.BooleanField(default=True)
 
     objects = JobManager()

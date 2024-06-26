@@ -14,13 +14,7 @@ SECRET_KEY = env(
     default="3z49ze0GhFfZQz1m1uSWcPvQryaxx5aeLgPOdnQrZuOtvhNIBa4KRb5rzExXl52p",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [
-    "localhost",
-    "0.0.0.0",
-    "127.0.0.1",
-    "liquid-v1-7563c1f6c59d.herokuapp.com",
-    "ebc9-102-0-8-22.ngrok-free.app"
-]  # noqa: S104
+ALLOWED_HOSTS = []  # noqa: S104
 
 # CACHES
 # ------------------------------------------------------------------------------

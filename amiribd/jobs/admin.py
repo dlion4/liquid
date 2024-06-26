@@ -2,6 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import JobApplication, Job
+from .forms import AddJobForm
+
 
 class JobApplicationInlineAdmin(admin.StackedInline):
     model = JobApplication
@@ -10,6 +12,7 @@ class JobApplicationInlineAdmin(admin.StackedInline):
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
+    form = AddJobForm
     list_display = [
         "title",
         "location",

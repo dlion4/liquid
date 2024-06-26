@@ -24,3 +24,6 @@ SQLAlchemy
 asyncpg
 advanced_alchemy
 aiosqlite
+django-unfold
+django-celery-beat
+django-silk
