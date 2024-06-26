@@ -74,10 +74,15 @@ class LoginView(AuthenticationGuard, TemplateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             email = form.cleaned_data.get("email")
-            if user := User.objects.get(email=email):
+            print(email)
+            queryset = User.objects.filter(email=email)
+            if queryset.exists():
+                user = queryset.first()
                 self._extracted_from_post_8(user, request, email)
-            return redirect(self.success_url)
-        return render(request, self.template_name, {"form": form})
+                return render(request, self.template_name, {"form": form, "message": "Login link sent to your inbox"})
+            else:
+                return redirect("users:signup")
+        return render(request, self.template_name, {"form": form, })
 
     def _extracted_from_post_8(self, user, request, email):
         # Generate a one-time use token for the user
@@ -93,7 +98,7 @@ class LoginView(AuthenticationGuard, TemplateView):
         send_welcome_email.after_response(
             user,
             "account/dashboard/v1/mails/login.html",
-            {"user": user, "link": link, "subject": "[Liquid Investment]"},
+            {"user": user, "link": link, "subject": "Earnkraft Agencies"},
         )
 
 

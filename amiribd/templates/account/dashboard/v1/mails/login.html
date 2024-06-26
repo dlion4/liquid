@@ -87,46 +87,39 @@
             </tr>
             <tr>
               <td class="px-3 px-sm-5 pb-2">
-                <p>Hi
-                  {{username}},</p>
+                <p>Hi {{user.username}},</p>
                 <p>Welcome to Earnkraft
                   <br>
-                  Thank you for registering on our site. To activate your
-                  Earnkraft account, please click the link below:
+                  Thank you for registering on our site. To activate your Earnkraft account, please click the link below:
                 </p>
                 <p>Click the link below to active your Earnkraft account.</p>
-                <p class="mb-4">This link will expire in 15 minutes and can only
-                  be used once.</p>
-                <a href="{{link}}" class="button3" target="_blank" rel="noopener">click to login</a>
-
+                <p class="mb-4">This link will expire in 15 minutes and can only be used once.</p>
               </td>
             </tr>
             <div class="button-box">
-              <button class="seven">Login to Account</button>
+              <button class="seven" type="bu">
+                <a href="{{link}}" class="seven btn btn-primary button3" target="_blank" rel="noopener">
+                </a>Click to login
+              </button>
             </div>
-            <a href="{{link}}" class="seven btn btn-primary button3" target="_blank" rel="noopener">Click to login</a>
-
             <tr>
               <td class="px-3 px-sm-5 pt-4">
                 <h4 class="email-heading-s2">or</h4>
-                <p>If the button above does not work, paste this link into your
-                  web browser:</p>
+                <p>If the button above does not work, paste this link into your web browser:</p>
                 <a href="{{link}}" class="link-block">{{link}}</a>
                 <div class="container">
-                  <div class="buttonz">
-
-                   
-                  </div>
+                  <div class="buttonz"></div>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="px-3 px-sm-5 pt-4 pb-3 pb-sm-5">
-                <p>If you did not make this request, please contact us or ignore
-                  this message.</p>
-                <p class="email-note">This is an automatically generated email
+                <p>If you did not make this request, please contact us or ignore this message.</p>
+                <p class="email-note">
+                  This is an automatically generated email
                   please do not reply to this email. If you face any issues,
-                  please contact us at support@earnkraft.com</p>
+                  please contact us at support@earnkraft.com
+                </p>
               </td>
             </tr>
           </tbody>
