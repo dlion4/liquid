@@ -31,6 +31,10 @@ from .views import (
     modified_jobs_view,
     modified_loans_view,
     modified_vip_view,
+    modified_qinfo_view,
+    modified_comingsoon_view,
+    modified_advertise_view,
+    modified_monetize_view,
 )
 
 app_name = "invest"
@@ -147,5 +151,8 @@ urlpatterns = [
     ),
 
     # paystack callback urls
-    
+    path("qinfo/", modified_qinfo_view, name="qinfo"),
+    path("comingsoon/", modified_comingsoon_view, name="comingsoon"),
+    path("advertise/", modified_advertise_view, name="advertise"),
+    path("monetize/", modified_monetize_view, name="monetize"),
 ]

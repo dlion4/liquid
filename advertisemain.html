@@ -1,0 +1,876 @@
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  .tab-divider {
+    border-left: 1px solid #ccc;
+    height: 40px;
+    margin: 0 15px;
+  }
+
+  .tab-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .tabs-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-pills .nav-link {
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .nav-pills .nav-link.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .nav-pills .nav-item {
+    display: inline-block;
+  }
+
+  .nav-pills input[type="radio"] {
+    display: none;
+  }
+
+  .content-section {
+    display: none;
+  }
+
+  .content-section.active {
+    display: block;
+  }
+</style>
+<style>
+  .list-group-item {
+    width: 100%;
+    margin: 1% !important;
+    padding: 0;
+  }
+
+  @media (min-width: 576px) {
+    .list-group-item {
+      width: 30%;
+      margin: 5px 1.5% !important;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .list-group-item {
+      width: 25%;
+      margin: 5px 1% !important;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .list-group-item {
+      width: 20%;
+      margin: 5px 1% !important;
+    }
+  }
+</style>
+
+<div class="container">
+
+  <div class="tab-group" id="group1">
+    <ul class="nav nav-pills mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <input type="radio" name="group1" id="pills-home-radio" checked="checked">
+        <label class="nav-link active" for="pills-home-radio" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Avertise</label>
+      </li>
+      <li class="nav-item" role="presentation">
+        <input type="radio" name="group1" id="pills-profile-radio">
+        <label class="nav-link" for="pills-profile-radio" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Earn</label>
+      </li>
+    </ul>
+    <div class="tab-divider"></div>
+  </div>
+  
+  
+  
+  
+  
+  
+  <div class="tab-content">
+    <!-- Advertise Section -->
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-radio">
+      <h3>Upload link</h3>
+      <p> advertisement details here.</p>
+      <!-- Detailed content for the Advertise section -->
+      <div class="container">
+        <div class="form-container">
+          <div class="form-title">Payment Form</div>
+          <form>
+            <div class="form-group">
+              <label for="linkUrl">Link URL</label>
+              <input type="url" class="form-control" id="linkUrl" placeholder="Enter URL">
+            </div>
+            <div class="form-group">
+              <label for="number">Number</label>
+              <input type="number" class="form-control" id="number" placeholder="Enter number">
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input type="number" class="form-control" id="amount" placeholder="Enter amount">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Pay</button>
+          </form>
+        </div>
+      </div>
+
+      <hr>
+      <hr>
+      <hr>
+
+      <h3>upload image meme here</h3>
+      <div class="container form-container">
+        <h2 class="form-title">File Upload Form</h2>
+        <form>
+          <div class="form-group">
+            <label for="fileInput">Upload Files</label>
+            <input type="file" class="form-control" id="fileInput" multiple>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Create</button>
+        </form>
+      </div>
+      <hr>
+      <hr>
+      <hr>
+      <h3>Hook up create</h3>
+      <div class="container">
+        <div class="form-container">
+            <div class="form-title">User Information</div>
+            <form>
+                <div class="form-group">
+                    <label for="name"><b>Name:</b></label>
+                    <input type="text" class="form-control" id="name" value="Doren Wambo">
+                </div>
+                <div class="form-group">
+                    <label for="age"><b>Age:</b></label>
+                    <input type="text" class="form-control" id="age" value="60">
+                </div>
+                <div class="form-group">
+                    <label for="gender"><b>Gender:</b></label>
+                    <input type="text" class="form-control" id="gender" value="She">
+                </div>
+                <div class="form-group">
+                    <label for="location"><b>Location:</b></label>
+                    <input type="text" class="form-control" id="location" value="Thika">
+                </div>
+                <div class="form-group">
+                    <label for="token"><b>Token:</b></label>
+                    <input type="text" class="form-control" id="token" value="1000 KSH">
+                </div>
+                <div class="form-group">
+                  <label for="fileInput">image/photo</label>
+                  <input type="file" class="form-control" id="fileInput" multiple>
+                </div>
+                <div class="form-group">
+                    <label for="contact"><b>Contact (phone number):</b></label>
+                    <input type="text" class="form-control" id="contact" placeholder="Enter phone number">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+      
+    </div>
+    
+    <!-- Earn Section -->
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-radio">
+      <h3>Earn</h3>
+      <p>Insert your earning details here.</p>
+      <!-- Detailed content for the Earn section -->
+      <div class="earn-details">
+        <!-- Example fields -->
+        <div class="form-group">
+          <label for="earn-title">Earning Title:</label>
+          <input type="text" class="form-control" id="earn-title" name="earn-title">
+        </div>
+        <div class="form-group">
+          <label for="earn-description">Description:</label>
+          <textarea class="form-control" id="earn-description" name="earn-description" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="earn-amount">Amount:</label>
+          <input type="number" class="form-control" id="earn-amount" name="earn-amount">
+        </div>
+        <div class="form-group">
+          <label for="earn-method">Payment Method:</label>
+          <select class="form-control" id="earn-method" name="earn-method">
+            <option value="paypal">PayPal</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="crypto">Cryptocurrency</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+        <!-- Add more fields as needed -->
+      </div>
+    </div>
+  </div>
+  <!--fritsss part advertise and earn-->
+  <div class="row">
+    <div class="tabs-container">
+
+      
+
+
+
+
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <!-- Second Group of Tabs -->
+      <div class="tab-group" id="group2">
+        <ul class="nav nav-pills mb-3" role="tablist">
+          <li class="nav-item" role="presentation">
+            <input type="radio" name="group2" id="pills-contact-radio1">
+            <label class="nav-link" for="pills-contact-radio1" data-bs-toggle="pill" data-bs-target="#pills-contact1" role="tab" aria-controls="pills-contact1" aria-selected="true">Links</label>
+          </li>
+          <li class="nav-item" role="presentation">
+            <input type="radio" name="group2" id="pills-contact-radio2">
+            <label class="nav-link" for="pills-contact-radio2" data-bs-toggle="pill" data-bs-target="#pills-contact2" role="tab" aria-controls="pills-contact2" aria-selected="false">Videos</label>
+          </li>
+          <li class="nav-item" role="presentation">
+            <input type="radio" name="group2" id="pills-contact-radio3">
+            <label class="nav-link" for="pills-contact-radio3" data-bs-toggle="pill" data-bs-target="#pills-contact3" role="tab" aria-controls="pills-contact3" aria-selected="false">Memes</label>
+          </li>
+          <li class="nav-item" role="presentation">
+            <input type="radio" name="group2" id="pills-contact-radio4">
+            <label class="nav-link" for="pills-contact-radio4" data-bs-toggle="pill" data-bs-target="#pills-contact4" role="tab" aria-controls="pills-contact4" aria-selected="false">Hookups</label>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- Third Group of Tabs -->
+      <!-- <div class="tab-group" id="group3"> <ul class="nav nav-pills mb-3" role="tablist"> <li class="nav-item" role="presentation"> <input type="radio" name="group3" id="pills-contact-radio4" checked="checked"> <label class="nav-link active" for="pills-contact-radio4" data-bs-toggle="pill" data-bs-target="#pills-contact4" role="tab" aria-controls="pills-contact4" aria-selected="true">Contact 4</label> </li> <li class="nav-item" role="presentation"> <input type="radio" name="group3" id="pills-contact-radio5"> <label class="nav-link" for="pills-contact-radio5" data-bs-toggle="pill" data-bs-target="#pills-contact5" role="tab" aria-controls="pills-contact5" aria-selected="false">Contact 5</label> </li> <li class="nav-item" role="presentation"> <input type="radio" name="group3" id="pills-contact-radio6"> <label class="nav-link" for="pills-contact-radio6" data-bs-toggle="pill" data-bs-target="#pills-contact6" role="tab" aria-controls="pills-contact6" aria-selected="false">Contact 6</label> </li> </ul> </div> -->
+
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <div id="content-sections">
+    <div id="contact1-content" class="content-section">
+
+      <section>
+
+        <div class="grey-bg container-fluid">
+          <section id="minimal-statistics">
+            <div class="row">
+              <div class="col-12 mt-3 mb-1">
+                <h4 class="text-uppercase">Links</h4>
+                <p>You can share, or click to visit the link to earn from any links bellow
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-sm-6 col-12">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <!-- Link icon -->
+                          <a href="#" class="icon-link">
+                            <i class="icon-link primary font-medium-2"></i>
+                          </a>
+                        </div>
+                        <div class="media-body text-right">
+
+                          <span>Link URL</span>
+                        </div>
+                      </div>
+                      <hr/>
+                      <div class="d-flex justify-content-between" style="display: flex; align-items: center;">
+                        <!-- Share icon -->
+                        <a href="#">
+                          <i class="icon-share primary" style="font-size: 24px;"></i>
+
+                        </a>
+                        <!-- Visit icon -->
+                        <a href="#">
+                          <span class="badge badge-primary" style="font-size: 19px;">Visit</span>
+                          <i class="icon-visit primary" style="font-size: 24px;"></i>
+                        </a>
+                        <!-- Price tag section -->
+                        <div class="text-center">
+                          <span class="badge badge-primary" style="font-size: 16px;">3 KSH</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-sm-6 col-12">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <!-- Link icon -->
+                          <a href="#" class="icon-link">
+                            <i class="icon-link primary font-medium-2"></i>
+                          </a>
+                        </div>
+                        <div class="media-body text-right">
+
+                          <span>Link URL</span>
+                        </div>
+                      </div>
+                      <hr/>
+                      <div class="d-flex justify-content-between" style="display: flex; align-items: center;">
+                        <!-- Share icon -->
+                        <a href="#">
+                          <i class="icon-share primary" style="font-size: 24px;"></i>
+
+                        </a>
+                        <!-- Visit icon -->
+                        <a href="#">
+                          <span class="badge badge-primary" style="font-size: 16px;">Visit</span>
+                          <i class="icon-visit primary" style="font-size: 24px;"></i>
+                        </a>
+                        <!-- Price tag section -->
+                        <div class="text-center">
+                          <span class="badge badge-primary" style="font-size: 16px;">3 KSH</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-sm-6 col-12">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <!-- Link icon -->
+                          <a href="#" class="icon-link">
+                            <i class="icon-link primary font-medium-2"></i>
+                          </a>
+                        </div>
+                        <div class="media-body text-right">
+
+                          <span>Link URL</span>
+                        </div>
+                      </div>
+                      <hr/>
+                      <div class="d-flex justify-content-between" style="display: flex; align-items: center;">
+                        <!-- Share icon -->
+                        <a href="#">
+                          <i class="icon-share primary" style="font-size: 24px;"></i>
+
+                        </a>
+                        <!-- Visit icon -->
+                        <a href="#">
+                          <span class="badge badge-primary" style="font-size: 19px;">Visit</span>
+                          <i class="icon-visit primary" style="font-size: 24px;"></i>
+                        </a>
+                        <!-- Price tag section -->
+                        <div class="text-center">
+                          <span class="badge badge-primary" style="font-size: 16px;">Free</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+    </section>
+
+  </div>
+
+  <div id="contact2-content" class="content-section">
+    <div class="d-flex align-items-start">
+      
+      
+      
+    <h3>Videos</h3>
+
+    
+          <div class="container">
+            <div class="card-deck">
+              <div class="card">
+                <img class="card-img-top" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/bologna-2.jpg" alt="Bologna">
+                <div class="card-body">
+      
+                  <a href="#" class="card-link text-danger">#Tik Tok</a>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <!-- Button -->
+                    <button class="btn btn-primary" style="margin-right: 5px;">Watch</button>
+                    <!-- Time Tag -->
+                    <span class="badge bg-secondary">00:62</span>
+                    <!-- Price -->
+                    <span class="badge bg-success">$0.49</span>
+                  </div>
+                </div>
+      
+              </div>
+              <div class="card">
+                <img class="card-img-top" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/bologna-2.jpg" alt="Bologna">
+                <div class="card-body">
+      
+                  <a href="#" class="card-link text-danger">#meme</a>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <!-- Button -->
+                    <button class="btn btn-primary" style="margin-right: 5px;">Watch</button>
+                    <!-- Time Tag -->
+                    <span class="badge bg-secondary">01:42</span>
+                    <!-- Price -->
+                    <span class="badge bg-success">$0.42</span>
+                  </div>
+                </div>
+      
+              </div>
+              <div class="card">
+                <img class="card-img-top" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/bologna-2.jpg" alt="Bologna">
+                <div class="card-body">
+      
+                  <a href="#" class="card-link text-danger">#Youtube</a>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <!-- Button -->
+                    <button class="btn btn-primary" style="margin-right: 5px;">Watch</button>
+                    <!-- Time Tag -->
+                    <span class="badge bg-secondary">00:12</span>
+                    <!-- Price -->
+                    <span class="badge bg-success">$0.09</span>
+                  </div>
+                </div>
+      
+              </div>
+      
+            </div>
+      
+          </div>
+                
+        
+    
+
+   
+    
+
+        
+    </div>
+
+    <!--xxxxxxxxxxxxxx-->
+
+    <!--xxxxxx-->
+  </div>
+  <div id="contact3-content" class="content-section">
+    <h3>Like and share the bellow Images or memes to earn more
+    </h3>
+
+    <section>
+
+      <ul class="list-group list-group-horizontal align-items-stretch flex-wrap">
+
+        <li class="list-group-item border-0">
+          <div class="card my-3">
+            <img src="http://placehold.it/560x560" class="card-img-top">
+            <div class="card-body">
+
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Button -->
+                <!-- <button class="btn btn-primary" type="button">Button</button> -->
+                <!-- Share -->
+                <div class="d-flex justify-content-between" style="display: flex; align-items: center;">
+                  <!-- Share icon -->
+                  <a href="#" style="padding-left: 16px;">
+                    10
+                    <i class="icon-share primary" style="font-size: 18px;"></i>
+                  </a>
+                  <!-- Visit icon -->
+                  <a href="#" style="padding-left: 16px;">
+                    0
+                    <i class="icon-like primary" style="font-size: 18px;"></i>
+                  </a>
+                  <!-- Price tag section -->
+                  <div class="text-center" style="padding-left: 15px;">Earn
+                    <span class="badge badge-primary" style="font-size: 16px;">3 KSH</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item border-0">
+          <div class="card my-3">
+            <img src="http://placehold.it/560x560" class="card-img-top">
+            <div class="card-body">
+
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Button -->
+                <!-- <button class="btn btn-primary" type="button">Button</button> -->
+                <!-- Share -->
+                <div class="d-flex justify-content-between" style="display: flex; align-items: center;">
+                  <!-- Share icon -->
+                  <a href="#" style="padding-left: 16px;">
+                    10
+                    <i class="icon-share primary" style="font-size: 18px;"></i>
+                  </a>
+                  <!-- Visit icon -->
+                  <a href="#" style="padding-left: 16px;">
+                    0
+                    <i class="icon-like primary" style="font-size: 18px;"></i>
+                  </a>
+                  <!-- Price tag section -->
+                  <div class="text-center" style="padding-left: 15px;">Earn
+                    <span class="badge badge-primary" style="font-size: 16px;">3 KSH</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item border-0">
+          <div class="card my-3">
+            <img src="http://placehold.it/560x560" class="card-img-top">
+            <div class="card-body">
+
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Button -->
+                <!-- <button class="btn btn-primary" type="button">Button</button> -->
+                <!-- Share -->
+                <div class="d-flex justify-content-between" style="display: flex; align-items: center;">
+                  <!-- Share icon -->
+                  <a href="#" style="padding-left: 16px;">
+                    10
+                    <i class="icon-share primary" style="font-size: 18px;"></i>
+                  </a>
+                  <!-- Visit icon -->
+                  <a href="#" style="padding-left: 16px;">
+                    0
+                    <i class="icon-like primary" style="font-size: 18px;"></i>
+                  </a>
+                  <!-- Price tag section -->
+                  <div class="text-center" style="padding-left: 15px;">Earn
+                    <span class="badge badge-primary" style="font-size: 16px;">3 KSH</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+  </div>
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+  <div id="contact4-content" class="content-section">
+    <h3>Like and share the bellow Images or memes to earn more
+    </h3>
+
+    <section>
+      <ul class="list-group list-group-horizontal align-items-stretch flex-wrap">
+        <li class="list-group-item border-0">
+          <div class="card my-3">
+            <img src="http://placehold.it/560x560" class="card-img-top">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Name -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Name:</b></span>
+                    <span style="font-size: 10px;">Doren Wambo</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <!-- Age -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Age:</b></span>
+                    <span style="font-size: 10px;">100</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <!-- Gender -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Gender:</b></span>
+                    <span style="font-size: 10px;">She</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <!-- Location -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Location:</b></span>
+                    <span style="font-size: 10px;">Thika</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <!-- Token -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Token:</b></span>
+                    <span style="font-size: 10px;">1000 KSH</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <!-- Function to reveal phone number -->
+                  <div>
+                    <button class="badge bg-dark" onclick="revealPhoneNumber()" style="font-size: 10px;">Contact</button>
+                    <span id="phone" style="display: none; font-size: 11px;">+123456789</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item border-0">
+          <div class="card my-3">
+            <img src="http://placehold.it/560x560" class="card-img-top">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Name -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Name:</b></span>
+                    <span style="font-size: 10px;">Doren Wambo</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <!-- Age -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Age:</b></span>
+                    <span style="font-size: 10px;">100</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <!-- Gender -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Gender:</b></span>
+                    <span style="font-size: 10px;">She</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <!-- Location -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Location:</b></span>
+                    <span style="font-size: 10px;">Thika</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <!-- Token -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Token:</b></span>
+                    <span style="font-size: 10px;">1000 KSH</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <!-- Function to reveal phone number -->
+                  <div>
+                    <button class="badge bg-dark" onclick="revealPhoneNumber()" style="font-size: 10px;">Contact</button>
+                    <span id="phone" style="display: none; font-size: 11px;">+123456789</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item border-0">
+          <div class="card my-3">
+            <img src="http://placehold.it/560x560" class="card-img-top">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Name -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Name:</b></span>
+                    <span style="font-size: 10px;">Doren Wambo</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <!-- Age -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Age:</b></span>
+                    <span style="font-size: 10px;">100</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <!-- Gender -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Gender:</b></span>
+                    <span style="font-size: 10px;">She</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <!-- Location -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Location:</b></span>
+                    <span style="font-size: 10px;">Thika</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <!-- Token -->
+                  <div>
+                    <span style="font-size: 10px;"><b>Token:</b></span>
+                    <span style="font-size: 10px;">1000 KSH</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <!-- Function to reveal phone number -->
+                  <div>
+                    <button class="badge bg-dark" onclick="revealPhoneNumber()" style="font-size: 10px;">Contact</button>
+                    <span id="phone" style="display: none; font-size: 11px;">+123456789</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      
+      
+      
+        
+      </section>
+
+</div>
+
+
+
+</div>
+
+</div>
+<!--fritsss part advertise and earn-->
+<!--fritsss part advertise and earn-->
+
+<!-- First Group of Tabs -->
+
+<!--fritsss part advertise and earn-->
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+document
+.querySelectorAll('.nav-link')
+.forEach(function (label) {
+label.addEventListener('click', function () {
+let group = label.closest('.tab-group');
+group
+  .querySelectorAll('.nav-link')
+  .forEach(function (link) {
+    link
+      .classList
+      .remove('active');
+  });
+label
+  .classList
+  .add('active');
+
+// Show/hide content based on selected tab
+if (label.getAttribute('for') === 'pills-contact-radio1') {
+  showContent('contact1-content');
+} else if (label.getAttribute('for') === 'pills-contact-radio2') {
+  showContent('contact2-content');
+} else if (label.getAttribute('for') === 'pills-contact-radio3') {
+  showContent('contact3-content');
+} else if (label.getAttribute('for') === 'pills-contact-radio4') {
+  showContent('contact4-content');
+} else {
+  hideAllContent();
+}
+});
+});
+
+function showContent(contentId) {
+document
+.querySelectorAll('.content-section')
+.forEach(function (section) {
+section
+  .classList
+  .remove('active');
+});
+document
+.getElementById(contentId)
+.classList
+.add('active');
+}
+
+function hideAllContent() {
+document
+.querySelectorAll('.content-section')
+.forEach(function (section) {
+section
+  .classList
+  .remove('active');
+});
+}
+
+// Initially show the content for the default selected tab
+document.addEventListener('DOMContentLoaded', function () {
+if (document.getElementById('pills-contact-radio1').checked) {
+showContent('contact1-content');
+}
+});
+</script>
+<script>
+function revealPhoneNumber() {
+var phoneElement = document.getElementById('phone');
+phoneElement.style.display = 'inline';
+}
+</script>
+
+<script>
+  // Show the first tab by default
+$('.tabs-stage div').hide();
+$('.tabs-stage div:first').show();
+$('.tabs-nav li:first').addClass('tab-active');
+
+// Change tab class and display content
+$('.tabs-nav a').on('click', function(event){
+  event.preventDefault();
+  $('.tabs-nav li').removeClass('tab-active');
+  $(this).parent().addClass('tab-active');
+  $('.tabs-stage div').hide();
+  $($(this).attr('href')).show();
+});
+</script>

@@ -101,7 +101,8 @@ class DashboardViewMixin(TemplateView):
                 type="DEPOSIT",
                 source="Account Registration",
             ).aggregate(total=Sum("paid")):
-                return Decimal(transaction['total'])
+                if transaction["total"] is not None:
+                    return Decimal(transaction['total'])
             return Decimal("0.00")
         except Transaction.DoesNotExist:
             return Decimal("0.00")

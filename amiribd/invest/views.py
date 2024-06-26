@@ -477,6 +477,29 @@ class ReferalView(InvestmentViewMixin):
 modified_referal_view = ReferalView.as_view()
 
 
+class QinfoView(TemplateView):
+    template_name = "account/dashboard/v1/investment/qinfo.html"
+
+modified_qinfo_view = QinfoView.as_view()
+
+class ComingSoonView(TemplateView):
+    template_name = "account/dashboard/v1/investment/comingsoon.html"
+
+modified_comingsoon_view = ComingSoonView.as_view()
+
+class AdvertiseView(TemplateView):
+    template_name = "account/dashboard/v1/investment/advertise.html"
+
+modified_advertise_view = AdvertiseView.as_view()
+
+class MonetizeView(TemplateView):
+    template_name = "account/dashboard/v1/investment/monetize.html"
+
+modified_monetize_view = MonetizeView.as_view()
+
+
+
+
 class BonusView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/bonus.html"
     template_name = "account/dashboard/v1/investment/bonus.html"

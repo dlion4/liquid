@@ -285,7 +285,7 @@
                             </a>
                         </li>
                         <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:wallet' %}" class="nk-menu-link">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:qinfo' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
                                     </em></span>
 
@@ -294,7 +294,35 @@
                             </a>
                         </li>
                         <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:wallet' %}" class="nk-menu-link">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:advertise' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
+                                    </em></span>
+
+                                <span class="nk-menu-text">Advertise
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:monetize' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
+                                    </em></span>
+
+                                <span class="nk-menu-text">Monetize
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a href="{% url 'dashboard:invest:monetize' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
+                                    </em></span>
+
+                                <span class="nk-menu-text">Monetize x2
+                                </span>
+                            </a>
+                        </li>
+                        
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:comingsoon' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
                                     </em></span>
 
@@ -303,20 +331,13 @@
                             </a>
                         </li>
 
-                        <!-- <li class="nk-menu-item has-sub">
-              <a href="#" class="nk-menu-link nk-menu-toggle">
-                <span class="nk-menu-icon">
-                  <em class="icon ni ni-files"></em>
-                </span><span class="nk-menu-text">Additional Pages</span>
-              </a>
-
-              <ul class="nk-menu-sub">
-
-                
-
-              </ul>
-
-            </li> -->
+                        <li class="nk-menu-item">
+                            <a role="button" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-coins"></em>
+                                </span><span class="nk-menu-text">Monetize</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="nk-sidebar-widget">
