@@ -11,7 +11,6 @@ load_dotenv()
 
 # amiribd/
 APPS_DIR = BASE_DIR / "amiribd"
-SERVICE_DIR = BASE_DIR / "services"
 
 env = environ.Env()
 
