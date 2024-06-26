@@ -130,20 +130,21 @@ class SignupView(AuthenticationGuard, FormView):
             # profle = Profile.objects.create(user=user)
             # login the user without having to send him/her email
 
-            send_welcome_email.after_response(
-                user,
-                "account/dashboard/v1/mails/welcome.html",
-                {
-                    "profile": user.profile_user,
-                    "register_url": self.request.build_absolute_uri(
-                        reverse("dashboard:invest:invest")
-                    ),
-                },
-            )
+            self.email_submitted(user)
             user.backend = "users.backends.TokenAuthenticationBackend"
             login(self.request, user)
             # redirect to home page after login
-            return super().form_valid(form)
+            return redirect("home")
+        
+
+    def email_submitted(self, user):
+        send_welcome_email.after_response(user,
+                "account/dashboard/v1/mails/welcome.html",
+                {"profile": user.profile_user,"register_url": self.request.build_absolute_uri(
+                    reverse("dashboard:home")),
+                },
+            )
+
 
 
 class SuccessAuthenticationView(AuthenticationGuard, TemplateView):

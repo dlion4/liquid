@@ -1,11 +1,14 @@
 from django.contrib import admin
+from .forms import AdCategoryForm, AdvertForm
+from unfold.admin import ModelAdmin
 
 # Register your models here.
 from .models import AdCategory, Advert
 
 @admin.register(AdCategory)
-class AdCategoryAdmin(admin.ModelAdmin):
+class AdCategoryAdmin(ModelAdmin):
     list_display = ['title']
+    form = AdCategoryForm
 
 @admin.register(Advert)
 class AdvertAdmin(admin.ModelAdmin):
@@ -32,6 +35,7 @@ class AdvertAdmin(admin.ModelAdmin):
         "__approve_advert",
         "__disapprove_advert"
     )
+    form = AdvertForm
 
     @admin.action(description="Approve")
     def __approve_advert(self, request, queryset):

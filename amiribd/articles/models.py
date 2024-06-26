@@ -4,7 +4,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from amiribd.users.models import Profile
 from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
-
+from django.utils import timezone
 
 def my_slugify_function(content):
     return content.replace("_", "-").lower()
@@ -21,7 +21,7 @@ class Article(models.Model):
     slug = AutoSlugField(populate_from="title", slugify_function=my_slugify_function)
     content = CKEditor5Field("Text", config_name="default", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title

@@ -88,11 +88,11 @@ class EmailSignupForm(forms.Form):
             attrs={
                 "class": "form-control form-control-lg",
                 "placeholder": "Email Address",
-                "hx-get": "/users/htmx-signup-email-lookup/",
-                "hx-target": "#email-lookup-result",
-                "hx-trigger": "keyup changed delay:1s",
-                "hx-swap": "outerHTML",
-                "hx-swap-oob": "true",
+                # "hx-get": "/users/htmx-signup-email-lookup/",
+                # "hx-target": "#email-lookup-result",
+                # "hx-trigger": "keyup changed delay:1s",
+                # "hx-swap": "outerHTML",
+                # "hx-swap-oob": "true",
             }
         )
     )
