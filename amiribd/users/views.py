@@ -121,7 +121,7 @@ class SignupView(AuthenticationGuard, FormView):
         try:
             user = User.objects.get(email=email)
             self.email_submitted(user.email)
-            return redirect("users:success")
+            return redirect("users:login")
 
         except User.DoesNotExist:
             user = User.objects.create_user(email=email, username=username)
