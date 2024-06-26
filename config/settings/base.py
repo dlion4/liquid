@@ -840,4 +840,5 @@ CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",
     # "https://ebc9-102-0-8-22.ngrok-free.app",
+    "https://lionnic.com"
 ]
