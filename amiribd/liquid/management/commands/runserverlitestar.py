@@ -7,6 +7,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
-        config = Config('config.asgi:application', host='localhost', port=8000, log_level='info', reload=True)
+        config = Config(
+            'config.asgi:application',
+            host='127.0.0.1', 
+            port=8000, 
+            log_level='debug', 
+            reload=True, 
+            reload_dirs=['./services/apis/']
+        )
         server = Server(config)
         server.run()

@@ -9,7 +9,22 @@ from litestar import Litestar, get, Request
 
 from litestar import Litestar
 
-# app = Litestar(route_handlers=[article_route_handler])
+import logging
+
+# Configure basic logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Create a custom handler
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+
+# Create a custom formatter and add it to the handler
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+
+# Add the handler to the logger
+logger.addHandler(console_handler)
 
 
 @get("/apis/v1/omera")

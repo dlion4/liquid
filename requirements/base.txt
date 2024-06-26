@@ -19,3 +19,8 @@ django-redis # # https://github.com/jazzband/django-redis
 django-widget-tweaks
 litestar
 requests
+uvicorn-worker
+SQLAlchemy
+asyncpg
+advanced_alchemy
+aiosqlite

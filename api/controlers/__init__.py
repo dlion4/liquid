@@ -1,0 +1,1 @@
+from .index import (posts_route)
