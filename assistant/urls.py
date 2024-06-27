@@ -5,9 +5,8 @@ import requests
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
-GOOGLE_GEMINI_API_KEY = "AIzaSyCMLe1vsA9rMVxKiFRFbiROGRJ_iCw2pgs"
-GOOGLE_GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GOOGLE_GEMINI_API_KEY}'
+import os
+from dotenv import load_dotenv
 
 from django import forms
 
@@ -15,7 +14,12 @@ from django import forms
 import google.generativeai as genai
 import os
 
-GOOGLE_GEMINI_API_KEY = "AIzaSyCMLe1vsA9rMVxKiFRFbiROGRJ_iCw2pgs"
+load_dotenv()
+
+
+GOOGLE_GEMINI_API_KEY = os.eviron.get('GOOGLE_GEMINI_API_KEY')
+GOOGLE_GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GOOGLE_GEMINI_API_KEY}'
+
 
 
 genai.configure(api_key=GOOGLE_GEMINI_API_KEY)
