@@ -1,4 +1,4 @@
-from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldBooleanSwitchWidget, UnfoldAdminFileFieldWidget
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldBooleanSwitchWidget, UnfoldAdminFileFieldWidget, UnfoldAdminSelectWidget
 from unfold.contrib.forms.widgets import WysiwygWidget
 from .models import AdCategory, Advert
 from django import forms
@@ -25,6 +25,7 @@ class AdvertForm(forms.ModelForm):
         ]
 
         widgets = {
+            'category':UnfoldAdminSelectWidget(choices=AdCategory.objects.all()),
             'title': UnfoldAdminTextInputWidget(),	
             'website_url': UnfoldAdminTextInputWidget(),	
             "description": WysiwygWidget(),

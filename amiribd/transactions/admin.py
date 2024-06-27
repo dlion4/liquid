@@ -2,16 +2,16 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import PaymentMethod, Transaction
+from amiribd.core.admin import earnkraft_site
 
-
-@admin.register(PaymentMethod)
+@admin.register(PaymentMethod, site=earnkraft_site)
 class PaymentMethod(admin.ModelAdmin):
     list_display = [
         "channel",
     ]
 
 
-@admin.register(Transaction)
+@admin.register(Transaction, site=earnkraft_site)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = [
         "profile",

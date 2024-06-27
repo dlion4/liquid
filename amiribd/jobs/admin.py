@@ -3,14 +3,14 @@ from django.contrib import admin
 # Register your models here.
 from .models import JobApplication, Job
 from .forms import AddJobForm
-
+from amiribd.core.admin import earnkraft_site
 
 class JobApplicationInlineAdmin(admin.StackedInline):
     model = JobApplication
     extra = 0
 
 
-@admin.register(Job)
+@admin.register(Job, site=earnkraft_site)
 class JobAdmin(admin.ModelAdmin):
     form = AddJobForm
     list_display = [

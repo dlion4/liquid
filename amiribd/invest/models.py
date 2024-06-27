@@ -7,6 +7,7 @@ from .types import (
     PlanStatus,
     AccountTypeObjects,
 )
+from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
 from django.core.validators import RegexValidator
 from django.db.models import Sum
@@ -79,6 +80,10 @@ class Pool(models.Model):
     def account(self):
         return self.account_pool.type
 
+    class Meta:
+        verbose_name = _("Pool")
+        verbose_name_plural = _("Pools")
+
 
 class PoolFeature(models.Model):
     pool = models.OneToOneField(
@@ -114,6 +119,11 @@ class Account(models.Model):
     balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     # interest = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     account_ssid = models.CharField(max_length=200, blank=True, null=True)
+
+
+    class Meta:
+        verbose_name = _("Account")
+        verbose_name_plural = _("Accounts")
 
     @property
     def account_owner(self):

@@ -110,7 +110,6 @@ THIRD_PARTY_APPS = [
     "widget_tweaks",
 
     "django_celery_beat",
-
     # for monitaring application healths
     "silk",
 ]
@@ -147,14 +146,14 @@ LOCAL_APPS = [
     "amiribd.rates",
     # apis
     "amiribd.apis",
-
     # application for running and registering adverst for display in other 
     # appwebsites will depoend on the apis app for external websites to access the adverst registered by the users of our
     # platforms
     "amiribd.adverts",
-
     # market apps fro the disferenet packages 
-    "amiribd.markets"
+    "amiribd.markets",
+    # core apps
+    "amiribd.core",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -336,6 +335,9 @@ EMAIL_TIMEOUT = 5
 # ------------------------------------------------------------------------------
 # Django Admin URL.
 ADMIN_URL = "admin/"
+# STUFF ADMIN
+# ------------------------------------------------------------------------------
+STUFF_ADMIN_URL="earnkraft/"
 # ------------------------------------------------------------------------------
 # Django CLIENT Dashboard URL
 DASHBOARD_URL = env.str("DJANGO_DASHBOARD_URL", default="dashboard:home")
@@ -842,3 +844,18 @@ CSRF_TRUSTED_ORIGINS = [
     # "https://ebc9-102-0-8-22.ngrok-free.app",
     "https://lionnic.com"
 ]
+
+
+from .unfold import DJANGO_UNFOLD_SIDEBAR_NAVIGATION
+
+
+UNFOLD = {
+    "SITE_SYMBOL": "settings",
+
+    "SIDEBAR": {
+        "show_search": True,  # Search in applications and models names
+        "show_all_applications": True,  # Dropdown with all applications and models
+        "navigation": DJANGO_UNFOLD_SIDEBAR_NAVIGATION,
+    }
+}
+

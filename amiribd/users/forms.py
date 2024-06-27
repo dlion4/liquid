@@ -4,6 +4,10 @@ from django.contrib.auth import forms as admin_forms
 from django.forms import EmailField
 from django.utils.translation import gettext_lazy as _
 from django import forms
+
+from amiribd.adverts.models import Advert
+from amiribd.invest.models import Plan
+from amiribd.jobs.models import Job
 from .models import User, Profile, Address, Document
 from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminEmailInputWidget
 
@@ -256,3 +260,41 @@ class ProfileVerificationDocumentForm(forms.ModelForm):
                 }
             )
         }
+from unfold.widgets import UnfoldAdminFileFieldWidget, UnfoldAdminSelectWidget
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldBooleanSwitchWidget, UnfoldAdminSingleDateWidget, UnfoldAdminSplitDateTimeVerticalWidget, UnfoldBooleanSwitchWidget, UnfoldAdminSplitDateTimeWidget
+
+class AdminProfileForm(forms.ModelForm):
+
+    job_applications = forms.ModelMultipleChoiceField(queryset=Job.objects.all())
+    plans = forms.ModelMultipleChoiceField(queryset=Plan.objects.all())
+    adverts = forms.ModelMultipleChoiceField(queryset=Advert.objects.all())
+
+    class Meta:
+        model = Profile
+        fields = "__all__"
+        widgets = {
+            'user': UnfoldAdminSelectWidget(choices=User.objects.all()),
+            "first_name": UnfoldAdminTextInputWidget(),
+            "last_name": UnfoldAdminTextInputWidget(),
+            "image": UnfoldAdminFileFieldWidget(),
+            "kyc_completed": UnfoldBooleanSwitchWidget(),
+            "kyc_validated": UnfoldBooleanSwitchWidget(),
+
+            "is_address_set": UnfoldBooleanSwitchWidget(),
+            "is_document_set": UnfoldBooleanSwitchWidget(),
+
+            'kyc_completed_at': UnfoldAdminSplitDateTimeWidget(),
+
+            "phone_number":UnfoldAdminTextInputWidget(),
+            'date_of_birth': UnfoldAdminSingleDateWidget(),
+
+
+
+            "initials":UnfoldAdminTextInputWidget(),
+            "referral_code":UnfoldAdminTextInputWidget(),
+
+            'referred_by': UnfoldAdminSelectWidget(choices=User.objects.all()),
+
+
+        }
+

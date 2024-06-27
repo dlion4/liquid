@@ -7,6 +7,7 @@ from django.urls import path
 from django.views import defaults as default_views
 from sesame.views import LoginView
 from amiribd.articles.editor import views as ck_editor_views
+from amiribd.core.admin import earnkraft_site
 
 urlpatterns = [
     # root urls
@@ -24,8 +25,12 @@ urlpatterns = [
             namespace="posts",
         ),
     ),
-    # Django Admin, use {% url 'admin:index' %}
+    # Django Admin, use {% url 'admin:index' %} 
+    # main admin site for super users
     path(settings.ADMIN_URL, admin.site.urls),
+    # main admin site for stuff users
+    # path(settings.STUFF_ADMIN_URL, include(earnkraft_site.urls)),
+    path(settings.STUFF_ADMIN_URL, earnkraft_site.urls, name='stuff_admin'),
     # User management
     path("users/", include("amiribd.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
@@ -125,3 +130,10 @@ if settings.DEBUG:
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+# Admin Site Settings
+
+admin.site.site_title = "Earnkraft Agencies"
+admin.site.site_header = "Earnkraft administration"
+admin.site.index_title = "Earnkraft Agencies"

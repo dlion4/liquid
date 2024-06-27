@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 from .models import ShopItem, ShopItemOffer
 from django import forms
-
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminDecimalFieldWidget
+from unfold.contrib.forms.widgets import WysiwygWidget
 
 
 class ShopItemForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class ShopItemForm(forms.ModelForm):
         ]
 
         widgets = {
-            "title": forms.TextInput(attrs={'placeholder':'Product or item title', 'autofocus':True, 'class':'form-control form-control-lg'}),
+            "title": UnfoldAdminTextInputWidget(attrs={'placeholder':'Product or item title', 'autofocus':True, 'class':'form-control form-control-lg'}),
             'regular_price': forms.NumberInput(attrs={'placeholder':'Kshs 0.00', 'autofocus':True, 'class':'form-control form-control-lg'}),
             'sales_price': forms.NumberInput(attrs={'placeholder':'Kshs 0.00', 'autofocus':True, 'class':'form-control form-control-lg'}),
             'description': forms.Textarea(attrs={'placeholder':'Product description','class':'form-control', 'rows':2})

@@ -1,6 +1,6 @@
 from django.db import models
 from amiribd.users.models import Profile
-
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
@@ -14,3 +14,7 @@ class Issue(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name = _('Issue')
+        verbose_name_plural = _('Issues')

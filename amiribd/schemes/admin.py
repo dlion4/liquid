@@ -5,12 +5,14 @@ from django.http import HttpRequest
 
 from amiribd.invest.models import Account
 from amiribd.transactions.models import Transaction
+from amiribd.core.admin import earnkraft_site
+
 
 # Register your models here.
 from .models import WhatsAppEarningScheme
 
 
-@admin.register(WhatsAppEarningScheme)
+@admin.register(WhatsAppEarningScheme, site=earnkraft_site)
 class WhatsAppEarningSchemeAdmin(admin.ModelAdmin):
     list_display = [
         "profile",

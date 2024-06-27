@@ -42,7 +42,7 @@ from amiribd.profiles.forms import (
     PlantformTypeForm,
     PositionForm,
 )
-
+from amiribd.users.views import send_welcome_email
 # Create your views here.
 
 
@@ -344,10 +344,23 @@ class HandleAddPlanPaymentView(HandlePaymentView):
         account.balance += Decimal(amount)
         account.save()
 
-        return JsonResponse({"success": True, 'url': reverse("subscriptions:subscription", kwargs={
-            "plan_slug":plan.slug,
-            "plan_id":plan.pk
-        })})
+
+        send_welcome_email.after_response(
+            profile.user,
+            "mails/add_plan.html",
+            {
+                "user": profile.user, 
+                "plan": plan, 
+                "subject": "Earnkraft Agencies [Plan purchase Successful]"
+            },
+        )
+
+        return JsonResponse(
+            {
+                "success": True, 
+                'url': reverse("subscriptions:subscription", kwargs={"plan_slug":plan.slug,"plan_id":plan.pk})
+            }
+        )
     
     def handle_transaction_creation(
             self, 

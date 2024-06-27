@@ -1,12 +1,13 @@
 from django.contrib import admin
-
+from amiribd.core.admin import earnkraft_site
 # Register your models here.
 from .models import ShopItem, ShopItemOffer
+from .forms import ShopItemForm
 
 
-
-@admin.register(ShopItem)
+@admin.register(ShopItem, site=earnkraft_site)
 class ItemAdmin(admin.ModelAdmin):
+    form = ShopItemForm
     list_display = [
         "profile",
         "title",
@@ -32,7 +33,7 @@ class ItemAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(ShopItemOffer)
+@admin.register(ShopItemOffer, site=earnkraft_site)
 class ShopItemOfferAdmin(admin.ModelAdmin):
     list_display = [
         "client",

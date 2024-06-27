@@ -1,5 +1,13 @@
 from django.contrib import admin
+from .forms import PositionForm, AdminPlatformTypeForm
 from .models import PlantformType, Position, Agent, Plantform
+from unfold.admin import (
+    ModelAdmin,
+    StackedInline,
+    TabularInline,
+)
+
+from .forms import AdminAgentForm
 
 # Register your models here.
 
@@ -7,18 +15,26 @@ from .models import PlantformType, Position, Agent, Plantform
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
     list_display = ("name",)
+    form = PositionForm
 
 
-class PlantformInline(admin.StackedInline):
+class PlantformInline(StackedInline):
     model = Plantform
-    extra = 0
+    extra = 1
+    fields = [
+        'plantform_type',
+    ]
+    
 
 
 @admin.register(Agent)
 class AgentAdmin(admin.ModelAdmin):
     list_display = ("profile",)
+    form = AdminAgentForm
 
 
 @admin.register(PlantformType)
 class PlantformAdmin(admin.ModelAdmin):
     list_display = ("name",)
+    inlines = [PlantformInline]
+    form = AdminPlatformTypeForm

@@ -15,7 +15,7 @@ class Country(models.Model):
     country = models.CharField(max_length=100)
     currency_code = models.CharField(max_length=100)
     currency_name = models.CharField(max_length=100, blank=True, null=True)
-    amount = models.PositiveIntegerField(default=10, help_text="In relation to 1 KShs")
+    amount = models.FloatField(default=10, help_text="In relation to 1 KShs")
     conversion_rate = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def __str__(self):

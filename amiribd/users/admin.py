@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from .forms import UserAdminChangeForm
 from .forms import UserAdminCreationForm
+from .forms import AdminProfileForm
 from .models import User, Profile, Address, Document
 from unfold.widgets import UnfoldAdminTextInputWidget
 
@@ -78,6 +79,7 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
     search_fields = ("user",)
     ordering = ("user",)
+    form = AdminProfileForm
 
 
 @admin.register(Address)

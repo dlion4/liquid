@@ -1,7 +1,9 @@
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
+
+from amiribd.users.models import Profile
 from .models import Article
-from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminSplitDateTimeWidget
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminSplitDateTimeWidget, UnfoldAdminSelectWidget
 
 """
 profile
@@ -53,6 +55,7 @@ class AdminArticleForm(forms.ModelForm):
         ]
 
         widgets = {
+            "profile":UnfoldAdminSelectWidget(choices=Profile.objects.all()),
             "title": UnfoldAdminTextInputWidget(),
             "updated_at":UnfoldAdminSplitDateTimeWidget(),
         }

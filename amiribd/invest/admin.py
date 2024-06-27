@@ -9,14 +9,16 @@ from .models import (
     Account,
     AccountWithdrawalAction,
 )
+from amiribd.core.admin import earnkraft_site
 from nested_inline.admin import NestedModelAdmin
 from .inlines import AccountInline, PoolFeatureInline, Plan
-
+from .forms import AdminAddPlanForm, AdminAccountForm,AdminAccountTypeForm, AdminPoolForm, AdminPlanTypeForm
 # Register your models here.
-
+from amiribd.liquid.sites import admin_site
 
 @admin.register(Pool)
 class PoolAdmin(NestedModelAdmin):
+    form = AdminPoolForm
     list_display = [
         "profile",
         "account",
@@ -38,10 +40,12 @@ class PoolTypeAdmin(admin.ModelAdmin):
 class PlanInlineAdmin(admin.StackedInline):
     model = Plan
     extra = 1
+    form = AdminAddPlanForm
 
 
 @admin.register(PlanType)
 class PlanTypeAdmin(admin.ModelAdmin):
+    form = AdminPlanTypeForm
     list_display = ["type", "price", "percentage_return", "icon", "svg"]
 
     inlines = [PlanInlineAdmin]
@@ -49,14 +53,16 @@ class PlanTypeAdmin(admin.ModelAdmin):
 
 @admin.register(AccountType)
 class AccountTypeAdmin(admin.ModelAdmin):
+    form = AdminAccountTypeForm
     list_display = [
         "type",
         "price",
     ]
 
 
-@admin.register(Account)
+@admin.register(Account, site=earnkraft_site)
 class AccountAdmin(admin.ModelAdmin):
+    form = AdminAccountForm
     list_display = [
         "account_owner",
         "pool",
@@ -70,8 +76,9 @@ class AccountAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(Plan)
+@admin.register(Plan, site=earnkraft_site)
 class PlanAdmin(admin.ModelAdmin):
+    form = AdminAddPlanForm
     list_display = [
         "account",
         "type",
@@ -104,7 +111,7 @@ class PlanAdmin(admin.ModelAdmin):
         queryset.update(is_paid=False)
 
 
-@admin.register(AccountWithdrawalAction)
+@admin.register(AccountWithdrawalAction, site=earnkraft_site)
 class EventActionAdmin(admin.ModelAdmin):
     list_display = [
         "account",
