@@ -1,1 +1,14 @@
+<<<<<<< HEAD
 GET <https://jsonplaceholder.com>
+=======
+# GET http://127.0.0.1:8001/notes
+
+POST https://api.phrasly.ai/v1/humanize/ HTTP/1.1
+Accept: text/plain
+X-Api-Key: 987ce022563a51b71754db6f9bfb9b936b7ee39439ff5b5827eb50db1133faee
+Content-Type: application/json
+Host: api.phrasly.ai
+Content-Length: 794
+
+{"text":"The moon is Earth's natural satellite, a celestial object that orbits our planet. It is approximately 1/6th the size of Earth and lacks a significant atmosphere, which means it cannot support human life. The moon has played a significant role in Earth's history, influencing tides and possibly even playing a role in the development of life on our planet. It has been the subject of human fascination and exploration for centuries, with NASA's Apollo program being one of the most iconic missions that allowed astronauts to set foot on its surface in the 1960s and 1970s. Today, the moon continues to be a target for scientific study and potential future exploration missions, as it holds valuable insights into the early history of our solar system and the universe.","mode":"medium"}
+>>>>>>> 25c8a31aa1030d38d50e37a7ab26a85c02187608
