@@ -98,6 +98,10 @@ urlpatterns = [
     path("payments/", include("amiribd.payments.urls", namespace="payments")),
     # silk interface
     path("silk/", include('silk.urls', namespace="silk")),
+
+    # post ai genration
+
+    path("ai/assistant/", include("assistant.urls", namespace="assistant")),
 ]
 
 

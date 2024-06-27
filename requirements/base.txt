@@ -27,3 +27,5 @@ aiosqlite
 django-unfold
 django-celery-beat
 django-silk
+google-generativeai
+markdown
