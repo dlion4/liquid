@@ -17,7 +17,7 @@ import os
 load_dotenv()
 
 
-GOOGLE_GEMINI_API_KEY = os.eviron.get('GOOGLE_GEMINI_API_KEY')
+GOOGLE_GEMINI_API_KEY = os.environ.get('GOOGLE_GEMINI_API_KEY')
 GOOGLE_GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GOOGLE_GEMINI_API_KEY}'
 
 
