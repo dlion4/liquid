@@ -132,6 +132,7 @@ class ContentArticleUpdateView(ArticleMixinView):
 import json
 import after_response
 
+from amiribd.articles.editor.ai.models import AIHistory
 
 class ContentAiGeneratorView(ArticleMixinView):
     template_name = "account/dashboard/v1/articles/editor/generate.html"
@@ -141,8 +142,9 @@ class ContentAiGeneratorView(ArticleMixinView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class()
+        context["histories"] = AIHistory.objects.filter(profile=self.get_profile()).order_by("-id")[:3]
         return context
-    
+
 
 
 
@@ -150,11 +152,9 @@ def format_ai_response_content(markdown_text):
     formatted_html = markdown.markdown(markdown_text)
     return formatted_html
 
-from amiribd.articles.editor.ai.models import AIHistory
 
 class ArticleAiCreationView(View):
     form_class  = AIArticleGenerationModelForm
-
 
     def get_profile(self):
         return get_user(self.request).profile_user
@@ -264,3 +264,16 @@ def reduce_tokens(profile, **kwargs):
 
 class ContentAiEditPostView(ArticleMixinView):
     template_name = "account/dashboard/v1/articles/editor/edit.html"
+
+    def get_history(self):
+        return get_object_or_404(AIHistory, pk=self.kwargs.get("pk"), slug=self.kwargs.get("slug"))	
+    
+    def get_histories(self):
+        return AIHistory.objects.select_related("profile").filter(profile=self.get_history().profile).exclude(slug=self.get_history().slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["history"] = self.get_history()
+        context["histories"] = self.get_histories().order_by("-id")[:3]
+        return context
+    

@@ -16,7 +16,7 @@ urlpatterns = [
         name="new-article-ai-generation-post",
     ),
     path(
-        "new-article-ai-edit/",
+        "new-article-ai-edit/<pk>/<slug>/",
         views.ContentAiEditPostView.as_view(),
         name="new-article-ai-edit",
     ),

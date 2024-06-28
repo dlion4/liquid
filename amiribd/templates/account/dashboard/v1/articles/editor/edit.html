@@ -1,11 +1,21 @@
 {% extends "account/dashboard/v1/articles/editor/base.html" %}
+{% load filter_markdown %}
 
 {% block main %}
+
+  <style>
+    b,
+    strong {
+      font-size: 22px !important;
+      font-weight: 600 !important;
+    }
+  </style>
+
   <div class="card">
     <div class="nk-editor">
       <div class="nk-editor-header">
         <div class="nk-editor-title">
-          <h4 class="me-3 mb-0 line-clamp-1">2023-02-03 Untitled</h4>
+          <h4 class="me-3 mb-0 line-clamp-1">{{history.title|safe|title}}</h4>
           <ul class="d-inline-flex align-item-center">
             <li>
               <button class="btn btn-sm btn-icon btn-trigger">
@@ -205,101 +215,56 @@
                     <a href="#">Go Unlimited</a>
                   </div>
                 </div>
-                <div class="row g-4">
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="p-3">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                          <div class="badge badge-dim bg-primary rounded-pill align-center">
-                            <em class="icon ni ni-pen-fill fs-11px"></em>
-                            <span>Social Media Post</span></div>
-                          <ul class="d-flex align-items-center gx-1">
-                            <li>
-                              <button class="btn btn-sm btn-icon btn-trigger">
-                                <em class="icon ni ni-chevrons-left"></em>
-                              </button>
-                            </li>
-                            <li>
-                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost03" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
-                                <span class="clipboard-text">
-                                  <em class="icon ni ni-copy"></em></span></button>
-                            </li>
-                          </ul>
+
+                <!-- -->
+
+                {% if histories %}
+                  <div class="row g-4">
+                    {% for h in histories %}
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="p-3">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                              <div class="badge badge-dim bg-primary rounded-pill align-center">
+                                <em class="icon ni ni-pen-fill fs-11px"></em>
+                                <span style="cursor: pointer;">{{h.title|safe|truncatewords:"3"}}</span></div>
+                              <ul class="d-flex align-items-center gx-1">
+                                <li>
+                                  <button class="btn btn-sm btn-icon btn-trigger" hx-trigger="click" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{{h.get_absolute_url}}">
+                                    <em class="icon ni ni-chevrons-left"></em>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost03" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+                                    <span class="clipboard-text">
+                                      <em class="icon ni ni-copy"></em></span></button>
+                                </li>
+                              </ul>
+                            </div>
+                            <p class="text-dark" id="SocialMediaPost01">
+                              {{h.response|safe|filter_h2_template|truncatewords:"30"}}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+                              <span>{{h.created_at|date:"M d, Y"}}
+                                &nbsp;
+                                {{h.created_at|date:"H:i A"}}
+                              </span>
+                              <span>42 Words</span>
+                            </div>
+                          </div>
                         </div>
-                        <p class="text-dark" id="SocialMediaPost01">Hey everyone! Have you met ChatGPT? As an AI language model, I'm trained to answer your questions and have a conversation with you! Ask me anything, and let's get chatting! 😊</p>
-                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
-                          <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
                       </div>
-                    </div>
+                    {% endfor %}
                   </div>
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="p-3">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                          <div class="badge badge-dim bg-primary rounded-pill align-center">
-                            <em class="icon ni ni-pen-fill fs-11px"></em>
-                            <span>Social Media Post</span></div>
-                          <ul class="d-flex align-items-center gx-1">
-                            <li>
-                              <button class="btn btn-sm btn-icon btn-trigger">
-                                <em class="icon ni ni-chevrons-left"></em>
-                              </button>
-                            </li>
-                            <li>
-                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost02" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
-                                <span class="clipboard-text">
-                                  <em class="icon ni ni-copy"></em></span></button>
-                            </li>
-                          </ul>
-                        </div>
-                        <p class="text-dark" id="SocialMediaPost02">Are you tired of Googling for answers? Meet ChatGPT - your one-stop solution for all your queries! I'm an AI language model trained to provide you with accurate and informative responses. Try me out! 💬</p>
-                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
-                          <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="p-3">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                          <div class="badge badge-dim bg-primary rounded-pill align-center">
-                            <em class="icon ni ni-pen-fill fs-11px"></em>
-                            <span>Social Media Post</span></div>
-                          <ul class="d-flex align-items-center gx-1">
-                            <li>
-                              <button class="btn btn-sm btn-icon btn-trigger">
-                                <em class="icon ni ni-chevrons-left"></em>
-                              </button>
-                            </li>
-                            <li>
-                              <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost03" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
-                                <span class="clipboard-text">
-                                  <em class="icon ni ni-copy"></em></span></button>
-                            </li>
-                          </ul>
-                        </div>
-                        <p class="text-dark" id="SocialMediaPost03">OpenAI is changing the game for data-driven innovation. With its cutting-edge technology, we can harness the power of data in ways we never thought possible.</p>
-                        <div class="d-flex justify-content-between align-items-center fs-11px text-base">
-                          <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {% endif %}
+
               </div>
             </div>
           </div>
         </div>
         <div class="nk-editor-body">
           <div class="tinymce-toolbar nk-editor-style-clean nk-editor-full p-4 form-contol ">
-            <h1>The Importance of Business Metrics in Product Design Industry</h1>
-            <h3>Introduction</h3>
-            <p>In the product design industry, creating a successful product is a top priority for any business. However, creating a product that sells and brings in revenue is equally important. This is where business metrics come into play. Business metrics are key performance indicators (KPIs) that measure a company's success in achieving its goals. In this blog post, we will discuss the importance of business metrics in the product design industry.</p>
-            <h3>Understanding Customer Needs</h3>
-            <p>One of the most important aspects of product design is understanding customer needs. Business metrics help companies gather data on customer behavior, such as purchase history, product reviews, and customer feedback. By analyzing this data, companies can determine what products are in demand and what features customers are looking for. This helps companies design products that meet customer needs, which can increase sales and customer satisfaction.</p>
-            <h3>Measuring Product Performance</h3>
-            <p>Business metrics also help companies measure the performance of their products. Metrics such as sales revenue, profit margin, and customer retention rate can provide insight into how well a product is performing in the market. By analyzing these metrics, companies can make data-driven decisions about product design, pricing, and marketing strategies. This can increase profitability and help companies stay competitive in the market.</p>
-            <h3>Identifying Areas for Improvement</h3>
-            <p>Finally, business metrics can help companies identify areas for improvement in their product design process. Metrics such as product development cycle time, defect rate, and customer satisfaction can help companies pinpoint areas where they can improve their processes. By addressing these areas, companies can streamline their product design process and improve the quality of their products.</p>
+            {{history.response|safe}}
           </div>
         </div>
       </div>
