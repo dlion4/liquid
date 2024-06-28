@@ -11,6 +11,11 @@ urlpatterns = [
         name="new-article-ai-generation",
     ),
     path(
+        "ai/new/",
+        views.ArticleAiCreationView.as_view(),
+        name="new-article-ai-generation-post",
+    ),
+    path(
         "new-article-ai-edit/",
         views.ContentAiEditPostView.as_view(),
         name="new-article-ai-edit",

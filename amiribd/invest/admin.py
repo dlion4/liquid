@@ -15,10 +15,11 @@ from .inlines import AccountInline, PoolFeatureInline, Plan
 from .forms import AdminAddPlanForm, AdminAccountForm,AdminAccountTypeForm, AdminPoolForm, AdminPlanTypeForm
 # Register your models here.
 from amiribd.liquid.sites import admin_site
+from unfold.admin import ModelAdmin
 
 @admin.register(Pool)
-class PoolAdmin(NestedModelAdmin):
-    form = AdminPoolForm
+class PoolAdmin(NestedModelAdmin, ModelAdmin):
+    # form = AdminPoolForm
     list_display = [
         "profile",
         "account",
@@ -30,7 +31,7 @@ class PoolAdmin(NestedModelAdmin):
 
 
 @admin.register(PoolType)
-class PoolTypeAdmin(admin.ModelAdmin):
+class PoolTypeAdmin(ModelAdmin):
     list_display = [
         "type",
         "price",
@@ -44,15 +45,15 @@ class PlanInlineAdmin(admin.StackedInline):
 
 
 @admin.register(PlanType)
-class PlanTypeAdmin(admin.ModelAdmin):
-    form = AdminPlanTypeForm
+class PlanTypeAdmin(ModelAdmin):
+    # form = AdminPlanTypeForm
     list_display = ["type", "price", "percentage_return", "icon", "svg"]
 
     inlines = [PlanInlineAdmin]
 
 
 @admin.register(AccountType)
-class AccountTypeAdmin(admin.ModelAdmin):
+class AccountTypeAdmin(ModelAdmin):
     form = AdminAccountTypeForm
     list_display = [
         "type",
@@ -61,8 +62,8 @@ class AccountTypeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Account, site=earnkraft_site)
-class AccountAdmin(admin.ModelAdmin):
-    form = AdminAccountForm
+class AccountAdmin(ModelAdmin):
+    # form = AdminAccountForm
     list_display = [
         "account_owner",
         "pool",
@@ -77,8 +78,8 @@ class AccountAdmin(admin.ModelAdmin):
 
 
 @admin.register(Plan, site=earnkraft_site)
-class PlanAdmin(admin.ModelAdmin):
-    form = AdminAddPlanForm
+class PlanAdmin(ModelAdmin):
+    # form = AdminAddPlanForm
     list_display = [
         "account",
         "type",
@@ -112,7 +113,7 @@ class PlanAdmin(admin.ModelAdmin):
 
 
 @admin.register(AccountWithdrawalAction, site=earnkraft_site)
-class EventActionAdmin(admin.ModelAdmin):
+class EventActionAdmin(ModelAdmin):
     list_display = [
         "account",
         "action",

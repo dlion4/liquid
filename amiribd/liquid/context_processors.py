@@ -9,4 +9,12 @@ def liquid_site_data(request):
         "officephone": "(888)234-5686",
         "officeemail": "contact@liquid.co.ke",
         "company_privacy_document":CompanyTermsAndPolicy.objects.first(),
+        "external_links": {
+            "blogging_site":{
+                "domain": "earnkraft.com",
+                "url": "https://earnkraft.com"
+            }
+        }
     }
+
+

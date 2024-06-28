@@ -44156,7 +44156,8 @@ button.close {
 
 .amount1,
 .is-dark .nk-wgw-balance .amount {
-    color: #fff
+    /* color: #fff */
+     color: #364a63;
 }
 
 .nk-wgw-balance .amount span {
@@ -51904,11 +51905,13 @@ div.dataTables_wrapper div.dataTables_filter .dark-mode input {
 
 .amount1,
 .dark-mode .pricing-amount .amount {
-    color: #fff
+    /* color: #fff */
+    color: #364a63;
 }
 
 .dark-mode .product-title a {
-    color: #fff
+    /* color: #fff */
+     color: #364a63;
 }
 
 .dark-mode .product-gallery {

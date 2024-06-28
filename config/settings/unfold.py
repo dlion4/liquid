@@ -7,29 +7,29 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                 "separator": False,  # Top border
                 "items": [
                     {
-                        "title": _("Home"),
-                        "icon": "home",  # Supported icon set: https://fonts.google.com/icons
-                        "link": reverse_lazy("admin:index"),
-                        "badge": "",
-                        "permission": lambda request: request.user.is_staff,
+                        "title": _("Dashboard"),
+                        "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
+                        "link": "core.navigation_reverse_callback",
+                        "badge": "core.badge_callback",
+                        "permission": "core.staff_permissions_callback",
                     },
                     {
                         "title": _("Users"),
                         "icon": "person",
                         "link": reverse_lazy("admin:users_user_changelist"),
-                        "permission": lambda request: request.user.is_superuser,
+                        "permission": "core.superuser_permissions_callback",
                     },
                     {
                         "title": _("Profile"),
                         "icon": "person",
                         "link": reverse_lazy("admin:users_profile_changelist"),
-                        "permission": lambda request: request.user.is_superuser,
+                        "permission": "core.superuser_permissions_callback",
                     },
                     {
                         "title": _("Groups"),
-                        "icon": "group",
+                        "icon": "holiday_village",
                         "link": reverse_lazy("admin:auth_group_changelist"),
-                        "permission": lambda request: request.user.is_superuser,
+                        "permission": "core.superuser_permissions_callback",
                     }
                 ],
             },
@@ -41,13 +41,13 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                         "title": _("Pool"),
                         "icon": "savings",
                        "link": reverse_lazy("admin:invest_pool_changelist"),
-                        "permissions": lambda request: request.user.is_superuser,
+                        "permission": "core.superuser_permissions_callback",
                     },
                     {
                         "title": _("Account"),
-                        "icon": "savings",
+                        "icon": "admin_panel_settings",
                        "link": reverse_lazy("earnkraft:invest_account_changelist"),
-                        "permissions": lambda request: request.user.is_superuser,
+                        "permission": "core.superuser_permissions_callback",
                     },
                 ],
             },
@@ -58,8 +58,8 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                     {
                         "title": _("Advertisement"),
                         "icon": "storefront",
-                         "link": reverse_lazy("admin:adverts_adcategory_changelist"),
-                         "permissions": lambda request: request.user.is_staff
+                        "link": reverse_lazy("admin:adverts_adcategory_changelist"),
+                        "permission": "core.superuser_permissions_callback",
                     },
                 ]
             },
@@ -111,5 +111,58 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                          "permissions": lambda request: request.user.is_superuser
                     },
                 ]
-             }
+            },
+            {
+                "title":_("Editor"),
+                "separator":True,
+                "items": [
+                    {
+                        "title": _("Writings"),
+                        "icon": "article", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:articles_article_changelist"),
+                        "badge":"core.badge_articles_count_callback",
+                        "permission": "core.staff_permissions_callback",
+                    },
+                    {
+                        "title": _("AI Template"),
+                        "icon": "highlight", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:articles_templatecategory_changelist"),
+                        # "badge":"core.badge_articles_count_callback",
+                        "permission": "core.staff_permissions_callback",
+                    },
+                    {
+                        "title": _("Templates"),
+                        "icon": "connected_tv", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:articles_template_changelist"),
+                        # "badge":"core.badge_articles_count_callback",
+                        "permission": "core.staff_permissions_callback",
+                    },
+                    {
+                        "title": _("AI History"),
+                        "icon": "history", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:articles_aihistory_changelist"),
+                        # "badge":"core.badge_articles_count_callback",
+                        "permission": "core.staff_permissions_callback",
+                    },
+                ]
+            },
+            {
+                "title":_("PROFILE KYC"),
+                "separator":True,
+                "items": [
+                    {
+                        "title": _("Address"),
+                        "icon": "location_on", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:users_address_changelist"),
+                        
+                        "permission": lambda request: request.user.is_superuser
+                    },
+                    {
+                        "title": _("Documents"),
+                        "icon": "app_registration", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:users_document_changelist"),
+                        "permission": lambda request: request.user.is_superuser
+                    },
+                ]
+            },
     ]
