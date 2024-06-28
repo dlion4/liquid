@@ -14,8 +14,6 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
     <style>
-        
-      
       .card {
         margin: 1em auto;
       }
@@ -53,10 +51,10 @@
       }
     </style>
     <style>
-        .cardx {
-            margin-bottom: 20px;
-        }
-    </style>  
+      .cardx {
+        margin-bottom: 20px;
+      }
+    </style>
   </head>
 
   <body>
@@ -469,3 +467,30 @@
   </body>
 
 </html>
+
+<div class="col-12">
+  <div class="card">
+    <div class="p-3">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="badge badge-dim bg-primary rounded-pill align-center">
+          <em class="icon ni ni-pen-fill fs-11px"></em>
+          <span>Social Media Post</span></div>
+        <ul class="d-flex align-items-center gx-1">
+          <li>
+            <button class="btn btn-sm btn-icon btn-trigger" hx-trigger="click" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article-ai-edit' %}">
+              <em class="icon ni ni-chevrons-left"></em>
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-sm btn-icon clipboard-init" title="Copy to clipboard" data-clipboard-target="#SocialMediaPost02" data-clip-success="<em class='icon ni ni-copy-fill'></em>" data-clip-text="<em class='icon ni ni-copy'></em>">
+              <span class="clipboard-text">
+                <em class="icon ni ni-copy"></em></span></button>
+          </li>
+        </ul>
+      </div>
+      <p class="text-dark" id="SocialMediaPost02">Are you tired of Googling for answers? Meet ChatGPT - your one-stop solution for all your queries! I'm an AI language model trained to provide you with accurate and informative responses. Try me out! 💬</p>
+      <div class="d-flex justify-content-between align-items-center fs-11px text-base">
+        <span>Feb 23, 2023 &nbsp; 05:23 PM</span><span>42 Words</span></div>
+    </div>
+  </div>
+</div>
