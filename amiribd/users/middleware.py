@@ -15,6 +15,21 @@ class AuthenticationStateCheckMiddleware(MiddlewareMixin):
     def __init__(self, get_response):
         self.get_response = get_response
 
+    def get_unprotected_route(self):
+        return [
+            reverse("home"),
+            reverse("about"),
+            # reverse("investment"),
+            reverse("learn"),
+            reverse("contact"),
+            reverse("help"),
+            reverse("guide"),
+            reverse("customers"),
+            reverse("career"),
+            reverse("policies"),
+            # reverse("view_policy", kwargs={"pk": 1}),
+        ]
+
     def process_request(self, request):
         # List of paths to skip the authentication check
         exempt_paths = [
@@ -22,6 +37,8 @@ class AuthenticationStateCheckMiddleware(MiddlewareMixin):
             reverse('users:signup'),
             reverse('users:logout')
         ]
+
+        exempt_paths += self.get_unprotected_route()
 
         # Add patterns that require additional parameters
         exempt_paths += [

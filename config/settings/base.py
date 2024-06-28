@@ -849,15 +849,49 @@ CSRF_TRUSTED_ORIGINS = [
 
 
 from .unfold import DJANGO_UNFOLD_SIDEBAR_NAVIGATION
-
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse_lazy
 
 UNFOLD = {
-    "SITE_SYMBOL": "settings",
-
+    "SITE_SYMBOL": "speed",
+    "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
+    "ENVIRONMENT": "core.environment_callback",
+    "DASHBOARD_CALLBACK": "core.dashboard_callback",
+    "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "en": "🇬🇧",
+                "fr": "🇫🇷",
+                "nl": "🇧🇪",
+            },
+        },
+    },
     "SIDEBAR": {
         "show_search": True,  # Search in applications and models names
         "show_all_applications": True,  # Dropdown with all applications and models
         "navigation": DJANGO_UNFOLD_SIDEBAR_NAVIGATION,
-    }
+    },
+
+    "TABS": [
+        {
+            "models": [
+                "articles.article",
+            ],
+            "items": [
+                {
+                    "title": _("Article"),
+                    "link": reverse_lazy("earnkraft:articles_article_changelist"),
+                    "permission": lambda request: request.user.is_staff,
+                },
+            ],
+        },
+    ],
 }
+
+
+
+# GOOGLE GEMINI API  SETTINGS
+
+GOOGLE_GEMINI_API_KEY = env.str('GOOGLE_GEMINI_API_KEY', default='')
 

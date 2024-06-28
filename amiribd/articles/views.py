@@ -7,6 +7,8 @@ from django.contrib.auth import get_user
 from django.conf import settings
 import json
 
+from amiribd.invest.models import Account
+
 
 additional_js_ckeditor_logic = """
     .then(editor => {
@@ -48,6 +50,7 @@ additional_js_ckeditor_logic = """
 
 
 class ArticleMixinView(DashboardViewMixin):
+    queryset = Account
     def get_profile(self):
         return get_user(self.request).profile_user
 
@@ -83,10 +86,11 @@ class PaymentPlanForAiView(ArticleMixinView):
     template_name = "account/dashboard/v1/articles/payment.html"
 
 
-class ArticleDetailView(DashboardViewMixin):
+class ArticleDetailView(ArticleMixinView):
     template_name = "account/dashboard/v1/articles/article_detail.html"
+    queryset = Account
 
-    def get_object(self, **kwargs):
+    def get_article_object(self, **kwargs):
         return get_object_or_404(
             Article,
             slug=self.kwargs.get("slug"),
@@ -97,5 +101,5 @@ class ArticleDetailView(DashboardViewMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["article"] = self.get_object(**kwargs)
+        context["article"] = self.get_article_object(**kwargs)
         return context

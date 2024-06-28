@@ -18,8 +18,7 @@
 
 <header>
   <div class="uk-section uk-padding-remove-vertical in-header-inverse ">
-    <nav class="uk-navbar-container uk-navbar-transparent uk-sticky"
-      data-uk-sticky="show-on-up: true; top: 80; animation: uk-animation-fade">
+    <nav class="uk-navbar-container uk-navbar-transparent uk-sticky" data-uk-sticky="show-on-up: true; top: 80; animation: uk-animation-fade">
       <div class="uk-container" data-uk-navbar="data-uk-navbar">
         <div class="uk-navbar-left uk-width-expand uk-flex uk-flex-between">
           <a class="uk-navbar-item uk-logo" href="{% url 'home' %}">
@@ -41,16 +40,13 @@
           <div class="uk-navbar-item">
             {% if request.user.is_authenticated %}
             <div class="in-optional-nav">
-              <a role="button" href="{% url 'dashboard:home' %}"
-                class="uk-button uk-button-primary uk-button-small uk-border"
-                style="margin-left: 10px !important">{{request.user.username}}
+              <a role="button" href="{% url 'dashboard:home' %}" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
               </a>
 
             </div>
             {% else %}
             <div class="in-optional-nav">
-              <a href="{% url 'users:signup' %}" class="uk-button uk-button-primary uk-button-small uk-border-pill"
-                style="margin-left: 10px !important">Sign up</a>
+              <a href="{% url 'users:login' %}" class="uk-button uk-button-primary uk-button-small uk-border-pill" style="margin-left: 10px !important">Sign In</a>
             </div>
             {% endif %}
           </div>
@@ -71,8 +67,6 @@
               </div>
               <div class="uk-width-expand@m uk-text-center uk-text-right@m">
                 <a class="uk-margin-right" href="#" data-bs-whatever="@getbootstrap">
-                  <!-- modal for live chat TODO: implement later data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" -->
                   <i class="fas fa-comment-alt uk-margin-small-right"></i>Live Chat</a>
                 <a href="tel:{{officephone}}">
                   <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a>

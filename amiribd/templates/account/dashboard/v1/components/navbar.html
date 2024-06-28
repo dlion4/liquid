@@ -9,60 +9,53 @@
         </a>
       </div>
       <div class="nk-header-brand d-xl-none">
-        <a href="{% url 'dashboard:home' %}" class="logo-link"><img class="logo-light logo-img"
-            src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x"
-            alt="logo" /><img class="logo-dark logo-img" src="{% static 'img/earnkraftfull2.png' %}"
-            srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo-dark" />
+        <a href="{% url 'dashboard:home' %}" class="logo-link"><img class="logo-light logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo"/><img class="logo-dark logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo-dark"/>
           <span class="nio-version">EARNKRAFT</span></a>
       </div>
 
       {% block headerNews %}
-      <div class="nk-header-news d-none d-xl-block">
-        <div class="nk-news-list">
-          <a class="nk-news-item" href="#">
-            <div class="nk-news-icon">
-              <em class="icon ni ni-card-view"></em>
-            </div>
-            <div class="nk-news-text">
-              <p>
-                Visit our blog website where all written articles are posted
-                <span>
-                  Tested and Approved</span>
-              </p>
-              <em class="icon ni ni-external"></em>
-            </div>
-          </a>
+        <div class="nk-header-news d-none d-xl-block">
+          <div class="nk-news-list">
+            <a class="nk-news-item" href="//{{external_links.blogging_site.domain}}" target="_blank">
+              <div class="nk-news-icon">
+                <em class="icon ni ni-card-view"></em>
+              </div>
+              <div class="nk-news-text">
+                <p>
+                  Visit our blog website where all written articles are posted
+                  <span>
+                    Tested and Approved</span>
+                </p>
+                <em class="icon ni ni-external"></em>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
       {% endblock headerNews %}
       <div class="nk-header-tools">
         <ul class="nk-quick-nav">
           <li class="dropdown language-dropdown d-none d-sm-block me-n1">
             <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
               <div class="quick-icon border border-light">
-                <img class="icon" id="selectedCountryFlag" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt="" />
+                <img class="icon" id="selectedCountryFlag" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt=""/>
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-s1">
               <ul class="language-list">
                 <li>
-                  <a href="#" class="language-item"><img id="countryFlag" src="{% static 'dashboard/images/flags/english.png' %}" alt=""
-                      class="language-flag" />
+                  <a href="#" class="language-item"><img id="countryFlag" src="{% static 'dashboard/images/flags/english.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">English</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/spanish.png' %}" alt=""
-                      class="language-flag" />
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/spanish.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">Español</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/french.png' %}" alt=""
-                      class="language-flag" />
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/french.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">Français</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/turkey.png' %}" alt=""
-                      class="language-flag" />
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/turkey.png' %}" alt="" class="language-flag"/>
                     <span class="language-name">Türkçe</span></a>
                 </li>
               </ul>
@@ -172,11 +165,11 @@
 
                 <div class="user-info d-none d-md-block">
                   {% if request.user.verified %}
-                  <div class="user-status user-status-verified">Verified</div>
+                    <div class="user-status user-status-verified">Verified</div>
                   {% else %}
-                  <div class="user-status user-status-unverified">
-                    Unverified
-                  </div>
+                    <div class="user-status user-status-unverified">
+                      Unverified
+                    </div>
                   {% endif %}
                   <div class="user-name dropdown-indicator">
                     {{profile.full_name|truncatewords:"3"}}
@@ -191,32 +184,30 @@
                     <span>{{profile.initials}}</span>
                   </div>
                   <div class="user-info">
-                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span
-                      class="sub-text">{{profile.user.email}}</span>
+                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span>
                   </div>
                 </div>
               </div>
               {% if plans %}
-              <div class="dropdown-inner user-account-info">
-                <h6 class="overline-title-alt">Wallet Balance</h6>
-                <div class="user-balance">
-                  {{available_amount}}
-                  <small class="currency currency-btc">KES</small>
-                </div>
-                <div class="user-balance-sub">
-                  Locked
-                  <span>{{locked_amount}}
-                    <span class="currency currency-btc">KES</span></span>
-                </div>
+                <div class="dropdown-inner user-account-info">
+                  <h6 class="overline-title-alt">Wallet Balance</h6>
+                  <div class="user-balance">
+                    {{available_amount}}
+                    <small class="currency currency-btc">KES</small>
+                  </div>
+                  <div class="user-balance-sub">
+                    Locked
+                    <span>{{locked_amount}}
+                      <span class="currency currency-btc">KES</span></span>
+                  </div>
 
-                {% if available_amount > 0.00 %}
-                <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm"
-                  class="link">
-                  <span>Withdraw Funds</span>
-                  <em class="icon ni ni-wallet-out"></em>
-                </a>
-                {% endif %}
-              </div>
+                  {% if available_amount > 0.00 %}
+                    <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="link">
+                      <span>Withdraw Funds</span>
+                      <em class="icon ni ni-wallet-out"></em>
+                    </a>
+                  {% endif %}
+                </div>
               {% endif %}
               <div class="dropdown-inner">
                 <ul class="link-list">
@@ -240,8 +231,7 @@
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none"
-                      hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
                       <em class="icon ni ni-signout"></em>
                       <span>Sign out</span>
                     </a>

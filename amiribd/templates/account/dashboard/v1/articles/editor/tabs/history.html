@@ -3,12 +3,15 @@
     <div class="d-flex flex-wrap justify-content-between mb-3">
       <h6 class="mb-0 me-3">Generation History</h6>
       <div class="fs-11px">
-        <span class="text-dark">0</span>
+        <span class="text-dark">{{aitokens}}</span>
         tokens.
-        <a class="text-primary" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="">Unavailable yet</a>
+        <a class="text-primary" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="">
+          ~{{remainin}}
+        </a>
       </div>
     </div>
-    {% comment %} <div class="row g-4">
+    {% comment %} 
+    <div class="row g-4">
       <div class="col-12">
         <div class="card">
           <div class="p-3">
@@ -61,6 +64,7 @@
           </div>
         </div>
       </div>
-    </div> {% endcomment %}
+    </div>
+    {% endcomment %}
   </div>
 </div>

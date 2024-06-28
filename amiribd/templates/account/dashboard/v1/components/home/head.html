@@ -2,15 +2,17 @@
 
 <div class="nk-block-head">
   <div class="nk-block-head-sub">
-    <span>Welcome!</span></div>
+    <span>Welcome!</span>
+
+  </div>
   <div class="nk-block-between-md g-4">
     <div class="nk-block-head-content">
-      <h2 class="nk-block-title fw-normal">{{profile.user.username}}</h2>
+      <h2 class="nk-block-title fw-normal">{{profile.full_name|truncatewords:"3"}}</h2>
       <div class="nk-block-des">
         {% if plans %}
-        <p>A summary of your account. Have fun!</p>
+          <p>A summary of your account. Have fun!</p>
         {% else %}
-        <p>Account have no plan. Purchase a plan by subscribing to start earning</p>
+          <p>Account have no plan. Purchase a plan by subscribing to start earning</p>
         {% endif %}
       </div>
     </div>
@@ -31,7 +33,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'dashboard:invest:invest' %}" class="btn btn-white btn-light">
+            <a href="" class="btn btn-white btn-light">
               <span>Invest</span>
               <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
             </a>

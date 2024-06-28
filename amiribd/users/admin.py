@@ -9,6 +9,9 @@ from .forms import UserAdminCreationForm
 from .forms import AdminProfileForm
 from .models import User, Profile, Address, Document
 from unfold.widgets import UnfoldAdminTextInputWidget
+from unfold.admin import ModelAdmin
+from amiribd.articles.models import AiToken
+from amiribd.core.admin import earnkraft_site
 
 
 if settings.DJANGO_ADMIN_FORCE_ALLAUTH:
@@ -38,7 +41,7 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["email", "name", "is_superuser"]
+    list_display = ["email", "name",'is_staff', "is_superuser"]
     search_fields = ["name"]
     ordering = ["id"]
     add_fieldsets = (
@@ -54,7 +57,7 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
 
 
 @admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
+class ProfileAdmin(ModelAdmin):
     list_display = (
         "user",
         "referred_by",
@@ -79,11 +82,11 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
     search_fields = ("user",)
     ordering = ("user",)
-    form = AdminProfileForm
+    # form = AdminProfileForm
 
 
-@admin.register(Address)
-class AddressAdmin(admin.ModelAdmin):
+@admin.register(Address, site=earnkraft_site)
+class AddressAdmin(ModelAdmin):
     list_display = [
         "profile",
         "addr_line1",
@@ -115,8 +118,8 @@ s3_project_bucket_name = s3_files_resource.Bucket(s3_bucket_name)
 
 
 
-@admin.register(Document)
-class DocumentAdmin(admin.ModelAdmin):
+@admin.register(Document, site=earnkraft_site)
+class DocumentAdmin(ModelAdmin):
     list_display = [
         "profile",
         "document_type",

@@ -13,7 +13,7 @@
       </a>
     </li>
     <li>
-      <a class="d-flex bg-opacity-80 hover-bg-lighter px-3 py-2" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="">
+      <a class="d-flex bg-opacity-80 hover-bg-lighter px-3 py-2" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:articles:editor:new-article-ai-generation' %}">
         <em class="icon fs-4 ni ni-list-thumb-fill text-info"></em>
         <div class="ps-2">
           <h6 class="mb-1">Blog Post Outline</h6>
