@@ -4,15 +4,28 @@ from django.contrib import admin
 from .models import JobApplication, Job
 from .forms import AddJobForm
 from amiribd.core.admin import earnkraft_site
+from unfold.admin import ModelAdmin
+from django.db import models
+from unfold.contrib.forms.widgets import WysiwygWidget
+from unfold import admin as unfold_admin
+from unfold.widgets import UnfoldAdminTextInputWidget
 
-class JobApplicationInlineAdmin(admin.StackedInline):
+class JobApplicationInlineAdmin(unfold_admin.StackedInline):
     model = JobApplication
     extra = 0
+    formfield_overrides={
+        models.CharField:{
+            "widget":UnfoldAdminTextInputWidget
+        },
+        models.TextField:{
+            "widget":WysiwygWidget
+        },
+    }
 
 
 @admin.register(Job, site=earnkraft_site)
-class JobAdmin(admin.ModelAdmin):
-    form = AddJobForm
+class JobAdmin(ModelAdmin):
+    
     list_display = [
         "title",
         "location",
@@ -37,3 +50,11 @@ class JobAdmin(admin.ModelAdmin):
     inlines = [
         JobApplicationInlineAdmin,
     ]
+    
+    formfield_overrides = {
+        models.TextField:{
+            "widget":WysiwygWidget
+        }
+                           
+    
+    }

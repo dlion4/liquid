@@ -165,4 +165,18 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                     },
                 ]
             },
+            {
+                "title":_("OPPOTUNITIES"),
+                "separator":True,
+                "items": [
+                    {
+                        "title": _("Job"),
+                        "icon": "location_on", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:jobs_job_changelist"),
+                        
+                        "permission": lambda request: request.user.is_superuser
+                    },
+                    
+                ]
+            },
     ]
