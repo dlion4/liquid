@@ -32,8 +32,8 @@ class AddJobForm(forms.ModelForm):
 
 
 class JobApplicationForm(forms.ModelForm):
-    motivational_letter = forms.CharField(required=False)
-    resume = forms.FileField(required=False)
+    motivational_letter = forms.CharField(required=False, widget=forms.Textarea(attrs={"class": "form-control form-control-lg no-resize", "rows":2}))
+    resume = forms.FileField(required=False, widget=forms.FileInput(attrs={"class": "form-control form-control-lg"}))
     class Meta:
         model = JobApplication
         fields = [
@@ -44,8 +44,6 @@ class JobApplicationForm(forms.ModelForm):
 
         widgets = {
             "email_or_phone": forms.TextInput(attrs={"class": "form-control form-control-lg", "placeholder":"Email or Phone Number"}),
-            "motivational_letter": forms.Textarea(attrs={"class": "form-control form-control-lg no-resize", "rows":2}),
-            "resume": forms.FileInput(attrs={"class": "form-control form-control-lg"}),
         }
 
         labels = {
