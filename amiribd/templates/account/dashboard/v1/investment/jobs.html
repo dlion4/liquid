@@ -173,7 +173,7 @@
                 <h5 class="title py-1">{{job.title|title}}</h5>
                 <p class="sub-text">{{job.description|truncatewords:"10"}}</p>
                 <div class="py-2">
-                    <span class="tag price-tag">salary ${{job.salary_offer|floatformat:2|intcomma}}</span>
+                    <span class="tag price-tag">Pay ${{job.salary_offer|floatformat:2|intcomma}}</span>
                     <span class="tag date-tag">{{job.date_posted|date:"M Y"}}</span>
                     <span class="tag academic-level-tag">{{job.get_level_display|title}}</span>
                 </div>
