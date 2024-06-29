@@ -13,11 +13,12 @@
             <div class="uk-width-3-5@m">
               <div class="uk-overlay">
                 <h1>All Possible ways of Earning</h1>
-                <p class="uk-text-lead uk-visible@m">With Access to the internet, we bring you various ways of earning
-                  income from you smartphone</p>
+                <p class="uk-text-lead uk-visible@m">With Access to the internet, we bring you various ways of earning income from you smartphone</p>
                 <p class="uk-text-lead uk-visible@m">You can now use chatGPT to earn with us</p>
-                <a href="{% url 'dashboard:invest:invest' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
-                  <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
+                <a href="{% if request.user.profile_user.plans %}{% url 'dashboard:invest:invest_plan' %}{% else %}{% url 'dashboard:invest:invest' %}{% endif %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                  <i class="fas fa-scroll uk-margin-small-right"></i>
+                  Get Started
+                </a>
               </div>
             </div>
           </div>
@@ -33,9 +34,7 @@
             <div class="uk-width-3-5@m">
               <div class="uk-overlay">
                 <h1>We Deliver What We Promise</h1>
-                <p class="uk-text-lead uk-visible@m">You can earn from afflient marketing, commisions, bonuses,
-                  investiment returns, Blogs and so much more. Better earn small returns constanly daily with little
-                  capital to start with</p>
+                <p class="uk-text-lead uk-visible@m">You can earn from afflient marketing, commisions, bonuses, investiment returns, Blogs and so much more. Better earn small returns constanly daily with little capital to start with</p>
                 <a href="{% url 'dashboard:invest:invest' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
                   <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
               </div>
@@ -53,8 +52,7 @@
             <div class="uk-width-3-5@m">
               <div class="uk-overlay">
                 <h1>No Risk No Reward</h1>
-                <p class="uk-text-lead uk-visible@m">With our packages, Artificial Intelligence and the internet, the
-                  more you push beyond your limits, the greater the reward</p>
+                <p class="uk-text-lead uk-visible@m">With our packages, Artificial Intelligence and the internet, the more you push beyond your limits, the greater the reward</p>
                 <a href="{% url 'dashboard:invest:invest' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
                   <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
               </div>

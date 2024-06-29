@@ -1,5 +1,5 @@
 import contextlib
-from typing import Any
+from typing import Any, Optional
 from django.contrib.auth import authenticate
 from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -53,6 +53,7 @@ def send_welcome_email(
         body=plain_message,
         from_email=None,
         to=[context.get("email", user.email)],
+        team="Earnkraft",
     )
 
     message.attach_alternative(html_message, "text/html")
@@ -120,7 +121,7 @@ class SignupView(AuthenticationGuard, FormView):
         # TODO: email magic link to user.
         try:
             user = User.objects.get(email=email)
-            self.email_submitted(user)
+            # self.email_submitted(user, template="account/dashboard/v1/mails/login.html",)
             return redirect("users:login")
 
         except User.DoesNotExist:
@@ -137,10 +138,19 @@ class SignupView(AuthenticationGuard, FormView):
             return redirect("home")
         
 
-    def email_submitted(self, user):
+    def email_submitted(
+            self, 
+            user, 
+            template:Optional[str]="account/dashboard/v1/mails/welcome.html", 
+            context:Optional[dict[str, str]]={}
+        ):
         send_welcome_email.after_response(
-            user,"account/dashboard/v1/mails/welcome.html",
-            {"profile": user.profile_user,"register_url": self.request.build_absolute_uri(reverse("dashboard:home"))},
+            user,template,
+            {"profile": user.profile_user,
+             "link": self.request.build_absolute_uri(reverse("users:login")),
+             "policies":self.request.build_absolute_uri(reverse("policies")),
+             "subject": "Earnkraft Agencies"
+             }
         )
 
 
@@ -184,8 +194,8 @@ class ReferralSignupView(AuthenticationGuard, TemplateView):
             # TODO: email magic link to user.
             try:
                 user = User.objects.get(email=email)
-                self.email_submitted(user.email)
-                return redirect("users:success")
+                # self.email_submitted(user.email)
+                return redirect("users:login")
 
             except User.DoesNotExist:
                 user = User.objects.create_user(email=email, username=username)
@@ -197,21 +207,28 @@ class ReferralSignupView(AuthenticationGuard, TemplateView):
                 profile.save()
                 # redirect to home page after login
                 # login the user without having to send him/her email
-                send_welcome_email.after_response(
-                    user,
-                    "account/dashboard/v1/mails/welcome.html",
-                    {
-                        "profile": profile,
-                        "register_url": self.request.build_absolute_uri(
-                            reverse("dashboard:invest:invest")
-                        ),
-                    },
-                )
+                self.email_submitted(user)
                 login(self.request, user)
                 return redirect(self.success_url)
 
         context = {"form": form}
         return render(request, self.template_name, context)
+    
+    
+    def email_submitted(
+            self, 
+            user, 
+            template:Optional[str]="account/dashboard/v1/mails/welcome.html", 
+            context:Optional[dict[str, str]]={}
+        ):
+        send_welcome_email.after_response(
+            user,template,
+            {"profile": user.profile_user,
+             "link": self.request.build_absolute_uri(reverse("users:login")),
+             "policies":self.request.build_absolute_uri(reverse("policies")),
+             "subject": "Earnkraft Agencies"
+             }
+        )
 
 
 class HtmxSetupView(View):

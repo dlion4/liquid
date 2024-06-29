@@ -287,6 +287,8 @@ advertisemain.zip
 logs/
 
 
-.http
+*.http
 
 bookly
+
+*.ipynb
