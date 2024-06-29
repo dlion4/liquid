@@ -100,7 +100,8 @@
         document.getElementById("countryFlag").src = data.flag.png
         document.getElementById("selectedCountryFlag").src = data.flag.png
         if (document.querySelector(".country-currency")) {
-          document.querySelector(".country-currency").value = data.currency.currency_code
+          document.querySelector(".country-currency").value = 'KES'
+          //document.querySelector(".country-currency").value = data.currency.currency_code
         }
       } catch (error) {
         console.log(error)
@@ -221,7 +222,8 @@
           let dataArray = data
           console.log(dataArray)
           // locate the value input
-          const currencyCode = location.currency.currency_code
+          const currencyCode = "KES"
+         // const currencyCode = location.currency.currency_code
 
           if (document.querySelector(".currency-code") && document.getElementById("client-country-name")) {
 
@@ -254,7 +256,7 @@
             }
           }
 
-          let countryRate;
+          let countryRate=1;
 
 
           for (const country of iterableConvRate) {
