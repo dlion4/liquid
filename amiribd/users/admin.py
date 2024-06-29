@@ -12,7 +12,7 @@ from unfold.widgets import UnfoldAdminTextInputWidget
 from unfold.admin import ModelAdmin
 from amiribd.articles.models import AiToken
 from amiribd.core.admin import earnkraft_site
-
+from unfold import admin as unfold_admin
 
 if settings.DJANGO_ADMIN_FORCE_ALLAUTH:
     # Force the `admin` sign in process to go through the `django-allauth` workflow:
@@ -56,6 +56,14 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
     readonly_fields = ["date_joined"]
 
 
+from amiribd.profilesettings.models import NotificationSubscription
+
+class NotificationSubscriptionInline(unfold_admin.TabularInline):
+    model = NotificationSubscription
+    extra = 0
+
+    
+
 @admin.register(Profile)
 class ProfileAdmin(ModelAdmin):
     list_display = (
@@ -83,6 +91,7 @@ class ProfileAdmin(ModelAdmin):
     search_fields = ("user",)
     ordering = ("user",)
     # form = AdminProfileForm
+    inlines = [NotificationSubscriptionInline]
 
 
 @admin.register(Address, site=earnkraft_site)

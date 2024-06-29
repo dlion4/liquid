@@ -10,6 +10,7 @@ from django_celery_beat.models import (
     PeriodicTask,
     SolarSchedule,
 )
+from unfold.widgets import UnfoldAdminEmailInputWidget
 from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
 from unfold.admin import UnfoldAdminSelectWidget
 from django_celery_beat.admin import ClockedScheduleAdmin as BaseClockedScheduleAdmin
@@ -59,11 +60,26 @@ class ClockedScheduleAdmin(BaseClockedScheduleAdmin, ModelAdmin):
     pass
 
 
-from .models import CompanyTermsAndPolicy
+from .models import CompanyTermsAndPolicy, Contact
+from amiribd.core.admin import earnkraft_site
 
+@admin.register(Contact, site=earnkraft_site)
+class ContactAdmin(ModelAdmin):
+    list_display = [
+        "name",
+        "email",
+        "subject",
+        "message",
+    ]
+    formfield_overrides = {
+        'name': {'widget': UnfoldAdminTextInputWidget()},
+        'email': {'widget': UnfoldAdminEmailInputWidget()},
+        'subject': {'widget': UnfoldAdminTextInputWidget()},
+        'message': {'widget': WysiwygWidget()}
+    }
 
-@admin.register(CompanyTermsAndPolicy)
-class CompanyTermsAndPolicyAdmin(admin.ModelAdmin):
+@admin.register(CompanyTermsAndPolicy, site=earnkraft_site)
+class CompanyTermsAndPolicyAdmin(ModelAdmin):
     list_display = [
         'file',
         'created_at',

@@ -11,7 +11,7 @@ class AdCategoryAdmin(ModelAdmin):
     form = AdCategoryForm
 
 @admin.register(Advert)
-class AdvertAdmin(admin.ModelAdmin):
+class AdvertAdmin(ModelAdmin):
     list_display = [
         "category",
         "title",

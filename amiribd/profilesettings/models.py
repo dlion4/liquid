@@ -7,11 +7,15 @@ from amiribd.users.models import Profile
 
 class Notification(models.Model):
     title = models.CharField(max_length=255, unique=True, help_text="News")
-    description = models.CharField(
+    description = models.TextField(
         max_length=255,
         help_text="News",
         default="You will get only those email notification what you want.",
     )
+
+    class Meta:
+        verbose_name = "Notification"
+        verbose_name_plural = "Notifications"
 
     def get_notification_types(self):
         return self.notification_types.all()

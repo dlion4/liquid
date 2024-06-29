@@ -46,6 +46,9 @@ class Job(models.Model):
     )
     level = models.CharField(choices=JobLevel.choices, default=JobLevel.B, max_length=1)
     is_active = models.BooleanField(default=True)
+    resume_required = models.BooleanField(default=True)
+    motivation_letter_required = models.BooleanField(default=True)
+
 
     objects = JobManager()
 
