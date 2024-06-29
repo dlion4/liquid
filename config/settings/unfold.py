@@ -19,12 +19,7 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                         "link": reverse_lazy("admin:users_user_changelist"),
                         "permission": "core.superuser_permissions_callback",
                     },
-                    {
-                        "title": _("Profile"),
-                        "icon": "person",
-                        "link": reverse_lazy("admin:users_profile_changelist"),
-                        "permission": "core.superuser_permissions_callback",
-                    },
+                   
                     {
                         "title": _("Groups"),
                         "icon": "holiday_village",
@@ -32,6 +27,24 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                         "permission": "core.superuser_permissions_callback",
                     }
                 ],
+            },
+             {
+                "title":_("Profile"),
+                "separator":True,
+                "items": [
+                    {
+                        "title": _("Profile"),
+                        "icon": "person",
+                        "link": reverse_lazy("admin:users_profile_changelist"),
+                        "permission": "core.superuser_permissions_callback",
+                    },
+                    {
+                        "title": _("Notifications"),
+                        "icon": "notifications",
+                        "link": reverse_lazy("earnkraft:profilesettings_notification_changelist"),
+                        "permission": "core.superuser_permissions_callback",
+                    },
+                ]
             },
             {
                 "title": _("Investment"),
@@ -63,6 +76,7 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                     },
                 ]
             },
+           
             {
                 "title":_("Podium"),
                 "separator":True,

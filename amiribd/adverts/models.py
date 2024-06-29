@@ -1,6 +1,8 @@
 from django.db import models
 from amiribd.markets.models import Package
 from utils.upload_urls import advertizement_design_upload_url
+from django.utils.translation import gettext_lazy as _
+
 
 class AdCategory(models.Model):
     title = models.CharField(max_length=100, unique=True)
@@ -28,4 +30,8 @@ class Advert(models.Model):
         ]
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name = _('Advert')
+        verbose_name_plural = _('Adverts')
     
