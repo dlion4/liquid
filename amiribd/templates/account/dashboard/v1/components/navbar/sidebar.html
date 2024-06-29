@@ -410,13 +410,7 @@
                             </a>
                         </li>
 
-                        <li class="nk-menu-item">
-                            <a class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-tags-fill"></em>
-                                </span><span class="nk-menu-text">Advertisement</span>
-                            </a>
-                        </li>
+                        
 
                     </ul>
                 </div>
@@ -445,6 +439,20 @@
                                         </span>
                                     </a>
                                 </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">AI Detector
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">AI Remover
+                                        </span>
+                                    </a>
+                                </li>
+                                
+                                
                                 <li class="nk-menu-item">
                                     <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}" class="nk-menu-link">
                                         <span class="nk-menu-text">Pricing
