@@ -21,9 +21,7 @@ class NotificationAdmin(unfold_admin.ModelAdmin):
     list_display = ("title",)
     inlines = [NotificationTypeInline]
     formfield_overrides = {
-        models.TextField : {
-            "widget": WysiwygWidget,
-        }
+        "description" : {"widget": WysiwygWidget}
     }
 
 

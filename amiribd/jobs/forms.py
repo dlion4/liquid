@@ -32,6 +32,8 @@ class AddJobForm(forms.ModelForm):
 
 
 class JobApplicationForm(forms.ModelForm):
+    motivational_letter = forms.CharField(required=False)
+    resume = forms.FileField(required=False)
     class Meta:
         model = JobApplication
         fields = [

@@ -1,388 +1,408 @@
-{% extends "account/dashboard/v1/base.html" %} {% load static humanize %} {% block heading %}
-<div class="nk-block-head nk-block-head-sm">
+{% extends "account/dashboard/v1/base.html" %}
+{% load static humanize %}
+{% block heading %}
+  <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
-        <div class="nk-block-head-content">
-            <h3 class="nk-block-title page-title">Jobs</h3>
-            <div class="nk-block-des text-soft">
-                <p>
-                    We have a total of {{jobs.count}}<span>+</span> Active job{{jobs.count|pluralize}}.
-                </p>
-            </div>
+      <div class="nk-block-head-content">
+        <h3 class="nk-block-title page-title">Jobs</h3>
+        <div class="nk-block-des text-soft">
+          <p>
+            We have a total of
+            {{jobs.count}}
+            <span>+</span>
+            Active job{{jobs.count|pluralize}}.
+          </p>
         </div>
-        <div class="nk-block-head-content">
-            <div class="toggle-wrap nk-block-tools-toggle">
-                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
-                    <em class="icon ni ni-menu-alt-r"></em>
-                </a>
-                <div class="toggle-expand-content" data-content="pageMenu">
-                    <ul class="nk-block-tools g-3">
-                        <li>
-                            <div class="form-control-wrap">
-                                <div class="form-icon form-icon-right">
-                                    <em class="icon ni ni-search"></em>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Search jobs">
-                            </div>
-                        </li>
-                        <li>
-                            <div class="drodown">
-                                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light"
-                                    data-bs-toggle="dropdown">
-                                    <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
-                                    <span>Filtered By</span>
-                                    <em class="dd-indc icon ni ni-chevron-right"></em>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <ul class="link-list-opt no-bdr">
-                                        <li>
-                                            <a href="#">
-                                                <span id="filterItem">Online</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span id="filterItem">Local</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span id="filterItem">Abroad</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nk-block-tools-opt d-none d-sm-block">
-                            <a href="#" class="btn btn-primary">
-                                <em class="icon ni ni-share"></em>
-                                <span>Share</span>
-                            </a>
-                        </li>
-                        <li class="nk-block-tools-opt d-block d-sm-none">
-                            <a href="#" class="btn btn-icon btn-primary">
-                                <em class="icon ni ni-plus"></em>
-                            </a>
-                        </li>
-                    </ul>
+      </div>
+      <div class="nk-block-head-content">
+        <div class="toggle-wrap nk-block-tools-toggle">
+          <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+            <em class="icon ni ni-menu-alt-r"></em>
+          </a>
+          <div class="toggle-expand-content" data-content="pageMenu">
+            <ul class="nk-block-tools g-3">
+              <li>
+                <div class="form-control-wrap">
+                  <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-search"></em>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Search jobs">
                 </div>
-            </div>
+              </li>
+              <li>
+                <div class="drodown">
+                  <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown">
+                    <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
+                    <span>Filtered By</span>
+                    <em class="dd-indc icon ni ni-chevron-right"></em>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <ul class="link-list-opt no-bdr">
+                      <li>
+                        <a href="#">
+                          <span id="filterItem">Online</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <span id="filterItem">Local</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <span id="filterItem">Abroad</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li class="nk-block-tools-opt d-none d-sm-block">
+                <a href="#" class="btn btn-primary">
+                  <em class="icon ni ni-share"></em>
+                  <span>Share</span>
+                </a>
+              </li>
+              <li class="nk-block-tools-opt d-block d-sm-none">
+                <a href="#" class="btn btn-icon btn-primary">
+                  <em class="icon ni ni-plus"></em>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-{% endblock heading %} {% block main %}
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-<style>
+  </div>
+{% endblock heading %}
+{% block main %}
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+  <style>
     /* Existing styles for cards and tags */
 
     .with-border {
-        border: 1px solid hwb(0 97% 3%);
-        border-radius: 5px;
+      border: 1px solid hwb(0 97% 3%);
+      border-radius: 5px;
     }
 
     .tag {
-        display: inline-block;
-        background-color: #fd7d1e;
-        /* Customize the background color as needed */
-        color: white;
-        padding: 2px 8px;
-        font-size: 12px;
-        border-radius: 12px;
-        margin-right: 5px;
-        /* Space between tags */
+      display: inline-block;
+      background-color: #fd7d1e;
+      /* Customize the background color as needed */
+      color: white;
+      padding: 2px 8px;
+      font-size: 12px;
+      border-radius: 12px;
+      margin-right: 5px;
+      /* Space between tags */
     }
 
     .price-tag {
-        background-color: #28a745;
-        /* Customize the background color for the price tag */
+      background-color: #28a745;
+      /* Customize the background color for the price tag */
     }
 
     .date-tag {
-        background-color: #007bff;
-        /* Customize the background color for the date tag */
+      background-color: #007bff;
+      /* Customize the background color for the date tag */
     }
 
     .academic-level-tag {
-        background-color: #6f42c1;
-        /* Customize the background color for the academic level tag */
+      background-color: #6f42c1;
+      /* Customize the background color for the academic level tag */
     }
 
     .filter-button.active {
-        font-weight: bold;
+      font-weight: bold;
     }
 
     /* General Card Styles */
 
     .card {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(79, 77, 77, 0.1);
-        padding: 15px;
-        margin-bottom: 20px;
-        background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(79, 77, 77, 0.1);
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #fff;
     }
 
     /* Card Inner Content */
 
     .card-inner {
-        position: relative;
+      position: relative;
     }
 
     .btn-primary {
-        display: inline-block;
+      display: inline-block;
     }
 
     .errorlist {
-        color: crimson !important;
+      color: crimson !important;
     }
 
     /* Ensure Card Adjusts to Content */
     /* Responsive Adjustments */
-</style>
-<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+  </style>
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
-<ul class="filter-button-group mb-4 pb-1">
+  <ul class="filter-button-group mb-4 pb-1">
     <li>
-        <button class="filter-button active" type="button" data-filter="*">All</button>
+      <button class="filter-button active" type="button" data-filter="*">All</button>
     </li>
     <li>
-        <button class="filter-button" type="button" data-filter=".online">Online/Remote</button>
+      <button class="filter-button" type="button" data-filter=".online">Online/Remote</button>
     </li>
     <li>
-        <button class="filter-button" type="button" data-filter=".physical">Physical</button>
+      <button class="filter-button" type="button" data-filter=".physical">Physical</button>
     </li>
     <li>
-        <button class="filter-button" type="button" data-filter=".abroad">Abroad</button>
+      <button class="filter-button" type="button" data-filter=".abroad">Abroad</button>
     </li>
-</ul>
-{% if jobs %}
-<div class="row g-gs" data-animation="true">
-    {% for job in jobs %}
+  </ul>
+  {% if jobs %}
+    <div class="row g-gs" data-animation="true">
+      {% for job in jobs %}
 
-    <!-- {{jon.location_type}} Content Cards -->
+        <!-- {{jon.location_type}} Content Cards -->
 
-    <div class="col-sm-6 col-xxl-4 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
-        <div class="card card-full">
+        <div class="col-sm-6 col-xxl-4 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
+          <div class="card card-full">
             <div class="card-inner">
-                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
-                    {% if job.is_new %}
-                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
-                    {% endif %}
-                </div>
-                <span class="tag" style="background-color: black; color: white;">{{job.location|upper}}</span>
-                <h5 class="title py-1">{{job.title|title}}</h5>
-                <p class="sub-text">{{job.description|truncatewords:"10"}}</p>
-                <div class="py-2">
-                    <span class="tag price-tag">salary ${{job.salary_offer|floatformat:2|intcomma}}</span>
-                    <span class="tag date-tag">{{job.date_posted|date:"M Y"}}</span>
-                    <span class="tag academic-level-tag">{{job.get_level_display|title}}</span>
-                </div>
-                <div class="relative d-flex mt-3">
-                    {% if job in request.user.profile_user.job_applications.all %}
-                    <button type="button" disabled class="btn btn-primary rounded-pill w-full  flex-grow-1">
-                        <!-- Job is in profile_job_applications -->
-                        You've applied Already
-                    </button>
-                    {% else %}
-                    <button type="button" class="btn btn-primary rounded-pill w-full  flex-grow-1"
-                        data-bs-toggle="modal" data-bs-target="#modalZoom{{job.pk}}">
-                        <!-- Job is not in profile_job_applications -->
-                        View and Apply
-                    </button>
-                    {% endif %}
-                </div>
+              <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
+                {% if job.is_new %}
+                  <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+                {% endif %}
+              </div>
+              <span class="tag" style="background-color: black; color: white;">{{job.location|upper}}</span>
+              <h5 class="title py-1">{{job.title|title}}</h5>
+              <p class="sub-text">{{job.description|truncatewords:"10"}}</p>
+              <div class="py-2">
+                <span class="tag price-tag">salary ${{job.salary_offer|floatformat:2|intcomma}}</span>
+                <span class="tag date-tag">{{job.date_posted|date:"M Y"}}</span>
+                <span class="tag academic-level-tag">{{job.get_level_display|title}}</span>
+              </div>
+              <div class="relative d-flex mt-3">
+                {% if job in request.user.profile_user.job_applications.all %}
+                  <button type="button" disabled="disabled" class="btn btn-primary rounded-pill w-full  flex-grow-1">
+                    <!-- Job is in profile_job_applications -->
+                    You've applied Already
+                  </button>
+                {% else %}
+                  <button type="button" class="btn btn-primary rounded-pill w-full  flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalZoom{{job.pk}}">
+                    <!-- Job is not in profile_job_applications -->
+                    View and Apply
+                  </button>
+                {% endif %}
+              </div>
             </div>
+          </div>
         </div>
-    </div>
 
-    <!-- modals -->
-    <div class="modal fade zoom" tabindex="-1" id="modalZoom{{job.pk}}">
-        <div class="modal-dialog modal-lg" role="document">
+        <!-- modals -->
+        <div class="modal fade zoom" tabindex="-1" id="modalZoom{{job.pk}}">
+          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Job Title: {{job.title}} </h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    {{job.content|safe}}
-                </div>
-                <div class="modal-footer bg-light">
-                    <span class="sub-text btn btn-primary text-white" data-bs-toggle="modal"
-                        data-bs-target="#modalJobApplicationZoom{{job.pk}}">
-                        Chat Admin
-                    </span>
-                </div>
+              <div class="modal-header">
+                <h5 class="modal-title">Job Title:
+                  {{job.title}}
+                </h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <em class="icon ni ni-cross"></em>
+                </a>
+              </div>
+              <div class="modal-body">
+                {{job.content|safe}}
+              </div>
+              <div class="modal-footer bg-light">
+                <span class="sub-text btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#modalJobApplicationZoom{{job.pk}}">
+                  Chat Admin
+                </span>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
 
+        <!-- application modal -->
 
-    <!-- application modal -->
-
-    <div class="modal fade zoom" tabindex="-1" id="modalJobApplicationZoom{{job.pk}}">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal fade zoom" tabindex="-1" id="modalJobApplicationZoom{{job.pk}}">
+          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Job Application: {{job.title}} </h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <form id="applicationPostForm" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="applicant_id" value="{{request.user.profile_user.pk}}">
-                        <input type="hidden" name="job_id" value="{{job.pk}}">
-                        <div class="form-group ">
-                            <label class="form-label " for="{{job_application_form.email_or_phone.id_for_label}}">
-                                {{job_application_form.email_or_phone.label}}
-                            </label>
-                            <div class="form-control-wrap ">
-                                {{job_application_form.email_or_phone}}
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="form-label " for=" {{job_application_form.motivational_letter.id_for_label}}">
-                                {{job_application_form.motivational_letter.label}}
-                            </label>
-                            <div class="form-control-wrap ">
-                                {{job_application_form.motivational_letter}}
-                            </div>
-                        </div>
+              <div class="modal-header">
+                <h5 class="modal-title">Job Application:
+                  {{job.title}}
+                </h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <em class="icon ni ni-cross"></em>
+                </a>
+              </div>
+              <div class="modal-body">
+                <form id="applicationPostForm" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input type="hidden" name="applicant_id" value="{{request.user.profile_user.pk}}">
+                  <input type="hidden" name="job_id" value="{{job.pk}}">
+                  <div class="form-group ">
+                    <label class="form-label " for="{{job_application_form.email_or_phone.id_for_label}}">
+                      {{job_application_form.email_or_phone.label}}
+                    </label>
+                    <div class="form-control-wrap ">
+                      {{job_application_form.email_or_phone}}
+                    </div>
+                  </div>
+                  {% if job.motivation_letter_required %}
+                    <div class="form-group ">
+                      <label class="form-label " for=" {{job_application_form.motivational_letter.id_for_label}}">
+                        {{job_application_form.motivational_letter.label}}
+                      </label>
+                      <div class="form-control-wrap ">
+                        {{job_application_form.motivational_letter}}
+                      </div>
+                    </div>
+                  {% endif %}
+                  <!-- -->
+                  {% if job.resume_required %}
+                    <div class="form-group ">
+                      <label class="form-label " for=" {{job_application_form.resume.id_for_label}}">
+                        {{job_application_form.resume.label}}
+                      </label>
+                      <div class="form-control-wrap">
+                        {{job_application_form.resume}}
+                      </div>
+                    </div>
+                  {% endif %}
+                  <div class="align-center justify-between mt-3">
+                    <ul class="btn-toolbar g-1">
 
-                        <div class="form-group ">
-                            <label class="form-label " for=" {{job_application_form.resume.id_for_label}}">
-                                {{job_application_form.resume.label}}
-                            </label>
-                            <div class="form-control-wrap">
-                                {{job_application_form.resume}}
-                            </div>
-                        </div>
-                        <div class="align-center justify-between mt-3">
-                            <ul class="btn-toolbar g-1">
+                      <li>
+                        <button type="submit" id="job_application_submit_btn" class="btn btn-primary">
+                          Submit Application
+                        </button>
 
-                                <li>
-                                    <button type="submit" id="job_application_submit_btn" class="btn btn-primary">
-                                        Submit Application
-                                    </button>
-
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
-                    <div class="py-2" id="message"></div>
-                </div>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+                <div class="py-2" id="message"></div>
+              </div>
             </div>
+          </div>
         </div>
+
+      {% endfor %}
     </div>
+  {% endif %}
 
-    {% endfor %}
-</div>
-{% endif %}
+  <!--the pop up for modal when user cliks the view button1-->
 
+  <!--the pop up for modal when user cliks the view button1-->
 
-
-<!--the pop up for modal when user cliks the view button1-->
-
-
-<!--the pop up for modal when user cliks the view button1-->
-
-
-
-
-
-
-<script>
-
-
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const filterButtons = document.querySelectorAll('.filter-button');
-        const filterItems = document.querySelectorAll('.filter-item');
+      const filterButtons = document.querySelectorAll('.filter-button');
+      const filterItems = document.querySelectorAll('.filter-item');
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const filterValue = this.getAttribute('data-filter');
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const filterValue = this.getAttribute('data-filter');
 
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this
+            .classList
+            .add('active');
 
-
-
-                filterItems.forEach(item => {
-                    if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
+          filterItems.forEach(item => {
+            if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
         });
+      });
 
-        // post the application form
+      // post the application form
 
-        document.getElementById('applicationPostForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            // do the spinner to show the user application is being sent
-            createSpinnerBtnSimulation()
+      document
+        .getElementById('applicationPostForm')
+        .addEventListener('submit', async function (e) {
+          e.preventDefault();
+          // do the spinner to show the user application is being sent
+          createSpinnerBtnSimulation()
 
-            var form = document.getElementById('applicationPostForm');
-            var formData = new FormData(form);
+          var form = document.getElementById('applicationPostForm');
+          var formData = new FormData(form);
 
-            const jobId = document.querySelector('[name=job_id]').value;
-            const applicantId = document.querySelector('[name=applicant_id]').value;
+          const jobId = document
+            .querySelector('[name=job_id]')
+            .value;
+          const applicantId = document
+            .querySelector('[name=applicant_id]')
+            .value;
 
-            var xhr = new XMLHttpRequest();
+          var xhr = new XMLHttpRequest();
 
-            const url = `/jobs/applications/${jobId}/${applicantId}`
+          const url = `/jobs/applications/${jobId}/${applicantId}`
 
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
+          const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRFToken': form
+                .querySelector('[name=csrfmiddlewaretoken]')
+                .value
+            }
+          })
 
-            setTimeout(async () => {
-                const data = await response.json()
-                if (!data.success) {
-                    document.getElementById('message').innerHTML = data.message;
-                    return false;
-                }
+          setTimeout(async () => {
+            const data = await response.json()
+            if (!data.success) {
+              document
+                .getElementById('message')
+                .innerHTML = data.message;
+              return false;
+            }
 
-                document.getElementById('message').classList.add("text-success");
-                document.getElementById('message').innerHTML = data.message
+            document
+              .getElementById('message')
+              .classList
+              .add("text-success");
+            document
+              .getElementById('message')
+              .innerHTML = data.message
 
-                resetTheSpinnerBtnSimulation()
+            resetTheSpinnerBtnSimulation()
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }, 2000);
+            setTimeout(() => {
+              window
+                .location
+                .reload();
+            }, 1000);
+          }, 2000);
 
         })
-        const submitApplicationBtn = document.getElementById("job_application_submit_btn")
-        // load the spinner
-        function createSpinnerBtnSimulation() {
-            submitApplicationBtn.classList.add("align-items-center", "justify-content-between")
-            submitApplicationBtn.innerHTML = `
+      const submitApplicationBtn = document.getElementById("job_application_submit_btn")
+      // load the spinner
+      function createSpinnerBtnSimulation() {
+        submitApplicationBtn
+          .classList
+          .add("align-items-center", "justify-content-between")
+        submitApplicationBtn.innerHTML = `
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">submitting application...</span>
             `
-            submitApplicationBtn.setAttribute("disabled", "disabled")
-        }
+        submitApplicationBtn.setAttribute("disabled", "disabled")
+      }
 
-        // remove the spiner after the response is received
-        function resetTheSpinnerBtnSimulation() {
-            submitApplicationBtn.classList.remove("align-items-center", "justify-content-between")
-            submitApplicationBtn.innerHTML = `Submit Application`
-            submitApplicationBtn.removeAttribute("disabled")
-        }
+      // remove the spiner after the response is received
+      function resetTheSpinnerBtnSimulation() {
+        submitApplicationBtn
+          .classList
+          .remove("align-items-center", "justify-content-between")
+        submitApplicationBtn.innerHTML = `Submit Application`
+        submitApplicationBtn.removeAttribute("disabled")
+      }
 
     });
-
-</script>
+  </script>
 
 {% endblock main %}

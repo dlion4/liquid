@@ -8,7 +8,7 @@ from unfold.admin import ModelAdmin
 from django.db import models
 from unfold.contrib.forms.widgets import WysiwygWidget
 from unfold import admin as unfold_admin
-from unfold.widgets import UnfoldAdminTextInputWidget
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldBooleanSwitchWidget
 
 class JobApplicationInlineAdmin(unfold_admin.StackedInline):
     model = JobApplication
@@ -54,7 +54,8 @@ class JobAdmin(ModelAdmin):
     formfield_overrides = {
         models.TextField:{
             "widget":WysiwygWidget
-        }
-                           
-    
+        },
+        models.BooleanField: {
+            'widget':UnfoldBooleanSwitchWidget
+        }               
     }
