@@ -1,4 +1,5 @@
 from typing import Any
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 from amiribd.dashboard.views import DashboardViewMixin
@@ -6,12 +7,13 @@ from amiribd.invest.forms import AccountEventWithdrawalForm, CancelPlanForm
 from amiribd.invest.models import Account, Plan, PlanType
 from amiribd.invest.views import InvestmentSetupView
 from amiribd.transactions.models import Transaction
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
-class SubscriptionViewMixin(DashboardViewMixin):
+class SubscriptionViewMixin(LoginRequiredMixin, DashboardViewMixin):
     queryset = Account
+
 
 
 class SubscriptionAccountView(SubscriptionViewMixin):

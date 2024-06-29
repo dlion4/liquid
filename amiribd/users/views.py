@@ -1,5 +1,5 @@
 import contextlib
-from typing import Any
+from typing import Any, Optional
 from django.contrib.auth import authenticate
 from django import http
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -137,10 +137,15 @@ class SignupView(AuthenticationGuard, FormView):
             return redirect("home")
         
 
-    def email_submitted(self, user):
+    def email_submitted(
+            self, 
+            user, 
+            template:Optional[str]="account/dashboard/v1/mails/welcome.html", 
+            context:Optional[dict[str, str]]={}
+        ):
         send_welcome_email.after_response(
-            user,"account/dashboard/v1/mails/welcome.html",
-            {"profile": user.profile_user,"register_url": self.request.build_absolute_uri(reverse("dashboard:home"))},
+            user,template,
+            {"profile": user.profile_user,"register_url": self.request.build_absolute_uri(reverse("dashboard:home"))}
         )
 
 

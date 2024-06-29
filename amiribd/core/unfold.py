@@ -43,6 +43,5 @@ def navigation_reverse_callback(request):
 
     if request.user.is_superuser:
         return reverse(admin_url)
-    
     else:
         return reverse(earnkraft_url)

@@ -9,7 +9,7 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                     {
                         "title": _("Dashboard"),
                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
-                        "link": "core.navigation_reverse_callback",
+                        "link": reverse_lazy("admin:index"),
                         "badge": "core.badge_callback",
                         "permission": "core.staff_permissions_callback",
                     },
