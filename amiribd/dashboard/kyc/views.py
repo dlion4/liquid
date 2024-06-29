@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 from django.views.generic import TemplateView
 from amiribd.dashboard.guard import DashboardGuard
 from amiribd.users.models import Profile, Address, Document
@@ -16,6 +16,8 @@ from django.urls import reverse, reverse_lazy
 from django import forms, http
 from django.views.generic.edit import FormView
 from django.utils import timezone
+from amiribd.users.views import send_welcome_email
+
 
 
 class ProfileUpdateKycView(DashboardGuard, TemplateView):
@@ -151,7 +153,25 @@ class ProfileCompleteKycView(DashboardGuard, TemplateView):
         profile.user.save()
         profile.save()
 
+        self.submit_email(profile.user)
+
         return redirect(self.success_url)
+    
+
+    def submit_email(
+            self, 
+            user,
+            template:Optional[str]="account/dashboard/v1/mails/kyc.html", 
+        ):
+        send_welcome_email.after_response(
+           user,
+            template,
+            {"profile": user.profile_user,
+             "link": self.request.build_absolute_uri(reverse("users:login")),
+             "policies":self.request.build_absolute_uri(reverse("policies")),
+             "subject": "Earnkraft Agencies"
+             }
+        )
 
 
 kyc_profile_complete = ProfileCompleteKycView.as_view()
