@@ -15,11 +15,7 @@ class Migration(migrations.Migration):
             model_name="token",
             name="token",
             field=models.UUIDField(
-<<<<<<< HEAD
-                default=uuid.UUID("902f267d-b896-4b6d-9809-d8c1fc6de77a"),
-=======
                 default=uuid.UUID("b000bdd7-2852-439a-9e45-d274dccc59ba"),
->>>>>>> f72f548cbcde95a82737b82ea66528226db08361
                 editable=False,
             ),
         ),
