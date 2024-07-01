@@ -27,9 +27,9 @@ class LocationTypeChoice(models.TextChoices):
     
 
 class JobLevel(models.TextChoices):
-    A = "A", "Advanced"
-    B = "B", "Beginner"
-    I = "I","Intermediate"
+    A = "A", "Career"
+    B = "B", "Manual"
+    I = "I","Freelance"
 
 # Create your models here.
 class Job(models.Model):

@@ -169,32 +169,33 @@
         <div class="col-sm-6 col-xxl-4 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
           <div class="card card-full">
             <div class="card-inner">
-              <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
-                {% if job.is_new %}
-                  <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
-                {% endif %}
-              </div>
-              <span class="tag" style="background-color: black; color: white;">{{job.location|upper}}</span>
-              <h5 class="title py-1">{{job.title|title}}</h5>
-              <p class="sub-text">{{job.description|truncatewords:"10"}}</p>
-              <div class="py-2">
-                <span class="tag price-tag">salary ${{job.salary_offer|floatformat:2|intcomma}}</span>
-                <span class="tag date-tag">{{job.date_posted|date:"M Y"}}</span>
-                <span class="tag academic-level-tag">{{job.get_level_display|title}}</span>
-              </div>
-              <div class="relative d-flex mt-3">
-                {% if job in request.user.profile_user.job_applications.all %}
-                  <button type="button" disabled="disabled" class="btn btn-primary rounded-pill w-full  flex-grow-1">
-                    <!-- Job is in profile_job_applications -->
-                    You've applied Already
-                  </button>
-                {% else %}
-                  <button type="button" class="btn btn-primary rounded-pill w-full  flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalZoom{{job.pk}}">
-                    <!-- Job is not in profile_job_applications -->
-                    View and Apply
-                  </button>
-                {% endif %}
-              </div>
+                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
+                    {% if job.is_new %}
+                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+                    {% endif %}
+                </div>
+                <span class="tag" style="background-color: black; color: white;">{{job.location|upper}}</span>
+                <h5 class="title py-1">{{job.title|title}}</h5>
+                <p class="sub-text">{{job.description|truncatewords:"10"}}</p>
+                <div class="py-2">
+                    <span class="tag price-tag">Pay ${{job.salary_offer|floatformat:2|intcomma}}</span>
+                    <span class="tag date-tag">{{job.date_posted|date:"M Y"}}</span>
+                    <span class="tag academic-level-tag">{{job.get_level_display|title}}</span>
+                </div>
+                <div class="relative d-flex mt-3">
+                    {% if job in request.user.profile_user.job_applications.all %}
+                    <button type="button" disabled class="btn btn-primary rounded-pill w-full  flex-grow-1">
+                        <!-- Job is in profile_job_applications -->
+                        You've applied Already
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary rounded-pill w-full  flex-grow-1"
+                        data-bs-toggle="modal" data-bs-target="#modalZoom{{job.pk}}">
+                        <!-- Job is not in profile_job_applications -->
+                        View and Apply
+                    </button>
+                    {% endif %}
+                </div>
             </div>
           </div>
         </div>
