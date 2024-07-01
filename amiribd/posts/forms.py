@@ -20,8 +20,4 @@ class PostForm(forms.ModelForm):
             'content',
             'author',
         ]
-        widgets = {
-            "title":UnfoldAdminTextInputWidget(),
-            "content":WysiwygWidget(),
-            "author":UnfoldAdminSelectWidget(choices=Profile.objects.all())
-        }
+     

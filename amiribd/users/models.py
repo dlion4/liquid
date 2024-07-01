@@ -82,7 +82,7 @@ class Profile(models.Model):
     )
     first_name = models.CharField(blank=True, null=True, max_length=100)
     last_name = models.CharField(blank=True, null=True, max_length=100)
-    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
+    image = models.ImageField(upload_to="profile_pics", blank=True, null=True)
     full_name = models.GeneratedField(
         expression=ConcatFiels(
             "first_name",

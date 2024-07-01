@@ -43,8 +43,19 @@ class TemplateCategory(models.Model):
     description = models.TextField(max_length=500)
     timestamp = models.DateTimeField(auto_now_add=True)
     icon = models.CharField(default="icon ni ni-spark-fill", max_length=100)
+    color = models.CharField(max_length=100, choices=(
+        ("primary", "primary"),
+        ("secondary", "secondary"),
+        ("danger", "danger"),
+        ("info", "info"),
+        ("warning", "warning"),
+        ("success", "success"),
+    ), default="primary")
+
     def __str__(self):
         return self.title
+    
+
     class Meta:
         verbose_name = "Template Category"
         verbose_name_plural = "Template Categories"
@@ -59,8 +70,10 @@ class TemplateCategory(models.Model):
     def templates_count(self):
         return self.templates().count()
     
+    def get_article_posts(self):
+        # Access articles through related templates
+        return Article.objects.filter(template__category=self)
 
-    
     
 
 class Template(models.Model):
@@ -73,7 +86,7 @@ class Template(models.Model):
 
     def __str__(self):
         return self.category.title.title()
-
+    
 
 
 class Article(models.Model):
@@ -92,14 +105,37 @@ class Article(models.Model):
     )
     title = models.CharField(max_length=200)
     slug = AutoSlugField(populate_from="title", slugify_function=my_slugify_function)
-    content = CKEditor5Field("Text",)
+    summary = models.TextField(blank=True)
+    content = CKEditor5Field("Content",)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
     release_date = models.DateTimeField(default=timezone.now, help_text="Time for your post to be visible to audience.")
+    views = models.IntegerField(default=0)
+    archived = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
+    reads = models.IntegerField(default=0)
+    editorsPick = models.BooleanField(default=False)
+    sponsored = models.BooleanField(default=False)
+    recommeded = models.BooleanField(default=False)
     
-
+    
     def __str__(self):
         return self.title
+    
+    @property
+    def trending(self):
+        return self.is_trending()
+    
+    @property
+    def popular(self):
+        return self.is_popular()
+
+    def is_trending(self)->bool:
+        return timezone.now() - timedelta(days=3) >= self.created_at and self.views > 1000
+    
+    def is_popular(self)->bool:
+        return self.views >= 1000
+
 
     def get_absolute_url(self):
         return reverse(
@@ -123,3 +159,17 @@ class Article(models.Model):
             },
         )
 
+class YtSummarizer(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True)
+    video_url = models.URLField(max_length=255) # the online needed url
+    timestamp = models.DateTimeField(auto_now_add=True)
+    summary = models.TextField(blank=True)
+    audio_file = models.URLField(max_length=2000, blank=True, null=True)
+    is_processed = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "YtSummarizer"
+        verbose_name_plural = "YtSummarizers"
+    
+    def __str__(self):
+        return f"Summarizer for {self.video_url}"

@@ -68,7 +68,7 @@ class JobApplicationForm(forms.ModelForm):
     
     def get_applicant(self):
         return get_object_or_404(Profile, pk=self.applicant_id)
-    
+
 
     def clean_resume(self):
         resume = self.cleaned_data.get('resume')

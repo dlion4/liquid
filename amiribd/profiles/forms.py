@@ -32,10 +32,10 @@ class AdminAgentForm(forms.ModelForm):
             "plantform",
         ]
 
-        widgets = {
-            "profile": UnfoldAdminSelectWidget(choices=Profile.objects.all()),
-            "position": UnfoldAdminRadioSelectWidget(),
-        }
+        # widgets = {
+        #     "profile": UnfoldAdminSelectWidget(choices=Profile.objects.all()),
+        #     "position": UnfoldAdminRadioSelectWidget(),
+        # }
 
 
 class PositionForm(forms.ModelForm):
@@ -62,6 +62,7 @@ class PlantformTypeForm(forms.Form):
         required=False,  # Set to True if the field is mandatory
     )
 
+from asgiref.sync import sync_to_async
 
 class PlantformForm(forms.ModelForm):
     platform_type = forms.ModelMultipleChoiceField(
@@ -69,7 +70,7 @@ class PlantformForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-control-input"}),
         required=False,  # Set to True if the field is mandatory
     )
-    plan = forms.ChoiceField(widget=UnfoldAdminSelectWidget(choices=PlantformType.objects.all()))
+    plan = forms.ModelChoiceField(queryset=PlantformType.objects.all(),widget=UnfoldAdminSelectWidget())
 
     class Meta:
         model = Plantform

@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.forms import Form
 from django.http import HttpRequest
-from .models import Article, Template, TemplateCategory
+from .models import Article, Template, TemplateCategory, YtSummarizer
 from .forms import AdminArticleForm
 from amiribd.core.admin import earnkraft_site
 from unfold.admin import ModelAdmin
@@ -10,7 +10,7 @@ from unfold.admin import ModelAdmin
 # Register your models here.
 from django.db import models
 from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
-from unfold.widgets import UnfoldAdminTextInputWidget
+from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldBooleanSwitchWidget
 from amiribd.articles.editor.ai.models import AIHistory
 
 
@@ -26,7 +26,7 @@ updated_at
 
 @admin.register(Article, site=earnkraft_site)
 class ArticleAdmin(ModelAdmin):
-    list_display = ["title"]
+    list_display = ["title", "views", "archived", "reads", "trending", "popular", "editorsPick", "sponsored"]
     # form = AdminArticleForm
     # prepopulated_fields = {"slug": ("title",)}
     # Display fields in changeform in compressed mode
@@ -35,6 +35,12 @@ class ArticleAdmin(ModelAdmin):
         models.CharField: {
             "widget": UnfoldAdminTextInputWidget,
         },
+        models.TextField: {
+            "widget": WysiwygWidget,
+        },
+        models.BooleanField: {
+            "widget": UnfoldBooleanSwitchWidget
+        }
     }
 
 
@@ -56,4 +62,21 @@ class AIHistoryAdmin(ModelAdmin):
         models.TextField: {
             "widget": WysiwygWidget,
         },
+    }
+
+
+@admin.register(YtSummarizer, site=earnkraft_site)
+class YtSummarizerAdmin(ModelAdmin):
+    list_display = [
+        'profile',
+        'video_url',
+        'timestamp',
+        'summary',
+        'audio_file',
+        'is_processed'
+    ]
+    formfield_overrides = {
+        models.TextField: {
+            "widget": WysiwygWidget,
+        }
     }

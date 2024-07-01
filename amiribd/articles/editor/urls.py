@@ -20,6 +20,11 @@ urlpatterns = [
         views.ContentAiEditPostView.as_view(),
         name="new-article-ai-edit",
     ),
+    path(
+        "youtube-summarizer/",
+        views.YoutubeSummarizerView.as_view(),
+        name="youtube-summarizer",
+    ),
     # articel minor edits
     path(
         "htmx/",

@@ -54,8 +54,8 @@ class AdminArticleForm(forms.ModelForm):
             "updated_at"
         ]
 
-        widgets = {
-            "profile":UnfoldAdminSelectWidget(choices=Profile.objects.all()),
-            "title": UnfoldAdminTextInputWidget(),
-            "updated_at":UnfoldAdminSplitDateTimeWidget(),
-        }
+        # widgets = {
+        #     "profile":UnfoldAdminSelectWidget(choices=Profile.objects.all()),
+        #     "title": UnfoldAdminTextInputWidget(),
+        #     "updated_at":UnfoldAdminSplitDateTimeWidget(),
+        # }

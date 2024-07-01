@@ -13,9 +13,9 @@ from .forms import AdminAgentForm
 
 
 @admin.register(Position)
-class PositionAdmin(admin.ModelAdmin):
+class PositionAdmin(ModelAdmin):
     list_display = ("name",)
-    form = PositionForm
+    # form = PositionForm
 
 
 class PlantformInline(StackedInline):
@@ -28,13 +28,13 @@ class PlantformInline(StackedInline):
 
 
 @admin.register(Agent)
-class AgentAdmin(admin.ModelAdmin):
+class AgentAdmin(ModelAdmin):
     list_display = ("profile",)
-    form = AdminAgentForm
+    # form = AdminAgentForm
 
 
 @admin.register(PlantformType)
-class PlantformAdmin(admin.ModelAdmin):
+class PlantformAdmin(ModelAdmin):
     list_display = ("name",)
     inlines = [PlantformInline]
-    form = AdminPlatformTypeForm
+    # form = AdminPlatformTypeForm

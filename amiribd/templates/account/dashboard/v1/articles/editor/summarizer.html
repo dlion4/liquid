@@ -1,0 +1,12 @@
+{% extends "account/dashboard/v1/articles/editor/base.html" %}
+
+{% block main %}
+  <h1>Youtube Summarizer</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-lg btn-primary">Summarize</button>
+  </form>
+
+{% endblock main %}

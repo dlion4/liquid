@@ -9,6 +9,8 @@ from .models import (
     Account,
     AccountWithdrawalAction,
 )
+from django.db import models
+from unfold.contrib.forms.widgets import WysiwygWidget
 from amiribd.core.admin import earnkraft_site
 from nested_inline.admin import NestedModelAdmin
 from .inlines import AccountInline, PoolFeatureInline, Plan
@@ -16,6 +18,8 @@ from .forms import AdminAddPlanForm, AdminAccountForm,AdminAccountTypeForm, Admi
 # Register your models here.
 from amiribd.liquid.sites import admin_site
 from unfold.admin import ModelAdmin
+from unfold import admin as unfold_admin
+
 
 @admin.register(Pool)
 class PoolAdmin(NestedModelAdmin, ModelAdmin):
@@ -38,10 +42,9 @@ class PoolTypeAdmin(ModelAdmin):
     ]
 
 
-class PlanInlineAdmin(admin.StackedInline):
+class PlanInlineAdmin(unfold_admin.StackedInline):
     model = Plan
     extra = 1
-    form = AdminAddPlanForm
 
 
 @admin.register(PlanType)
@@ -50,6 +53,11 @@ class PlanTypeAdmin(ModelAdmin):
     list_display = ["type", "price", "percentage_return", "icon", "svg"]
 
     inlines = [PlanInlineAdmin]
+    formfield_overrides = {
+        models.TextField: {
+            "widgets": WysiwygWidget
+        }
+    }
 
 
 @admin.register(AccountType)

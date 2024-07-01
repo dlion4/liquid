@@ -20,6 +20,7 @@ from unfold.widgets import (
     UnfoldAdminFileFieldWidget,
     UnfoldAdminTextareaWidget
 )
+from asgiref.sync import sync_to_async
 from amiribd.transactions.models import Transaction
 from unfold.contrib.forms.widgets import WysiwygWidget
 
@@ -293,78 +294,60 @@ class AdminAddPlanForm(forms.ModelForm):
         model = Plan
         fields = "__all__"
 
-        widgets = {
-            "account":UnfoldAdminSelectWidget(choices=Account.objects.all()),
-            "type":UnfoldAdminSelectWidget(choices=PlanType.objects.all()),
-            "min_amount":UnfoldAdminDecimalFieldWidget(),
-            "max_amount":UnfoldAdminDecimalFieldWidget(),
-            "fee":UnfoldAdminDecimalFieldWidget(),
-            "status":UnfoldAdminSelectWidget(choices=PlanStatus.choices),
-            "payment_method":UnfoldAdminTextInputWidget(),
-            "sku":UnfoldAdminTextInputWidget(),
-            "is_paid":UnfoldBooleanSwitchWidget(),
-            "mpesa_transaction_code":UnfoldAdminTextInputWidget(),
-            "payment_phone_number":UnfoldAdminTextInputWidget(),
-        }
+        # widgets = {
+        #     "account":UnfoldAdminSelectWidget(choices=Account.objects.all())),
+        #     "type":UnfoldAdminSelectWidget(choices=PlanType.objects.all())),
+        #     "min_amount":UnfoldAdminDecimalFieldWidget(),
+        #     "max_amount":UnfoldAdminDecimalFieldWidget(),
+        #     "fee":UnfoldAdminDecimalFieldWidget(),
+        #     "status":UnfoldAdminSelectWidget(choices=PlanStatus.choices),
+        #     "payment_method":UnfoldAdminTextInputWidget(),
+        #     "sku":UnfoldAdminTextInputWidget(),
+        #     "is_paid":UnfoldBooleanSwitchWidget(),
+        #     "mpesa_transaction_code":UnfoldAdminTextInputWidget(),
+        #     "payment_phone_number":UnfoldAdminTextInputWidget(),
+        # }
 
 class AdminAccountForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = "__all__"
-        widgets = {
-            "pool": UnfoldAdminSelectWidget(choices=Pool.objects.all()),
-            "type": UnfoldAdminSelectWidget(choices=AccountType.objects.all()),
-            "created_at": UnfoldAdminSplitDateTimeVerticalWidget(),
-            "updated_at": UnfoldAdminSplitDateTimeVerticalWidget(),
-            "balance": UnfoldAdminDecimalFieldWidget(),
-            "account_ssid": UnfoldAdminTextInputWidget(),
-        }
+        # widgets = {
+        #     "pool": UnfoldAdminSelectWidget(choices=Pool.objects.all()),
+        #     "type": UnfoldAdminSelectWidget(choices=AccountType.objects.all()),
+        #     "created_at": UnfoldAdminSplitDateTimeVerticalWidget(),
+        #     "updated_at": UnfoldAdminSplitDateTimeVerticalWidget(),
+        #     "balance": UnfoldAdminDecimalFieldWidget(),
+        #     "account_ssid": UnfoldAdminTextInputWidget(),
+        # }
 
 class AdminAccountTypeForm(forms.ModelForm):
     class Meta:
         model = AccountType
         fields = "__all__"
-        widgets = {
-            "type":UnfoldAdminSelectWidget(choices=(("Basic", "Basic"), ("Standard", "Standard"))),
-            "price":UnfoldAdminDecimalFieldWidget(),
-        }
+        # widgets = {
+        #     "type":UnfoldAdminSelectWidget(choices=(("Basic", "Basic"), ("Standard", "Standard"))),
+        #     "price":UnfoldAdminDecimalFieldWidget(),
+        # }
 
 
 class AdminPoolForm(forms.ModelForm):
     class Meta:
         model = Pool
         fields = "__all__"
-        widgets = {
-            "profile":UnfoldAdminSelectWidget(choices=Profile.objects.all()),
-            "type": UnfoldAdminSelectWidget(choices=PoolType.objects.all()),
-            "created_at": UnfoldAdminSplitDateTimeVerticalWidget(),
-            "updated_at": UnfoldAdminSplitDateTimeVerticalWidget(),
-        }
+        # widgets = {
+        #     "profile":UnfoldAdminSelectWidget(choices=Profile.objects.all()),
+        #     "type": UnfoldAdminSelectWidget(choices=PoolType.objects.all()),
+        #     "created_at": UnfoldAdminSplitDateTimeVerticalWidget(),
+        #     "updated_at": UnfoldAdminSplitDateTimeVerticalWidget(),
+        # }
 
 
 class AdminTransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = "__all__"
-        widgets = {
-            "profile":UnfoldAdminSelectWidget(choices=Profile.objects.all()),
-            "account":UnfoldAdminSelectWidget(choices=Account.objects.all()),
-            "type": UnfoldAdminTextInputWidget(),
-            "created_at": UnfoldAdminSplitDateTimeVerticalWidget(),
-            "updated_at": UnfoldAdminSplitDateTimeVerticalWidget(),
-            "amount": UnfoldAdminDecimalFieldWidget(),
-            "discount": UnfoldAdminDecimalFieldWidget(),
-            "paid": UnfoldAdminDecimalFieldWidget(),
-            "verified":UnfoldBooleanSwitchWidget(),
-            "is_payment_success":UnfoldBooleanSwitchWidget(),
-            "receipt_number":UnfoldAdminTextInputWidget(),
-            "source":UnfoldAdminTextInputWidget(),
-            "payment_phone":UnfoldAdminTextInputWidget(),
-            "mpesa_transaction_code":UnfoldAdminTextInputWidget(),
-            "payment_phone_number":UnfoldAdminTextInputWidget(),
-            "currency":UnfoldAdminTextInputWidget(),
-            "country":UnfoldAdminTextInputWidget(),
-        }
+       
 
 
 
@@ -374,14 +357,14 @@ class AdminPlanTypeForm(forms.ModelForm):
     class Meta:
         model = PlanType
         fields = "__all__"
-        widgets = {
-            "type":UnfoldAdminSelectWidget(choices=PlanTypeObjects.choices),
-            "price":UnfoldAdminDecimalFieldWidget(),
-            "percentage_return":UnfoldAdminBigIntegerFieldWidget(),
-            "icon":UnfoldAdminTextInputWidget(),
-            "svg":UnfoldAdminFileFieldWidget(),
-            "interval":UnfoldAdminTextInputWidget(),
-            "description":WysiwygWidget()
-        }
+        # widgets = {
+        #     "type":UnfoldAdminSelectWidget(choices=PlanTypeObjects.choices),
+        #     "price":UnfoldAdminDecimalFieldWidget(),
+        #     "percentage_return":UnfoldAdminBigIntegerFieldWidget(),
+        #     "icon":UnfoldAdminTextInputWidget(),
+        #     "svg":UnfoldAdminFileFieldWidget(),
+        #     "interval":UnfoldAdminTextInputWidget(),
+        #     "description":WysiwygWidget()
+        # }
 
 

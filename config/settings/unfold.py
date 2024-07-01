@@ -193,4 +193,16 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                     
                 ]
             },
+            {
+                "title":_("SERVICES"),
+                "separator":True,
+                "items": [
+                    {
+                        "title": _("Youtube Summarizer"),
+                        "icon": "engineering", # TODO add the write icon
+                        "link": reverse_lazy("earnkraft:articles_ytsummarizer_changelist"),
+                        "permission": lambda request: request.user.is_superuser
+                    },
+                ]
+            },
     ]

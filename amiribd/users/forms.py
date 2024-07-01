@@ -272,29 +272,4 @@ class AdminProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = "__all__"
-        widgets = {
-            'user': UnfoldAdminSelectWidget(choices=User.objects.all()),
-            "first_name": UnfoldAdminTextInputWidget(),
-            "last_name": UnfoldAdminTextInputWidget(),
-            "image": UnfoldAdminFileFieldWidget(),
-            "kyc_completed": UnfoldBooleanSwitchWidget(),
-            "kyc_validated": UnfoldBooleanSwitchWidget(),
-
-            "is_address_set": UnfoldBooleanSwitchWidget(),
-            "is_document_set": UnfoldBooleanSwitchWidget(),
-
-            'kyc_completed_at': UnfoldAdminSplitDateTimeWidget(),
-
-            "phone_number":UnfoldAdminTextInputWidget(),
-            'date_of_birth': UnfoldAdminSingleDateWidget(),
-
-
-
-            "initials":UnfoldAdminTextInputWidget(),
-            "referral_code":UnfoldAdminTextInputWidget(),
-
-            'referred_by': UnfoldAdminSelectWidget(choices=User.objects.all()),
-
-
-        }
-
+      

@@ -35,7 +35,7 @@ class AdvertAdmin(ModelAdmin):
         "__approve_advert",
         "__disapprove_advert"
     )
-    form = AdvertForm
+    # form = AdvertForm
 
     @admin.action(description="Approve")
     def __approve_advert(self, request, queryset):

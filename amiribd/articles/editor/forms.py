@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from amiribd.articles.models import Template
+from amiribd.articles.models import Template, YtSummarizer
+
 
 class AIArticleGenerationModelForm(forms.Form):
     template = forms.ModelChoiceField(required=False, label="Select Template to use", queryset=Template.objects.all(), widget=forms.Select(
@@ -20,3 +21,14 @@ class AIArticleGenerationModelForm(forms.Form):
     keywords = forms.CharField(required=False, widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "chatgpt, django, nextjs"}))
     words = forms.IntegerField(required=False,widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "number of words"}))
 
+
+class YoutubeSummarizerForm(forms.ModelForm):
+    class Meta:
+        model = YtSummarizer
+        fields = [
+            'video_url'
+        ]
+        widgets = {
+            "video_url": forms.URLInput(attrs={"class": "form-control", "placeholder": "https://www.youtube.com/embed/watch",})
+        }
+    

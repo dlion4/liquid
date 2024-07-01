@@ -839,7 +839,7 @@ CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
-
+CORS_ALLOW_ALL_ORIGINS=True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",

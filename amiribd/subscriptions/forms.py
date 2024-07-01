@@ -15,10 +15,10 @@ class AdminIssueForm(forms.ModelForm):
             "resolved",
             "files",
         ]
-        widgets = {
-             "profile": UnfoldAdminSelectWidget(choices=Profile.objects.all()),
-             "title":UnfoldAdminTextInputWidget(),
-             "description": WysiwygWidget(),
-             'resolved':UnfoldBooleanSwitchWidget(),
-             'files': UnfoldAdminFileFieldWidget()
-        }
+        # widgets = {
+        #      "profile": UnfoldAdminSelectWidget(choices=Profile.objects.all()),
+        #      "title":UnfoldAdminTextInputWidget(),
+        #      "description": WysiwygWidget(),
+        #      'resolved':UnfoldBooleanSwitchWidget(),
+        #      'files': UnfoldAdminFileFieldWidget()
+        # }

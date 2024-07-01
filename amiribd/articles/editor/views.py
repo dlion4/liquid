@@ -10,7 +10,7 @@ from django.contrib.auth import get_user
 
 import google.generativeai as genai
 
-from .forms import AIArticleGenerationModelForm
+from .forms import AIArticleGenerationModelForm, YoutubeSummarizerForm
 
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -266,14 +266,29 @@ class ContentAiEditPostView(ArticleMixinView):
     template_name = "account/dashboard/v1/articles/editor/edit.html"
 
     def get_history(self):
-        return get_object_or_404(AIHistory, pk=self.kwargs.get("pk"), slug=self.kwargs.get("slug"))	
+        try:
+            return get_object_or_404(AIHistory, pk=self.kwargs.get("pk"), slug=self.kwargs.get("slug"))	
+        except:
+            return None
     
     def get_histories(self):
-        return AIHistory.objects.select_related("profile").filter(profile=self.get_history().profile).exclude(slug=self.get_history().slug)
-
+        try:
+            return AIHistory.objects.select_related("profile").filter(profile=self.get_history().profile).exclude(slug=self.get_history().slug)
+        except:
+            return None
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["history"] = self.get_history()
         context["histories"] = self.get_histories().order_by("-id")[:3]
         return context
     
+
+class YoutubeSummarizerView(ArticleMixinView):
+    template_name = 'account/dashboard/v1/articles/editor/summarizer.html'
+    form_class = YoutubeSummarizerForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class()
+        return context

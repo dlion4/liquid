@@ -24,13 +24,13 @@ class AdvertForm(forms.ModelForm):
             "is_active",
         ]
 
-        widgets = {
-            'category':UnfoldAdminSelectWidget(choices=AdCategory.objects.all()),
-            'title': UnfoldAdminTextInputWidget(),	
-            'website_url': UnfoldAdminTextInputWidget(),	
-            "description": WysiwygWidget(),
-            "is_approved":UnfoldBooleanSwitchWidget(),
-            "is_active":UnfoldBooleanSwitchWidget(),
-            "design":UnfoldAdminFileFieldWidget(),
-        }
+        # widgets = {
+        #     'category':UnfoldAdminSelectWidget(choices=AdCategory.objects.all()),
+        #     'title': UnfoldAdminTextInputWidget(),	
+        #     'website_url': UnfoldAdminTextInputWidget(),	
+        #     "description": WysiwygWidget(),
+        #     "is_approved":UnfoldBooleanSwitchWidget(),
+        #     "is_active":UnfoldBooleanSwitchWidget(),
+        #     "design":UnfoldAdminFileFieldWidget(),
+        # }
     
