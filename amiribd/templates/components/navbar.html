@@ -31,6 +31,9 @@
             <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
               <a href="{% url 'about' %}">About Us</a>
             </li>
+            <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
+              <a href="{% url 'career' %}">Partners</a>
+            </li>
             <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
               <a href="{% url 'help' %}">Help Center</a>
             </li>

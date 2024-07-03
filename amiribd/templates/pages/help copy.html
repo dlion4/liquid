@@ -1,0 +1,4257 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block breadcrumb %}
+  
+  <!-- breadcrumb content begin -->
+  <div class="uk-section uk-padding-remove-vertical in-wave-breadcrumb">
+    <div class="uk-container">
+      <div class="uk-grid">
+        <div class="uk-width-1-1">
+          <ul class="uk-breadcrumb">
+            <li>
+              <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>
+              <a href="{% url 'help' %}">Terms of Use</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumb content end -->
+
+{% endblock breadcrumb %}
+
+{% block content %}
+  <!-- section content begin -->
+  <div class="uk-section">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-content-10">
+                <div class="uk-card uk-card-primary uk-card-body uk-border-rounded uk-background-bottom-left uk-background-contain" style="background-image: url('img/blockit/in-content-10-image.png');">
+                    <div class="uk-grid uk-flex uk-flex-center">
+                        <div class="uk-width-3-5@m uk-text-center">
+                            <h1 class="uk-margin-small-top">Hi, we’re here to help.</h1>
+                            <form class="uk-search uk-search-default uk-width-1-1 uk-margin-bottom">
+                                <span data-uk-search-icon="data-uk-search-icon"></span>
+                                <input class="uk-search-input uk-border-pill" type="search" placeholder="Search for articles...">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-grid-divider uk-child-width-1-3@m uk-child-width-1-2@s uk-margin-medium-top" data-uk-grid="data-uk-grid">
+                    <!-- Section 1 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Register</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Learn how to create an account on EarnKraft to get started.</p>
+                                <a href="#" class="uk-button uk-button-text" data-bs-toggle="modal" data-bs-target="#Register">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-user-plus fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 2 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Subscribe to a Package</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Find out how to choose and subscribe to the right package for you.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-box-open fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 3 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">Package Benefits</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Understand the benefits included in each package.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-gift fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 4 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">Ways of Earning</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Explore the different ways you can earn money on our platform.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-coins fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 5 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Withdraw</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Learn the steps to withdraw your earnings to your bank account.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-university fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 6 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Send Money to Another Member</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Discover how to transfer money to other members on EarnKraft.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-exchange-alt fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 7 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Buy Products and Services for Online Writing</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Steps to purchase online writing products and services.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-shopping-cart fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 8 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Buy Online Writing Accounts</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Learn how to buy online writing accounts from our marketplace.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-user-shield fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 9 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Apply for Jobs</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Step-by-step guide to applying for jobs on EarnKraft.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-briefcase fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 10 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Submit Remote Jobs Given</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Instructions for submitting remote jobs you've been assigned.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-paper-plane fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 11 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Apply for Abroad Jobs</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Steps to apply for job opportunities abroad through EarnKraft.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-globe fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 12 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Apply for Local or Physical Jobs</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Guidance on applying for local or physical job positions.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-map-marker-alt fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 13 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Apply for VIP Section</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Learn how to gain access to our VIP section for exclusive benefits.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-crown fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 14 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Submit WhatsApp Views to Get Paid</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Instructions on how to submit your WhatsApp views and earn money.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-eye fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 15 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Use Our AI to Write Content</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Step-by-step guide to using our AI tools for content creation.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-robot fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 16 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Convert Video to Text</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Instructions on how to convert video content to text using our tools.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-video fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 17 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Post Content to Our Blog Platform</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Learn how to post your articles and blog posts on our platform.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-blog fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 18 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Get Paid</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Understand the payment process and how to receive your earnings.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-dollar-sign fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 19 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Get Connected and Hookups</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Find out how to connect with other members and get relevant hookups.</p>
+                                <a href="#" class="uk-button uk-button-text">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-link fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 20 -->
+                    <div>
+                        <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Monetize Your Products or Links</a></h3>
+                        <div class="uk-grid uk-grid-small" data-uk-grid="data-uk-grid">
+                            <div class="uk-width-expand@m">
+                                <p>Steps to start earning by monetizing your products or links on EarnKraft.</p>
+                                <a href="#" class="uk-button uk-button-text" data-bs-toggle="modal" data-bs-target="#modalZoom">More details</a>
+                            </div>
+                            <div class="uk-width-auto@m">
+                                <div class="in-icon-wrap small transparent uk-margin-left">
+                                    <i class="fas fa-hand-holding-usd fa-3x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 21 -->
+
+                    <div>
+                      <h3 class="uk-heading-bullet"><a class="uk-link-text" href="#">How to Monetize Your Products or Links</a></h3>
+                      <div class="uk-grid uk-grid-small" data-uk-grid>
+                          <div class="uk-width-expand@m">
+                              <p>Steps to start earning by monetizing your products or links on EarnKraft.</p>
+                              <a href="#" class="uk-button uk-button-text" data-bs-toggle="modal" data-bs-target="#modalLarge">More details</a>
+                          </div>
+                          <div class="uk-width-auto@m">
+                              <div class="in-icon-wrap small transparent uk-margin-left">
+                                  <i class="fas fa-hand-holding-usd fa-3x"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+  <!-- section content begin -->
+  
+  
+  <!-- section content end xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+  <div class="modal fade" tabindex="-1" id="Register">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">⚡ How to Register for Earnkraft Agencies ⚡</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>Link: Will be provided 
+
+          <p>  1️⃣ Choose a Unique Username 🌟</p>
+            👉 Use a unique username that you can easily remember. This will be your identifier on our platform. 
+            
+           <p> 2️⃣ Enter Your Email Address 📧</p>
+            👉 Provide a valid email address without any spaces. This is crucial because we will send you a login link to access your dashboard. No need to worry about remembering passwords or risking hacks! 🔒
+            
+           <p> 3️⃣ Receive Your Login Link 🔗</p>
+            👉 Check your email for a link from Earnkraft Agencies. Click on this link to log in to your dashboard securely.
+            
+            <p> Now, Let's Complete Your Profile! 🎉</p>
+            
+          <p>  4️⃣ Fill in Your Personal Details 📝</p>
+            👉 First Name and Last Name
+            👉 Phone Number 📱
+            👉 Date of Birth 🎂
+            
+           <p> 5️⃣ Address Details 🏡</p>
+            👉 Home Address: Enter your area name and address details.
+            👉 Country and City 🌍
+            
+           <p> 6️⃣ Proof of Citizenship or Residence 🆔</p>
+            👉 Upload any document that proves your citizenship or residence, such as an ID card, driving license, or other valid documents.
+            
+           <p> 7️⃣ Submit Your Information 📤</p>
+            👉 After filling in all the required details and uploading your document, click on the Submit button to proceed.
+            
+           <p> 8️⃣ Complete KYC Process ✅</p>
+            👉 Your documents will be verified. Once successful, you will complete the KYC process and gain full access to your Earnkraft Agencies dashboard. Welcome aboard! 🚀
+          
+          <p>Make sure you don’t miss our amazing opportunities to earn and grow with Earnkraft Agencies! 🌟✨</p>
+
+          <p>Stay tuned for more guides on how to make the most out of our platform. Happy earning! 💰😊</p>
+         </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Join Today</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="WaysofEarning">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ways of Earning with Earnkraft Agencies </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            With access to the internet, Earnkraft Agencies offers a multitude of ways to earn income right from your smartphone. Here’s a detailed guide on how you can start earning and maximizing your financial growth with us.
+
+ <p>🌐 All Possible Ways of Earning 🌐</p>
+
+<p>1️⃣ ChatGPT Earnings 🤖</p>
+   - Use our integrated AI, EarnGPT, to generate articles, blogs, and other content. This can be a steady stream of income as you create valuable content for various clients.
+
+<p>2️⃣ Referral Commissions 👥</p>
+   - Earn by referring friends and family to Earnkraft Agencies. Each successful referral brings you a commission, adding to your income effortlessly.
+
+<p>3️⃣ Buy and Sell Online Writing Accounts 📝</p>
+   - You can buy and sell online writing accounts on our platform, opening up a marketplace of opportunities for consistent earnings.
+
+<p>4️⃣ Apply for Jobs 💼</p>
+   - Access a variety of short-term and long-term online projects. Apply for jobs through our platform and work remotely, earning substantial income in USD rates.
+
+<p>5️⃣ WhatsApp Earnings 📱</p>
+   - Earn money by leveraging your WhatsApp status. Promote Earnkraft and other services, and watch your income grow with each view and interaction.
+
+<p>6️⃣ Investment Packages 💰</p>
+   - Invest in our diverse packages to earn returns. The more you invest, the higher your potential earnings. Enjoy extra bonuses and commissions across all investment levels.
+
+ <p>📈 Why Earnkraft is Your Best Income Generator 📈</p>
+
+<p>Earnkraft is designed to maximize your financial success with multiple earning streams. Here’s why you should choose us:</p>
+
+- Referral Commissions and Bonuses 🏆: Every recommendation adds to your wealth.
+- Unlimited Online Writing Accounts ✍️: Buy and sell without limits.
+- Job Applications and WhatsApp Earnings 💬: Seamless digital earning streams.
+- EarnGPT for Content Creation 🧠: Limited use for crafting articles and blogs.
+- Collaborative Growth 🤝: Chat with your downlines and grow together.
+- Diverse Investment Packages 📊: Secure returns on varied investments.
+- Merchant Opportunities 🛒: Expand your reach and income potential.
+
+ <p>💵 Investment Packages 💵</p>
+
+<p>- Individual Package 👤</p>
+  - Access extra bonuses and commissions.
+  - Unlock better rates as your investment level increases.
+  - Option to select other premium packages.
+
+<p>- Joint Package 👥</p>
+  - Invest together with friends.
+  - Access premium packages with a shared amount.
+  - Distributed payout once returns are achieved.
+
+<p>- Freelancer Package 💼</p>
+  - Work on short-term and long-term online projects.
+  - Earn substantial income in USD rates.
+
+<p>- Merchant Package 🛍️</p>
+  - Tailored for individuals or businesses offering digital services.
+  - Sell digital products like online writing accounts.
+  - Earn returns on your investments.
+
+ <p>🌟 Starter Package for Everyone 🌟</p>
+
+- Minimum Funding: KES 49
+  - Basic Account Benefits:
+    - Chat with admin and your downlines 🗨️
+    - Free deposits anytime 💸
+    - Earn from WhatsApp status 💬
+    - One withdrawal per day 🏧
+    - Withdrawal limit: 20,000 per transaction 💵
+    - Earn 40% of referral commissions 🏅
+
+- Minimum Funding: KES 199
+  - Premium Account Benefits:
+    - Chat with admin and your downlines 🗨️
+    - Free deposits anytime 💸
+    - Earn from WhatsApp status 💬
+    - Withdraw to your bank account 🏦
+    - Schedule withdrawals every day 📅
+    - No withdrawal limit per transaction 💵
+    - Earn 60% of referral commissions 🏅
+
+ <p>💡 Ways of Generating Income 💡</p>
+
+- FREE PLAN (KES 500) 🆓
+  - Limited referral commissions.
+  - Bonuses earning.
+  - Buy online writing accounts.
+  - Apply for jobs.
+
+<p>- MOST POPULAR (KES 2500) 🌟</p>
+  - All limited privileges.
+  - WhatsApp earnings.
+  - Limited use of EarnGPT to write articles and blogs.
+  - Chat with your downlines.
+  - Access investment packages.
+
+<p>- ADVANCED (KES 5000) 🏷️</p>
+  - All limited and moderate privileges.
+  - Qualify to be a merchant.
+  - Unlimited buying and selling of online writing accounts.
+  - Unlimited earning from EarnGPT.
+  - Unlimited investment packages.
+
+
+
+Earnkraft Agencies is your ultimate partner in financial growth, offering diverse and lucrative ways to earn and invest. Join us today and start your journey towards financial success! 🌟🚀
+
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Join Today</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end xxxxxx-->
+  <div class="modal fade" tabindex="-1" id="Pricing">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pricing Packages at Earnkraft Agencies </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>At Earnkraft Agencies, we offer a unique and comprehensive pricing system designed to maximize your earning potential. Here’s a detailed guide on how to choose the best package for your needs, explained with simplicity and clarity, and enhanced with plenty of engaging emojis!</p>
+
+ <p>📊 Step 1: Choose Your Earning Pool 📊</p>
+
+<p>1. Individual Package 👤</p>
+   - Ideal for solo users looking to access extra bonuses and commissions. As your investment level increases, you unlock even better rates and have the option to select premium packages.
+
+<p>2. Joint Package 👥</p>
+   - Perfect for two or more friends who want to invest together. Access premium packages by subscribing with a shared amount and enjoy distributed payouts once returns are achieved.
+
+<p>3. Freelancer Package 💼</p>
+   - Designed for remote workers and freelancers. Work on short-term and long-term online projects offered on our platform and earn substantial income in USD rates.
+
+<p>4. Merchant Package 🛍️</p>
+   - Tailored for individuals or businesses offering digital services. Sell digital products and services like online writing accounts on our platform and earn returns on your investments.
+
+<p>💵 Step 2: Choose Your Starter Package 💵</p>
+
+<p>1. Basic Account 🆓</p>
+   - Minimum Funding: KES 49
+   - Benefits:
+     - Chat with admin and your downlines 🗨️
+     - Free deposits anytime 💸
+     - Earn from WhatsApp status 💬
+     - One withdrawal per day 🏧
+     - Withdrawal limit: 20,000 per transaction 💵
+     - Earn 40% of referral commissions 🏅
+
+<p>2. Premium Account 🌟</p>
+   - Minimum Funding: KES 199
+   - Benefits:
+     - Chat with admin and your downlines 🗨️
+     - Free deposits anytime 💸
+     - Earn from WhatsApp status 💬
+     - Withdraw to your bank account 🏦
+     - Schedule withdrawals every day 📅
+     - No withdrawal limit per transaction 💵
+     - Earn 60% of referral commissions 🏅
+
+ <p>💡 Step 3: Choose Your Income Generation Package 💡</p>
+
+<p>1. Limited Plan 💼</p>
+   - Minimum Funding: KES 500
+   - Benefits:
+     - Limited referral commissions.
+     - Bonuses earning.
+     - Buy online writing accounts.
+     - Apply for jobs.
+
+<p>2. Moderate Plan 🌟</p>
+   - Minimum Funding: KES 2500
+   - Benefits:
+     - All limited privileges.
+     - WhatsApp earnings.
+     - Limited use of EarnGPT to write articles and blogs.
+     - Chat with your downlines.
+     - Access investment packages.
+
+<p>3. Unlimited Plan 🛍️</p>
+   - Minimum Funding: KES 5000
+   - Benefits:
+     - All limited and moderate privileges.
+     - Qualify to be a merchant.
+     - Unlimited buying and selling of online writing accounts.
+     - Unlimited earning from EarnGPT.
+     - Unlimited investment packages.
+
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end x-->
+  <div class="modal fade" tabindex="-1" id="Benefits">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Benefits of Our Package System </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>1. We Only Deliver What Generates Income 💵</p>
+   - At Earnkraft Agencies, we provide genuine income-generating opportunities. No fake services like trivial questions, Google ads, YouTube videos, or unrealistic investments that make you lose money.
+
+<p>2. Choose the Package That Suits Your Needs 🛍️</p>
+   - Our diverse packages ensure you don’t need to join multiple affiliate marketing platforms. We deliver all the best features in one place, tailored to meet your specific earning needs.
+
+<p>3. Flexibility to Change Packages 🔄</p>
+   - You can switch to another package anytime to enhance your earning potential. As we advance our systems and services, there’s no need to limit your opportunities.
+
+<p>4. Boost Sales with EarnGPT 🤖</p>
+   - Start as a referred user and utilize our AI platform to boost sales, write blogs, and post content. This is perfect for bloggers, article writers, and web content creators.
+
+<p>5. Sell Digital Products 💼</p>
+   - Earn extra income by selling digital products like online writing accounts, writing tool packages (Grammarly, Chegg, Course Hero), AI removal tools, premium Netflix accounts, and more.
+
+<p>6. Genuine WhatsApp Marketing 📱</p>
+   - We pay 1 KES for each WhatsApp view of our services and links. If you get 900 views in a single day, you earn 900 KES! This ensures our brand gains more users while you earn.
+
+<p>7. Access to New and Relevant Jobs 💼</p>
+   - We post job opportunities both locally and internationally, including online/remote jobs. This helps you grow your career as a professional and freelancer, contributing to your long-term success.
+
+<p>At Earnkraft Agencies, we are committed to providing you with the best income-generating opportunities. Join us today, choose the package that suits you, and start your journey to financial success! 🌟🚀</p>
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Benefits2">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Benefits of Our Package System </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>At Earnkraft Agencies, our package system is designed to offer unparalleled benefits, ensuring that every user has the opportunity to maximize their earnings. Here’s why our package system stands out, explained in detail with engaging and fancy emojis:</p>
+
+ <p>1. We Only Deliver What Generates Income 💵</p>
+At Earnkraft Agencies, we pride ourselves on providing genuine income-generating opportunities. Unlike other platforms that promise high returns but deliver little, we ensure that all our services are real and beneficial. 🌟 
+- No Fake Services: We don't engage in trivial questions that don’t pay, fake Google ads, unrealistic YouTube videos, or inflated earnings for WhatsApp views.
+- Authentic Opportunities: Our platform focuses on real, sustainable ways to make money, avoiding scams like fake forex training and other schemes that only make you lose money after a short period.
+
+ <p>2. Choose the Package That Suits Your Needs 🛍️</p>
+Our diverse range of packages is tailored to meet your specific earning needs, eliminating the need to join multiple affiliate marketing platforms. We bring all the best features together in one place.
+- Customized Options: Whether you’re an individual, part of a joint investment, a freelancer, or a merchant, we have packages designed to cater to your unique needs.
+- Comprehensive Solutions: From investment pools to digital product sales and AI-powered content creation, we cover all aspects of online earning, ensuring you get the best value.
+
+ <p>3. Flexibility to Change Packages 🔄</p>
+We understand that your needs might change over time. That’s why our system allows you to switch packages easily, enhancing your earning potential without any hassle.
+- Seamless Upgrades: As we continually advance our systems and services, you can upgrade or change your package to access new features and opportunities.
+- Unlimited Potential: There's no need to limit your earning capacity. You can always choose another package that grants you additional benefits and higher returns.
+
+ <p>4. Boost Sales with EarnGPT 🤖</p>
+Our platform empowers users to leverage AI technology for content creation, boosting sales, and enhancing their online presence.
+- AI-Powered Content: Use our EarnGPT feature to write articles, blogs, and other content, either for our platform or your own.
+- Sales Enhancement: Bloggers, article writers, and web content creators can use EarnGPT to generate high-quality content, improving their sales and online visibility.
+
+ <p>5. Sell Digital Products 💼</p>
+Earn extra income by selling a wide range of digital products on our platform. We provide a marketplace for diverse digital goods.
+- Digital Goods Marketplace: Sell online writing accounts, writing tool packages like Grammarly, Chegg, Course Hero, AI removal tools, premium Netflix accounts, and more.
+- Extra Income Streams: By offering valuable digital products, you can create additional revenue streams that enhance your overall earnings.
+
+ <p>6. Genuine WhatsApp Marketing 📱</p>
+We value the power of social media marketing and offer genuine compensation for promoting our services on WhatsApp.
+- Earn from Views: We pay 1 KES for each WhatsApp view of our services and links. This means if you get 900 views in a single day, you earn 900 KES!
+- Effective Promotion: By promoting Earnkraft on your WhatsApp status, you help grow our user base while earning a steady income.
+
+ <p>7. Access to New and Relevant Jobs 💼</p>
+We provide access to a wide range of job opportunities, both locally and internationally, including online and remote jobs.
+- Job Listings: Regularly updated job postings that cater to various skills and experiences, from local jobs to international remote opportunities.
+- Career Growth: We contribute to your career development by offering jobs that allow you to utilize your skills and experience, ensuring continuous professional growth.
+
+<p>At Earnkraft Agencies, we are committed to providing you with the best tools and opportunities to achieve financial success. Our carefully crafted package system is designed to meet your needs and help you thrive. Join us today and experience the difference! 🚀🌟</p>
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="world">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Earn money from anywhere in the world!</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>•	Kenya 🇰🇪</p>
+<p>•	Uganda 🇺🇬</p>
+<p>•	Tanzania 🇹🇿</p>
+<p>•	Rwanda 🇷🇼</p>
+<p>•	Ghana 🇬🇭</p>
+<p>•	Nigeria 🇳🇬</p>
+<p>•	Malawi 🇲🇼</p>
+<p>•	Zambia 🇿🇲</p>
+<p>•	Zimbabwe 🇿🇼</p>
+<p>•	Ethiopia 🇪🇹</p>
+<p>•	Mozambique 🇲🇿</p>
+<p>•	USA 🇺🇸</p>
+<p>•	UK 🇬🇧</p>
+<p>•	Europe 🇪🇺</p>
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end xxxxxx-->
+  <div class="modal fade" tabindex="-1" id="Registration">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Kenya</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            🇰🇪 Kenya (KES)
+
+<p>Step-by-Step Registration</p>
+
+<p>1. Choose a Unique Username 🌟  </p>
+   👉 Use a unique username for your Earnkraft account.
+
+<p>2. Enter Your Email Address 📧  </p>
+   👉 Provide a valid email address. Check your email for a login link.
+
+<p>3. Receive Your Login Link 🔗  </p>
+   👉 Click the link from Earnkraft Agencies to access your dashboard.
+
+<p>Complete Your Profile 📝</p>
+
+<p>4. Fill in Your Personal Details  </p>
+   - First Name and Last Name  
+   - Phone Number 📱  
+   - Date of Birth 🎂  
+
+<p>5. Address Details 🏡  </p>
+   - Home Address: Enter your area name and address details.  
+   - Country and City 🌍  
+
+<p>6. Proof of Citizenship or Residence 🆔  </p>
+   - Upload a valid ID card, driving license, or other document.
+
+<p>7. Submit Your Information 📤  </p>
+   - Click on the Submit button.
+
+<p>8. Complete KYC Process ✅  </p>
+   - Your documents will be verified for full dashboard access.
+
+<p>Registration Packages in Kenya 💰</p>
+
+<p>1. Limited Plan 🌟  </p>
+   - Minimum Funding: KES 500  
+   - Benefits:  
+     - Chat with admin and your downlines 🗨️  
+     - Free deposits anytime 💸  
+     - Earn from WhatsApp status 💬  
+     - One withdrawal per day 🏧  
+     - Withdrawal limit: 20,000 per transaction 💵  
+     - Earn 40% of referral commissions 🏅  
+
+<p>2. Moderate Plan 🚀  </p>
+   - Minimum Funding: KES 2,500  
+   - Benefits:  
+     - All Limited Plan benefits  
+     - WhatsApp earnings 💬  
+     - Limited use of EarnGPT for content creation 🧠  
+     - Chat with your downlines 🗨️  
+     - Access to investment packages 📊  
+
+<p>3. Unlimited Plan 🛍️  </p>
+   - Minimum Funding: KES 5,000  
+   - Benefits:  
+     - All Moderate Plan benefits  
+     - Qualify to be a merchant 🛒  
+     - Unlimited buying and selling of online writing accounts ✍️  
+     - Unlimited use of EarnGPT for content creation 🧠  
+     - Unlimited investment packages 📊  
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end xxx-->
+  <div class="modal fade" tabindex="-1" id="RegisterinUgand">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Uganda</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>🇺🇬 Uganda (UGX)
+
+            <p>Step-by-Step Registration</p>
+            
+            <p>1. Choose a Unique Username 🌟  </p>
+               👉 Use a unique username for your Earnkraft account.
+            
+            <p>2. Enter Your Email Address 📧  </p>
+               👉 Provide a valid email address. Check your email for a login link.
+            
+            <p>3. Receive Your Login Link 🔗  </p>
+               👉 Click the link from Earnkraft Agencies to access your dashboard.
+            
+            <p>Complete Your Profile 📝</p>
+            
+            <p>4. Fill in Your Personal Details  </p>
+               - First Name and Last Name  
+               - Phone Number 📱  
+               - Date of Birth 🎂  
+            
+            <p>5. Address Details 🏡  </p>
+               - Home Address: Enter your area name and address details.  
+               - Country and City 🌍  
+            
+            <p>6. Proof of Citizenship or Residence 🆔  </p>
+               - Upload a valid ID card, driving license, or other document.
+            
+            <p>7. Submit Your Information 📤  </p>
+               - Click on the Submit button.
+            
+            <p>8. Complete KYC Process ✅  </p>
+               - Your documents will be verified for full dashboard access.
+            
+            <p>Registration Packages in Uganda 💰</p>
+            
+            <p>1. Limited Plan 🌟  </p>
+               - Minimum Funding: UGX 14,000  
+               - Benefits:  
+                 - Chat with admin and your downlines 🗨️  
+                 - Free deposits anytime 💸  
+                 - Earn from WhatsApp status 💬  
+                 - One withdrawal per day 🏧  
+                 - Withdrawal limit: 575,000 per transaction 💵  
+                 - Earn 40% of referral commissions 🏅  
+            
+            <p>2. Moderate Plan 🚀  </p>
+               - Minimum Funding: UGX 71,500  
+               - Benefits:  
+                 - All Limited Plan benefits  
+                 - WhatsApp earnings 💬  
+                 - Limited use of EarnGPT for content creation 🧠  
+                 - Chat with your downlines 🗨️  
+                 - Access to investment packages 📊  
+            
+            <p>3. Unlimited Plan 🛍️  </p>
+               - Minimum Funding: UGX 143,500  
+               - Benefits:  
+                 - All Moderate Plan benefits  
+                 - Qualify to be a merchant 🛒  
+                 - Unlimited buying and selling of online writing accounts ✍️  
+                 - Unlimited use of EarnGPT for content creation 🧠  
+                 - Unlimited investment packages 📊  
+            </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end xx-->
+  <div class="modal fade" tabindex="-1" id="RegisterinTanza">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Tanzania</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>🇹🇿 Tanzania (TZS)</p>
+
+<p>Step-by-Step Registration</p>
+
+<p>1. Choose a Unique Username 🌟  </p>
+   👉 Use a unique username for your Earnkraft account.
+
+<p>2. Enter Your Email Address 📧  </p>
+   👉 Provide a valid email address. Check your email for a login link.
+
+<p>3. Receive Your Login Link 🔗  </p>
+   👉 Click the link from Earnkraft Agencies to access your dashboard.
+
+<p>Complete Your Profile 📝</p>
+
+<p>4. Fill in Your Personal Details  </p>
+   - First Name and Last Name  
+   - Phone Number 📱  
+   - Date of Birth 🎂  
+
+<p>5. Address Details 🏡  </p>
+   - Home Address: Enter your area name and address details.  
+   - Country and City 🌍  
+
+<p>6. Proof of Citizenship or Residence 🆔  </p>
+   - Upload a valid ID card, driving license, or other document.
+
+<p>7. Submit Your Information 📤  </p>
+   - Click on the Submit button.
+
+<p>8. Complete KYC Process ✅  </p>
+   - Your documents will be verified for full dashboard access.
+
+<p>Registration Packages in Tanzania 💰</p>
+
+<p>1. Limited Plan 🌟  </p>
+   - Minimum Funding: TZS 10,000  
+   - Benefits:  
+     - Chat with admin and your downlines 🗨️  
+     - Free deposits anytime 💸  
+     - Earn from WhatsApp status 💬  
+     - One withdrawal per day 🏧  
+     - Withdrawal limit: 450,000 per transaction 💵  
+     - Earn 40% of referral commissions 🏅  
+
+<p>2. Moderate Plan 🚀  </p>
+   - Minimum Funding: TZS 51,000  
+   - Benefits:  
+     - All Limited Plan benefits  
+     - WhatsApp earnings 💬  
+     - Limited use of EarnGPT for content creation 🧠  
+     - Chat with your downlines 🗨️  
+     - Access to investment packages 📊  
+
+<p>3. Unlimited Plan 🛍️  </p>
+   - Minimum Funding: TZS 102,000  
+   - Benefits:  
+     - All Moderate Plan benefits  
+     - Qualify to be a merchant 🛒  
+     - Unlimited buying and selling of online writing accounts ✍️  
+     - Unlimited use of EarnGPT for content creation 🧠  
+     - Unlimited investment packages 📊  
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end xx -->
+  <div class="modal fade" tabindex="-1" id="RegisterinRwa">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">  How to Register in Rwanda</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            🇷🇼 Rwanda (RWF)
+
+<p>Step-by-Step Registration</p>
+
+<p>1. Choose a Unique Username 🌟  </p>
+   👉 Use a unique username for your Earnkraft account.
+
+<p>2. Enter Your Email Address 📧  </p>
+   👉 Provide a valid email address. Check your email for a login link.
+
+<p>3. Receive Your Login Link 🔗  </p>
+   👉 Click the link from Earnkraft Agencies to access your dashboard.
+
+<p>Complete Your Profile 📝</p>
+
+<p>4. Fill in Your Personal Details  </p>
+   - First Name and Last Name  
+   - Phone Number 📱  
+   - Date of Birth 🎂  
+
+<p>5. Address Details 🏡  </p>
+   - Home Address: Enter your area name and address details.  
+   - Country and City 🌍  
+
+<p>6. Proof of Citizenship or Residence 🆔  </p>
+   - Upload a valid ID card, driving license, or other document.
+
+<p>7. Submit Your Information 📤  </p>
+   - Click on the Submit button.
+
+<p>8. Complete KYC Process ✅  </p>
+   - Your documents will be verified for full dashboard access.
+
+<p>Registration Packages in Rwanda 💰</p>
+
+<p>1. Limited Plan 🌟  </p>
+   - Minimum Funding: RWF 5,000  
+   - Benefits:  
+     - Chat with admin and your downlines 🗨️  
+     - Free deposits anytime 💸  
+     - Earn from WhatsApp status 💬  
+     - One withdrawal per day 🏧  
+     - Withdrawal limit: 200,000 per transaction 💵  
+     - Earn 40% of referral commissions 🏅  
+
+<p>2. Moderate Plan 🚀  </p>
+   - Minimum Funding: RWF 25,000  
+   - Benefits:  
+     	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.Unlimited Plan 🛍️</p>
+o	Minimum Funding: RWF 50 000
+o	Benefits:
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end xx -->
+  <div class="modal fade" tabindex="-1" id="egisterinGha">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Ghana </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>🇬🇭 Ghana (GHS)</p>
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+<p>Complete Your Profile 📝</p>
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+Registration Packages in Ghana 💰
+<p>2.	Limited Plan 🌟</p>
+o	Minimum Funding: GHS 60
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 100 GHS per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>3.	Moderate Plan 🚀</p>
+o	Minimum Funding: GHS 295
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>4.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: GHS 590
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="RegisterinNige">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Nigeria</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            🇳🇬 Nigeria (NGN)
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+Complete Your Profile 📝
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+<p>Registration Packages in Nigeria 💰</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: NGN 6000
+o	Benefits:
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 250,000 NGN per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+<p>o	Minimum Funding: NGN 29,000</p>
+o	Benefits:
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: NGN 58,000
+o	Benefits:
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="egisterinMalaw">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Malawi</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            🇲🇼 Malawi (MWK)
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+Complete Your Profile 📝
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+<p>Registration Packages in Malawi 💰</p>
+1.	Limited Plan 🌟
+o	Minimum Funding: MWK 6600
+o	Benefits:
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 250,000 MWK per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: MWK 33,000
+o	Benefits:
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: MWK 67,000
+o	Benefits:
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content endxx -->
+  <div class="modal fade" tabindex="-1" id="RegisterinZambi">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Zambia</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            🇿🇲 Zambia (ZMW)
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+<p>Complete Your Profile 📝</p>
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+Registration Packages in Zambia 💰
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: ZMW 92
+o	Benefits:
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 4000 ZMW per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: ZMW 463
+o	Benefits:
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: ZMW 930
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end xx-->
+  <div class="modal fade" tabindex="-1" id="RegisterinZimbab">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">  How to Register in Zimbabwe</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>🇿🇼 Zimbabwe (ZWL)
+            <p>Step-by-Step Registration</p>
+            <p>1.	Choose a Unique Username 🌟</p>
+            👉 Use a unique username for your Earnkraft account.
+            <p>2.	Enter Your Email Address 📧</p>
+            👉 Provide a valid email address. Check your email for a login link.
+            <p>3.	Receive Your Login Link 🔗</p>
+            👉 Click the link from Earnkraft Agencies to access your dashboard.
+            <p>Complete Your Profile 📝</p>
+            4.	Fill in Your Personal Details
+            o	First Name and Last Name
+            o	Phone Number 📱
+            o	Date of Birth 🎂
+            <p>5.	Address Details 🏡</p>
+            o	Home Address: Enter your area name and address details.
+            o	Country and City 🌍
+            <p>6.	Proof of Citizenship or Residence 🆔</p>
+            o	Upload a valid ID card, driving license, or other document.
+            <p>7.	Submit Your Information 📤</p>
+            o	Click on the Submit button.
+            <p>8.	Complete KYC Process ✅</p>
+            o	Your documents will be verified for full dashboard access.
+            Registration Packages in Zimbabwe 💰
+            <p>1.	Limited Plan 🌟</p>
+            o	Minimum Funding: ZWL 1250
+            o	Benefits:
+            	Chat with admin and your downlines 🗨️
+            	Free deposits anytime 💸
+            	Earn from WhatsApp status 💬
+            	One withdrawal per day 🏧
+            	Withdrawal limit: 50,000 ZWL per transaction 💵
+            	Earn 40% of referral commissions 🏅
+            <p>2.	Moderate Plan 🚀</p>
+            o	Minimum Funding: ZWL 6,000
+            o	Benefits:
+            	All Limited Plan benefits
+            	WhatsApp earnings 💬
+            	Limited use of EarnGPT for content creation 🧠
+            	Chat with your downlines 🗨️
+            	Access to investment packages 📊
+            <p>3.	Unlimited Plan 🛍️</p>
+            o	Minimum Funding: ZWL 12,500
+            o	Benefits:
+            	All Moderate Plan benefits
+            	Qualify to be a merchant 🛒
+            	Unlimited buying and selling of online writing accounts ✍️
+            	Unlimited use of EarnGPT for content creation 🧠
+            	Unlimited investment packages 📊
+            </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="RegisterinEthio">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Ethiopia</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>🇪🇹 Ethiopia (ETB)
+            <p>Step-by-Step Registration</p>
+            <p>1.	Choose a Unique Username 🌟</p>
+            👉 Use a unique username for your Earnkraft account.
+            <p>2.	Enter Your Email Address 📧</p>
+            👉 Provide a valid email address. Check your email for a login link.
+            <p>3.	Receive Your Login Link 🔗</p>
+            👉 Click the link from Earnkraft Agencies to access your dashboard.
+            Complete Your Profile 📝
+            <p>4.	Fill in Your Personal Details</p>
+            o	First Name and Last Name
+            o	Phone Number 📱
+            o	Date of Birth 🎂
+            <p>5.	Address Details 🏡</p>
+            o	Home Address: Enter your area name and address details.
+            o	Country and City 🌍
+            6.	Proof of Citizenship or Residence 🆔
+            o	Upload a valid ID card, driving license, or other document.
+            <p>7.	Submit Your Information 📤</p>
+            o	Click on the Submit button.
+            <p>8.	Complete KYC Process ✅</p>
+            o	Your documents will be verified for full dashboard access.
+            Registration Packages in Ethiopia 💰
+            <p>1.	Limited Plan 🌟</p>
+            o	Minimum Funding: ETB 250
+            o	Benefits:
+            	Chat with admin and your downlines 🗨️
+            	Free deposits anytime 💸
+            	Earn from WhatsApp status 💬
+            	One withdrawal per day 🏧
+            	Withdrawal limit: 10,000 ETB per transaction 💵
+            	Earn 40% of referral commissions 🏅
+            <p>2.	Moderate Plan 🚀</p>
+            o	Minimum Funding: ETB 1,200
+            o	Benefits:
+            	All Limited Plan benefits
+            	WhatsApp earnings 💬
+            	Limited use of EarnGPT for content creation 🧠
+            	Chat with your downlines 🗨️
+            	Access to investment packages 📊
+            <p>3.	Unlimited Plan 🛍️</p>
+            o	Minimum Funding: ETB 2,200
+            <p>o	Benefits:</p>
+            	All Moderate Plan benefits
+            	Qualify to be a merchant 🛒
+            	Unlimited buying and selling of online writing accounts ✍️
+            	Unlimited use of EarnGPT for content creation 🧠
+            	Unlimited investment packages 📊
+            </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="RegisterinMoza">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Mozambique</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            🇲🇿 Mozambique (MZN)
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+Complete Your Profile 📝
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+Registration Packages in Mozambique 💰
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: MZN 250
+o	Benefits:
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 12,500 MZN per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: MZN 1250
+o	Benefits:
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: MZN 2500
+o	Benefits:
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="RegisterinUSA">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in USA</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>🇺🇸 USA (USD)
+            <p>Step-by-Step Registration</p>
+            <p>1.	Choose a Unique Username 🌟</p>
+            👉 Use a unique username for your Earnkraft account.
+            <p>2.	Enter Your Email Address 📧</p>
+            👉 Provide a valid email address. Check your email for a login link.
+            <p>3.	Receive Your Login Link 🔗</p>
+            👉 Click the link from Earnkraft Agencies to access your dashboard.
+            Complete Your Profile 📝
+            <p>4.	Fill in Your Personal Details</p>
+            o	First Name and Last Name
+            o	Phone Number 📱
+            o	Date of Birth 🎂
+            <p>5.	Address Details 🏡</p>
+            o	Home Address: Enter your area name and address details.
+            o	Country and City 🌍
+            <p>6.	Proof of Citizenship or Residence 🆔</p>
+            o	Upload a valid ID card, driving license, or other document.
+            <p>7.	Submit Your Information 📤</p>
+            o	Click on the Submit button.
+            <p>8.	Complete KYC Process ✅</p>
+            o	Your documents will be verified for full dashboard access.
+            Registration Packages in the USA 💰
+            <p>1.	Limited Plan 🌟</p>
+            o	Minimum Funding: USD 5
+            o	Benefits:
+            	Chat with admin and your downlines 🗨️
+            	Free deposits anytime 💸
+            	Earn from WhatsApp status 💬
+            	One withdrawal per day 🏧
+            	Withdrawal limit: 200 USD per transaction 💵
+            	Earn 40% of referral commissions 🏅
+            <p>2.	Moderate Plan 🚀</p>
+            o	Minimum Funding: USD 25
+            o	Benefits:
+            	All Limited Plan benefits
+            	WhatsApp earnings 💬
+            	Limited use of EarnGPT for content creation 🧠
+            	Chat with your downlines 🗨️
+            	Access to investment packages 📊
+            <p>3.	Unlimited Plan 🛍️</p>
+            o	Minimum Funding: USD 50
+            o	Benefits:
+            	All Moderate Plan benefits
+            	Qualify to be a merchant 🛒
+            	Unlimited buying and selling of online writing accounts ✍️
+            	Unlimited use of EarnGPT for content creation 🧠
+            	Unlimited investment packages 📊
+            </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="RegisterinUK">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in UK</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            🇬🇧 UK (GBP)
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+Complete Your Profile 📝
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+<p>Registration Packages in the UK 💰</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: GBP 6
+o	Benefits:
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 200 GBP per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: GBP 25
+o	Benefits:
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: GBP 50
+o	Benefits:
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="RegisterinEur">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to Register in Europe</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            🇪🇺 Europe (EUR)
+<p>Step-by-Step Registration</p>
+<p>1.	Choose a Unique Username 🌟</p>
+👉 Use a unique username for your Earnkraft account.
+<p>2.	Enter Your Email Address 📧</p>
+👉 Provide a valid email address. Check your email for a login link.
+<p>3.	Receive Your Login Link 🔗</p>
+👉 Click the link from Earnkraft Agencies to access your dashboard.
+Complete Your Profile 📝
+<p>4.	Fill in Your Personal Details</p>
+o	First Name and Last Name
+o	Phone Number 📱
+o	Date of Birth 🎂
+<p>5.	Address Details 🏡</p>
+o	Home Address: Enter your area name and address details.
+o	Country and City 🌍
+<p>6.	Proof of Citizenship or Residence 🆔</p>
+o	Upload a valid ID card, driving license, or other document.
+<p>7.	Submit Your Information 📤</p>
+o	Click on the Submit button.
+<p>8.	Complete KYC Process ✅</p>
+o	Your documents will be verified for full dashboard access.
+<p>Registration Packages in Europe 💰</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: EUR 6
+o	Benefits:
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 200 EUR per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: EUR 30
+o	Benefits:
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: EUR 50
+o	Benefits:
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="ReferralEarningsinK">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Kenya </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Kenya 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: KES 500
+o	First-Level Referral: KES 250 
+o	Second-Level Referral: KES 100 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 20,000 per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: KES 2,500
+o	First-Level Referral: KES 1,250 
+o	Second-Level Referral: KES 500 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+<p>	WhatsApp earnings 💬</p>
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: KES 5,000
+o	First-Level Referral: KES 2,500 
+o	Second-Level Referral: KES 1,000 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+
+
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinUga">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Uganda 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: UGX 14,000
+o	First-Level Referral: UGX 7,000 
+o	Second-Level Referral: UGX 2,800 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 575,000 per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: UGX 71,500
+o	First-Level Referral: UGX 35,750 
+o	Second-Level Referral: UGX 14,300 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: UGX 143,500
+o	First-Level Referral: UGX 71,750 
+o	Second-Level Referral: UGX 28,700 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinTanz">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">  Referral Earnings in Tanzania 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Tanzania 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: TZS 10,000
+o	First-Level Referral: TZS 5,000 
+o	Second-Level Referral: TZS 2,000 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 450,000 per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: TZS 51,000
+o	First-Level Referral: TZS 25,500 
+o	Second-Level Referral: TZS 10,200 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: TZS 102,000
+o	First-Level Referral: TZS 51,000 
+o	Second-Level Referral: TZS 20,400 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="ingsinRwan">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Rwanda 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Rwanda 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: RWF 5,000
+o	First-Level Referral: RWF 2,500 
+o	Second-Level Referral: RWF 1,000 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 200,000 per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: RWF 25,000
+o	First-Level Referral: RWF 12,500 
+o	Second-Level Referral: RWF 5,000 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: RWF 50,000
+o	First-Level Referral: RWF 25,000 
+o	Second-Level Referral: RWF 10,000 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinGh">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Ghana 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Earnings in Ghana 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: GHS 60
+o	First-Level Referral: GHS 30 
+o	Second-Level Referral: GHS 12 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 100 GHS per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: GHS 295
+o	First-Level Referral: GHS 147.50 
+o	Second-Level Referral: GHS 59 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: GHS 590
+o	First-Level Referral: GHS 295 
+o	Second-Level Referral: GHS 118 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinNige">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Nigeria 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Nigeria 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: NGN 6,000
+o	First-Level Referral: NGN 3,000 
+o	Second-Level Referral: NGN 1,200 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 250,000 NGN per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: NGN 29,000
+o	First-Level Referral: NGN 14,500 
+o	Second-Level Referral: NGN 5,800 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: NGN 58,000
+o	First-Level Referral: NGN 29,000 
+o	Second-Level Referral: NGN 11,600 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinMal">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Malawi 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Earnings in Malawi 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: MWK 6,600
+o	First-Level Referral: MWK 3,300 
+o	Second-Level Referral: MWK 1,320 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 250,000 MWK per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: MWK 33,000
+o	First-Level Referral: MWK 16,500 
+o	Second-Level Referral: MWK 6,600 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: MWK 67,000
+o	First-Level Referral: MWK 33,500 
+o	Second-Level Referral: MWK 13,400 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinZamb">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Zambia 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Zambia 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: ZMW 92
+o	First-Level Referral: ZMW 46 
+o	Second-Level Referral: ZMW 18.40 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 4,000 ZMW per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: ZMW 463
+o	First-Level Referral: ZMW 231.50 
+o	Second-Level Referral: ZMW 92.60 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: ZMW 930
+o	First-Level Referral: ZMW 465 
+o	Second-Level Referral: ZMW 186 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="EarningsinZimbab">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Zimbabwe 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Zimbabwe 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: ZWL 1,250
+o	First-Level Referral: ZWL 625 
+o	Second-Level Referral: ZWL 250 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 50,000 ZWL per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: ZWL 6,000
+o	First-Level Referral: ZWL 3,000 
+o	Second-Level Referral: ZWL 1,200 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: ZWL 12,500
+o	First-Level Referral: ZWL 6,250 
+o	Second-Level Referral: ZWL 2,500 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="gsinEthiop">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Ethiopia 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Earnings in Ethiopia 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: ETB 250
+o	First-Level Referral: ETB 125 
+o	Second-Level Referral: ETB 50 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 10,000 ETB per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: ETB 1,200
+o	First-Level Referral: ETB 600 
+o	Second-Level Referral: ETB 240 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: ETB 2,200
+o	First-Level Referral: ETB 1,100 
+o	Second-Level Referral: ETB 440 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="inMoza">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Mozambique 💸  </h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Earnings in Mozambique 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: MZN 250
+o	First-Level Referral: MZN 125 
+o	Second-Level Referral: MZN 50 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 12,500 MZN per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: MZN 1250
+o	First-Level Referral: MZN 625 
+o	Second-Level Referral: MZN 250 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: MZN 2500
+o	First-Level Referral: MZN 1250 
+o	Second-Level Referral: MZN 500 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="intheUSA">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in the USA 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Earnings in the USA 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: USD 5
+o	First-Level Referral: USD 2.50 
+o	Second-Level Referral: USD 1 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 200 USD per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: USD 25
+o	First-Level Referral: USD 12.50 
+o	Second-Level Referral: USD 5 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: USD 50
+o	First-Level Referral: USD 25 
+o	Second-Level Referral: USD 10 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="ntheUK">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in the UK 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Earnings in the UK 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: GBP 6
+o	First-Level Referral: GBP 3 
+o	Second-Level Referral: GBP 1.20 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 200 GBP per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: GBP 25
+o	First-Level Referral: GBP 12.50 
+o	Second-Level Referral: GBP 5 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: GBP 50
+o	First-Level Referral: GBP 25 
+o	Second-Level Referral: GBP 10 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="europ">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Earnings in Europe 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Earnings in Europe 💸</p>
+<p>1.	Limited Plan 🌟</p>
+o	Minimum Funding: EUR 6
+o	First-Level Referral: EUR 3 
+o	Second-Level Referral: EUR 1.20 
+<p>o	Benefits:</p>
+	Chat with admin and your downlines 🗨️
+	Free deposits anytime 💸
+	Earn from WhatsApp status 💬
+	One withdrawal per day 🏧
+	Withdrawal limit: 200 EUR per transaction 💵
+	Earn 40% of referral commissions 🏅
+<p>2.	Moderate Plan 🚀</p>
+o	Minimum Funding: EUR 30
+o	First-Level Referral: EUR 15 
+o	Second-Level Referral: EUR 6 
+<p>o	Benefits:</p>
+	All Limited Plan benefits
+	WhatsApp earnings 💬
+	Limited use of EarnGPT for content creation 🧠
+	Chat with your downlines 🗨️
+	Access to investment packages 📊
+<p>3.	Unlimited Plan 🛍️</p>
+o	Minimum Funding: EUR 50
+o	First-Level Referral: EUR 25 
+o	Second-Level Referral: EUR 10 
+<p>o	Benefits:</p>
+	All Moderate Plan benefits
+	Qualify to be a merchant 🛒
+	Unlimited buying and selling of online writing accounts ✍️
+	Unlimited use of EarnGPT for content creation 🧠
+	Unlimited investment packages 📊
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="kenyaref">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses in Kenya💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Bonuses 💸</p>
+
+Unlock bonuses when you reach the set targets in KENYA:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 1000 KES
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 2000 KES
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 5000 KES
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 7000 KES
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 10000 KES
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 15000 KES
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 20000 KES
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 25000 KES
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="ugandsa">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Uganda 🇺🇬 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Bonuses for Uganda 🇺🇬 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 28,000 UGX
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 56,000 UGX
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 140,000 UGX
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 196,000 UGX
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 280,000 UGX
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 420,000 UGX
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 560,000 UGX
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 700,000 UGX
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="tzzabonuses">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Tanzania 🇹🇿 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Bonuses for Tanzania 🇹🇿 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 18,500 TZS
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 37,000 TZS
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 92,500 TZS
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 129,500 TZS
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 185,000 TZS
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 277,500 TZS
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 370,000 TZS
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 462,500 TZS
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Rwandaxx">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Rwanda 🇷🇼 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Bonuses for Rwanda 🇷🇼 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 20,000 RWF
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 40,000 RWF
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 100,000 RWF
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 140,000 RWF
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 200,000 RWF
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 300,000 RWF
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 400,000 RWF
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 500,000 RWF
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Ghanawe">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Ghana 🇬🇭 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Bonuses for Ghana 🇬🇭 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 60 GHS
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 120 GHS
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 300 GHS
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 420 GHS
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 600 GHS
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 900 GHS
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 1200 GHS
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 1500 GHS
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="orNigeri">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Nigeria 🇳🇬 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Bonuses for Nigeria 🇳🇬 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 5,400 NGN
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 10,800 NGN
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 27,000 NGN
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 37,800 NGN
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 54,000 NGN
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 81,000 NGN
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 108,000 NGN
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 135,000 NGN
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="forMalaw">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Malawi 🇲🇼 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>Referral Bonuses for Malawi 🇲🇼 💸</p>
+            Unlock bonuses when you reach the set targets:
+            <p>1.	Junior</p>
+            o	Target: Refer 25 active users
+            o	Bonus: 7,500 MWK
+            <p>2.	Teenager</p>
+            o	Target: Refer 50 active users
+            o	Bonus: 15,000 MWK
+            <p>3.	Adult</p>
+            o	Target: Refer 100 active users
+            o	Bonus: 37,500 MWK
+            <p>4.	Master</p>
+            o	Target: Refer 200 active users
+            o	Bonus: 52,500 MWK
+            <p>5.	Manager</p>
+            o	Target: Refer 300 active users
+            o	Bonus: 75,000 MWK
+            <p>6.	Boss</p>
+            o	Target: Refer 500 active users
+            o	Bonus: 112,500 MWK
+            <p>7.	CEO</p>
+            o	Target: Refer 750 active users
+            o	Bonus: 150,000 MWK
+            <p>8.	King</p>
+            o	Target: Refer 1000 active users
+            o	Bonus: 187,500 MWK
+             
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="sforZamb">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Zambia 🇿🇲 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Bonuses for Zambia 🇿🇲 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 160 ZMW
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 320 ZMW
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 800 ZMW
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 1,120 ZMW
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 1,600 ZMW
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 2,400 ZMW
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 3,200 ZMW
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 4,000 ZMW
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="forZimbab">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Zimbabwe 🇿🇼 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Bonuses for Zimbabwe 🇿🇼 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 5 USD
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 10 USD
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 25 USD
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 35 USD
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 50 USD
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 75 USD
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 100 USD
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 125 USD
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="forEthiopi">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Ethiopia 🇪🇹 💸💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Referral Bonuses for Ethiopia 🇪🇹 💸</p>
+Unlock bonuses when you reach the set targets:
+<p>1.	Junior</p>
+o	Target: Refer 25 active users
+o	Bonus: 2,600 ETB
+<p>2.	Teenager</p>
+o	Target: Refer 50 active users
+o	Bonus: 5,200 ETB
+<p>3.	Adult</p>
+o	Target: Refer 100 active users
+o	Bonus: 13,000 ETB
+<p>4.	Master</p>
+o	Target: Refer 200 active users
+o	Bonus: 18,200 ETB
+<p>5.	Manager</p>
+o	Target: Refer 300 active users
+o	Bonus: 26,000 ETB
+<p>6.	Boss</p>
+o	Target: Refer 500 active users
+o	Bonus: 39,000 ETB
+<p>7.	CEO</p>
+o	Target: Refer 750 active users
+o	Bonus: 52,000 ETB
+<p>8.	King</p>
+o	Target: Refer 1000 active users
+o	Bonus: 65,000 ETB
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="onusesforMoza">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Mozambique 🇲🇿 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            Referral Bonuses for Mozambique 🇲🇿 💸
+Unlock bonuses when you reach the set targets:
+1.	Junior
+o	Target: Refer 25 active users
+o	Bonus: 2,500 MZN
+2.	Teenager
+o	Target: Refer 50 active users
+o	Bonus: 5,000 MZN
+3.	Adult
+o	Target: Refer 100 active users
+o	Bonus: 12,500 MZN
+4.	Master
+o	Target: Refer 200 active users
+o	Bonus: 17,500 MZN
+5.	Manager
+o	Target: Refer 300 active users
+o	Bonus: 25,000 MZN
+6.	Boss
+o	Target: Refer 500 active users
+o	Bonus: 37,500 MZN
+7.	CEO
+o	Target: Refer 750 active users
+o	Bonus: 50,000 MZN
+8.	King
+o	Target: Refer 1000 active users
+o	Bonus: 62,500 MZN
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="theUSA">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for the USA 🇺🇸 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            Referral Bonuses for the USA 🇺🇸 💸
+Unlock bonuses when you reach the set targets:
+1.	Junior
+o	Target: Refer 25 active users
+o	Bonus: 10 USD
+2.	Teenager
+o	Target: Refer 50 active users
+o	Bonus: 20 USD
+3.	Adult
+o	Target: Refer 100 active users
+o	Bonus: 50 USD
+4.	Master
+o	Target: Refer 200 active users
+o	Bonus: 70 USD
+5.	Manager
+o	Target: Refer 300 active users
+o	Bonus: 100 USD
+6.	Boss
+o	Target: Refer 500 active users
+o	Bonus: 150 USD
+7.	CEO
+o	Target: Refer 750 active users
+o	Bonus: 200 USD
+8.	King
+o	Target: Refer 1000 active users
+o	Bonus: 250 USD
+
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="theUK">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for the UK 🇬🇧 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            Referral Bonuses for the UK 🇬🇧 💸
+Unlock bonuses when you reach the set targets:
+1.	Junior
+o	Target: Refer 25 active users
+o	Bonus: 7 GBP
+2.	Teenager
+o	Target: Refer 50 active users
+o	Bonus: 14 GBP
+3.	Adult
+o	Target: Refer 100 active users
+o	Bonus: 35 GBP
+4.	Master
+o	Target: Refer 200 active users
+o	Bonus: 49 GBP
+5.	Manager
+o	Target: Refer 300 active users
+o	Bonus: 70 GBP
+6.	Boss
+o	Target: Refer 500 active users
+o	Bonus: 105 GBP
+7.	CEO
+o	Target: Refer 750 active users
+o	Bonus: 140 GBP
+8.	King
+o	Target: Refer 1000 active users
+o	Bonus: 175 GBP
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="nusesforEur">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Europe 🇪🇺 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            Referral Bonuses for Europe 🇪🇺 💸
+Unlock bonuses when you reach the set targets:
+1.	Junior
+o	Target: Refer 25 active users
+o	Bonus: 7 EUR
+2.	Teenager
+o	Target: Refer 50 active users
+o	Bonus: 14 EUR
+3.	Adult
+o	Target: Refer 100 active users
+o	Bonus: 35 EUR
+4.	Master
+o	Target: Refer 200 active users
+o	Bonus: 49 EUR
+5.	Manager
+o	Target: Refer 300 active users
+o	Bonus: 70 EUR
+6.	Boss
+o	Target: Refer 500 active users
+o	Bonus: 105 EUR
+7.	CEO
+o	Target: Refer 750 active users
+o	Bonus: 140 EUR
+8.	King
+o	Target: Refer 1000 active users
+o	Bonus: 175 EUR
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="tusEarn">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Whatsapp Status Earnings</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            WhatsApp status for emphasizing the earnings from WhatsApp views and how the income grows with the package level.
+
+🇺🇬 KENYA
+💵 WhatsApp Income 💵
+Earn 1 KES per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+
+ 
+🇺🇬 Uganda
+💵 WhatsApp Income 💵
+Earn 1 UGX per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇹🇿 Tanzania
+💵 WhatsApp Income 💵
+Earn 1 TZS per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇷🇼 Rwanda
+💵 WhatsApp Income 💵
+Earn 1 RWF per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇬🇭 Ghana
+💵 WhatsApp Income 💵
+Earn 1 GHS per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇳🇬 Nigeria
+💵 WhatsApp Income 💵
+Earn 1 NGN per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇲🇼 Malawi
+💵 WhatsApp Income 💵
+Earn 1 MWK per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇿🇲 Zambia
+💵 WhatsApp Income 💵
+Earn 1 ZMW per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇿🇼 Zimbabwe
+💵 WhatsApp Income 💵
+Earn 1 ZWL per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇪🇹 Ethiopia
+💵 WhatsApp Income 💵
+Earn 1 ETB per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇲🇿 Mozambique
+💵 WhatsApp Income 💵
+Earn 1 MZN per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇺🇸 USA
+💵 WhatsApp Income 💵
+Earn 1 USD per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇬🇧 UK
+💵 WhatsApp Income 💵
+Earn 1 GBP per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+ 
+🇪🇺 Europe
+💵 WhatsApp Income 💵
+Earn 1 EUR per view! 😲
+Submit Your WhatsApp Earnings 📈
+💰 The bigger the package, the bigger the income!
+🔗 Start Earning Now!
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="orGhan">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Ghana 🇬🇭 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Opportunities">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Jobs Opportunities</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            Earnkraft: Your Go-To Platform for Remote Academic Tasks and Services
+Welcome to Earnkraft, the premier platform where you can get a range of academic tasks completed remotely or find work opportunities online. Whether you need help with an academic assignment, looking for a flexible freelance gig, or seeking to hire someone for a specific project, Earnkraft is here to facilitate all your needs. Below is a comprehensive guide on how our platform works and how you can benefit from our services.
+________________________________________
+What We Offer
+At Earnkraft, we provide a variety of remote services and academic tasks that can be completed online. Here’s a detailed look at what we offer:
+Remote Academic Services
+We offer academic support for students, professionals, and anyone in need of academic assistance. Services include:
+•	Essay Writing: Craft well-researched and articulate essays on any subject.
+•	Coursework Assistance: Help with assignments, projects, and research.
+•	Thesis and Dissertation Writing: Professional support for your major academic projects.
+•	Research Papers: Development of original and well-documented research papers.
+•	Term Papers: Comprehensive writing and editing services for term papers.
+•	Capstone Projects: Assistance with final projects demonstrating your academic achievements.
+•	Annotated Bibliographies: Creation of detailed and insightful bibliographies for your research.
+•	Literature Reviews: Expert analysis and summarization of relevant literature.
+•	Book/Movie Reports: Detailed reports on books and movies for academic purposes.
+•	Peer Reviews: Evaluation and feedback on academic work.
+•	Lab Reports: Documentation and analysis of experimental results.
+•	Personal Statements: Craft compelling personal statements for applications.
+•	Admission Essays: Writing services for college or university admissions.
+•	Editing and Proofreading: Refinement of academic papers for clarity and correctness.
+Remote Jobs and Freelancing Opportunities
+We connect freelancers with various online job opportunities including:
+•	Content Creation: Writing, editing, and creating content for different platforms.
+•	Graphic Design: Designing visual content for websites, marketing materials, and more.
+•	Web Development: Building and maintaining websites for clients.
+•	Digital Marketing: Strategies for SEO, social media management, and online advertising.
+•	Virtual Assistance: Administrative support for businesses and entrepreneurs.
+•	Data Entry: Inputting and managing data for various organizations.
+•	Tutoring: Providing academic support and tutoring in different subjects.
+________________________________________
+How to Get an Academic Task Done: Step-by-Step Guide
+Here’s a detailed process for completing an academic task from start to finish:
+1.	Define Your Requirements
+o	What You Need follow: We specify the type of task (essay, research paper, etc.), subject, length, and any specific guidelines.
+o	Requirements: You will need a computer or laptop, a stable internet connection, and possibly academic tools like Grammarly.
+2.	Find a Professional
+o	Browse: Explore profiles of writers or freelancers on our platform or other platforms that have proven quality writers
+o	Select: Choose a qualified expert based on their expertise, reviews, and rates.
+3.	Confirm Your Task
+o	Order Details: We will provide detailed instructions and any supporting materials for the task.
+o	Communication: Stay in touch with the freelancer for updates and clarifications.
+4.	Review Progress
+o	Updates: Check the progress of your task through your dashboard for it to be withn the dute time or date.
+o	Feedback: Offer feedback or ask for additional instructions if necessary.
+5.	Send the Draft (when asked)
+o	Send: send to us the draft via emil or upload it to your account.
+o	Review: we will ask the client to check if it meets your expectations and requirements.
+6.	Requested Revisions
+o	Adjustments: If needed, when asked for revisions until the work meets our client’s standards.
+o	Approval: Approve the final version once satisfied.
+7.	Submit the Work
+o	Submission: Submit the completed work to your dashboard for us to send the client.
+
+8.	Receive your Payment
+o	Complete Transaction: We will confirm the payment for the completed task.
+o	Receipt: Obtain a receipt or confirmation of payment.
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Tips">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Bonus Tips for Earning and Managing Tasks</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+           
+How to Maximize Your Earnings:
+•	Get the Job: Find available tasks or projects on the platform.
+•	Hire Another Freelancer: If you don’t have the skills, hire another qualified freelancer to do the work.
+•	Submit Work: Oversee the freelancer’s work, make necessary adjustments, and submit the completed task through your dashboard.
+•	Earn Your Pay: You will receive your full payment upon successful delivery of the completed work.
+This way, both you and the freelancer can earn from the same task!
+________________________________________
+Subjects Available for Remote Academic Tasks
+Our platform supports a wide range of subjects for academic tasks:
+•	MBA: Business administration, management strategies.
+•	Marketing: Advertising, market research, digital marketing.
+•	Economics: Microeconomics, macroeconomics, economic theory.
+•	Social Sciences: Sociology, anthropology, political science.
+•	History: Historical events, historiography, period studies.
+•	Philosophy: Ethics, logic, philosophy of mind.
+•	Psychology: Behavioral studies, cognitive psychology.
+•	Journalism: News writing, media ethics, reporting.
+•	Nursing: Clinical skills, health care practices.
+•	Biology: Genetics, ecology, cellular biology.
+•	Computing: Programming, algorithms, software development.
+•	Technology: IT management, emerging technologies.
+•	Math: Algebra, calculus, statistics.
+•	Accounting: Financial statements, audits, tax preparation.
+•	Physics: Mechanics, quantum physics, thermodynamics.
+•	Engineering: Civil, mechanical, electrical engineering.
+________________________________________
+Cost Per Page and Cost Per Task
+Here’s a breakdown of costs:
+•	Cost Per Page
+o	Definition: This rate is based on the number of pages of the work provided.
+o	Pay: From $2 -$5 per page for an academic tasks.
+•	Cost Per Task
+o	Definition: This rate covers the entire project, from start to finish.
+o	High Pay: Upto to $50 for a complete tasks that require higher expertise and duration to complete.
+o	Low Pay: From $3 for a complete simple tasks that require no much experience and less time duration to complete.
+
+________________________________________
+Risks of Failing to Get Paid
+Be mindful of these risks to ensure you receive your payment:
+•	Incomplete Work: Ensure the task is fully completed according to the requirements.
+•	Lack of Communication: Maintain open communication with clients and freelancers.
+•	Dishonesty About Work: Be honest about the time and effort involved.
+•	Plagiarized Work: Submit original work, avoiding any form of plagiarism.
+•	Shady Work: Deliver quality and reliable work, following all instructions.
+•	Ignoring Instructions: Follow the client's guidelines to avoid disputes.
+________________________________________
+Conclusion
+Earnkraft is your one-stop solution for a variety of academic tasks and remote job opportunities. With a broad range of services, you can get high-quality academic support or find flexible work opportunities that suit your skills and schedule. Follow the outlined steps to successfully manage tasks and maximize your earnings on our platform.
+For more details and to get started, visit our Order Now page or contact our Support Team for any inquiries.
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Physical">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Local or Physical Job Opportunities on Earnkraft</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            Welcome to Earnkraft's Local or Physical Job Opportunities section! Here, we provide you with detailed information about job openings in your area that require specific qualifications and skills. Whether you’re looking for a new role or seeking to advance your career, we’ve got you covered. Here’s everything you need to know to navigate these opportunities effectively.
+________________________________________
+What You’ll Find Here
+In this section, we list local or physical job opportunities, including:
+•	Type of Work Currently Hiring
+•	Roles or Positions Open
+•	Requirements for Applicants
+•	Responsibilities of the Job
+•	Pay Structure
+•	Work Location
+•	Application Details
+________________________________________
+1. Type of Work Currently Hiring
+We showcase a variety of job types, ranging from entry-level positions to senior roles across different industries. Each job listing will detail the specific nature of the work, whether it’s in administration, sales, technical support, or other fields. You can find opportunities such as:
+•	Customer Service Representatives
+•	Administrative Assistants
+•	Sales Executives
+•	Field Technicians
+•	Project Managers
+•	Accountants
+By focusing on these roles, we help you identify the type of work that matches your skills and career goals.
+________________________________________
+2. Roles or Positions Open
+For each job listing, we provide clear details on the available roles or positions. This includes:
+•	Job Title: The name of the position you’re applying for.
+•	Job Description: A brief overview of the job responsibilities and what the employer expects from you.
+For example:
+•	Position: Sales Executive
+•	Description: Responsible for generating new business, meeting sales targets, and maintaining client relationships.
+________________________________________
+3. Requirements for Applicants
+To be considered for a job, you must meet certain requirements. Each listing includes:
+•	Academic Qualifications: The minimum educational level required, such as a high school certificate, Diploma Certificate, Bachelor’s degree, or higher.
+•	Work Experience: The amount of prior experience needed, if any.
+•	Skills: Specific skills relevant to the role, such as proficiency in certain software, communication abilities, or technical skills.
+Example:
+•	Qualifications: Bachelor’s Degree in Business Administration
+•	Experience: 2+ years of sales experience
+•	Skills: Excellent communication and negotiation skills
+________________________________________
+4. Responsibilities of the Job
+We outline the key responsibilities associated with the job to help you understand what will be expected of you. Responsibilities include:
+•	Daily Tasks: What you will do on a day-to-day basis.
+•	Goals: Objectives you need to achieve.
+•	Reporting: Who you will report to and how you will communicate your progress.
+Example:
+•	Daily Tasks: Conduct sales meetings, prepare sales reports, and follow up on leads.
+•	Goals: Meet or exceed monthly sales targets.
+•	Reporting: Report to the Sales Manager.
+________________________________________
+5. Pay Structure
+Each job listing provides details about the pay structure. This includes:
+•	Salary Information: Whether you’ll be paid monthly, weekly, or daily.
+•	Pay Range: The salary or wage offered for each position will vary.
+Example:
+•	Salary: KES 29,000 per month
+•	Pay Schedule: Monthly payments
+Some jobs may also offer additional benefits such as bonuses, health insurance, or transportation allowances.
+________________________________________
+6. Work Location
+We provide the location of the job to help you determine if it’s feasible for you to commute. This includes:
+•	Address: The physical address of the company or work site.
+•	Commuting Details: Information on how to get to the location, including public transportation options if available.
+Example:
+•	Location: Job Towers along Mtaani Street, Nairobi, Kenya
+•	Commuting: Accessible by bus routes 10 and 15; parking available on-site.
+________________________________________
+7. Application Details
+To apply for a job, you will have the follwoing:
+•	Submission: Send your CV, recommendation letters, academic certificates, and relevant documents to the specified email address.
+•	Contact Information: Details of the company’s HR or hiring manager to whom you should send your application.
+Example:
+•	Apply To: hr@company.com
+•	Contact Person: Jane Doe, HR Manager
+If you need help with your application or prefer that we contact the employer on your behalf, you can reach out to us at Earnkraft for assistance.
+________________________________________
+8. Assistance from Earnkraft
+At Earnkraft, we offer additional support for job seekers. If you have submitted your application documents but need further assistance, we can:
+•	Contact the Employer: Reach out to the employer on your behalf to follow up on your application.
+•	Provide Guidance: Offer advice on improving your CV or recommendation letters.
+Simply contact us after you’ve submitted your documents, and we will help you with the next steps.
+________________________________________
+Get Started Today!
+Explore the job opportunities available in your area, meet the qualifications, and apply for roles that interest you. If you need any help during the process, don’t hesitate to reach out to us. We’re here to support you in finding your next career opportunity.
+Good luck!
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Global">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Explore Global Career Opportunities with Earnkraft: Your Gateway to International Jobs</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="modalLarge">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Referral Bonuses for Ghana 🇬🇭 💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            Are you looking to advance your career or start a new professional chapter in another country? Earnkraft is here to connect you with exciting job opportunities abroad. Whether you’re interested in manual jobs, career-level positions, or specialized roles, we offer a range of services to help you find and secure a job that matches your skills and aspirations. Here’s a detailed guide on how we can assist you in finding a job abroad and what to expect during the process.
+________________________________________
+Categories of Jobs and Required Skills
+We offer a variety of job opportunities in different countries around the world. Here’s an overview of the job categories and the skills or qualifications required for each:
+1. Manual Jobs
+•	Examples: Nanny, Caregiver, Driver, House Help, Waiter/Waitress
+•	Skills Required: Basic communication skills, relevant certifications (e.g., driving license for drivers), experience in similar roles, ability to follow instructions.
+2. Healthcare and Service Roles
+•	Examples: Nurse, Chef, Service Provider
+•	Skills Required: Relevant academic qualifications (e.g., nursing degree), professional certifications, hands-on experience in the field, good interpersonal skills.
+3. Professional and Career-Level Positions
+•	Examples: Barrister, Chef, HR Manager
+•	Skills Required: Advanced degrees, professional licenses (e.g., bar association membership for barristers), extensive work experience, strong resume and cover letter, excellent communication and leadership skills.
+4. Specialized Roles
+•	Examples: IT Specialist, Financial Analyst
+•	Skills Required: Specialized academic qualifications (e.g., IT certifications), professional experience, strong analytical and problem-solving skills, updated CV.
+________________________________________
+Location and Employer Information
+For each job opportunity, we provide detailed information about the location and the employer. This includes:
+1. Job Location
+•	Country: [List of countries, e.g., Italy, UK, Canada, Qatar]
+•	City/Town: Specific city or town where the job is located.
+•	Employer Location: Address of the company or organization offering the job.
+2. Employer Profile
+•	Company Overview: Background information about the employer, including company size, industry, and mission.
+•	Contact Information: Official email address for job applications, and any additional contact details.
+________________________________________
+Documents and Finances Required
+To apply for jobs abroad, you will need to prepare certain documents and manage some financial aspects. Here’s what you need to know:
+1. Required Documents
+•	Passport: Valid passport for international travel.
+•	Visa: Work visa for the specific country.
+•	Flight Tickets: Proof of flight arrangements.
+•	Academic Certificates: Relevant educational qualifications.
+•	CV/Resume: Up-to-date and well-crafted resume.
+•	Recommendation Letters: Professional references or recommendation letters.
+•	National ID: For identity verification purposes.
+2. Financial Considerations
+•	Visa Fees: Cost for obtaining the work visa.
+•	Flight Expenses: Travel costs to the job location.
+•	Accommodation: Initial accommodation costs (if not provided by the employer).
+•	Other Fees: Any additional expenses for document processing.
+________________________________________
+Guarantees and Risks
+Understanding the guarantees and risks involved in working abroad is crucial for a successful international career move. Here’s what you should know:
+1. Guarantees
+•	Legitimate Job Offers: We ensure that all job opportunities are genuine and provided by verified employers.
+•	Safe and Reliable Agencies: We connect you with reputable agencies for visa and job applications.
+•	Support Services: We offer support throughout the application process, from document preparation to job placement.
+2. Risks
+•	Cultural Differences: Adapting to a new culture and work environment can be challenging.
+•	Visa Issues: Potential delays or complications with visa approvals.
+•	Job Security: Understanding the terms of employment and ensuring that they meet your expectations.
+________________________________________
+Job Policies and Foreign Labor Laws
+To help you navigate the complexities of working in another country, we provide information on job policies and labor laws:
+1. Job Policies
+•	Employment Terms: Details on job contracts, working hours, and duties.
+•	Employment Rights: Information on your rights as an employee in the foreign country.
+2. Foreign Labor Laws
+•	Legal Protections: Overview of labor laws regarding wages, working conditions, and employee rights.
+•	Regulations: Compliance with local regulations and labor standards.
+________________________________________
+Our Services: From Start to Finish
+At Earnkraft, we offer comprehensive support to ensure your job application process is smooth and successful. Here’s how we assist you:
+1. Job Application
+•	Job Listings: We provide a list of available jobs with detailed descriptions.
+•	Application Guidance: Assistance with preparing and submitting your job application documents.
+2. Document Preparation
+•	Document Review: We help you review and organize your CV, recommendation letters, and other documents.
+•	Visa and Travel Arrangements: Guidance on obtaining visas, booking flights, and arranging accommodation.
+3. Connecting You to Agencies
+•	Agency Referral: We refer you to trusted agencies that handle visa applications and job placements.
+•	Follow-Up Support: We follow up with the agencies on your behalf to ensure your application progresses smoothly.
+________________________________________
+Job Opportunities in Various Countries
+We offer job opportunities in a wide range of countries. Here are some of the locations where you can find your next job:
+•	Italy: Diverse roles in hospitality, healthcare, and more.
+•	UK: Opportunities in various sectors including legal, healthcare, and service industries.
+•	Canada: Jobs in healthcare, education, and professional services.
+•	Qatar: Roles in hospitality, construction, and administration.
+•	Saudi Arabia: Opportunities in healthcare, education, and business.
+•	Oman: Positions in service industries, education, and more.
+•	Kuwait: Jobs in healthcare, teaching, and service roles.
+•	Europe: Various roles in Schengen countries, Poland, Bulgaria, Czech Republic, and others.
+Types of Manual Jobs Offered
+•	Nanny: Caring for children in private households.
+•	Caregiver: Providing support to elderly or disabled individuals.
+•	Driver: Transporting people or goods.
+•	House Help: Performing domestic chores and tasks.
+•	Service Providers: Offering various services including cleaning and maintenance.
+Types of Career-Level Jobs Offered
+•	Barrister: Legal representation and advice.
+•	Chef: Professional cooking and kitchen management.
+•	HR Manager: Human resources management and administration.
+________________________________________
+Ready to Take the Next Step?
+If you’re ready to explore job opportunities abroad, Earnkraft is here to help you every step of the way. Contact us today to get started on your international career journey!
+For more information, job listings, and to apply, visit our website or email us at [Your Contact Email Address]. Let’s work together to make your global career dreams a reality!
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Salaries">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Salaries and Pay for Jobs Abroad: What to Expect💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            When considering job opportunities abroad, understanding the salary range and additional benefits is crucial for making informed decisions. Here’s a detailed overview of the pay structure for different types of jobs and what you can expect in various countries.
+________________________________________
+Salary Ranges for Different Types of Jobs
+1. Manual Jobs
+For manual jobs abroad, you can expect the following salary ranges based on the role and location:
+•	Salary Range: $400 to $1,000 USD per month
+o	Entry-Level Manual Jobs: $400 to $600 USD
+o	Experienced Manual Jobs: $600 to $1,000 USD
+Examples of Manual Jobs and Their Pay:
+•	Nanny: $500 to $800 USD per month
+•	Caregiver: $600 to $900 USD per month
+•	Driver: $700 to $1,000 USD per month
+•	House Help: $400 to $700 USD per month
+•	Waiter/Waitress: $500 to $800 USD per month
+<p><p>2. Career-Level Jobs</p></p>
+For more advanced and professional positions, salaries are generally higher and vary based on the role and country:
+•	Salary Range: $1,000 to $4,000 USD per month
+o	Entry-Level Career Jobs: $1,000 to $1,500 USD
+o	Experienced Career Jobs: $1,500 to $4,000 USD
+<p><p>Examples of Career-Level Jobs and Their Pay:</p></p>
+•	Barrister: $2,000 to $4,000 USD per month
+•	Chef: $1,500 to $3,000 USD per month
+•	HR Manager: $2,000 to $4,000 USD per month
+•	Financial Analyst: $1,500 to $3,500 USD per month
+________________________________________
+Pay Structures and Additional Benefits by Region
+<p><p>1. UK, USA, and Europe</p></p>
+In the UK, USA, and many European countries, you can expect not only competitive salaries but also additional benefits and privileges:
+•	Higher Salaries: These regions generally offer higher salaries compared to other countries.
+o	Manual Jobs: $600 to $1,000 USD per month
+o	Career Jobs: $2,000 to $4,000 USD per month
+<p><p>•	Additional Benefits:</p></p>
+o	Weekly Bonuses: Some employers offer weekly performance bonuses.
+o	Health Insurance: Comprehensive health insurance plans.
+o	Paid Leave: Generous vacation days and paid sick leave.
+o	Retirement Plans: Employer-sponsored retirement savings plans.
+o	Professional Development: Opportunities for further education and training.
+2. Other Countries (Qatar, Saudi Arabia, Oman, Kuwait, etc.)
+In other countries, while salaries might be slightly lower, there are still various benefits and opportunities:
+<p><p>•	Salaries:</p></p>
+o	Manual Jobs: $400 to $800 USD per month
+o	Career Jobs: $1,200 to $3,000 USD per month
+<p><p>•	Additional Benefits:</p></p>
+o	Overtime Pay: Compensation for extra hours worked.
+o	Accommodation: Some employers provide free or subsidized housing.
+o	Transportation: Transportation allowances or company-provided transport.
+o	End-of-Service Benefits: One-time bonus or severance pay at the end of employment.
+
+________________________________________
+<p><p>Summary of What to Expect</p></p>
+Whether you are looking for a manual job or a career-level position, each country offers different salary ranges and benefits:
+•	Manual Jobs: Pay generally ranges from $400 to $1,000 USD per month, with higher salaries in the UK, USA, and Europe.
+•	Career Jobs: Salaries typically range from $1,000 to $4,000 USD per month, with higher earnings and more benefits in Western countries.
+•	Additional Benefits: Higher chances of receiving bonuses, health insurance, and paid leave in the UK, USA, and Europe.
+•	Other Countries: Expect overtime pay, accommodation benefits, and transportation allowances in countries like Qatar and Saudi Arabia.
+<p><p>Understanding these aspects will help you make an informed decision about where to pursue your job opportunities abroad.</p></p>
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Academic">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Earnkraft: Your Hub for Academic Writing Services and Tools</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p><p>At Earnkraft, we specialize in providing a wide range of academic writing services, tools, and accounts. Whether you are a student looking for essay writing help, a professional writer needing advanced tools, or someone interested in buying or selling academic writing accounts, Earnkraft is your one-stop solution. Our services are tailored to meet the diverse needs of our clients, ensuring high-quality, reliable, and affordable solutions.</p></p>
+<p><p>Academic Writing Accounts</p></p>
+<p><p>Buy and Sell Academic Writing Accounts</p></p>
+Earnkraft offers a marketplace for buying and selling academic writing accounts. These accounts can be invaluable for freelance writers, students, and professionals who need access to academic resources and tools. Here are some of the accounts we provide:
+1.	Edusson Technical Accounts
+o	Price: $200 to $2000 per account
+o	CPP (Cost Per Page): From $10
+2.	Chegg Accounts
+o	Price: from $5 per month
+o	Features: Access to textbook solutions and expert Q&A
+3.	Course Hero Accounts
+o	Price: from $3 per month
+o	Features: Over 50 unlocks per month
+4.	Scribd Accounts
+o	Price: from $3 per month
+o	Features: Access to a vast library of documents and books
+5.	Studypool Accounts
+o	Price:  from $99 to $500
+o	Features: Access to tutor questions and study resources
+Etc…….
+<p><p>Academic Writing Services</p></p>
+Earnkraft provides a variety of academic writing services to help students and professionals excel in their studies and careers. Our services include:
+Chegg Unlocks
+•	Price: from $0.3 per unlock
+•	Features: Access solutions and explanations for textbook problems
+Course Hero Unlocks
+•	Price: from $0.3 per unlock
+•	Features: Access study guides, class notes, and textbook solutions
+AI Removal Services
+•	Price: from $0.5 per page
+•	Features: Remove AI-generated content from your documents for originality
+Turnitin Slots
+•	Price: from $1 per slot
+•	Features: Check your documents for plagiarism and AI content
+Personal Turnitin Instructors
+•	Price: from $15 per month
+•	Features: Unlimited checks for both plagiarism and AI content
+Claude.ai Opus Pro Content Generator
+•	Price: from $10 per month
+•	Features: Generate high-quality content for essays and academic papers
+Grammarly Premium
+•	Price: from $8 per month
+•	Features: Advanced grammar and style checking, plagiarism detection
+Quillbot Premium
+•	Price: from $5 per month
+•	Features: Paraphrasing tool with multiple modes and integrations
+Etc…….
+
+<p><p>Academic and Online Writing Tools</p></p>
+Earnkraft provides access to a range of tools that can enhance your writing process and improve the quality of your work. These tools include:
+Hix.ai Bypassing Tool
+•	Price: $10 per month
+•	Features: Bypass AI detectors with unlimited word count
+Nord VPN, Express VPN, and Windscribe VPN
+•	Price: $4 - $12 per month
+•	Features: Secure your internet connection and access restricted content
+ChatGPT Premium
+•	Price: $8 per month
+•	Features: Access to GPT-4 and GPT-4.0 models for advanced writing assistance
+Turnitin Instructor Bots
+•	Price: $15 per month
+•	Features: Unlimited plagiarism and AI checks
+Stealthwriter AI Remover
+•	Price: $10 per month
+•	Features: Standard plan for removing AI-generated content
+Canva Pro Logins
+•	Price: $3 per month
+•	Features: Access premium design tools and templates
+Stable Proxies for All Countries
+•	Price: $8 per month
+•	Features: Access stable proxies to browse the internet securely
+Etc…….
+
+<p><p>Extra Services</p></p>
+PayPal Unblocking
+•	Price: $15 per service
+•	Features: Unblock restricted PayPal accounts
+Crypto Services
+•	Price: Varies
+•	Features: Secure and manage your cryptocurrency transactions
+KRA Services
+•	Price: $0.5 - $5 per service
+•	Features: Assistance with Kenya Revenue Authority (KRA) tasks
+Verification Documents
+•	Price: $10 - $50
+•	Features: Provide proof of address, bank statements, and other documents for account verification
+Utility Bills for Proof of Residence
+•	Price: $5 per document
+•	Features: Stamped and sealed legal affidavits
+Degree/Diploma Verification
+•	Price: from $10 per document
+•	Features: Official certificates for educational verification
+Etc…….
+<p><p>Additional Services on Earnkraft</p></p>
+1.	UPwork @ 8 USD 📚
+o	📝 Become a master in academic writing and earn $4 per page!
+2.	TopContent @ 12 USD ✍️
+o	📝 Share your expertise and earn 0.03 USD per word!
+3.	Survey Accounts @ 3 USD 📊
+o	📝 Voice your opinions and earn $0.5 - $2 per survey!
+4.	VPNs @ 3 USD 🔒
+5.	ChatGPT 4 & Writesonic 🔥
+6.	Turnitin AI & Copyleaks 🔥
+7.	BypassGPT 🔥
+8.	USA Banks & PayPal 🔥
+9.	Cracked GoLogin 🔥
+10.	TikTok and Instagram followers 🔥
+11.	Verified Payoneer & PayPal ✅
+AND SO MUCH MORE…………
+
+<p><p>How to Get Started</p></p>
+Getting started with Earnkraft is simple. Whether you need an account, a service, or a tool, our team is ready to assist you. Here’s how you can get started:
+1.	Contact Us: Reach out via call, DM, or email to discuss your needs.
+2.	Select Your Services: Choose from our wide range of accounts, services, and tools.
+3.	Make a Payment: Secure your services with our easy and secure payment methods.
+4.	Start Using: Once your order is confirmed, you can start using the services and tools immediately.
+<p><p>Contact Information</p></p>
+For more information or to place an order, you can contact us.
+Join Earnkraft today and take advantage of our comprehensive academic writing services, tools, and accounts to enhance your academic and professional journey.
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="Roles">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">VIP Roles on Earnkraft💸</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Earnkraft offers exclusive VIP roles that allow you to earn extra income by helping us grow our community. As a VIP, you can become a Team Leader, Agent, or Mentor. Each role comes with unique responsibilities and rewards, providing you with various opportunities to increase your earnings and make a significant impact on our platform.</p>
+<p>1. Team Leader</p>
+As a Team Leader, your primary responsibility is to manage and motivate your team to achieve their goals. You will ensure your team is actively recruiting new members and providing support when needed. Your role includes:
+•	Recruiting and onboarding new members.
+•	Leading weekly team meetings.
+•	Providing training and development for team members.
+•	Monitoring and reporting team performance.
+•	Creating and implementing recruitment strategies.
+•	Ensuring team members meet their targets.
+•	Managing team communication channels.
+•	Addressing and resolving any team issues.
+•	Encouraging and recognizing top referred performers.
+•	Coordinating with other Team Leaders and Mentors.
+<p>Benefits:</p>
+•	Weekly performance bonuses.
+•	Exclusive training sessions.
+•	Higher referral commission rates.
+•	Recognition and rewards for top-performing teams.
+•	Pay: $50
+
+<p>2. Agent</p>
+As an Agent, you are the frontline of Earnkraft’s recruitment efforts. Your job is to use creative strategies to attract new members to the platform, primarily through social media and other online channels. Your roles include:
+•	Creating engaging social media content to attract new users.
+•	Utilizing various online platforms for recruitment.
+•	Developing and executing recruitment campaigns.
+•	Tracking and analyzing recruitment metrics.
+•	Providing support and guidance to new recruits.
+•	Participating in training sessions and team meetings.
+•	Collaborating with Team Leaders and Mentors.
+•	Keeping up-to-date with the latest recruitment trends.
+•	Handling inquiries and feedback from potential recruits.
+•	Reporting on recruitment activities and outcomes.
+<p>Benefits:</p>
+•	Weekly bonuses based on performance.
+•	Access to exclusive marketing tools and resources.
+•	Higher commission rates for successful referrals.
+•	Opportunities for career advancement within Earnkraft.
+•	Pay: $50
+
+<p>3. Mentor</p>
+As a Mentor, you provide guidance and support to both Agents and Team Leaders. Your role is to share your expertise, help develop recruitment strategies, and ensure everyone is performing at their best. Your responsibilities include:
+•	Providing one-on-one coaching to Agents and Team Leaders.
+•	Developing training materials and programs.
+•	Monitoring the progress of mentees.
+•	Offering feedback and performance improvement suggestions.
+•	Leading workshops and training sessions.
+•	Assisting in the creation of recruitment strategies.
+•	Encouraging and motivating mentees.
+•	Identifying and addressing skill gaps.
+•	Supporting the overall recruitment efforts.
+•	Coordinating with Earnkraft’s management team.
+<p>Benefits:</p>
+•	Higher performance bonuses.
+•	Recognition as a key leader within the community.
+•	Opportunities to influence Earnkraft’s recruitment strategies.
+•	Access to exclusive events and networking opportunities.
+•	Pay: $50
+<p>How It Works</p>
+1.	Join a VIP Role: Apply to become a Team Leader, Agent, or Mentor on the Earnkraft platform.
+2.	Recruit and Refer: Use your role to recruit new users to Earnkraft. Utilize creative methods and leverage social media platforms to maximize your reach.
+3.	Earn Bonuses: Earn weekly bonuses based on your recruitment efforts and the performance of your recruits. The more users you bring in, the more you earn.
+4.	Support Your Team: As a Team Leader or Mentor, support and motivate your team to achieve their recruitment goals. Provide training, guidance, and encouragement to help them succeed.
+<p>Get Started</p>
+Submit your request to become a Mentor, Team Leader, or Agent and start earning extra income by helping us grow the Earnkraft community. Take advantage of this opportunity to develop your leadership skills, expand your network, and increase your earnings!
+Apply now and be part of Earnkraft's success story!
+
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="saveInvest">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Save and Invest with Earnkraft</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            <p>Save and Invest with Earnkraft</p>
+Earnkraft offers flexible and rewarding savings and investment opportunities that help you grow your money securely. Whether you choose to save or invest, you can expect significant returns over your chosen period.
+<p>Investment Plan</p>
+<p>How It Works:</p>
+1.	Choose Your Investment Amount: You can invest any amount from KES 0 to KES 10,000 or USD 0 to USD 100.
+2.	Daily Interest Rate: Earn an interest rate of 0.5% per day on your invested amount.
+3.	Investment Duration: Select your desired investment duration.
+4.	Compounded Interest: At the end of the investment period, receive your principal plus compounded interest.
+<p>Example:</p>
+•	Investment Amount: KES 10,000 or USD 10
+•	Duration: 5 days
+•	Daily Interest Rate: 0.5%
+
+Day 1: Principal = KES 10,000
+Interest for Day 1 = 0.5% of 10,000 = KES 50
+New Principal for Day 2 = KES 10,050
+
+Day 2: Principal = KES 10,050
+Interest for Day 2 = 0.5% of 10,050 = KES 50.25
+New Principal for Day 3 = KES 10,100.25
+
+Day 3: Principal = KES 10,100.25
+Interest for Day 3 = 0.5% of 10,100.25 = KES 50.50
+New Principal for Day 4 = KES 10,150.75
+
+Day 4: Principal = KES 10,150.75
+Interest for Day 4 = 0.5% of 10,150.75 = KES 50.75
+New Principal for Day 5 = KES 10,201.50
+
+Day 5: Principal = KES 10,201.50
+Interest for Day 5 = 0.5% of 10,201.50 = KES 51.01
+Final Amount = KES 10,252.51
+
+<p>Total Interest Earned in 5 days: KES 25.255</p>
+<p>Savings Plan</p>
+How It Works:
+1.	Choose Your Savings Amount: Save any amount from KES 100 to KES 10,000 or USD 1 to USD 100.
+2.	Fixed Bonus Returns: Earn a fixed bonus return of USD 1 to USD 3, or equivalent in KES, depending on the amount saved and the duration.
+3.	Saving Duration: You can save for up to 10 days.
+4.	Bonus Calculation: The longer you save, the bigger the bonus at the end of the saving period.
+<p>Example:</p>
+•	Savings Amount: KES 10,000 or USD 100
+•	Duration: 10 days
+•	Fixed Bonus: $3 - $5 or equivalent in KES
+<p>Calculation:</p>
+Initial Savings: KES 10,000
+Fixed Bonus for 10 days: KES 300 (approx.)
+
+Total Savings at End of Period: KES 10,300 – 10,500
+Total Bonus Earned: KES 300 - 500
+<p>Key Benefits</p>
+1.	Flexible Amounts: Choose any amount to save or invest according to your financial capability.
+2.	High Returns: Benefit from daily compounded interest on investments and fixed bonuses on savings.
+3.	Secure Growth: Your principal and returns are securely managed, ensuring peace of mind.
+<p>Get Started</p>
+Take advantage of Earnkraft’s savings and investment plans today and watch your money grow. Whether you prefer the steady growth of savings or the dynamic returns of investments, Earnkraft offers the right plan for you. Start saving or investing now and secure your financial future with us!
+Sign up now and begin your journey towards financial growth with Earnkraft!
+
+            
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+  <div class="modal fade" tabindex="-1" id="ChatGPT">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Earnkraft: Leveraging AI and ChatGPT for Content Creation and Monetization</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross">X</em>
+          </a>
+        </div>
+        <div class="modal-body">
+          <p>
+            
+            <p>At  Earnkraft, we harness the power of artificial intelligence and advanced language models to revolutionize content creation and monetization. Our platform offers a suite of AI-driven tools designed to help you create high-quality content, optimize it for search engines, and monetize your efforts through various ad networks, including Google AdSense. In this comprehensive guide, we'll explore the features and benefits of our AI platform and provide detailed insights into how you can maximize your earnings with AI-generated content.</p>
+<p>AI-Powered Content Creation with ChatGPT</p>
+At Earnkraft, we utilize the latest advancements in AI and GPT (Generative Pre-trained Transformer) technology to help you generate engaging and high-quality articles and blog posts. Our AI platform can:
+•	Generate Articles and Blogs: Use AI to create compelling content quickly and efficiently. Whether you need a 500-word blog post or a 2,000-word article, our AI can generate content tailored to your specific needs and topics.
+•	Content Personalization: Customize the tone, style, and format of your content to match your brand voice or audience preferences. This ensures that your content resonates with readers and drives engagement.
+<p>AI Content Detection and Optimization</p>
+In today's digital landscape, search engines like Google place a high value on original and high-quality content. To ensure your content meets these standards, our platform includes an AI content detector that:
+•	Detects AI-Generated Content: Our tool analyzes your content to determine the level of AI-generated text, helping you maintain a balance between human and AI contributions.
+•	Optimizes for SEO: Superior and clean content with low AI content is essential for high search engine rankings. Our detector ensures your content is optimized for SEO, helping your articles and blogs rank higher on search engines like Google.
+<p>AI Removal for High-Ranking Content</p>
+One of the key features of Earnkraft is our AI removal tool, which enhances the quality of your AI-generated content by:
+•	Removing AI Footprints: Our AI removal tool eliminates traces of AI-generated marks, making your content appear more authentic and human-like.
+•	Improving Content Quality: By refining AI-generated content, we ensure that your articles are highly remarkable, leading to better rankings, higher CPM (Cost Per Thousand Impressions), and increased ad revenue monetization.
+<p>Text-to-Speech and Video-to-Text Conversion</p>
+Earnkraft goes beyond traditional content creation by offering advanced tools for multimedia content:
+•	Text-to-Speech Generator: Convert your written content into high-quality audio podcasts. This feature allows you to reach a wider audience and repurpose your content for different platforms.
+•	Video-to-Text Generator: Transform video or podcast content into written articles or blogs. This tool enables you to leverage existing multimedia content and expand your reach by creating new written pieces.
+<p>Hosting and Monetizing Your Content</p>
+Our platform provides a robust infrastructure to host your blogs and articles, attracting more traffic and enabling you to monetize your content effectively. Here's how:
+•	Public Blog Platform: Earnkraft hosts all your blogs and articles, creating a centralized platform that generates views and attracts more traffic.
+•	Google AdSense Monetization: By integrating Google AdSense, we help you monetize your content based on traffic and ad impressions. Let's explore how this works:
+<p>Example:</p>
+o	Suppose you write 10 blog articles and channel traffic to your site.
+o	If one of your articles garners 100,000 views with a CPM of $0.5, you can earn $50 passively and consistently for that article every month.
+o	Optimizing your content for higher CPM through Google Ads and other ad networks can significantly boost your earnings.
+<p>The Importance of Google Ads and CPM</p>
+Google Ads plays a crucial role in content monetization. Understanding the factors that influence CPM can help you maximize your earnings:
+•	Content Length and Quality: Google prioritizes high-quality, well-researched content. Aim for articles that are informative and engaging, typically ranging from 1,000 to 2,000 words.
+•	Audience and Traffic: The more traffic your content generates, the higher your potential earnings. Focus on creating content that appeals to a broad audience while targeting specific niches for higher engagement.
+•	Ad Placement and Relevance: Strategically placing ads within your content can improve click-through rates and increase your earnings. Ensure that ads are relevant to your content to enhance user experience.
+<p>Google's Guidelines for Earning from Ads</p>
+To maximize your earnings from Google Ads, it's essential to adhere to Google's guidelines:
+•	Content Quality: Maintain high-quality, original content that provides value to readers.
+•	Ad Placement: Avoid placing too many ads on a single page, as this can negatively impact user experience.
+•	Mobile Optimization: Ensure your content is mobile-friendly, as a significant portion of web traffic comes from mobile devices.
+•	Audience Engagement: Create content that encourages user interaction and engagement, leading to higher traffic and better ad performance.
+By following these guidelines and leveraging Earnkraft's AI-powered tools, you can create high-quality content, optimize it for SEO, and monetize your efforts effectively.
+<p>Conclusion</p>
+Earnkraft is your go-to platform for leveraging AI and GPT technology to create, optimize, and monetize content. With our suite of AI tools, you can generate compelling articles and blogs, detect and improve AI content, convert text to speech, and transform video to text. By hosting your content on our platform and integrating Google AdSense, you can attract traffic, optimize for higher CPM, and maximize your earnings. Join Earnkraft today and unlock the full potential of AI-powered content creation and monetization.
+
+
+          </p>
+        </div>
+        <div class="modal-footer bg-light">
+          <span class="sub-text">Modal Footer Text</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- section content end -->
+  <!-- section content end -->
+   
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+  <!-- section content end -->
+
+
+
+
+
+<!-- section content end -->
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.22/dist/css/uikit.min.css" /> {% endcomment %}
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ <!-- UIkit JS -->
+  <!-- UIkit JS -->
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.22/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.22/dist/js/uikit-icons.min.js"></script> {% endcomment %}
+  <!-- Bootstrap JS -->
+  {% comment %} <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> {% endcomment %}
+{% endblock content %}

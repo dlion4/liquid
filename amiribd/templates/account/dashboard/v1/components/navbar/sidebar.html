@@ -261,7 +261,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nk-menu-item">
+                        {% comment %} <li class="nk-menu-item">
                             <a role="button" class="nk-menu-link">
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-repeat"></em>
@@ -275,11 +275,11 @@
 
                                 </span>
                             </a>
-                        </li>
+                        </li> {% endcomment %}
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest-order' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-chart-bar"></em></span>
-                                <span class="nk-menu-text">Investment Order
+                                <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
+                                <span class="nk-menu-text">Invest and Save
 
                                 </span>
                             </a>
@@ -322,7 +322,7 @@
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:comingsoon' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-clock"></em></span>
 
-                                <span class="nk-menu-text">comming Soon
+                                <span class="nk-menu-text">Comming Soon
                                 </span>
                             </a>
                         </li>
@@ -366,7 +366,7 @@
                                     <em class="icon ni ni-plus"></em>
                                 </div>
                                 <div class="wallet-text">
-                                    <h6 class="wallet-name" role="button">Add another plan</h6>
+                                    <h6 class="wallet-name" role="button">Upgrade Plan</h6>
                                     <!--
                                         data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal"
                                     -->
@@ -423,7 +423,7 @@
 
                     <ul class="nk-menu">
                         <li class="nk-menu-heading mb-3">
-                            <h6 class="overline-title">Premium Access</h6>
+                            <h6 class="overline-title">AI & Content Creation</h6>
                         </li>
 
                         <li class="nk-menu-item has-sub">
@@ -449,6 +449,24 @@
                                 <li class="nk-menu-item">
                                     <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
                                         <span class="nk-menu-text">AI Remover
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">Podcasts
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">Text To Video
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">Video To Text
                                         </span>
                                     </a>
                                 </li>
