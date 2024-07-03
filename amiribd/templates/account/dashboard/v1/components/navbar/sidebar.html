@@ -376,45 +376,8 @@
                     </ul>
                     {% endif %}
                 </div>
-                <hr />
-                <div class="nk-sidebar-menu ">
-
-                    <ul class="nk-menu">
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-chat-circle"></em>
-                                </span><span class="nk-menu-text">Chats</span>
-                            </a>
-                        </li>
-
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-user-c"></em>
-                                </span><span class="nk-menu-text">Account</span>
-                            </a>
-                        </li>
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'subscriptions:home' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-swap-alt"></em>
-                                </span><span class="nk-menu-text">Subscriptions</span>
-                            </a>
-                        </li>
-
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-headphone"></em>
-                                </span><span class="nk-menu-text">Assistant</span>
-                            </a>
-                        </li>
-
-                        
-
-                    </ul>
-                </div>
+               
+                
 
                 <!--  -->
                  <!-- TODO: set permission is_premium -->
@@ -484,6 +447,44 @@
 
                 </div>
                 <!--  -->
+                <div class="nk-sidebar-menu ">
+
+                    <ul class="nk-menu">
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-chat-circle"></em>
+                                </span><span class="nk-menu-text">Chats</span>
+                            </a>
+                        </li>
+
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-user-c"></em>
+                                </span><span class="nk-menu-text">Account</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'subscriptions:home' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-swap-alt"></em>
+                                </span><span class="nk-menu-text">Subscriptions</span>
+                            </a>
+                        </li>
+
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-headphone"></em>
+                                </span><span class="nk-menu-text">Assistant</span>
+                            </a>
+                        </li>
+
+                        
+
+                    </ul>
+                </div>
                 <hr />
                 <div class="nk-sidebar-footer">
                     <ul class="nk-menu nk-menu-footer d-flex flex-wrap mb-3">
