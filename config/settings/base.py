@@ -226,15 +226,12 @@ MIDDLEWARE = [
     # "django.middleware.cache.FetchFromCacheMiddleware",
     # to check authentication status
     "amiribd.users.middleware.AuthenticationStateCheckMiddleware",
-    # 
+    # custom load secret variables
+    'amiribd.tokens.middleware.load_secrets.LoadSecretsMiddleware',
     # account status middleware
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
     "silk.middleware.SilkyMiddleware",
-   
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
-
-    # middleware for silk
-    # "silk.middleware.SilkyMiddleware",
 ]
 
 # CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
@@ -297,6 +294,10 @@ TEMPLATES = [
                 "amiribd.invest.context_processors.withdrawal_form_action",
                 "amiribd.htmx.context_processors.display_add_plan_form",
                 "amiribd.payments.context_processors.payment_context_data",
+
+                # secret templat processor sfro the secrets
+                'amiribd.tokens.context_processors.load_secrets',
+                
             ],
         },
     },

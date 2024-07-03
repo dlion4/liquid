@@ -3,132 +3,140 @@
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>
-    {% block title %}
-    Earnkraft Dashboard
-    {% endblock title %}
-  </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="investment app" />
-  <meta name="author" content="kwasa" />
-  <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
-  {% compress css %}
-  <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite.css' %}?ver=3.2.3" />
-  <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3" />
-  <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}" />
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>
+      {% block title %}
+        Earnkraft Dashboard
+      {% endblock title %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="investment app"/>
+    <meta name="author" content="kwasa"/>
+    {% block meta %}
+      <!-- Inside your base template or specific view template -->
+      <meta name="csrf-token" content="{{ csrf_token }}">
+    {% endblock meta %}
+    <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}"/>
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite.css' %}?ver=3.2.3"/>
+    <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3"/>
+    <link rel="stylesheet" href="{% static 'v1/assets/css/fontawesome.css' %}"/>
+    <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}"/>
 
-  <style>
-    .errorlist {
-      color: red !important;
-    }
-  </style>
+    <style>
+      .errorlist {
+        color: red !important;
+      }
+    </style>
 
-  {% block css %}{% endblock css %}
-  {% endcompress css %}
+    {% block css %}{% endblock css %}
+    {% endcompress css %}
 
-  {% block editorcss %}{% endblock editorcss %}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% block editorcss %}{% endblock editorcss %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+  </head>
 
-</head>
+  <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
+    {% block body %}
 
-<body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
-  {% block body %}
+      <div class="nk-app-root">
+        <div class="nk-main">
+          {% block sidebar %}{% endblock sidebar %}
+          <div class="nk-wrap">
+            {% block content %}
 
-  <div class="nk-app-root">
-    <div class="nk-main">
-      {% block sidebar %}{% endblock sidebar %}
-      <div class="nk-wrap">
-        {% block content %}
+              {% block navbar %}{% endblock navbar %}
 
-        {% block navbar %}{% endblock navbar %}
+              {% block footer %}{% endblock footer %}
 
-        {% block footer %}{% endblock footer %}
-
-        {% endblock content %}
+            {% endblock content %}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  {% block modals %}{% endblock modals %}
-  {% endblock body %}
+      {% block modals %}{% endblock modals %}
+    {% endblock body %}
 
-  {% compress js %}
-  {% block javascript %}
+    {% compress js %}
+    {% block javascript %}
 
-  <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
-  <script src="{% static 'js/vendors/ext/htmx/ws.js' %}"></script>
-  <script src="{% static 'js/vendors/_hyperscript.min.js' %}"></script>
-  <script src="{% static 'js/vendors/axios.min.js' %}"></script>
-  <script src="{% static 'v1/assets/js/bundle.js' %}?ver=3.2.3"></script>
-  <script src="{% static 'v1/assets/js/scripts.js' %}?ver=3.2.3"></script>
-  <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
-  <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
-  <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
+      <script src="{% static 'js/vendors/ext/htmx/ws.js' %}"></script>
+      <script src="{% static 'js/vendors/_hyperscript.min.js' %}"></script>
+      <script src="{% static 'js/vendors/axios.min.js' %}"></script>
+      <script src="{% static 'v1/assets/js/bundle.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/libs/fontawesome/all.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/scripts.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
+      <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
 
-  {% endblock javascript %}
-  {% endcompress %}
+    {% endblock javascript %}
+    {% endcompress %}
 
-  <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script>
-  {% block js %}{% endblock js %}
+    <!-- <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script> -->
+    {% block js %}{% endblock js %}
 
-  <script defer="defer">
+    <script defer="defer">
+      // Example code to get the user's public IP address using an external API
 
+      async function fetchUserIpAddress(url) {
+        const response = await fetch(`${url}?format=json`)
+        const data = await response.json()
+        localStorage.setItem("ipAddressStorageKey", JSON.stringify(data.ip));
+        return data.ip;
+      }
 
-    // Example code to get the user's public IP address using an external API
+      async function fetchUserLocationByLocation(url, ipAddress, storageKey) {
+        const apiKey = "ec05d0535a1e4fc3a81309703896c8bf"
+        const responseCall = await fetch(`${url}?api_key=${apiKey}&ip_address=${ipAddress}`)
+        const data = await responseCall.json()
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        return data
+      }
 
-    async function fetchUserIpAddress(url) {
-      const response = await fetch(`${url}?format=json`)
-      const data = await response.json()
-      localStorage.setItem("ipAddressStorageKey", JSON.stringify(data.ip));
-      return data.ip;
-    }
-
-    async function fetchUserLocationByLocation(url, ipAddress, storageKey) {
-      const apiKey = "ec05d0535a1e4fc3a81309703896c8bf"
-      const responseCall = await fetch(`${url}?api_key=${apiKey}&ip_address=${ipAddress}`)
-      const data = await responseCall.json()
-      localStorage.setItem(storageKey, JSON.stringify(data));
-      return data
-    }
-
-    function updateLocationData(data) {
-      try {
-        document.getElementById("countryFlag").src = data.flag.png
-        document.getElementById("selectedCountryFlag").src = data.flag.png
-        if (document.querySelector(".country-currency")) {
-          document.querySelector(".country-currency").value = 'KES'
-          //document.querySelector(".country-currency").value = data.currency.currency_code
-        }
-      } catch (error) {
-        console.log(error)
-        if (document.querySelector(".country-currency")) {
-          document.querySelector(".country-currency").value = "KES"
-
+      function updateLocationData(data) {
+        try {
+          document
+            .getElementById("countryFlag")
+            .src = data
+            .flag
+            .png
+            document
+            .getElementById("selectedCountryFlag")
+            .src = data.flag.png
+          if (document.querySelector(".country-currency")) {
+            document
+              .querySelector(".country-currency")
+              .value = 'KES'
+            //document.querySelector(".country-currency").value = data.currency.currency_code
+          }
+        } catch (error) {
+          console.log(error)
+          if (document.querySelector(".country-currency")) {
+            document
+              .querySelector(".country-currency")
+              .value = "KES"
+          }
         }
       }
-    }
 
+      // const currencyConversionRate
 
-    // const currencyConversionRate
-
-    async function loadCurrencyConversionRate(storageKey) {
-      const url = "{% url 'apis:conversion' %}"
-      const response = await fetch(url)
-      const data = await response.json()
-      if (data.results) {
-        localStorage.setItem(storageKey, JSON.stringify(data.results));
+      async function loadCurrencyConversionRate(storageKey) {
+        const url = "{% url 'apis:conversion' %}"
+        const response = await fetch(url)
+        const data = await response.json()
+        if (data.results) {
+          localStorage.setItem(storageKey, JSON.stringify(data.results));
+        }
+        return data
       }
-      return data
-    }
 
-
-    document.addEventListener("DOMContentLoaded",
-
-      async function handleSiteCurrencyLocation() {
+      document.addEventListener("DOMContentLoaded", async function handleSiteCurrencyLocation() {
         const countryCurrencyCode = document.querySelectorAll(".currency")
         let currencyRate;
         let apiAddress;
@@ -144,16 +152,17 @@
         }
         console.log(navigator.onLine)
 
-
         let geoData = localStorage.getItem(storageKey);
-        let conversionRateData = localStorage.getItem(conversionStorageKey) ?? '1';
+        let conversionRateData = localStorage.getItem(conversionStorageKey)
+          ? null
+          : '1';
 
         // if (ipAddress && ipAddress === localIpAddress)
 
         /*
-          @ LocationPayload Dat
-          
-          */
+                                                  @ LocationPayload Dat
+
+                                                  */
         // call the endpoint to save the plan selected
 
         if (conversionRateData === '1') {
@@ -166,18 +175,12 @@
         console.log(conversionRateData)
 
         if (geoData === null) {
-          fetchUserLocationByLocation(
-            'https://ipgeolocation.abstractapi.com/v1',
-            JSON.parse(localIpAddress),
-            'geoData'
-          ).then(response => response.json().then(data => {
+          fetchUserLocationByLocation('https://ipgeolocation.abstractapi.com/v1', JSON.parse(localIpAddress), 'geoData').then(response => response.json().then(data => {
             updateLocationData(data)
           }));
         }
 
-
         console.log(JSON.parse(localIpAddress), apiAddress)
-
 
         geoData = JSON.parse(localStorage.getItem('geoData'));
 
@@ -223,20 +226,23 @@
           console.log(dataArray)
           // locate the value input
           const currencyCode = "KES"
-         // const currencyCode = location.currency.currency_code
+          // const currencyCode = location.currency.currency_code
 
           if (document.querySelector(".currency-code") && document.getElementById("client-country-name")) {
 
-            document.querySelector(".currency-code").value = currencyCode
+            document
+              .querySelector(".currency-code")
+              .value = currencyCode
 
-            document.getElementById("client-country-name").value = location.country
+            document
+              .getElementById("client-country-name")
+              .value = location.country
           }
 
           // update the currecny display on the screeen
           countryCurrencyCode.forEach(currency => {
             currency.innerHTML = currencyCode
           })
-
 
           if (dataArray === '1') {
             iterableConvRate = [1]; // Creates an array with a single element 1
@@ -256,8 +262,7 @@
             }
           }
 
-          let countryRate=1;
-
+          let countryRate = 1;
 
           for (const country of iterableConvRate) {
             if (country.currency_code === geoData.currency.currency_code) {
@@ -271,69 +276,65 @@
 
           countryCurrencyRate.value = countryRate;
 
-
-
-
           if (document.querySelectorAll('.amount')) {
-            document.querySelectorAll('.amount').forEach(amountElement => {
-              // get the inet text data of the prices
-              const amountElementContext = amountElement.childNodes[0].textContent.trim();
-              console.log(amountElementContext)
-              // create a span element to encapsulate this information
-              const amountSpanElement = document.createElement('span');
-              // asign a class name to this span element
-              amountSpanElement.className = 'amountvalue';
-              // inser the amount into the span element
-              amountSpanElement.textContent = amountElementContext;
-              // get the inner content of the amount wrapper
-              amountElementInnerHTML = amountElement.querySelector('span.currency');
+            document
+              .querySelectorAll('.amount')
+              .forEach(amountElement => {
+                // get the inet text data of the prices
+                const amountElementContext = amountElement
+                  .childNodes[0]
+                  .textContent
+                  .trim();
+                console.log(amountElementContext)
+                // create a span element to encapsulate this information
+                const amountSpanElement = document.createElement('span');
+                // asign a class name to this span element
+                amountSpanElement.className = 'amountvalue';
+                // inser the amount into the span element
+                amountSpanElement.textContent = amountElementContext;
+                // get the inner content of the amount wrapper
+                amountElementInnerHTML = amountElement.querySelector('span.currency');
 
-              amountElement.innerHTML = ''; //
+                amountElement.innerHTML = ''; //
 
+                amountSpanElement.textContent = formatNumberWithCommas(parseFloat(parseFloat(amountElementContext) * parseFloat(countryCurrencyRate.value)))
+                // parseFloat(document.querySelector(".currencyRate").value)).toFixed(2))
 
-              amountSpanElement.textContent = formatNumberWithCommas(parseFloat(
-                parseFloat(amountElementContext) *
-                parseFloat(countryCurrencyRate.value)
-                // parseFloat(document.querySelector(".currencyRate").value)
-              ).toFixed(2))
+                // console.log(spanElement)
 
-              // console.log(spanElement)
+                if (amountSpanElement && amountElementInnerHTML) {
+                  // append the span element to the amount wrapper
+                  amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
+                  // margin styling
 
-              if (amountSpanElement && amountElementInnerHTML) {
-                // append the span element to the amount wrapper
-                amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
-                // margin styling
+                  const spanHtml = document.createElement('span');
+                  spanHtml.style.margin = "0px 10px!important";
 
-                const spanHtml = document.createElement('span');
-                spanHtml.style.margin = "0px 10px!important";
-
-                amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
-                // styling the link
-                amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
-              }
-            })
+                  amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
+                  // styling the link
+                  amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
+                }
+              })
           };
 
           function formatNumberWithCommas(number) {
-            return new Intl.NumberFormat('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            }).format(number);
+            return new Intl
+              .NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })
+              .format(number);
           };
 
         }
-      }
+      })
+    </script>
+    <input type="hidden" name="currencyRate" class="currencyRate">
+    <input type="hidden" name="country" class="client-country-name" id="client-country-name"/>
+    <input type="hidden" name="currecny" class="currency-code" id="currency-code"/>
 
-    )
+    {% block morejs %}{% endblock morejs %}
 
-  </script>
-  <input type="hidden" name="currencyRate" class="currencyRate">
-  <input type="hidden" name="country" class="client-country-name" id="client-country-name" />
-  <input type="hidden" name="currecny" class="currency-code" id="currency-code" />
-
-  {% block morejs %}
-  {% endblock morejs %}
-
-</body>
+  </body>
 
 </html>

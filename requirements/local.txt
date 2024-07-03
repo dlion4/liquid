@@ -34,3 +34,4 @@ pytest-django  # https://github.com/pytest-dev/pytest-django
 django-debug-toolbar
 
 black
+langchain-cli

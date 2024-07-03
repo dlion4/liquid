@@ -1,4 +1,4 @@
-from .models import Article, Template, TemplateCategory
+from .models import Article, Template, TemplateCategory, YtSummarizer
 from rest_framework import serializers
 from amiribd.users.serializers import ProfileSerializer
 
@@ -32,6 +32,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     # SerializerMethodField for custom boolean fields
     popular = serializers.SerializerMethodField()
     trending = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -44,6 +45,16 @@ class ArticleSerializer(serializers.ModelSerializer):
     
     def get_trending(self, obj):
         return bool(obj.is_trending())
+    
+    def get_image_url(self, obj):
+        if obj.cover:
+            return obj.cover.url
+        return None
 
 
-        
+class YtSummarizerSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+    class Meta:
+        model = YtSummarizer
+        fields = "__all__"
+

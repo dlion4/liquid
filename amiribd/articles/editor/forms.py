@@ -29,6 +29,6 @@ class YoutubeSummarizerForm(forms.ModelForm):
             'video_url'
         ]
         widgets = {
-            "video_url": forms.URLInput(attrs={"class": "form-control", "placeholder": "https://www.youtube.com/embed/watch",})
+            "video_url": forms.URLInput(attrs={"class": "form-control", "placeholder": "https://www.youtube.com/embed/watch",'id':'video_url'})
         }
     

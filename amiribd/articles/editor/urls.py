@@ -25,6 +25,16 @@ urlpatterns = [
         views.YoutubeSummarizerView.as_view(),
         name="youtube-summarizer",
     ),
+    path(
+        "audio-transcription/",
+        views.AudioTranscriptionView.as_view(),
+        name="transcription",
+    ),
+    path(
+        "trancript-summarization/",
+        views.SummarizeTranscriptionView.as_view(),
+        name="summarize",
+    ),
     # articel minor edits
     path(
         "htmx/",

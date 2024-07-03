@@ -282,3 +282,10 @@ import re
 #         },
 #     },
 # }
+
+
+# DEEP GRAM SETTINGS 
+
+#---------------------------------------------------------------------------------------
+
+print(os.environ.get("DEEPGRAM_API_KEY"), "from the settings file")

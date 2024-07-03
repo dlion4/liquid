@@ -51,6 +51,7 @@ class TemplateCategory(models.Model):
         ("warning", "warning"),
         ("success", "success"),
     ), default="primary")
+    cover = models.FileField(upload_to="template/category", blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -111,6 +112,7 @@ class Article(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
     release_date = models.DateTimeField(default=timezone.now, help_text="Time for your post to be visible to audience.")
     views = models.IntegerField(default=0)
+    cover = models.FileField(upload_to="template/category", blank=True, null=True)
     archived = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
     reads = models.IntegerField(default=0)
@@ -158,14 +160,24 @@ class Article(models.Model):
                 "tm__day": self.created_at.day,
             },
         )
+    
+
+def youtube_audio_file_path(instance, filename):
+    return f"audio/{instance.profile.user.username}/yt/{filename}"
 
 class YtSummarizer(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True)
     video_url = models.URLField(max_length=255) # the online needed url
     timestamp = models.DateTimeField(auto_now_add=True)
     summary = models.TextField(blank=True)
-    audio_file = models.URLField(max_length=2000, blank=True, null=True)
+    transcript_file = models.URLField(blank=True)
+    audio_url = models.URLField(max_length=300, blank=True, null=True)
     is_processed = models.BooleanField(default=False)
+    duration = models.IntegerField(default=0, help_text="in seconds")
+    size = models.IntegerField(default=0, help_text="megabytes")
+    video_transcript = models.TextField(blank=True)
+    is_verified = models.BooleanField(default=True)
+
 
     class Meta:
         verbose_name = "YtSummarizer"

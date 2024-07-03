@@ -1,4 +1,5 @@
-from amiribd.articles.models import Article
+from amiribd.articles.editor.serializer import YtSummarizerSerializer
+from amiribd.articles.models import Article, YtSummarizer
 from amiribd.articles.views import ArticleMixinView
 from amiribd.articles.forms import ArticleForm
 from django.shortcuts import get_object_or_404, redirect, render
@@ -12,7 +13,7 @@ import google.generativeai as genai
 
 from .forms import AIArticleGenerationModelForm, YoutubeSummarizerForm
 
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -283,12 +284,114 @@ class ContentAiEditPostView(ArticleMixinView):
         context["histories"] = self.get_histories().order_by("-id")[:3]
         return context
     
+from .download import download_youtube_from_video_url
+from .transcribe import transcribe_audio
+from django.db import transaction
+from .summarize import TranscriptSummarizer, summarize_transcript
 
 class YoutubeSummarizerView(ArticleMixinView):
     template_name = 'account/dashboard/v1/articles/editor/summarizer.html'
     form_class = YoutubeSummarizerForm
 
+    @transaction.atomic
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
+    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class()
         return context
+    
+    def post(self, request, *args, **kwargs):
+        form  = self.form_class(data=json.loads(request.body))
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.profile = self.request.user.profile_user
+
+            video_url = form.cleaned_data.get("video_url", '')
+
+            time.sleep(1)
+
+            # audio_url, length = download_youtube_from_video_url(video_url)
+            audio_url = 'https://earnkraft.s3.eu-north-1.amazonaws.com/audio/youtube/Ko52pn1KXS0.mp3'
+            length=100
+            instance.duration = length
+            instance.audio_url = audio_url
+            instance.save()
+            form.save()
+
+            response = YtSummarizerSerializer(instance).data
+
+            if audio_url:
+                return JsonResponse({"success": True, 'data': audio_url, 'instance': response}, safe=False)
+        return JsonResponse({"success": False, 'data': json.dumps(form.errors)})
+
+
+class AudioTranscriptionView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        audio_link = data.get("audio_link")
+        audio_pk = data.get("audio_pk", '')
+
+        yt_summarizer = get_object_or_404(YtSummarizer, pk=audio_pk)
+        print("yt_summarizer: ", yt_summarizer)
+
+        time.sleep(3)
+
+        file_link, transcript = transcribe_audio(filename=audio_link)
+
+
+        yt_summarizer.video_transcript = transcript
+        yt_summarizer.transcript_file = file_link
+
+        yt_summarizer.save()
+
+        instance = YtSummarizerSerializer(yt_summarizer).data
+        
+        return JsonResponse({
+                "success": True, 
+                'data': instance, 
+                'response': transcript,
+            }, 
+            safe=False
+        )
+
+
+
+class SummarizeTranscriptionView(ArticleMixinView):
+    filename_url = "https://earnkraft.s3.eu-north-1.amazonaws.com/transcripts/files/transcript.pdf"  #TODO: REMOVE ONCE TEST DONE
+    template_name = 'account/dashboard/v1/articles/editor/summary.html' #TODO: REMOVE ONCE TEST DONE
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_object(self, pk):
+        return get_object_or_404(YtSummarizer, pk=pk)
+    
+    def post(self, request, *args, **kwargs):
+        # data = json.loads(request.body)
+        # print("data", data)
+
+        summarizer = summarize_transcript(self.filename_url)
+
+        # instance = self.get_object(pk=data["transcript_instance"]['id'])
+        # print("transcript", instance)
+        # transcript_text = instance.video_transcript
+        # # file = instance.transcript_file
+
+        # print("instance", instance, "transcript_text", transcript_text)
+        summary = summarizer
+        print("summary", summary)
+        data = {
+            "summary": summary,
+        }
+
+
+        return JsonResponse({"success": True, "response":data})
+
+        

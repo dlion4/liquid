@@ -46,6 +46,25 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                     },
                 ]
             },
+
+            {
+                "title": _("Secret Credentials"),
+                "separator":True,
+                "items": [
+                    {
+                        "title": _("Credentials"),
+                        "icon": "key",
+                        "link": reverse_lazy("admin:tokens_secretcredential_changelist"),
+                        "permission": "core.superuser_permissions_callback",
+                    },
+                    {
+                        "title": _("AuthToken"),
+                        "icon": "security",
+                        "link": reverse_lazy("admin:tokens_authtoken_changelist"),
+                        "permission": "core.superuser_permissions_callback",
+                    },
+                ]
+            },
             {
                 "title": _("Investment"),
                 "separator":True,

@@ -72,7 +72,7 @@ class YtSummarizerAdmin(ModelAdmin):
         'video_url',
         'timestamp',
         'summary',
-        'audio_file',
+        'audio_url',
         'is_processed'
     ]
     formfield_overrides = {
