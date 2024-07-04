@@ -167,6 +167,7 @@ def youtube_audio_file_path(instance, filename):
 
 class YtSummarizer(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
     video_url = models.URLField(max_length=255) # the online needed url
     timestamp = models.DateTimeField(auto_now_add=True)
     summary = models.TextField(blank=True)

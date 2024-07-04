@@ -81,6 +81,7 @@ class ProfileModel(BaseModel):
 class YtSummarizerModel(BaseModel):
     id:int
     profile:ProfileModel|None = None
+    title:str|None="This is un untitled podcast."
     video_url:str|None = None
     timestamp:datetime
     summary:str

@@ -285,7 +285,7 @@ class ContentAiEditPostView(ArticleMixinView):
         return context
     
 from .download import download_youtube_from_video_url
-from .transcribe import transcribe_audio
+from .transcribe import  DeepgramAudioTranscription
 from django.db import transaction
 from .summarize import TranscriptSummarizer, summarize_transcript
 
@@ -310,12 +310,7 @@ class YoutubeSummarizerView(ArticleMixinView):
             instance.profile = self.request.user.profile_user
 
             video_url = form.cleaned_data.get("video_url", '')
-
-            time.sleep(1)
-
-            # audio_url, length = download_youtube_from_video_url(video_url)
-            audio_url = 'https://earnkraft.s3.eu-north-1.amazonaws.com/audio/youtube/Ko52pn1KXS0.mp3'
-            length=100
+            audio_url, length = download_youtube_from_video_url(video_url)
             instance.duration = length
             instance.audio_url = audio_url
             instance.save()
@@ -329,6 +324,7 @@ class YoutubeSummarizerView(ArticleMixinView):
 
 
 class AudioTranscriptionView(View):
+    deepgram = DeepgramAudioTranscription()
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -341,13 +337,12 @@ class AudioTranscriptionView(View):
         yt_summarizer = get_object_or_404(YtSummarizer, pk=audio_pk)
         print("yt_summarizer: ", yt_summarizer)
 
-        time.sleep(3)
-
-        file_link, transcript = transcribe_audio(filename=audio_link)
+        file_link, transcript, title_theme = self.deepgram.transcribe_audio(filename=audio_link)
 
 
         yt_summarizer.video_transcript = transcript
         yt_summarizer.transcript_file = file_link
+        yt_summarizer.title = title_theme
 
         yt_summarizer.save()
 
