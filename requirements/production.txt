@@ -61,3 +61,7 @@ unstructured
 pdfminer
 pdfminer.six
 pymupdf
+django-ninja
+pyjwt
+pydantic-settings
+aioredis

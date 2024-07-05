@@ -1,16 +1,22 @@
-# import sys
-# import os
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-# from datetime import datetime
-# import django
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import django
 
-# django.setup()
+django.setup()
+
+from amiribd.articles.models import Article, TemplateCategory, Template, YtSummarizer
+from amiribd.articles.serializers import ArticleSerializer, TemplateCategorySerializer
+from amiribd.users.models import User, Profile
+from amiribd.users.serializers import ProfileSerializer
+from .config import config
 import uvicorn
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from src.posts.views import router as posts_router
+from src.authentication import router as auth_router
 
 load_dotenv(dotenv_path="./.env")
 version=os.environ.get('API_VERSION', "1.0")
@@ -26,6 +32,7 @@ app = FastAPI(
 
 
 app.include_router(posts_router, prefix="/api/{version}")
+app.include_router(auth_router, prefix="/api/{version}", tags=['Authentication Endpoints'])
 
 app.add_middleware(
     CORSMiddleware,

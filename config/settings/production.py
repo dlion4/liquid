@@ -146,7 +146,7 @@ INSTALLED_APPS += ["anymail"]
 # else:
 #     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 ANYMAIL = {}
 
@@ -287,5 +287,3 @@ import re
 # DEEP GRAM SETTINGS 
 
 #---------------------------------------------------------------------------------------
-
-print(os.environ.get("DEEPGRAM_API_KEY"), "from the settings file")

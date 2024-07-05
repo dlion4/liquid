@@ -7,12 +7,15 @@ from .models import (
     TemplateModel,
     UserModel,
     ProfileModel,
+    
 )
-from .index import (
+
+from src import (
     # serializer
     ArticleSerializer, 
     TemplateCategorySerializer,
     # django model
     Article, 
-    TemplateCategory
+    TemplateCategory,
+    # User
 )
