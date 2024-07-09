@@ -1,10 +1,23 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
+from unfold import admin as unfold_admin
 
 # Register your models here.
-from .models import Inbox, Room, RoomMessage, Favorite, Message, Archive, AdminInbox
+from .models import (
+    Inbox, 
+    Room, 
+    RoomMessage, 
+    Favorite, 
+    Message, 
+    Archive, 
+    AdminInbox, 
+    Notification,
+    # this is for test and learning the redis realtime communitions and annonimous async message broadcasting
+    Post
+)
 
 
-class RoomMessageInline(admin.StackedInline):
+class RoomMessageInline(unfold_admin.StackedInline):
     model = RoomMessage
     extra = 0
 
@@ -21,36 +34,24 @@ class RoomAdmin(admin.ModelAdmin):
     inlines = [RoomMessageInline]
 
 
-# @admin.register(RoomMessage)
-# class RoomMessageAdmin(admin.ModelAdmin):
-#     list_display = (
-#         "room",
-#         "profile",
-#         "created_at",
-#         "updated_at",
-#     )
-#     search_fields = ("room",)
-#     list_filter = ("created_at", "updated_at")
-
-
 @admin.register(Favorite)
-class FavoriteAdmin(admin.ModelAdmin):
+class FavoriteAdmin(ModelAdmin):
     list_display = ("profile",)
     search_fields = ("profile", "rooms")
 
 
-class ArchiveInline(admin.StackedInline):
+class ArchiveInline(unfold_admin.StackedInline):
     model = Archive
     extra = 0
 
 
-class InboxMessageInline(admin.StackedInline):
+class InboxMessageInline(unfold_admin.StackedInline):
     model = Inbox
     extra = 0
 
 
 @admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
+class MessageAdmin(ModelAdmin):
     list_display = ("sender", "receiver", "created_at", "updated_at")
     search_fields = ("sender", "receiver")
     list_filter = ("created_at", "updated_at")
@@ -63,7 +64,16 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 @admin.register(AdminInbox)
-class AdminInboxAdmin(admin.ModelAdmin):
+class AdminInboxAdmin(ModelAdmin):
     list_display = [
         "message",
     ]
+
+@admin.register(Notification)
+class NotificationAdmin(ModelAdmin):
+    list_display = ['title']
+
+
+@admin.register(Post)
+class PostPlayAdmin(ModelAdmin):
+    list_display = ['title']

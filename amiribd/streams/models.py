@@ -1,9 +1,11 @@
+import json
 from django.db import models
+# from .serializers import PostSerializer
 from django.urls import reverse
 from django.utils.text import slugify
 from amiribd.users.models import Profile
-
-
+from amiribd import redis_client, notification_websocket_client
+from asgiref.sync import sync_to_async, async_to_sync
 # Create your models here.
 class Room(models.Model):
 
@@ -147,3 +149,67 @@ class Archive(models.Model):
 
     def __str__(self):
         return f"Archived Message Id {self.message.pk}"
+
+
+class Notification(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+
+        # # Push notification to the sender's WebSocket connection
+        # redis_client.publish(
+        #     self.sender.get_ws_sender_url,
+        #     {
+        #         "type": "notification",
+        #         "title": self.title,
+        #     },
+        # )
+        super(Notification, self).save(*args, **kwargs)
+        redis_client.upload_instance_to_redis(
+            instance_name="notification",
+            instance_id=self.pk,
+            instance_data={"title": self.title},
+            expiry=600  # 10 minutes
+        )
+
+        notification_websocket_client.send_notification(
+            notification_group="notifications_group", 
+            message='', 
+            redis_instance_id=self.pk,
+            redis_instance_name='notification'
+        )
+
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    is_active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # # Publish the post data to the Redis channel
+        # redis_client.upload_instance_to_redis(
+        #     instance_name="posts",
+        #     instance_id=self.pk,
+        #     instance_data=PostSerializer(instance=self).data,
+        #     expiry=600  # 10 minutes
+        # )
+
+        # notification_websocket_client.send_notification(
+        #     notification_group="posts_group", 
+        #     message='', 
+        #     redis_instance_id=self.pk,
+        #     redis_instance_name='posts'
+        # )
+    
+
+

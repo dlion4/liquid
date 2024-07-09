@@ -6,7 +6,7 @@ from .base import env
 
 # Debug mode on
 # ------------------------------------------------------------------------------
-DEBUG = True
+# DEBUG = True
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -273,12 +273,12 @@ import re
 #     "default": {
 #         "BACKEND": "channels_redis.core.RedisChannelLayer",
 #         "CONFIG": {
-#             # "hosts": [("0.0.0.0", 6379)],
-#             "channel_capacity": {
-#                 "http.request": 200,
-#                 "http.response!*": 10,
-#                 re.compile(r"^websocket.send\!.+"): 20,
-#             },
+#             "hosts": [("localhost", 6379)],
+#             # "channel_capacity": {
+#             #     "http.request": 200,
+#             #     "http.response!*": 10,
+#             #     # re.compile(r"^websocket.send\!.+"): 20,
+#             # },
 #         },
 #     },
 # }
@@ -287,3 +287,14 @@ import re
 # DEEP GRAM SETTINGS 
 
 #---------------------------------------------------------------------------------------
+
+#REDIS SETTINGS
+#---------------------------------------------------------------------------------------
+
+REDIS_HOST = env.str("DJANGO_REDIS_HOST", '')
+REDIS_PORT = env.str("DJANGO_REDIS_PORT", '')
+REDIS_DB=env.str("DJANGO_REDIS_DB", 0)
+REDIS_DECODE_RESPONSE=env.bool("DJANGO_REDIS_DECODE_RESPONSES", True)
+REDIS_SSL=env.bool("DJANGO_REDIS_SSL", False)
+REDIS_SSL_CERT_REQUIRED=env.get_value("DJANGO_REDIS_SSL_CERT", None)
+

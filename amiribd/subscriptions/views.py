@@ -36,7 +36,17 @@ class SubscriptionPlanView(InvestmentSetupView, SubscriptionViewMixin):
             profile=self._get_user().profile_user
         ).order_by("-id")
 
-    def get_object(self):
+    def get_object(self)->Plan:
+        """
+        This function is obverriden as it requires plan slug and id
+
+        In this case the user is authenticated so we dont need the slug
+        Cna use the user id
+        return self.request.user.profile_user | User
+        args:
+            # Plan(profile=self.request.user.profile_user)
+
+        """
         plan = get_object_or_404(
             self.plan,
             account__pool__profile=self._get_user().profile_user,
@@ -65,6 +75,7 @@ class SubscriptionPlanView(InvestmentSetupView, SubscriptionViewMixin):
                 ).order_by("-id")
             return render(request, self.htmx_template_name, context)
         return super().get(request, *args, **kwargs)
+
 
 
 class PlanPricingView(SubscriptionViewMixin):

@@ -9,11 +9,14 @@
 <div class="nk-content nk-content-fluid">
     <div class="container-xl wide-lg">
         <div class="nk-content-body">
-            {% block heading %}{% endblock heading %} {% block main %}{% endblock main %}
+            {% block heading %}{% endblock heading %}
+            
+            {% block main %}{% endblock main %}
         </div>
     </div>
 </div>
-{% include "account/dashboard/v1/components/footer.html" %} {% endblock content %} {% block modals %}
+{% include "account/dashboard/v1/components/footer.html" %}
+{% endblock content %} {% block modals %}
 <div aria-modal="true" class="modal fade" id="withdrawalPopupForm" role="dialog">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -739,13 +742,74 @@
 
 
 
+    // Simulating the percentage change value 
+    const percentageDisplayBoxs = document.querySelectorAll(".percentageDisplay")
+    const percentageValues = document.querySelectorAll('.percentageValue');
+
+
+    // start looping the percentage display boxes
+
+    percentageDisplayBoxs.forEach((percentageBox)=>{
+
+        percentageValues.forEach((percentageValue)=>{
+            // Set the absolute value
+    
+            if (parseFloat(percentageValue.textContent) < 0) {
+                
+                percentageValue.textContent = Math.abs(parseFloat(percentageValue.textContent));
+                //
+                percentageBox.innerHTML = `
+                <span class="change down text-danger percentageChange">
+                    <em class="icon ni ni-arrow-long-down"></em>
+                    <span class="percentageValue">${parseFloat(percentageValue.textContent).toFixed(2)}</span>%
+                </span>
+                `;
+            }
+            else if (parseFloat(percentageValue.textContent) > 0){
+                percentageValue.textContent = Math.abs(parseFloat(percentageValue.textContent));
+                percentageBox.innerHTML = `
+                <span class="change down text-sucess percentageChange">
+                    <em class="icon ni ni-arrow-long-up"></em>
+                    <span class="percentageValue">${parseFloat(percentageValue.textContent).toFixed(2)}</span>%
+                </span>
+                `;
+            }
+        })
+
+    })
 
 
 
+    // const ws = new WebSocket("ws://" + window.location.host + '/ws/streams/news/notification')
+
+    class WebSocketNotification{
+        constructor(){
+            this.base_url = `ws://${window.location.host}/ws/streams`
+        };
+
+        initiateConnection = async (endpoint) =>{
+            const ws = new WebSocket(`${this.base_url}/${endpoint}`);
+
+            ws.onmessage = async (event) =>{
+                const data = JSON.parse(JSON.parse(event.data).message);
+                this.stream(data)
+                return data
+            }
+        }
+
+        stream(data){
+            console.log(data)
+        }
+
+        init = async ()=>{
+            await this.initiateConnection('news/notifications')
+        };
+    }
 
 
+    const connection = new WebSocketNotification();
 
-
+    connection.init()
 
 </script>
 {% endblock morejs %}

@@ -6,6 +6,9 @@ from django.template.loader import render_to_string
 from channels.db import database_sync_to_async
 from amiribd.streams.models import Message
 from amiribd.streams.serializers import InboxSerializer, MessageSerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class StreamRoomConsumer(AsyncWebsocketConsumer):
@@ -122,3 +125,4 @@ class AsyncStreamSupportConsumer(AsyncWebsocketConsumer):
         }
 
         await self.send(text_data=json.dumps({"message": response}))
+

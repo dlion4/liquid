@@ -126,6 +126,7 @@ class Profile(models.Model):
         return f"{self.user.username}"
 
     def generate_initials(self) -> str | None:
+        """Use the full name that has been genrated to get the initial"""
         if self.full_name:
             names = self.full_name.split()
             initials = [name[0].upper() for name in names]
@@ -146,6 +147,7 @@ class Profile(models.Model):
         self.referral_code = generate_referral_code(self.pk)
         super(Profile, self).save(*args, **kwargs)
         self.initials = self.generate_initials()
+        super(Profile, self).save(*args, **kwargs)
 
     @property
     def profile_identity(self):

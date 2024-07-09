@@ -21,4 +21,14 @@ urlpatterns = [
         views.MessageInboxView.as_view(),
         name="message-detail",
     ),
+
+    # path("subscribe/<int:pk>/<receiver>", name="subscribe"),
+    # path("subscribe",views.subscribe, name="subscribe"),
+
+    # # to check the state of the subscription
+    # path('check-post-expiry/<int:post_id>/', views.check_post_expiry, name='check_post_expiry'),
+
+    # include other urls
+    # path('news/',include("amiribd.streams.news.")),
 ]
+

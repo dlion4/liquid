@@ -29,3 +29,4 @@ django-celery-beat
 django-silk
 google-generativeai
 markdown
+channels-redis

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Message, Inbox
+from amiribd.streams.models import Message, Inbox, Post
 from amiribd.users.serializers import ProfileSerializer
 
 
@@ -21,4 +21,9 @@ class InboxSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Inbox
+        fields = "__all__"
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
         fields = "__all__"

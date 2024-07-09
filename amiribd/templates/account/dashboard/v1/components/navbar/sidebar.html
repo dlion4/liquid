@@ -1,4 +1,4 @@
-{% load static %} {% load usergroups %}
+{% load static humanize %} {% load usergroups %}
 
 <div class="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
     <div class="nk-sidebar-element nk-sidebar-head">
@@ -20,12 +20,12 @@
                     <div class="user-account-info between-center">
                         <div class="user-account-main">
                             <h6 class="overline-title-alt">Available Balance</h6>
-                            <div class="amount user-balance">{{available_amount}}
+                            <div class="amount user-balance">{{available_amount|floatformat:2|intcomma}}
                                 <span class="currency currency-btc">
                                     KES
                                 </span>
                             </div>
-                            <div class="amount user-balance-alt">{{locked_amount}}
+                            <div class="amount user-balance-alt">{{locked_amount|floatformat:2|intcomma}}
                                 <span class="currency currency-btc">KES</span>
                             </div>
                         </div>
