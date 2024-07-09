@@ -185,6 +185,7 @@ class Notification(models.Model):
 
 
 class Post(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True, related_name="profile_update")
     title = models.CharField(max_length=100)
     content = models.TextField()
     is_active = models.BooleanField(default=True)

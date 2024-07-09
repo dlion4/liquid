@@ -792,17 +792,38 @@
 
             ws.onmessage = async (event) =>{
                 const data = JSON.parse(JSON.parse(event.data).message);
-                this.stream(data)
+                this.stream(this.updateRecentUpdate,data)
                 return data
             }
         }
 
-        stream(data){
-            console.log(data)
+        stream(func, data){
+            console.log(data);
+            if(typeof func === 'function'){
+                func(data);
+            }
         }
 
         init = async ()=>{
             await this.initiateConnection('news/notifications')
+        };
+
+        updateRecentUpdate = async (data, target)=>{
+
+            const holders = document.querySelectorAll(".home-recent-activities");
+            const element = document.createElement("li");
+
+            element.classList.add(...['nk-activity-item']);
+            element.innerHTML = `
+                <div class="nk-activity-media user-avatar bg-pink">${data.profile.initials}</div>
+                <div cla<div class="nk-activity-data">
+                    <div class="label">${data.title}</div>
+                    <span class="time">2 hours ago</span>
+                </div>
+            `;
+            holders.forEach(holder=>{
+                holder.prepend(element)
+            })
         };
     }
 

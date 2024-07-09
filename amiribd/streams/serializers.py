@@ -24,6 +24,7 @@ class InboxSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class PostSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
     class Meta:
         model = Post
         fields = "__all__"
