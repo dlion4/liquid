@@ -187,7 +187,7 @@ class DashboardViewMixin(TemplateView):
         # return Plan.objects.filter(
         #     account__pool__profile=self.__get_user().profile_user,
         # ).all()
-        return self.__get_user().profile_user.plans.all()
+        return self.__get_user().profile_user.plans.filter(is_paid=True)
 
     def _get_profile_active_plans(self, **kwargs):
         return self.get_profile_plans().filter(status="RUNNING")

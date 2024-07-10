@@ -241,12 +241,14 @@
                                 <span class="nk-menu-text">Whatsapp</span>
                             </a>
                         </li>
+                          {% if plans %}
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:jobs:jobs' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
                                 <span class="nk-menu-text">Jobs</span>
                             </a>
                         </li>
+                        {% endif %}
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:academic_writing_accounts' %}" class="nk-menu-link">
                                 <Span class="nk-menu-icon"><em class="icon ni ni-edit"></em></Span>
@@ -378,7 +380,7 @@
                  <!-- TODO: set permission is_premium -->
                 <hr />
                 <div class="nk-sidebar-menu">
-
+                    {% if plans %}
                     <ul class="nk-menu">
                         <li class="nk-menu-heading mb-3">
                             <h6 class="overline-title">AI & Content Creation</h6>
@@ -439,7 +441,7 @@
                             </ul>
                         </li>
                     </ul>
-
+                    {% endif %}
                 </div>
                 <!--  -->
                 <div class="nk-sidebar-menu ">
