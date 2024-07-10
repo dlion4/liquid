@@ -22,6 +22,16 @@ class JobApplicationInlineAdmin(unfold_admin.StackedInline):
         },
     }
 
+    @admin.action(description="Assign job to selected individual")
+    def assign_job(self, request, queryset):
+        # queryset.update(job=None)
+        # queryset.update(job=request.POST.get("job"))
+        for qs in queryset:
+            # app.job = request.POST.get("job")
+            # app.save()
+            # print(qs.)
+            print(request.POST)
+
 
 @admin.register(Job, site=earnkraft_site)
 class JobAdmin(ModelAdmin):

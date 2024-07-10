@@ -1,0 +1,23 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% block title %}
+  {{block.super}}
+  Job Applications
+{% endblock title %}
+
+{% load static humanize %}
+{% block heading %}
+  <div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between position-relative">
+      <div class="nk-block-head-content">
+        <h3 class="nk-block-title page-title">Applications</h3>
+      </div>
+      {% include 'account/dashboard/v1/investment/jobs/components/actions.html' %}
+    </div>
+  </div>
+{% endblock heading %}
+{% block main %}
+  <div class="nk-fmg-quick-list nk-block">
+    {% include 'account/dashboard/v1/investment/jobs/components/access.html' %}
+  </div>
+  <!-- <div class="nk-fmg-listing nk-block"> <div class="nk-block-head-xs"> <div class="nk-block-between g-2"> <div class="nk-block-head-content"> <h6 class="nk-block-title title">Biding Request</h6> </div> <div class="nk-block-head-content"> <a href="#" class="link link-primary toggle-opt active" data-target="recent-files"> <div class="inactive-text">Show</div> <div class="active-text">Hide</div> </a> </div> </div> </div> <div class="toggle-expand-content expanded" data-content="recent-files"> <div class="nk-files nk-files-view-group"> <div class="nk-files-head"> <div class="nk-file-item"> <div class="nk-file-info"> <div class="dropdown"> <div class="tb-head dropdown-toggle dropdown-indicator-caret" data-bs-toggle="dropdown">Request State</div> <div class="dropdown-menu"> <ul class="link-list-opt no-bdr"> <li> <a class="active" href="#"> <span>Accepted Requests</span></a> </li> <li> <a href="#"> <span>Rejected Requests</span></a> </li> <li> <a href="#"> <span>Pending Requests</span></a> </li> </ul> </div> </div> </div> <div class="nk-file-actions"> <div class="dropdown"> <a href="" class="dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"> <em class="icon ni ni-more-h"></em> </a> <div class="dropdown-menu dropdown-menu-end"> <ul class="link-list-opt no-bdr"> <li> <a href="#file-share" data-bs-toggle="modal"> <em class="icon ni ni-share"></em> <span>Share</span></a> </li> <li> <a href="#file-copy" data-bs-toggle="modal"> <em class="icon ni ni-copy"></em> <span>Copy</span></a> </li> <li> <a href="#file-move" data-bs-toggle="modal"> <em class="icon ni ni-forward-arrow"></em> <span>Move</span></a> </li> <li> <a href="#" class="file-dl-toast"> <em class="icon ni ni-download"></em> <span>Download</span></a> </li> <li> <a href="#"> <em class="icon ni ni-trash"></em> <span>Delete</span></a> </li> </ul> </div> </div> </div> </div> </div> <div class="nk-files-group"> <h6 class="title">Folder</h6> {% include 'account/dashboard/v1/investment/jobs/components/folders.html' %} </div> <div class="nk-files-group"> <h6 class="title">Files</h6> {% include 'account/dashboard/v1/investment/jobs/components/files.html' %} </div> </div> </div> </div> -->
+{% endblock main %}

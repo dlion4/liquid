@@ -1,6 +1,7 @@
 {% extends 'account/dashboard/v1/layout.html' %}
-{% block title %} Earnkraft Dashboard {{profile.user.email.username}}
-<!---->{% endblock title %} {% load static humanize %} {% block sidebar %}
+{% block title %} {{block.super}} {{profile.user.username}}{% endblock title %} 
+
+{% load static humanize %} {% block sidebar %}
 <!---->{% include "account/dashboard/v1/components/navbar/sidebar.html" %}
 <!---->{% endblock sidebar %}
 <!---->{% block content %}

@@ -32,9 +32,22 @@ class DashboardViewMixin(TemplateView):
         return self.request.user
 
     def get_profile(self):
+        """
+        Retrieves the user's profile.
+        Returns:
+        Profile: The user's profile.
+        """
         return self.__get_user().profile_user
 
     def get_total_whatsapp_earnings(self):
+        """
+        Calculates the total earnings from WhatsApp views and prices.
+
+        Parameters:
+        self (DashboardViewMixin): The instance of the class.
+        Returns:
+        Decimal: The total earnings from WhatsApp views and prices. If no earnings are found, returns 0.00.
+        """
         earnings = (
             WhatsAppEarningScheme.objects.prefetch_related("profile")
             .filter(profile=self.get_profile(), approved=True)
