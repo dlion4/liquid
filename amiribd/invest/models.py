@@ -205,6 +205,17 @@ class PlanType(models.Model):
         max_length=500,
         default="Unlimited access with priority support, 99.95% uptime, powerfull features and more...",
     )
+    theme = models.CharField(max_length=100, default="orange",choices=(
+        ("primary", "primary"),
+        ("secondary", "secondary"),
+        ("danger", "danger"),
+        ("info", "info"),
+        ("success", "success"),
+        ("orange", "orange"),
+        ("teal", "teal"),
+        ("pink", "pink"),
+        ("azure", "azure"),
+    ))
 
     def __str__(self):
         return f"{self.type}"

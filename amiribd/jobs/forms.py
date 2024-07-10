@@ -18,27 +18,29 @@ class AddJobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = "__all__"
-        widgets = {
-            "title": UnfoldAdminTextInputWidget(),
-            "location": UnfoldAdminTextInputWidget(),
-            'location_type':UnfoldAdminSelectWidget(choices=LocationTypeChoice.choices),
-            "description": UnfoldAdminTextInputWidget(),
-            "content":WysiwygWidget(),
-            "salary_offer":UnfoldAdminDecimalFieldWidget(),
-            "level":UnfoldAdminSelectWidget(choices=JobLevel.choices),
-            "is_active":UnfoldBooleanSwitchWidget()
-        }
+        # widgets = {
+        #     "title": UnfoldAdminTextInputWidget(),
+        #     "location": UnfoldAdminTextInputWidget(),
+        #     'location_type':UnfoldAdminSelectWidget(choices=LocationTypeChoice.choices),
+        #     "description": UnfoldAdminTextInputWidget(),
+        #     "content":WysiwygWidget(),
+        #     "salary_offer":UnfoldAdminDecimalFieldWidget(),
+        #     "level":UnfoldAdminSelectWidget(choices=JobLevel.choices),
+        #     "is_active":UnfoldBooleanSwitchWidget()
+        # }
 
 
 
 class JobApplicationForm(forms.ModelForm):
     motivational_letter = forms.CharField(required=False, widget=forms.Textarea(attrs={"class": "form-control form-control-lg no-resize", "rows":2}))
+    bidding_offer = forms.CharField(required=False, widget=forms.Textarea(attrs={"class": "form-control form-control-lg no-resize", "rows":2}))
     resume = forms.FileField(required=False, widget=forms.FileInput(attrs={"class": "form-control form-control-lg"}))
     class Meta:
         model = JobApplication
         fields = [
             "email_or_phone",
             "motivational_letter",
+            "bidding_offer",
             "resume",
         ]
 
@@ -49,12 +51,14 @@ class JobApplicationForm(forms.ModelForm):
         labels = {
             "email_or_phone": "Preffered Contact Channel",
             "motivational_letter": "Motivational Letter",
+            "bidding_offer": "Bidding Offer",
             "resume": "Resume",
         }
 
         help_text = {
             "email_or_phone": "Enter your email or phone number",
             "motivational_letter": "Write a letter of motivation to the employer",
+            "bidding_offer": "How much can you charge for this job and the duration for which it will be done",
             "resume": "Upload your resume",
         }
 

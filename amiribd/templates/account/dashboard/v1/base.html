@@ -1,6 +1,7 @@
 {% extends 'account/dashboard/v1/layout.html' %}
-{% block title %} Earnkraft Dashboard {{profile.user.email.username}}
-<!---->{% endblock title %} {% load static humanize %} {% block sidebar %}
+{% block title %} {{block.super}} {{profile.user.username}}{% endblock title %} 
+
+{% load static humanize %} {% block sidebar %}
 <!---->{% include "account/dashboard/v1/components/navbar/sidebar.html" %}
 <!---->{% endblock sidebar %}
 <!---->{% block content %}
@@ -9,11 +10,14 @@
 <div class="nk-content nk-content-fluid">
     <div class="container-xl wide-lg">
         <div class="nk-content-body">
-            {% block heading %}{% endblock heading %} {% block main %}{% endblock main %}
+            {% block heading %}{% endblock heading %}
+            
+            {% block main %}{% endblock main %}
         </div>
     </div>
 </div>
-{% include "account/dashboard/v1/components/footer.html" %} {% endblock content %} {% block modals %}
+{% include "account/dashboard/v1/components/footer.html" %}
+{% endblock content %} {% block modals %}
 <div aria-modal="true" class="modal fade" id="withdrawalPopupForm" role="dialog">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -739,13 +743,117 @@
 
 
 
+    // Simulating the percentage change value 
+    const percentageDisplayBoxs = document.querySelectorAll(".percentageDisplay")
+    const percentageValues = document.querySelectorAll('.percentageValue');
+
+
+    // start looping the percentage display boxes
+
+    percentageDisplayBoxs.forEach((percentageBox)=>{
+
+        percentageValues.forEach((percentageValue)=>{
+            // Set the absolute value
+    
+            if (parseFloat(percentageValue.textContent) < 0) {
+                
+                percentageValue.textContent = Math.abs(parseFloat(percentageValue.textContent));
+                //
+                percentageBox.innerHTML = `
+                <span class="change down text-danger percentageChange">
+                    <em class="icon ni ni-arrow-long-down"></em>
+                    <span class="percentageValue">${parseFloat(percentageValue.textContent).toFixed(2)}</span>%
+                </span>
+                `;
+            }
+            else if (parseFloat(percentageValue.textContent) > 0){
+                percentageValue.textContent = Math.abs(parseFloat(percentageValue.textContent));
+                percentageBox.innerHTML = `
+                <span class="change down text-sucess percentageChange">
+                    <em class="icon ni ni-arrow-long-up"></em>
+                    <span class="percentageValue">${parseFloat(percentageValue.textContent).toFixed(2)}</span>%
+                </span>
+                `;
+            }
+        })
+
+    })
 
 
 
+    // const ws = new WebSocket("ws://" + window.location.host + '/ws/streams/news/notification')
+
+    class Utility{
+        formatDate (date){
+            const now = new Date()
+            const secondsPast =  (now.getTime() - new Date(date).getTime()) / 1000;
+            if (secondsPast < 60){
+                return `${Math.floor(secondsPast)} seconds ago`;
+            }
+            else if (secondsPast < 3600){
+                return `${Math.floor(secondsPast / 60)} minutes ago`;
+            }
+            else if (secondsPast < 86400){
+                return `${Math.floor(secondsPast / 3600)} hours ago`;
+            }
+            else if (secondsPast < 2592000){
+                return `${Math.floor(secondsPast / 86400)} days ago`;
+            }
+            else{
+                return `${new Date(date).toLocaleDateString()}`;
+            }
+        }
+    }
+
+    class WebSocketNotification{
+        constructor(){
+            this.base_url = `ws://${window.location.host}/ws/streams`;
+            this.utility = new Utility();
+        };
+
+        initiateConnection = async (endpoint) =>{
+            const ws = new WebSocket(`${this.base_url}/${endpoint}`);
+
+            ws.onmessage = async (event) =>{
+                const data = JSON.parse(JSON.parse(event.data).message);
+                this.stream(this.updateRecentUpdate,data)
+                return data
+            }
+        }
+
+        stream(func, data){
+            console.log(data);
+            if(typeof func === 'function'){
+                func(data);
+            }
+        }
+
+        init = async ()=>{
+            await this.initiateConnection('news/notifications')
+        };
+
+        updateRecentUpdate = async (data, target)=>{
+            const holders = document.querySelectorAll(".home-recent-activities");
+            const element = document.createElement("li");
+
+            element.classList.add(...['nk-activity-item']);
+            element.innerHTML = `
+                <div class="nk-activity-media user-avatar bg-pink">${data.profile.initials}</div>
+                <div cla<div class="nk-activity-data">
+                    <div class="label">${data.title}</div>
+                    <span class="time">${this.utility.formatDate(data.timestamp)}</span>
+                </div>
+            `;
+            holders.forEach(holder=>{
+                holder.prepend(element)
+            })
+        };
+    }
 
 
+    const connection = new WebSocketNotification();
 
-
+    connection.init()
 
 </script>
 {% endblock morejs %}

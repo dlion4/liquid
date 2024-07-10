@@ -1,94 +1,60 @@
 
-from pydantic import BaseModel
-from datetime import datetime
+from pydantic import  Field, Secret
+from datetime import date
 from typing import Optional, List
-from fastapi import UploadFile
+from src.posts.schemas import (
+UserSchema,
+ProfileSchema,
+ArticleSchema,
+TemplateSchema,
+TemplateCategorySchema,
+YtSummarizerSchema,
+)
+from typing_extensions import Annotated
 
 
-class ArticleModel(BaseModel):
-    id:int
+
+class SecretEmail(Secret[str]):
+    def _display(self) -> str:
+        return "some*****@webestica.com"
+    
+class SecretPhoneNumber(Secret[str]):
+    def _display(self)->str:
+        return "(***) (****) (**) (***)"
+    
+SecretDate = Secret[date]
+
+class ArticleModel(ArticleSchema):
     profile:Optional['ProfileModel']=None
     template:Optional['TemplateModel']|None = None
-    title:str
-    slug: str 
-    summary:str=''
-    content:str=''
-    created_at:datetime 
-    updated_at:datetime 
-    release_date:datetime 
 
 
-    views:int
-    archived:bool
-    featured :bool
-    reads:int
-
-    image_url:str|None=None
-
-    popular:bool
-    trending:bool
-
-    editorsPick:bool
-    sponsored:bool
-    
-    recommeded:bool
-
-
-class TemplateCategoryModel(BaseModel):
-    id: int
-    title:str
-    description:str
-    timestamp: datetime
-    icon:str
+class TemplateCategoryModel(TemplateCategorySchema):
     posts:List[ArticleModel]=[]
-    color:str
 
 
-class TemplateModel(BaseModel):
-    id:int
+class TemplateModel(TemplateSchema):
     category: TemplateCategoryModel
     is_premium:bool
 
 
-class UserModel(BaseModel):
-    id:int
-    email: str
-    username: str
-    verified: bool
+class UserModel(UserSchema):
+    email:SecretEmail
+
+class ProfileModel(ProfileSchema):
+    user: UserModel
+    image_url:Annotated[str, Field(default_factory=str)]
+    phone_number: SecretPhoneNumber
+    date_of_birth: SecretDate
+    refered_by: Optional["ProfileModel"] = None
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        if not self.image_url and self.image:
+            self.image_url = self.image.url
+        self.refered_by = self
 
 
-class ProfileModel(BaseModel):
-    id: int
-    user:UserModel
-    first_name: str
-    last_name: str
-    image_url:Optional[str]=None
-    full_name:str
-    kyc_completed: bool
-    kyc_validated: bool
-    kyc_completed_at: datetime
-    is_address_set: bool
-    is_document_set: bool
-    phone_number: str
-    date_of_birth: datetime
-    initials: str
-    referral_code: str
-    referred_by: Optional[int] = None
-    name_initials: Optional[str] = 'ES'
-
-
-
-class YtSummarizerModel(BaseModel):
-    id:int
+class YtSummarizerModel(YtSummarizerSchema):
     profile:ProfileModel|None = None
-    title:str|None="This is un untitled podcast."
-    video_url:str|None = None
-    timestamp:datetime
-    summary:str
-    transcript_file:str|None = None
-    audio_url:str|None = None
-    is_processed:bool = False
-    duration:int = None
-    size:int = None
-    video_transcript:str = None
-    is_verified:bool = True
+

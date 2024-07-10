@@ -1,5 +1,6 @@
 from amiribd.articles.models import YtSummarizer
 from amiribd.articles.serializers import YtSummarizerSerializer
+
 from src.posts.models import YtSummarizerModel
 from . import (
     router, 
@@ -14,7 +15,11 @@ from . import (
     TemplateCategory
 )
 from typing import List, Dict, Optional
-from fastapi import  HTTPException, status
+from fastapi import  HTTPException, status, Depends
+from src.authentication.dependencies import AccessTokenBearer
+
+
+access_token_bearer = AccessTokenBearer()
 
 
 @router.get("/posts",response_model=List[ArticleModel],status_code=status.HTTP_200_OK)
@@ -51,3 +56,11 @@ def get_post_categories()->List[TemplateCategoryModel]:
         return TemplateCategorySerializer(TemplateCategory.objects.all(), many=True).data
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+
+
+@router.get("/posts/comments")
+def retrieve_post_comment(user_details=Depends(access_token_bearer)):
+    print(user_details)
+    return {"message": "Something greate is cooking"}

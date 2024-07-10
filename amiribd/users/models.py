@@ -121,11 +121,16 @@ class Profile(models.Model):
     )
     plans = models.ManyToManyField("invest.Plan", blank=True)
     adverts = models.ManyToManyField("adverts.Advert", blank=True)
-
+    accepted_job_applications = models.ManyToManyField(
+        "jobs.JobApplication",
+        blank=True,
+        related_name="profile_accepted_job_applications",
+    )
     def __str__(self):
         return f"{self.user.username}"
 
     def generate_initials(self) -> str | None:
+        """Use the full name that has been genrated to get the initial"""
         if self.full_name:
             names = self.full_name.split()
             initials = [name[0].upper() for name in names]
@@ -146,6 +151,7 @@ class Profile(models.Model):
         self.referral_code = generate_referral_code(self.pk)
         super(Profile, self).save(*args, **kwargs)
         self.initials = self.generate_initials()
+        super(Profile, self).save(*args, **kwargs)
 
     @property
     def profile_identity(self):

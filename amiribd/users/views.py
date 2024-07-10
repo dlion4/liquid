@@ -44,7 +44,9 @@ def send_welcome_email(
     context: dict[str, Any] = None,
 ):
     if context is None:
-        context = {}
+        context = {
+            "team":"Earnkraft",
+        }
     html_message = render_to_string(template_name, context)
     plain_message = strip_tags(html_message)
 
@@ -53,7 +55,6 @@ def send_welcome_email(
         body=plain_message,
         from_email=None,
         to=[context.get("email", user.email)],
-        team="Earnkraft",
     )
 
     message.attach_alternative(html_message, "text/html")

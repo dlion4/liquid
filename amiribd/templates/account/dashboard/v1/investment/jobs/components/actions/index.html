@@ -1,0 +1,28 @@
+<li>
+  <a href="#">
+    <em class="icon ni ni-share"></em>
+    <span>Share</span></a>
+</li>
+{% if application.status == "ACCEPTED" %}
+  <li>
+    <a href="#file-upload-{{application.id}}" data-bs-toggle="modal">
+      <em class="icon ni ni-check-round-cut"></em>
+      <span>Mark completed</span>
+    </a>
+  </li>
+  {% if application.job.job_file %}
+    <li>
+      <a href="{{application.job.job_file.url}}">
+        <em class="icon ni ni-download"></em>
+        <span>Download</span></a>
+    </li>
+  {% endif %}
+{% endif %}
+{% if application.status == "CANCELLED" %}
+{% else %}
+  <li>
+    <a class="link-danger link-cancel-application link-cursor-pointer" data-application-id="{{application.id}}" data-cancel-url="{{application.get_cancel_url}}">
+      <em data-application-id="{{application.id}}" class="icon ni ni-cross-circle" data-cancel-url="{{application.get_cancel_url}}"></em>
+      <span data-application-id="{{application.id}}" data-cancel-url="{{application.get_cancel_url}}">Cancel Application</span></a>
+  </li>
+{% endif %}

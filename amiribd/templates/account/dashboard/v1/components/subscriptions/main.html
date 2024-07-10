@@ -94,12 +94,12 @@
               </svg>
             </div>
             <div class="nk-wg1-text">
-              <h5 class="title">Payment Channel</h5>
+              <h5 class="title">Transaction History</h5>
               <p>Where my payment are channelled to. Update or use the registered phone number.</p>
             </div>
           </div>
           <div class="nk-wg1-action">
-            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="payments.html" class="link">
+            <a href="{% url 'transaction:transactions' %}" class="link">
               <span>Update payment channel</span>
               <em class="icon ni ni-chevron-right"></em>
             </a>

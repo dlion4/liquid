@@ -1,0 +1,19 @@
+{% extends "account/dashboard/v1/base.html" %}
+
+{% load static %}
+
+{% block heading %}
+  {% include "account/dashboard/v1/components/subscriptions/transactions/head.html" %}
+{% endblock heading %}
+
+{% block main %}
+  <div class="nk-block">
+    <div class="row g-gs">
+      <!-- shoe stats -->
+      {% include "account/dashboard/v1/components/subscriptions/transactions/stats.html" %}
+      <!-- show tables -->
+      {% include "account/dashboard/v1/components/subscriptions/transactions/table.html" %}
+    </div>
+  </div>
+  <!-- {% include "account/dashboard/v1/components/subscriptions/plans/list.html" %} {% include "account/dashboard/v1/components/support.html" %} -->
+{% endblock main %}

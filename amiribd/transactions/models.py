@@ -1,10 +1,13 @@
 from django.db import models
-from amiribd.invest.models import Account
+from amiribd.invest.models import Account, Plan
 from .types import TransactionType
 import uuid
 from django.utils import timezone
 from amiribd.users.models import Profile
 from django.utils.functional import cached_property
+from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
 
 
 def generate_receipt_number():
@@ -70,6 +73,42 @@ class Transaction(models.Model):
     def save(self, *args, **kwargs):
         self.receipt_number = generate_receipt_number()
         super().save(*args, **kwargs)
+
+
+
+
+
+    def plan_transaction(self) -> Plan:
+        """
+        Get the first plan related to the account in the transaction.
+
+        To bypass errors due to nested queries, we use the OuterRef and Coalesce functions to work around this error.
+
+        Returns the plan associated with the account of this transaction.
+        """
+        # Subquery to find the account related to this transaction
+        # account_subquery = Account.objects.filter(
+        #     pk=OuterRef('account_id'),
+        #     pool__profile=OuterRef('profile_id')
+        # ).values('id')[:1]
+
+        # # Subquery to find the first plan related to the account
+        # plan_subquery = Plan.objects.filter(
+        #     account=Subquery(account_subquery)
+        # ).values('id')[:1]
+
+        # # Fetch the plan using the subquery
+        # plan = Plan.objects.filter(id=Subquery(plan_subquery)).first()
+
+        # return plan
+            # Subquery to find the first plan related to the account
+        subquery = Plan.objects.filter(account=OuterRef('account')).order_by('created_at').values('id')[:1]
+        
+        transactions = Transaction.objects.annotate(
+            first_plan_id=Subquery(subquery)
+        ).filter(account=self.account)
+
+        return transactions
 
 
 class PaymentMethod(models.Model):

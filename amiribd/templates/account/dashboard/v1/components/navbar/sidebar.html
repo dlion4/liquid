@@ -1,4 +1,4 @@
-{% load static %} {% load usergroups %}
+{% load static humanize %} {% load usergroups %}
 
 <div class="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
     <div class="nk-sidebar-element nk-sidebar-head">
@@ -20,12 +20,12 @@
                     <div class="user-account-info between-center">
                         <div class="user-account-main">
                             <h6 class="overline-title-alt">Available Balance</h6>
-                            <div class="amount user-balance">{{available_amount}}
+                            <div class="amount user-balance">{{available_amount|floatformat:2|intcomma}}
                                 <span class="currency currency-btc">
                                     KES
                                 </span>
                             </div>
-                            <div class="amount user-balance-alt">{{locked_amount}}
+                            <div class="amount user-balance-alt">{{locked_amount|floatformat:2|intcomma}}
                                 <span class="currency currency-btc">KES</span>
                             </div>
                         </div>
@@ -232,33 +232,31 @@
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:bonus' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-gift"></em></span>
-                                <span class="nk-menu-text">Bonus</span></a>
+                                <span class="nk-menu-text">Bonus</span>
+                            </a>
                         </li>
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:whatsapp' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-whatsapp"></em></span>
-                                <span class="nk-menu-text">Whatsapp</span></a>
-                        </li>
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:jobs' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
-                                <span class="nk-menu-text">Jobs
-
-                                </span>
+                                <span class="nk-menu-text">Whatsapp</span>
                             </a>
                         </li>
-
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:jobs:jobs' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
+                                <span class="nk-menu-text">Jobs</span>
+                            </a>
+                        </li>
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:academic_writing_accounts' %}" class="nk-menu-link">
                                 <Span class="nk-menu-icon"><em class="icon ni ni-edit"></em></Span>
-                                <span class="nk-menu-text">Online Writing</span></a>
+                                <span class="nk-menu-text">Online Writing</span>
+                            </a>
                         </li>
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:vip' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-star"></em></span>
-                                <span class="nk-menu-text">VIP Role
-
-                                </span>
+                                <span class="nk-menu-text">VIP Role</span>
                             </a>
                         </li>
                         {% comment %} <li class="nk-menu-item">
@@ -328,11 +326,8 @@
                         </li>
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:qinfo' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em>
-                                    </em></span>
-
-                                <span class="nk-menu-text">Quick Info
-                                </span>
+                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em></span>
+                                <span class="nk-menu-text">Quick Info</span>
                             </a>
                         </li>
                     </ul>

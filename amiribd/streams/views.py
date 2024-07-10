@@ -2,7 +2,13 @@ from itertools import groupby
 import json
 from typing import Any
 from django import http
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import  (
+    HttpRequest, 
+    HttpResponse, 
+    JsonResponse,
+    StreamingHttpResponse    
+)
+from django.views.decorators.http import require_GET
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import TemplateView
@@ -14,7 +20,7 @@ from amiribd.users.models import Profile
 from amiribd.streams.serializers import MessageSerializer
 from .models import Inbox, Message
 from django.utils.timezone import localdate, localtime
-
+from amiribd import redis_client
 # Create your views here.
 
 

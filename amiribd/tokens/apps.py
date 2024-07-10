@@ -8,4 +8,3 @@ class TokensConfig(AppConfig):
     def ready(self) -> None:
         super().ready()
         # call_command("load_secrets")
-        print(os.environ.get("DEEPGRAM_API_KEY"), "from the intialization of the app")

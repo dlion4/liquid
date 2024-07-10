@@ -102,6 +102,9 @@ urlpatterns = [
     # post ai genration
 
     path("ai/assistant/", include("assistant.urls", namespace="assistant")),
+
+    # streams for the notifications and other realtime chats
+    # path("streams/",include("amiribd.streams.urls", namespace="streams")), # TODO: remove the url in the dashboard url
 ]
 
 
@@ -141,3 +144,4 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 admin.site.site_title = "Earnkraft Agencies"
 admin.site.site_header = "Earnkraft administration"
 admin.site.index_title = "Earnkraft Agencies"
+

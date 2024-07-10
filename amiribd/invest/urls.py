@@ -20,7 +20,6 @@ from .views import (
     modified_referal_view,
     modified_bonus_view,
     modified_whatsapp_view,
-    modified_jobs_view,
     # modified_invest_view,
     modified_academic_view,
     modified_loans_view,
@@ -114,11 +113,8 @@ urlpatterns = [
         modified_whatsapp_view,
         name="whatsapp",
     ),
-    path(
-        "jobs/",
-        modified_jobs_view,
-        name="jobs",
-    ),
+    # jobs related urls
+    path("jobs/", include("amiribd.invest.jobs.urls", namespace="jobs")),
     path(
         "investment_plan/",
         modified_investplan_view,
