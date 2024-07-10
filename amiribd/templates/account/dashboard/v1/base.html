@@ -782,9 +782,32 @@
 
     // const ws = new WebSocket("ws://" + window.location.host + '/ws/streams/news/notification')
 
+    class Utility{
+        formatDate (date){
+            const now = new Date()
+            const secondsPast =  (now.getTime() - new Date(date).getTime()) / 1000;
+            if (secondsPast < 60){
+                return `${Math.floor(secondsPast)} seconds ago`;
+            }
+            else if (secondsPast < 3600){
+                return `${Math.floor(secondsPast / 60)} minutes ago`;
+            }
+            else if (secondsPast < 86400){
+                return `${Math.floor(secondsPast / 3600)} hours ago`;
+            }
+            else if (secondsPast < 2592000){
+                return `${Math.floor(secondsPast / 86400)} days ago`;
+            }
+            else{
+                return `${new Date(date).toLocaleDateString()}`;
+            }
+        }
+    }
+
     class WebSocketNotification{
         constructor(){
-            this.base_url = `ws://${window.location.host}/ws/streams`
+            this.base_url = `ws://${window.location.host}/ws/streams`;
+            this.utility = new Utility();
         };
 
         initiateConnection = async (endpoint) =>{
@@ -809,7 +832,6 @@
         };
 
         updateRecentUpdate = async (data, target)=>{
-
             const holders = document.querySelectorAll(".home-recent-activities");
             const element = document.createElement("li");
 
@@ -818,7 +840,7 @@
                 <div class="nk-activity-media user-avatar bg-pink">${data.profile.initials}</div>
                 <div cla<div class="nk-activity-data">
                     <div class="label">${data.title}</div>
-                    <span class="time">2 hours ago</span>
+                    <span class="time">${this.utility.formatDate(data.timestamp)}</span>
                 </div>
             `;
             holders.forEach(holder=>{
