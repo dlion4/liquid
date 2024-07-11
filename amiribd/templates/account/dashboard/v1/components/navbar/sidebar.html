@@ -275,16 +275,16 @@
 
                                 </span>
                             </a>
-                        </li> {% endcomment %}
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
-                                <span class="nk-menu-text">Invest and Save
-
-                                </span>
-                            </a>
-                        </li>
-                        
+                        </li> 
+                        {% endcomment %}
+                         {% if plans %}
+                            <li class="nk-menu-item">
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
+                                    <span class="nk-menu-text">Invest and Save</span>
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:advertise' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon">
