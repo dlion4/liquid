@@ -40,16 +40,18 @@
           <div class="between-center flex-wrap g-3">
             <div class="nk-block-text">
               <h6>Change Password</h6>
-              <p>Set a unique password to protect your account.</p>
+              <p>The authentication mechanism for this account don't rely on password.</p>
             </div>
             <div class="nk-block-actions flex-shrink-sm-0">
               <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
                 <li class="order-md-last">
-                  <a href="#" class="btn btn-primary">Change Password</a>
+                  <a href="#" class="btn btn-primary" aria-disabled="true">Change Password</a>
                 </li>
                 <li>
-                  <em class="text-soft text-date fs-12px">Last changed:
-                    <span>Oct 2, 2019</span></em>
+                  <em class="text-soft text-date fs-12px">
+                    Registration Date:
+                    <span>{{profile.user.date_joined|date:"M d, Y"}}</span>
+                  </em>
                 </li>
               </ul>
             </div>
@@ -72,9 +74,70 @@
     </div>
   </div>
 
-  <div class="nk-block-head nk-block-head-sm"><div class="nk-block-head-content"><div class="nk-block-title-group"><h6 class="nk-block-title title">Recent Activity</h6><a href="/demo5/crypto/profile-activity.html" class="link">See full log</a></div><div class="nk-block-des"><p>This information about the last login activity on your account.</p></div></div></div>
+  <div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-head-content">
+      <div class="nk-block-title-group">
+        <h6 class="nk-block-title title">Recent Activity</h6>
+        <a href="/demo5/crypto/profile-activity.html" class="link">See full log</a>
+      </div>
+      <div class="nk-block-des">
+        <p>This information about the last login activity on your account.</p>
+      </div>
+    </div>
+  </div>
 
-  <div class="card card-bordered"><table class="table table-ulogs"><thead class="table-light"><tr><th class="tb-col-os"><span class="overline-title">Browser <span class="d-sm-none">/ IP</span></span></th><th class="tb-col-ip"><span class="overline-title">IP</span></th><th class="tb-col-time"><span class="overline-title">Time</span></th><th class="tb-col-action"><span class="overline-title">&nbsp;</span></th></tr></thead><tbody><tr><td class="tb-col-os">Chrome on Window</td><td class="tb-col-ip"><span class="sub-text">192.149.122.128</span></td><td class="tb-col-time"><span class="sub-text">11:34 PM</span></td><td class="tb-col-action"></td></tr><tr><td class="tb-col-os">Mozilla on Window</td><td class="tb-col-ip"><span class="sub-text">86.188.154.225</span></td><td class="tb-col-time"><span class="sub-text">Nov 20, 2019 <span class="d-none d-sm-inline-block">10:34 PM</span></span></td><td class="tb-col-action"><a href="#" class="link-cross me-sm-n1"><em class="icon ni ni-cross"></em></a></td></tr><tr><td class="tb-col-os">Chrome on iMac</td><td class="tb-col-ip"><span class="sub-text">192.149.122.128</span></td><td class="tb-col-time"><span class="sub-text">Nov 12, 2019 <span class="d-none d-sm-inline-block">08:56 PM</span></span></td><td class="tb-col-action"><a href="#" class="link-cross me-sm-n1"><em class="icon ni ni-cross"></em></a></td></tr></tbody></table></div>
+  <div class="card card-bordered">
+    <table class="table table-ulogs">
+      <thead class="table-light">
+        <tr>
+          <th class="tb-col-os">
+            <span class="overline-title">Browser
+              <span class="d-sm-none">/ IP</span></span></th>
+          <th class="tb-col-ip">
+            <span class="overline-title">IP</span></th>
+          <th class="tb-col-time">
+            <span class="overline-title">Time</span></th>
+          <th class="tb-col-action">
+            <span class="overline-title">&nbsp;</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tb-col-os">Chrome on Window</td>
+          <td class="tb-col-ip">
+            <span class="sub-text">192.149.122.128</span></td>
+          <td class="tb-col-time">
+            <span class="sub-text">11:34 PM</span></td>
+          <td class="tb-col-action"></td>
+        </tr>
+        <tr>
+          <td class="tb-col-os">Mozilla on Window</td>
+          <td class="tb-col-ip">
+            <span class="sub-text">86.188.154.225</span></td>
+          <td class="tb-col-time">
+            <span class="sub-text">Nov 20, 2019
+              <span class="d-none d-sm-inline-block">10:34 PM</span></span></td>
+          <td class="tb-col-action">
+            <a href="#" class="link-cross me-sm-n1">
+              <em class="icon ni ni-cross"></em>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td class="tb-col-os">Chrome on iMac</td>
+          <td class="tb-col-ip">
+            <span class="sub-text">192.149.122.128</span></td>
+          <td class="tb-col-time">
+            <span class="sub-text">Nov 12, 2019
+              <span class="d-none d-sm-inline-block">08:56 PM</span></span></td>
+          <td class="tb-col-action">
+            <a href="#" class="link-cross me-sm-n1">
+              <em class="icon ni ni-cross"></em>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </div>
-

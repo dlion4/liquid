@@ -352,3 +352,52 @@ class AccountWithdrawalAction(models.Model):
 
 class AccountEventDeposit(models.Model):
     pass
+
+class SavingPlan(models.Model):
+    title = models.CharField(max_length=100)
+    interest = models.FloatField(default=1, help_text="The interest rate charged daily")
+    term = models.IntegerField(default=1, help_text="Maturation term. Example value 3 days")
+    principal = models.DecimalField(max_digits=15, decimal_places=2, default=0.00, help_text="Investment amount")
+    description = models.CharField(max_length=300, blank=True, default="Choose your investment plan and start earning.")
+    # amount = models.GeneratedField(
+    #     expression=models.ExpressionWrapper(
+    #         F("principal") +  (F("principal") * (1 + F("interest"))) * (F("term") / 7),
+    #         output_field=models.DecimalField(max_digits=15, decimal_places=2, default=0.00),
+    #     ),
+    #     output_field=models.DecimalField(max_digits=15, decimal_places=2, default=0.00),
+    #     db_persist=True,
+    # )
+    is_active=models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+    
+    @property
+    def amount(self):
+        return f"{(self.principal + Decimal(self.earned_interest)):.2f}"
+
+    
+    @property
+    def percentage_rate(self):
+        return self.interest / 100
+    
+    @property
+    def earned_interest(self):
+        return f"{(self.principal * Decimal(self.percentage_rate) * Decimal((self.term/7))):.2f}"
+
+class SavingInvestmentPlan(models.Model):
+    scheme = models.ForeignKey(SavingPlan, on_delete=models.SET_NULL, blank=True, null=True)
+    status = models.CharField(
+        max_length=100,
+        choices=(
+            ("pending", "Pending"),
+            ("approved", "approved"),
+            ("declined", "declined"),
+            ("expired", "expired"),
+        ),
+        default="pending"
+    )
+
+    def __str__(self):
+        return self.scheme
+    

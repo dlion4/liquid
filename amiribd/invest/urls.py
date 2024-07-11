@@ -116,7 +116,7 @@ urlpatterns = [
     # jobs related urls
     path("jobs/", include("amiribd.invest.jobs.urls", namespace="jobs")),
     path(
-        "investment_plan/",
+        "investment-savings-schemes/",
         modified_investplan_view,
         name="invest_plan",
     ),

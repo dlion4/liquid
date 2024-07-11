@@ -8,12 +8,14 @@ from .models import (
     AccountType,
     Account,
     AccountWithdrawalAction,
+    SavingPlan,
+    SavingInvestmentPlan
 )
 from django.db import models
 from unfold.contrib.forms.widgets import WysiwygWidget
 from amiribd.core.admin import earnkraft_site
 from nested_inline.admin import NestedModelAdmin
-from .inlines import AccountInline, PoolFeatureInline, Plan
+from .inlines import AccountInline, PoolFeatureInline, Plan, SavingInvestmentPlanInline
 from .forms import AdminAddPlanForm, AdminAccountForm,AdminAccountTypeForm, AdminPoolForm, AdminPlanTypeForm
 # Register your models here.
 from amiribd.liquid.sites import admin_site
@@ -183,3 +185,20 @@ class EventActionAdmin(ModelAdmin):
 
             # then updated the status
         queryset.update(status="Cancelled", paid=False)
+
+
+@admin.register(SavingPlan)
+class SavingPlanAdmin(ModelAdmin):
+    list_display = [
+        'title',
+        'interest',
+        'term',
+        'principal',
+        'amount',
+        "earned_interest",
+        "percentage_rate",
+    ]
+
+    inlines = [
+        SavingInvestmentPlanInline
+    ]

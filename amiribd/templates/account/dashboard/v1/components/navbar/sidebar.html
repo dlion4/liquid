@@ -277,7 +277,7 @@
                             </a>
                         </li> {% endcomment %}
                         <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest-order' %}" class="nk-menu-link">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
                                 <span class="nk-menu-text">Invest and Save
 
@@ -287,8 +287,9 @@
                         
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:advertise' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-bullhorn"></em></span>
-
+                                <span class="nk-menu-icon">
+                                   <em class="icon ni ni-bulb"></em>
+                                </span>
                                 <span class="nk-menu-text">Advertise
                                 </span>
                             </a>
@@ -313,22 +314,25 @@
                         
 
                         <li class="nk-menu-item">
-                            <a role="button" class="nk-menu-link">
+                            <a role="button" class="nk-menu-link" href="#">
                                 <span class="nk-menu-icon"><em class="icon ni ni-check"></em></span>
                                 <span class="nk-menu-text">Micro Tasks</span>
                             </a>
                         </li>
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:comingsoon' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-clock"></em></span>
-
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-notify"></em>
+                                </span>
                                 <span class="nk-menu-text">Comming Soon
                                 </span>
                             </a>
                         </li>
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:qinfo' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-info"></em></span>
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-question-alt"></em>
+                                </span>
                                 <span class="nk-menu-text">Quick Info</span>
                             </a>
                         </li>

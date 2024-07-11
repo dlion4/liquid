@@ -29,13 +29,13 @@ from django.contrib.auth import get_user
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from .models import AccountType, PlanType, Pool, Account, Plan, PoolType
+from .models import AccountType, PlanType, Pool, Account, Plan, PoolType, SavingPlan
 from amiribd.dashboard.views import DashboardGuard, DashboardViewMixin
 from decimal import Decimal  # Import Decimal from the decimal module
 from django.utils.termcolors import colorize
 from amiribd.transactions.models import Transaction
 from .serializers import AccountSerializer, PlanSerializer, PoolSerializer
-
+from .models import SavingInvestmentPlan
 from amiribd.profiles.forms import (
     AgentForm,
     PlantformForm,
@@ -612,6 +612,14 @@ modified_jobs_view = JobsView.as_view()
 class InvestplanView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_plan.html"
     template_name = "account/dashboard/v1/investment/investment_plan.html"
+
+    def retrieve_investment_schemes_options(self, **kwargs):
+        return SavingPlan.objects.filter(is_active=True)
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context =  super().get_context_data(**kwargs)
+        context['investment_schemes'] = self.retrieve_investment_schemes_options(**kwargs)
+        return context
 
 
 modified_investplan_view = InvestplanView.as_view()

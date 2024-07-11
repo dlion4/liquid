@@ -81,6 +81,12 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                        "link": reverse_lazy("earnkraft:invest_account_changelist"),
                         "permission": "core.superuser_permissions_callback",
                     },
+                    {
+                        "title": _("Savings"),
+                        "icon": "crowdsource",
+                       "link": reverse_lazy("admin:invest_savingplan_changelist"),
+                        "permission": "core.superuser_permissions_callback",
+                    },
                 ],
             },
             {
@@ -131,6 +137,7 @@ DJANGO_UNFOLD_SIDEBAR_NAVIGATION = [
                          "link": reverse_lazy("admin:rates_kenyaconversion_changelist"),
                          "permissions": lambda request: request.user.is_superuser
                     },
+                   
                 ]
              },
             {

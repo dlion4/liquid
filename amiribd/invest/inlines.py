@@ -1,4 +1,4 @@
-from .models import PoolFeature, Account, Plan
+from .models import PoolFeature, Account, Plan, SavingInvestmentPlan
 from amiribd.transactions.models import Transaction
 from nested_inline.admin import NestedStackedInline
 from .forms import AdminAddPlanForm,AdminAccountForm,AdminTransactionForm
@@ -30,3 +30,8 @@ class PoolFeatureInline(unfold_admin.StackedInline,NestedStackedInline):
     model = PoolFeature
     extra = 0
     fk_name = "pool"
+
+class SavingInvestmentPlanInline(unfold_admin.StackedInline, NestedStackedInline):
+    model = SavingInvestmentPlan
+    extra = 0
+    fk_name = "scheme"

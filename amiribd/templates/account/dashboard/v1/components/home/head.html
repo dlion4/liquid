@@ -12,13 +12,19 @@
         {% if plans %}
           <p>A summary of your account. Have fun!</p>
         {% else %}
-          <p>Account have no plan. Purchase a plan by subscribing to start earning</p>
+          <p>
+            {% if profile.plans and not plans %}
+              Your plan purchase has not been verified. This process normally take about 5 minutes to complete.
+            {% else  %}
+              Account have no plan. Purchase a plan by subscribing to start earning
+            {% endif %}
+          </p>
         {% endif %}
       </div>
     </div>
     <div class="nk-block-head-content">
       <ul class="nk-block-tools gx-3">
-        {% if not plans %}
+        {% if not profile.plans %}
           <li>
             <a href="{% url 'dashboard:invest:invest' %}" class="btn btn-primary">
               <span>Buy Plan</span>
@@ -33,7 +39,7 @@
             </a>
           </li>
           <li>
-            <a href="" class="btn btn-white btn-light">
+            <a href="{% url 'dashboard:invest:invest_plan' %}" class="btn btn-white btn-light">
               <span>Invest</span>
               <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
             </a>
