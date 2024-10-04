@@ -1,4 +1,4 @@
-import secrets
+import random
 import string
 
 from django.urls import reverse
