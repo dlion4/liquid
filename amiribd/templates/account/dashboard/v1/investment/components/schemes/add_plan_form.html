@@ -1,0 +1,374 @@
+{% load static %}
+
+<form action="#" method="post" id="addPlanForm" class="form-validate is-alter">
+  <div class="row gx-4 gy-3">
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Select plan type</label>
+        <div class="form-control-wrap">
+          {{add_plan_form.type}}
+        </div>
+      </div>
+    </div>
+
+    <small id='plan-type-response'>
+      <span id='response-price' data-price='{{plan.price}}'></span>
+    </small>
+
+    <div class="col-12">
+      <ul class="d-flex justify-content-between gx-4 mt-1">
+        <li>
+          <button id="updateEvent-add-pan" type="submit" class="btn btn-primary">Add plan to my pool</button>
+        </li>
+        <li>
+          <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Request</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>
+
+<div class="modal fade zoom" id="modalZoomPlanPayment" aria-modal="true" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Customer Info</h5>
+        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="" id="closePaymentModal">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+      <div class="modal-body">
+        <form action="#" class="form-validate is-alter" novalidate="novalidate">
+          <input type="hidden" id="profileId" value="{{request.user.profile_user.id}}"/>
+          <div class="form-group">
+            <label class="form-label" for="phone-no">Phone No</label>
+            <div class="form-control-wrap">
+              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no"/>
+            </div>
+            <span id="phone-error" class="errorlist"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pay-amount">Amount</label>
+            <div class="form-control-wrap">
+              <input type="text" class="form-control" id="pay-amount" name="pay_amount"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-lg btn-primary center-justify" id="suitable-plan-btn">
+              <!-- <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
+              <span id="payment-text">Confirm to pay</span>
+            </button>
+            <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
+            <style>
+              .center-justify {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+            </style>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let geoData = JSON.parse(localStorage.getItem('geoData'));
+
+  let currencyCode = geoData
+    ?.currency
+      ?.currency_code || "";
+
+  const planTypeResponse = document.getElementById("plan-type-response");
+
+  var priceField = document.createElement("div");
+  priceField.id = "priceField";
+  priceField.className = "col-12";
+  priceField.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Plan Budget</label>
+        <div class="form-control-wrap">
+          <input disabled type="text" name="price" class="form-control form-control-lg" placeholder="" maxlength="20" id="id_price" value="">
+        </div>
+      </div>
+    `;
+
+  // Check if plan-type-response has an ID of 'success'
+
+  const addPlanForm = document.getElementById("addPlanForm")
+  const addPlanFormPopup = document.getElementById("addPlanPopupForm")
+  let planTypeSelectedId = document.getElementById("plan_type__id")
+  let planSelectionId;
+
+  addPlanForm.addEventListener("submit", async (e) => {
+    e.preventDefault()
+    const formData = new FormData() // addPlanForm
+    formData.append('type', document.getElementById("plan-type-choice").value)
+    formData.append("price", cleanCurrency(document.getElementById("id_price").value))
+
+    if (!formData) {
+      return null;
+    }
+
+    fetch("/htmx/account/plan-type/", {
+      method: "POST",
+      body: formData
+    })
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (data.success) {
+          // fetc the endpoint to retun the price information for the selcted plan
+          // const response = await fetch(`/htmx/account/plan-type/?plan-type=${data.plan_type}`)
+          //const data = await response.json()
+          planSelectionId = data.plan.id;
+          document
+            .getElementById("plan_type__id")
+            .value = planSelectionId;
+
+          addPlanForm.style.display = "none"
+          addPlanForm
+            .classList
+            .remove("show")
+
+          const planPaymentForm = document.getElementById("modalZoomPlanPayment")
+          planPaymentForm.style.display = "block"
+          planPaymentForm
+            .classList
+            .add("show")
+          // start hanling payment with mpesa gateway
+          handlePlanPaymentRequest()
+        }
+
+      })
+      .catch((error) => {
+        console.error(error)
+        alert("You already subscribed to the selected plan")
+      })
+    })
+
+  try {
+    const typeSelection = document.getElementById("plan-type-choice")
+
+    typeSelection.addEventListener("change", async (e) => {
+
+      if (!e.target.value) {
+        if (priceField) {
+          priceField.remove()
+        }
+        return false
+      }
+      const response = await fetch(`/htmx/account/plan-type/?plan-type=${e.target.value}`)
+
+      const data = await response.json();
+
+      if (!data) {
+        return new Error(`Plan type not found`)
+      }
+
+      let planAmountToBePaid = document.getElementById("pay-amount")
+      planAmountToBePaid.value = `${currencyCode}: ${parseFloat(data.price).toFixed(2)}`;
+
+      planTypeResponse
+        .parentNode
+        .insertBefore(priceField, planTypeResponse.nextSibling);
+      // update after the swap
+      const planTypePrice = document.getElementById("id_price")
+      const responsePrice = document.getElementById("response-price")
+      responsePrice.setAttribute("data-price", data.price)
+      // planTypePrice.value = responsePrice.getAttribute("data-price")
+      planTypePrice.value = `${currencyCode}: ${parseFloat(data.price).toFixed(2)}`;
+
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
+  // clean the currency value and remove the KES VALUE
+  function cleanCurrency(value, currencyCode = 'KES') {
+    const regex = new RegExp(`${currencyCode}:\\s?`, "i");
+    // return value.replace(/KES:\s?/, "");
+    return value.replace(regex, "");
+  }
+
+  function updatedcleanCurrency(value, currencyCode) {
+    const regex = new RegExp(`${currencyCode}:\\s?`, "i");
+    return value.replace(regex, "");
+  }
+
+  const paymentBtnSpinner = document.getElementById("payment-btn-spinner");
+  const paymentBtnText = document.getElementById("payment-text");
+
+  function removeLoaderState() {
+    if (paymentBtnSpinner) {
+      paymentBtnSpinner.style.display = "none"
+    }
+  }
+
+  function addSpinner() {
+    spinner.style.display = "block"
+  }
+
+  let profileId = null;
+
+  async function handlePlanPaymentRequest() {
+
+    profileId = Number.parseInt(document.getElementById("profileId").value);
+
+    const paymentBtnForm = document.getElementById("mpesa-payment-btn-popup");
+    if (paymentBtnForm) {
+      paymentBtnForm.setAttribute("disabled", "disabled");
+    }
+
+    const phoneNo = document.getElementById("phone-no");
+    const payAmount = document.getElementById("pay-amount");
+
+    const cleanedCurrency = cleanCurrency(payAmount.value);
+
+    console.log(cleanedCurrency);
+
+    removeLoaderState();
+
+    phoneNo.addEventListener("input", (e) => {
+      var phoneN = e.target;
+      const validPhoneNumberFormat = /^\d{12}$/;
+
+      if (!validPhoneNumberFormat.test(phoneN.value)) {
+        // If the phone number is not valid
+        phoneN
+          .classList
+          .add('errorlist'); // Add invalid class for visual feedback
+        document
+          .getElementById('phone-error')
+          .textContent = 'Invalid phone number. Please enter a valid number.';
+
+        paymentBtnForm.setAttribute("disabled", "disabled");
+      } else {
+        // If the phone number is valid
+        phoneN
+          .classList
+          .remove('errorlist');
+        document
+          .getElementById('phone-error')
+          .textContent = ''; // Clear any error message
+        if (paymentBtnForm) {
+          paymentBtnForm.removeAttribute("disabled");
+
+          paymentBtnForm.addEventListener("click", () => {
+            const url = `{% url 'dashboard:invest:handle-payment' %}?phone=${phoneNo.value}&amount=${cleanedCurrency}&currency=KES&profile=${profileId}`;
+            async function handlePayment() {
+              const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              });
+
+              const data = await response.json();
+              planSelectionId = data.plan.id
+
+              handleClosePlanSelection(profileId, data.plan.id);
+
+              if (data.success) {
+                // asign tye plan type id
+              }
+            }
+
+            handlePayment();
+
+          })
+        };
+
+        // call the payment here
+      }
+    });
+
+  }
+
+  async function handlePlanPaymentFailed(profileId, plan_id) {
+    const url = `{% url 'htmx:account:handle-payment-failed' %}?profile_id=${profileId}&plan_id=${plan_id}`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({profile_id: profileId, plan_id: plan_id})
+    })
+
+    const data = await response.json();
+
+    if (!data) {
+      return null;
+    }
+    console.log(data)
+  }
+
+  async function handlePlanPaymentSuccess(profileId, plan_id, payment_phone) {
+    const response = await fetch(`/htmx/account/handle-payment-success/?profile_id=${profileId}&plan_id=${plan_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({profile_id: profileId, plan_id, payment_phone})
+    })
+
+    const data = await response.json();
+
+    if (data.success) {
+      window.location.href = data.url;
+    }
+  }
+
+  function reloadAndDisplayPlanSelectionForm() {
+    const planPaymentForm = document.getElementById("modalZoomPlanPayment");
+    planPaymentForm.style.display = "none";
+    planPaymentForm
+      .classList
+      .remove("show");
+
+    addPlanForm.style.display = "block";
+    addPlanForm
+      .classList
+      .add("show");
+  }
+
+  function handleClosePlanSelection(profileId, planId) {
+    closePaymentCancelRegisteredPlan(profileId, planId)
+  }
+
+  const closePaymentModal = document.getElementById("closePaymentModal")
+
+  function closePaymentCancelRegisteredPlan(profileId, planId) {
+    closePaymentModal.addEventListener("click", () => {
+      handlePlanPaymentFailed(profileId, planId)
+
+      window
+        .location
+        .reload();
+    })
+  }
+
+  closePaymentModal.addEventListener("click", () => {
+    handlePlanPaymentFailed(profileId, planSelectionId);
+
+    window
+      .location
+      .reload();
+
+  })
+
+  document
+    .getElementById("closeAddPlanPopupForm")
+    .addEventListener("click", () => {
+
+      handleClosePlanSelection(profileId, planSelectionId)
+      window
+        .location
+        .reload();
+
+    });
+</script>

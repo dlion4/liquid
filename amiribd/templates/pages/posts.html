@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block breadcrumb %}
+  <!-- breadcrumb content begin -->
+  <div class="uk-section uk-padding-remove-vertical in-wave-breadcrumb">
+    <div class="uk-container">
+      <div class="uk-grid">
+        <div class="uk-width-1-1">
+          <ul class="uk-breadcrumb">
+            <li>
+              <a href="{% url 'home' %}">Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumb content end -->
+{% endblock breadcrumb %}
+
+{% block content %}
+
+  <!-- blog content begin -->
+  <div class="uk-section uk-margin-small-top">
+    <div class="uk-container">
+      <div class="uk-grid" data-uk-grid="data-uk-grid">
+        <div class="uk-width-2-3@m">
+          <div class="in-blog-1" data-uk-grid="data-uk-grid">
+            {% for post in posts %}
+            <div class="in-stretch">
+              <article class="uk-card uk-card-default uk-border-rounded">
+                <div class="uk-card-media-top">
+                  <img src="{% static 'img/user/image-featured-a4DfvV.jpg' %}" alt="The typical U.S. household is spending $445 more a month due to inflation">
+                </div>
+                <div class="uk-card-body">
+                  <h3>
+                    <a href="{{post.get_absolute_url}}" class="link-primary text-decoration-none">{{post.title}}</a>
+                  </h3>
+                  <p>{{post.summary|truncatewords:"30"}}</p>
+                  <div class="uk-flex">
+                    <div class="uk-margin-small-right">
+                      <img class="uk-border-pill uk-background-muted" src="{% static 'img/user/author-85z9UC.jpg' %}" alt="image-team" width="32" height="32">
+                    </div>
+                    <div class="uk-flex uk-flex-middle">
+                      <p class="uk-text-small uk-text-muted uk-margin-remove">
+                        {{post.author.full_name}}
+                        <span class="uk-margin-small-left uk-margin-small-right">•</span>
+                      </p>
+                    </div>
+                    <div class="uk-flex uk-flex-middle">
+                      <p class="uk-text-small uk-text-muted uk-margin-remove">
+                        {{post.date_posted|date:"F d, Y"}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="uk-card-footer uk-clearfix">
+                  <div class="uk-float-left">
+                    {% for category in post.categories.all %}
+                      <span class="uk-label in-label-small">{{category.name}}</span>
+                    {% endfor %}
+                  </div>
+                  <div class="uk-float-right">
+                    <a href="{{post.get_absolute_url}}" class="uk-button uk-button-text">Read more</a>
+                  </div>
+                </div>
+              </article>
+              </div>
+            {% endfor %}
+          </div>
+          <!-- pagination begin -->
+          <ul class="uk-pagination uk-flex-center uk-margin-medium-top"></ul>
+          <!-- pagination end -->
+        </div>
+        <div class="uk-width-expand@m">
+          <!-- widget search begin -->
+          <aside class="uk-margin-medium-bottom">
+            <form name="blog-search" class="uk-search uk-search-default uk-width-1-1">
+              <a href="" class="uk-search-icon-flip" data-uk-search-icon="data-uk-search-icon"></a>
+              <input class="uk-input uk-border-rounded" type="search" placeholder="Search here...">
+            </form>
+          </aside>
+          <!-- widget search end -->
+          <!-- widget categories begin -->
+          <aside class="uk-margin-medium-bottom">
+            <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
+              <h5 class="uk-heading-bullet uk-text-uppercase uk-margin-remove-bottom">Categories</h5>
+              <ul class="uk-list widget-categories"></ul>
+            </div>
+          </aside>
+          <!-- widget categories end -->
+          <!-- widget lates begin -->
+          <aside class="uk-margin-medium-bottom">
+            <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
+              <h5 class="uk-heading-bullet uk-text-uppercase uk-margin-remove-bottom">Latest News</h5>
+              <ul class="uk-list uk-list-divider uk-list-large widget-latest"></ul>
+            </div>
+          </aside>
+          <!-- widget lates end -->
+          <!-- widget tags begin -->
+          <aside class="uk-margin-medium-bottom">
+            <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
+              <h5 class="uk-heading-bullet uk-text-uppercase uk-margin-remove-bottom">Tags</h5>
+              <div class="uk-margin-top widget-tag"></div>
+            </div>
+          </aside>
+          <!-- widget tags end -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- blog content end -->
+{% endblock content %}

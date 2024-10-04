@@ -1,0 +1,74 @@
+{% load static %}
+
+<form action="#" id="withdrawalForm" class="form-validate is-alter" novalidate="novalidate" data-id="default-event-id-5351877">
+  <div class="row gx-4 gy-3">
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label" for="edit-event-title">{{plan.type|title}}
+          Plan ~
+          {{plan.account}}
+          Account</label>
+
+        <div style="margin-top:10px!important">
+          <label class="form-label">Amount to Withdraw</label>
+          <div class="form-control-wrap">
+            {{withdrawal_form.amount}}
+            <small id="id_available_amount" style="padding-top:10px!important"></small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="form-label">Schedule withdrawal Date &amp; Time</label>
+        <div class="row gx-2">
+          <div class="w-70">
+            <div class="form-control-wrap">
+              <div class="form-icon form-icon-left">
+                <em class="icon ni ni-calendar"></em>
+              </div>
+              {{withdrawal_form.withdrawal_date}}
+            </div>
+          </div>
+          <div class="w-30">
+            <div class="form-control-wrap has-timepicker">
+              <div class="form-icon form-icon-left">
+                <em class="icon ni ni-clock"></em>
+              </div>
+              {{withdrawal_form.withdrawal_time}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Payment Chanel</label>
+        <div class="form-control-wrap">
+          {{withdrawal_form.channel}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Payment Phone Number</label>
+        <div class="form-control-wrap">
+          {{withdrawal_form.payment_phone_number}}
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <ul class="d-flex justify-content-between gx-4 mt-1">
+        <li>
+          <button id="updateEvent" type="submit" class="btn btn-primary">Request withdrawal</button>
+        </li>
+        <li>
+          <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Request</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>

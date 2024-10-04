@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Forbidden (403){% endblock title %}
+{% block content %}
+  <div class="uk-section">
+    <div class="uk-container">
+      <div class="uk-grid uk-flex uk-flex-center">
+        <div class="uk-width-3-4@m">
+          <h1>Forbidden (403)</h1>
+          <p>
+            {% if exception %}
+              {{ exception }}
+            {% else %}
+              You're not allowed to access this page.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

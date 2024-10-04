@@ -1,0 +1,84 @@
+{% load static humanize %}
+
+<style>
+  @media (max-width: 732px) {
+    .d-uk-nav-sm {
+      display: none;
+    }
+  }
+
+
+
+  @media (min-width: 768px) {
+    .in-mobile-nav {
+      display: none;
+    }
+  }
+</style>
+
+<header>
+  <div class="uk-section uk-padding-remove-vertical in-header-inverse ">
+    <nav class="uk-navbar-container uk-navbar-transparent uk-sticky" data-uk-sticky="show-on-up: true; top: 80; animation: uk-animation-fade">
+      <div class="uk-container" data-uk-navbar="data-uk-navbar">
+        <div class="uk-navbar-left uk-width-expand uk-flex uk-flex-between">
+          <a class="uk-navbar-item uk-logo" href="{% url 'home' %}">
+            <img src="{% static 'img/earnkraftfull2.png' %}" alt="logo" width="134" height="23" />
+          </a>
+          <ul class="uk-navbar-nav uk-visible@m d-uk-nav-sm d-md-flex">
+            <li class="{% if request.resolver_match.view_name == 'investment' %} uk-active {% endif %}">
+              <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
+              <a href="{% url 'about' %}">About Us</a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'about' %} uk-active {% endif %}">
+              <a href="{% url 'career' %}">Partners</a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'learn' %} uk-active {% endif %}">
+              <a href="{% url 'help' %}">Help Center</a>
+            </li>
+          </ul>
+        </div>
+        <div class="uk-navbar-right uk-width-auto">
+          <div class="uk-navbar-item">
+            {% if request.user.is_authenticated %}
+            <div class="in-optional-nav">
+              <a role="button" href="{% url 'dashboard:home' %}" class="uk-button uk-button-primary uk-button-small uk-border" style="margin-left: 10px !important">{{request.user.username}}
+              </a>
+
+            </div>
+            {% else %}
+            <div class="in-optional-nav">
+              <a href="{% url 'users:login' %}" class="uk-button uk-button-primary uk-button-small uk-border-pill" style="margin-left: 10px !important">Sign In</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="uk-container">
+      <div class="uk-grid">
+        <div class="uk-width-1-1">
+          <div class="uk-card uk-card-secondary uk-card-small uk-card-body uk-border-rounded">
+            <div class="uk-grid uk-text-small" data-uk-grid="data-uk-grid">
+              <div class="uk-width-3-4@m uk-visible@m">
+                <p>
+                  The power of earning is in your hands, you have to take advantage of the opportunity
+                  while
+                  it lasts.
+                </p>
+              </div>
+              <div class="uk-width-expand@m uk-text-center uk-text-right@m">
+                <a class="uk-margin-right" href="#" data-bs-whatever="@getbootstrap">
+                  <i class="fas fa-comment-alt uk-margin-small-right"></i>Live Chat</a>
+                <a href="tel:{{officephone}}">
+                  <i class="fas fa-phone-alt uk-margin-small-right uk-margin-small-left"></i>{{officephone}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% block breadcrumb %}{% endblock breadcrumb %}
+      </div>
+    </div>
+  </div>
+</header>

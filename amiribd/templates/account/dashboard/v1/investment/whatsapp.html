@@ -1,0 +1,245 @@
+{% extends 'account/dashboard/v1/base.html' %}
+{% load widget_tweaks %}
+
+{% load static humanize %}
+{% block heading %}
+<div class="nk-block-head-content mb-5">
+  <h3 class="nk-block-title page-title">WhatsApp Income</h3>
+  <div class="nk-block-des text-soft">
+    <p>
+      You can submit your whatsapp earnings when your package allows you to earn from whatsapp earnings
+    </p>
+  </div>
+</div>
+{% endblock %}
+<br />
+{% block main %}
+<div class="row g-gs mb-4">
+  <div class="col-sm-6 col-xxl-6">
+    <div class="card card-full bg-primary">
+      <div class="card-inner">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <div class="fs-6 text-white text-opacity-75 mb-0">
+            Whatsapp Total Earnings
+          </div>
+        </div>
+        <h5 class="amount fs-1 text-white">
+          {{ earnings|floatformat:2|intcomma|default:'0.00' }}
+          <span class="currency">ksh</span>
+        </h5>
+        <div class="fs-7 text-white text-opacity-75 mt-1">
+          The bigger the package, the bigger the income
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-xxl-6">
+    <div class="card card-full bg-grey is-dark">
+      <div class="card-inner">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <div class="fs-6 text-white text-opacity-75 mb-0">
+            Total Bonus Earnings
+          </div>
+        </div>
+        <h5 class="fs-1 text-white">
+          {{ available_amount|floatformat:2|intcomma|default:'0.00' }}
+          <small class="fs-3">Ksh</small>
+        </h5>
+        <div class="fs-7 text-white text-opacity-75 mt-1">
+          The amount is withdrawable from your wallet
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if messages %}
+<div class="example-alerts mb-4">
+  <div class="gy-4">
+    {% for message in messages %}
+    <div class="example-alert">
+      <div class="alert alert-pro alert-{{ message.tags }} alert-dismissible">
+        <div class="alert-text">
+          <h6>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}{{ message.tags|upper }}:
+            {% endif %}
+          </h6>
+          <p>
+            {{message}}
+          </p>
+        </div>
+        <button class="close" data-bs-dismiss="alert"></button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="card card-bordered">
+    <div class="card-inner">
+      <div class="card-head">
+        <h5 class="card-title">Client Information</h5>
+      </div>
+      <form enctype="multipart/form-data" action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        <div class="row g-4">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label class="form-label" for="{{ form.views.id_for_label }}">{{ form.views.label }}</label>
+              <div class="form-control-wrap">
+                {% if plans %}
+                {{ form.views }}
+                {% else %}
+                {{form.views|attr:'disabled=disabled' }}
+                {% endif %}
+                {{form.views.help_text }}
+              </div>
+            </div>
+          </div>
+
+          <!-- neewww section -->
+
+          <!-- new sec enddddd -->
+          <div class="form-group">
+            <label class="form-label">{{ form.file.label }}</label>
+            <div class="form-control-wrap">
+              <div class="form-file">
+                {% if plans %}
+                {{ form.file }}
+                {% else %}
+                {{ form.file|attr:'disabled=disabled' }}
+                {% endif %}
+                <label class="form-file-label" for="{{ form.file.id_for_label }}">Choose file</label>
+                {{ form.file.help_text }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              {% if plans and profile.plans %}
+              <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+              {% endif %}
+              {% if not plans %}
+              <a href="{% url 'dashboard:invest:invest' %}" class="btn btn-lg btn-primary">
+                Purchase Plan
+              </a>
+              {% else %}
+              <button type="button" role="link" disabled="disabled" class="btn btn-lg btn-primary">
+                Inactive Plan. Wait for activation to proceed
+              </button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br />
+  <br />
+
+  <div class="card-inner p-0">
+    <div class="card-head">
+      <h5 class="card-title">Record{{ whatsappschemestate.count|pluralize }}</h5>
+    </div>
+    {% if whatsappschemestate %}
+    <div class="nk-tb-list nk-tb-ulist is-compact">
+      <div class="nk-tb-item nk-tb-head">
+        <div class="nk-tb-col nk-tb-col-check"></div>
+        <div class="nk-tb-col">
+          <span class="sub-text">Post Date</span>
+        </div>
+        <div class="nk-tb-col tb-col-md">
+          <span class="sub-text">No of View</span>
+        </div>
+
+        <div class="nk-tb-col tb-col-md">
+          <span class="sub-text">Earnings</span>
+        </div>
+
+        <div class="nk-tb-col tb-col-md">
+          <span class="sub-text">Review Date</span>
+        </div>
+
+        <div class="nk-tb-col tb-col-lg">
+          <span class="sub-text">Status</span>
+        </div>
+      </div>
+
+      {% for earn in whatsappschemestate %}
+      <div class="nk-tb-item">
+        <div class="nk-tb-col nk-tb-col-check"></div>
+        <div class="nk-tb-col">
+          <div class="user-card">
+            <div class="user-name">
+              <span class="tb-lead">{{earn.created_at|date:"d/m/Y"}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="nk-tb-col tb-col-md">
+          <span>{{earn.views}}</span>
+        </div>
+
+        <div class="nk-tb-col tb-col-md">
+          <span>
+            {{earn.views}}
+            * 1 =
+            {{earn.amount}}
+            <span class="currency">ksh</span>
+          </span>
+        </div>
+
+        <div class="nk-tb-col tb-col-md">
+          {% if earn.approved %}
+          {{earn.approved_at|date:"d/m/Y"}}
+          {% elif earn.rejected %}
+          {{earn.rejected_at|date:"d/m/Y"}}
+          {% else %}
+          <span class="tb-status text-warning">--/--/----</span>
+          {% endif %}
+        </div>
+
+        <div class="nk-tb-col">
+          {% if earn.approved %}
+          <span class="tb-status text-success">Approved</span>
+          {% elif earn.rejected %}
+          <span class="tb-status text-danger">Rejected</span>
+          {% else %}
+          <span class="tb-status text-warning">Pending</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      <!-- uppto to 20 of them -->
+    </div>
+    {% endif %}
+  </div>
+  <div class="card-inner">
+    <ul class="pagination justify-content-center justify-content-md-start">
+      <li class="page-item">
+        <a class="page-link" href="#">Prev</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item">
+        <span class="page-link">
+          <em class="icon ni ni-more-h"></em>
+        </span>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">6</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">7</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </div>
+  {% endblock %}

@@ -1,0 +1,24 @@
+{% load static %}
+
+<div class="nk-block-head nk-block-head-lg">
+  <div class="nk-block-head-sub">
+    <span>Manage Subscription</span></div>
+  <div class="nk-block-between-md g-4">
+    <div class="nk-block-head-content">
+      <h2 class="nk-block-title fw-normal">My Subscriptions</h2>
+      <div class="nk-block-des">
+        <p>Here is list of package/product that you have subscribed to.
+          <span class="text-primary">
+            <em class="icon ni ni-info"></em></span></p>
+      </div>
+    </div>
+    <div class="nk-block-head-content">
+      <ul class="nk-block-tools gx-3">
+        <li class="order-md-last">
+          <a href="{% url 'subscriptions:plans' %}" class="btn btn-white btn-dim btn-outline-primary">
+            <span>View Pricing</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+{% extends "allauth/layouts/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block inner %}
+
+<form action="{% url 'users:login' %}" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <div class="form-label-group">
+      <label class="form-label" for="{{form.email.id_for_label}}">Email or Username</label>
+    </div>
+    <div class="form-control-wrap">
+      {{form.email}}
+      <div style="margin-top:5px">
+        <small id="email-lookup-result">{{message}}</small>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-lg btn-primary btn-block" id="submitBtn">Sign in</button>
+  </div>
+</form>
+
+<script>
+  document
+    .body
+    .addEventListener('htmx:afterSwap', function (event) {
+      // event.detail.target contains the swapped DOM element
+      const swappedElement = event.detail.target;
+      // You can now perform any additional actions with swappedElement
+      try {
+        const emailResponseBox = document.getElementById('email-lookup-result');
+        const responseBox = emailResponseBox.getAttribute("data-bt-state")
+
+        const submitButton = document.getElementById('submitBtn');
+        if (responseBox === "disabled") {
+
+          submitButton.setAttribute("disabled", "disabled")
+        } else {
+          if (submitButton.getAttribute("disabled")) {
+            submitButton.removeAttribute("disabled")
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    });
+</script>
+
+{% endblock inner %}

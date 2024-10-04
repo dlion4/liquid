@@ -1,0 +1,86 @@
+{% load static value_filter humanize %}
+
+{% comment %} <div class="nk-block-head">
+  <div class="nk-block-head-content">
+    <div class="nk-block-head-sub">
+      <a href="{% url 'subscriptions:list' %}" class="text-soft back-to">
+        <em class="icon ni ni-arrow-left"></em>
+        <span>My Investment</span>
+      </a>
+    </div>
+    <div class="nk-block-between-md g-4">
+      <div class="nk-block-head-content">
+        <h2 class="nk-block-title fw-normal">{{plan.type|title}}
+          - Daily
+          {{plan.type.percentage_return|floatformat:2}}% Interest Return</h2>
+        <div class="nk-block-des">
+          <p>INV-{{plan.sku|strip_none}}
+
+            {% if plan.status == "RUNNING" %}
+              <span class="badge bg-outline bg-primary">Running</span>
+            {% elif plan.status == "CANCELLED" %}
+              <span class="badge bg-outline bg-info">Cancelled</span>
+            {% else %}
+              <span class="badge bg-outline bg-secondary">Stopped</span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      <div class="nk-block-head-content">
+        <ul class="nk-block-tools gx-3">
+          <li>
+
+            <button data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="btn btn-primary">
+              <span>Withdraw</span>
+              <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
+            </button>
+
+          </li>
+          <li class="order-md-last">
+            <button data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deletePlanPopup" class="btn btn-danger">
+              <em class="icon ni ni-cross"></em>
+              <span>Cancel this plan</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+ {% endcomment %}
+
+
+
+
+ <div class="nk-block-head nk-block-head-lg">
+    <div class="nk-block-head-sub">
+        <a class="back-to" href="{% url 'subscriptions:list' %}"><em class="icon ni ni-arrow-left"></em><span>Subscription</span></a>
+    </div>
+    <div class="nk-block-between-md g-4">
+        <div class="nk-block-head-content">
+            <h2 class="nk-block-title fw-normal">{{plan.type|title}} Plan</h2>
+            <div class="nk-block-des">
+                <p>
+                    Your subscription started on {{plan.created_at}}
+                    <span class="text-soft">({{plan.created_at|timesince}} ago)</span>
+                    <span class="text-primary"><em class="icon ni ni-info"></em></span>
+                </p>
+            </div>
+        </div>
+        <div class="nk-block-head-content">
+            <ul class="nk-block-tools justify-content-md-end g-4 flex-wrap">
+                <li class="order-md-last">
+                    <a role="button" class="btn btn-auto btn-dim btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deletePlanPopup">
+                        <em class="icon ni ni-cross"></em>
+                        <span>Cancel Plan Subscription</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="custom-control custom-switch checked">
+                        <input type="checkbox" class="custom-control-input" checked="" id="auto-renew"><label class="custom-control-label text-soft" for="auto-renew">Auto Renew</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

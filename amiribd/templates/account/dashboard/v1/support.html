@@ -1,0 +1,178 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static humanize value_filter rooms %}
+
+{% block content %}
+
+  {% block navbar %}
+    {% include "account/dashboard/v1/components/navbar.html" %}
+  {% endblock navbar %}
+
+  <div class="nk-content p-0" style="height: 80vh; top: 0">
+    <div class="nk-content-inner">
+      <div class="nk-content-body">
+
+        <div class="nk-chat" style="top: 0">
+
+          {% include "account/dashboard/v1/rooms/components/sidebar.html" %}
+
+          <div class="nk-chat-body show-chat" id="mobile-chat-body">
+
+            {% block inner %}
+
+              {% block heading %}{% endblock heading %}
+
+              {% block message %}{% endblock message %}
+
+              <div class="nk-chat-panel" data-simplebar="init">
+                <div class="simplebar-wrapper" style="margin: -20px">
+                  <div class="simplebar-height-auto-observer-wrapper">
+                    <div class="simplebar-height-auto-observer"></div>
+                  </div>
+                  <div class="simplebar-mask">
+                    <div class="simplebar-offset" style="right: 0px; bottom: 0px">
+                      <div class="simplebar-content-wrapper" tabindex="0" role="region" id="messageBodyContent" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll">
+                        {% block panel %}
+                          <!--PANEL MESSAGE TO BE INDEPENDENT-->
+                          {% if collection_messages.items %}
+                            <div class="simplebar-content" style="padding: 20px" id="stream_room_chat_messages">
+                              {% for date, messages in collection_messages.items %}
+                                <div class="chat-sap">
+                                  <div class="chat-sap-meta">
+                                    <span>{{date}}</span>
+                                  </div>
+                                </div>
+                                {% for message in messages reversed %}
+                                  <div class="fade-in-up" id="chat_messages">
+                                    {% include "account/dashboard/v1/chats/messages.html" %}
+                                  </div>
+                                {% endfor %}
+                              {% endfor %}
+                            </div>
+                          {% endif %}
+                          <!--//PANEL MESSAGE TO BE INDEPENDENT-->
+                        {% endblock panel %}
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="simplebar-placeholder" style="width: auto; height: 1053px"></div>
+                </div>
+                <div class="simplebar-track simplebar-horizontal" style="visibility: hidden">
+                  <div class="simplebar-scrollbar" style="
+                  width: 0px;
+                  display: none;
+                  transform: translate3d(0px, 0px, 0px);
+                "></div>
+                </div>
+                <div class="simplebar-track simplebar-vertical" style="visibility: visible">
+                  <div class="simplebar-scrollbar" style="
+                  height: 234px;
+                  transform: translate3d(0px, 0px, 0px);
+                  display: block;
+                "></div>
+                </div>
+              </div>
+
+              {% block form %}
+
+                {% include "account/dashboard/v1/chats/form.html" %}
+
+              {% endblock form %}
+
+            {% endblock inner %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% block footer %}
+    {% include "account/dashboard/v1/components/footer.html" %}
+  {% endblock footer %}
+
+{% endblock content %}
+
+<script>
+  const arrowShowSideNav = document.querySelector(".profile-toggle")
+  const arrowShowSideNavDesktop = document.querySelector(".nk-msg-profile-toggle.profile-toggle")
+
+  const sideNavMini = document.querySelector(".nk-msg-profile")
+
+  const bodyMessage = document.querySelector(".nk-msg-boxed")
+
+  const messageCards = document.querySelectorAll(".nk-msg-item")
+
+  const messageCardBody = document.querySelector(".nk-msg-body.bg-white")
+
+  arrowShowSideNav.addEventListener("click", function () {
+    this
+      .classList
+      .toggle("active")
+    sideNavMini
+      .classList
+      .toggle("visible")
+
+    if (arrowShowSideNav.classList.contains("active")) {
+      arrowShowSideNav.style.marginRight = "50px"
+    } else {
+      arrowShowSideNav.style.marginRight = "0px"
+    }
+
+  })
+
+  arrowShowSideNavDesktop.addEventListener("click", function () {
+    this
+      .classList
+      .toggle("active")
+    sideNavMini
+      .classList
+      .toggle("visible")
+
+    if (arrowShowSideNavDesktop.classList.contains("active")) {
+      arrowShowSideNavDesktop.style.marginRight = "50px"
+    }
+
+  })
+
+  if (sideNavMini.classList.contains("visible")) {
+    document
+      .getElementById("open-body-message")
+      .addEventListener("click", function () {
+        sideNavMini
+          .classList
+          .remove("visible")
+      })
+  }
+
+  messageCards.forEach(card => {
+    card.addEventListener("click", function () {
+
+      messageCardBody
+        .classList
+        .add("show-message")
+
+    })
+  })
+
+  document
+    .querySelector("#open-message.nk-msg-hide")
+    .addEventListener("click", function () {
+      sideNavMini
+        .classList
+        .remove("visible")
+      messageCardBody
+        .classList
+        .remove("show-message")
+    });
+</script>
+
+<script>
+  const messageBodyContent = document.getElementById("messageBodyContent");
+
+  function scrollToBottom() {
+    messageBodyContent.scroll({top: messageBodyContent.scrollHeight, behavior: 'smooth'});
+  }
+
+  scrollToBottom()
+</script>

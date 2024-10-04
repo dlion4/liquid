@@ -1,0 +1,130 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static humanize %}
+{% block heading %}
+
+<style>
+    .devx {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h1 {
+        position: relative;
+        font-size: 3em;
+    }
+    h2 {
+        font-size: 2em;
+    }
+    .hybrid {
+        margin: 0;
+        position: relative;
+        width: auto;
+        display: inline-block;
+    }
+    .hybrid span {
+        color: #1100f1;
+    }
+    .hybrid span::after {
+        content: '|';
+        animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+        0%, 50%, 100% {
+            opacity: 1;
+        }
+        25%, 75% {
+            opacity: 0;
+        }
+    }
+</style>
+
+  <div class="devx">
+    <h2>
+      <span>EarnKraft will introduce</span></h2>
+      <br>
+    <h1>Advanced Upcoming Features</h1>
+    <br>
+    <h2 class="hybrid">
+      <span id="typed"></span>
+    </h2>
+  </div>
+
+  <script>
+    // These are the words we want to display
+    const txt = [
+    "1. Monetization  ",
+    "....where you will monetize your content",
+    "....you will monetize your social links",
+    "...you will showcase your online business",
+    "2. Connections and Hookups   ",
+    "...where you will connect with relevant people according to your liking",
+    "..you will contact the personnel in charge of the service you want directly",
+    "..you will do more than just connect",
+    "..you will meet and bond with various people",
+    "3. Advertisement   ",
+    "..you will advertise and showcase your product",
+    "4. Micro Task    ",
+    "..you will do small repetitive tasks",
+    "... you will do micro tasks that pay per task",
+    "..you will earn from collecting, manipulating, and analyzing data"
+  ];
+
+    // These are increment and decrement counters
+    let i = 0,
+      j = 0;
+
+    // This is for checking if all the characters of the word have been typed
+    let end = false;
+
+    // This will be the waiting function, to give delay after typing
+    function wait(seconds) {
+      return new Promise((resolve) => setTimeout(resolve, seconds * 100));
+    }
+
+    // The main function to type and backspace multiple words
+    async function main() {
+
+      // Check if the value of i is less than array length of txt containing all the words
+      if (i < txt.length) {
+
+        // This is for the auto typing
+        if (end == false && j <= txt[i].length) {
+          document
+            .getElementById("typed")
+            .innerHTML += txt[i][j];
+          j++
+
+        }
+
+        //This is for backspacing the characters one by one
+        if (end == true && j <= txt[i].length) {
+          document
+            .getElementById("typed")
+            .innerHTML = txt[i]
+            .substring(0, j - 1);
+          j--
+
+        }
+
+        // This is for checking if all the characters have been typed
+        if (j == txt[i].length) {
+          end = true;
+          await wait(2)
+        }
+
+        // This is for going to the next word
+        if (end == true && j == 0) {
+          i++
+          end = false // If the value of i becomes greater than;
+        }
+      } else 
+        i = 0;
+      setTimeout(main, 100)
+
+    }
+    main();
+  </script>
+
+{% endblock heading %}
+
+{% block main %}{% endblock main %}

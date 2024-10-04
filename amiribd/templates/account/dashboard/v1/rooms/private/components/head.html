@@ -1,0 +1,104 @@
+{% load static humanize value_filter rooms %}
+
+<div class="nk-chat-head">
+  <ul class="nk-chat-head-info">
+    <li class="nk-chat-body-close" id="mobile-remove-chat">
+      <a href="#" class="btn btn-icon btn-trigger nk-chat-hide ms-n1">
+        <em class="icon ni ni-arrow-left"></em>
+      </a>
+    </li>
+
+    <script>
+      document
+        .getElementById("mobile-remove-chat")
+        .addEventListener("click", function () {
+          document
+            .getElementById("mobile-chat-body")
+            .classList
+            .remove("show-chat");
+        });
+
+      document
+        .querySelectorAll(".chat-item")
+        .forEach((element) => {
+          element.addEventListener("click", () => {
+            document
+              .getElementById("mobile-chat-body")
+              .classList
+              .add("show-chat");
+          });
+        });
+    </script>
+
+    <li class="nk-chat-head-user">
+      <div class="user-card">
+        <div class="user-avatar bg-purple">
+          <span>{{message.receiver.full_name|generate_initials}}</span>
+        </div>
+        <div class="user-info">
+          <div class="lead-text">{{message.receiver.full_name|title}}</div>
+          <div class="sub-text">
+            <span class="d-none d-sm-inline me-1">Created
+            </span>
+            {{message.created_at|timesince}}
+            ago
+          </div>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+  <ul class="nk-chat-head-tools">
+    <li>
+      <a href="#" class="btn btn-icon btn-trigger text-primary">
+        <em class="icon ni ni-call-fill"></em>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="btn btn-icon btn-trigger text-primary">
+        <em class="icon ni ni-video-fill"></em>
+      </a>
+    </li>
+    <li class="d-none d-sm-block">
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger text-primary" data-bs-toggle="dropdown">
+          <em class="icon ni ni-setting-fill"></em>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <ul class="link-list-opt no-bdr">
+            <li>
+              <a class="dropdown-item" href="#">
+                <em class="icon ni ni-archive"></em>
+                <span>Make as Archive</span></a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <em class="icon ni ni-cross-c"></em>
+                <span>Remove Conversion</span></a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <em class="icon ni ni-setting"></em>
+                <span>More Options</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li class="me-n1 me-md-n2">
+      <a href="#" class="btn btn-icon btn-trigger text-primary chat-profile-toggle">
+        <em class="icon ni ni-alert-circle-fill"></em>
+      </a>
+    </li>
+  </ul>
+  <div class="nk-chat-head-search">
+    <div class="form-group">
+      <div class="form-control-wrap">
+        <div class="form-icon form-icon-left">
+          <em class="icon ni ni-search"></em>
+        </div>
+        <input type="text" class="form-control form-round" id="chat-search" placeholder="Search in Conversation"/>
+      </div>
+    </div>
+  </div>
+</div>

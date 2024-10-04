@@ -1,0 +1,108 @@
+{% load static %}
+
+<form action="#" method="post" id="addPlanForm" class="form-validate is-alter">
+  <div class="row gx-4 gy-3">
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Select plan type</label>
+        <div class="form-control-wrap">
+          {{add_plan_form.type}}
+        </div>
+      </div>
+    </div>
+
+    <small id='plan-type-response'>
+      <span id='response-price' data-price='{{plan.price}}'></span></small>
+
+    <div class="col-12">
+      <ul class="d-flex justify-content-between gx-4 mt-1">
+        <li>
+          <button id="updateEvent" type="submit" class="btn btn-primary">Add plan to my pool</button>
+        </li>
+        <li>
+          <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Request</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>
+
+<script>
+  const planTypeResponse = document.getElementById("plan-type-response");
+
+  var priceField = document.createElement("div");
+  priceField.id = "priceField";
+  priceField.className = "col-12";
+  priceField.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Plan Budget</label>
+        <div class="form-control-wrap">
+          <input type="number" name="price" class="form-control form-control-lg" placeholder="" maxlength="20" id="id_price" value="">
+        </div>
+      </div>
+    `;
+
+  // Check if plan-type-response has an ID of 'success'
+
+  const addPlanForm = document.getElementById("addPlanForm")
+
+  addPlanForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const formData = new FormData(addPlanForm)
+    console.log(formData)
+
+    if (!formData) {
+      return null;
+    }
+
+    fetch("/htmx/account/plan-type/", {
+      method: "POST",
+      body: formData
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+
+        window
+          .location
+          .reload()
+      })
+      .catch((error) => {
+        console.error(error)
+        alert("You already subscribed to the selected plan")
+      })
+    })
+
+  try {
+    const typeSelection = document.getElementById("plan-type-choice")
+
+    typeSelection.addEventListener("change", async (e) => {
+
+      if (!e.target.value) {
+        if (priceField) {
+          priceField.remove()
+        }
+        return false
+      }
+      const response = await fetch(`/htmx/account/plan-type/?plan-type=${e.target.value}`)
+
+      const data = await response.json();
+
+      if (!data) {
+        return new Error(`Plan type not found`)
+      }
+
+      planTypeResponse
+        .parentNode
+        .insertBefore(priceField, planTypeResponse.nextSibling);
+      // update after the swap
+      const planTypePrice = document.getElementById("id_price")
+      const responsePrice = document.getElementById("response-price")
+      responsePrice.setAttribute("data-price", data.price)
+      planTypePrice.value = responsePrice.getAttribute("data-price")
+    })
+  } catch (error) {
+    console.log(error)
+  }
+</script>

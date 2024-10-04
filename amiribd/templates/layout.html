@@ -1,0 +1,115 @@
+{% load static i18n compress %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>{% block title %}Earnkraft{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="investment app" />
+  <meta name="author" content="kwasa" />
+  <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
+  {% compress css %}
+  <!-- Your stuff: Third-party CSS libraries go here -->
+  <!-- This file stores project-specific CSS -->
+  <link rel="icon" href="{% static 'img/elogosmall.png' %}" />
+  <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+  <!-- preload assets -->
+  <link rel="preload" href="{% static 'fonts/fa-brands-400.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/inter-v12-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/inter-v12-latin-500.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/inter-v12-latin-700.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'css/style.css' %}" as="style">
+  <link rel="preload" href="{% static 'css/toastr.min.css' %}" as="style">
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/partner.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome.all.min.css' %}">
+  <!-- UIkit CSS -->
+  {% endcompress css %}
+  <!-- Le javascript ================================================== -->
+  {# Placed at the top of the document so pages load faster with defer #}
+  {% compress js %}
+  {% block javascript %}
+  <!-- Bootstrap JS -->
+  <!-- Your stuff: Third-party javascript libraries go here -->
+  <!-- place project specific Javascript in this file -->
+  <link rel="preload" href="{% static 'js/vendors/uikit.min.js' %}" as="script">
+  <link rel="preload" href="{% static 'js/vendors/htmx.min.js' %}" as="script">
+  <link rel="preload" href="{% static 'js/vendors/axios.min.js' %}" as="script">
+  <link rel="preload" href="{% static 'js/vendors/toastr.min.js' %}" as="script">
+  <link rel="preload" href="{% static 'js/utilities.min.js' %}" as="script">
+  <link rel="preload" href="{% static 'js/config-theme.js' %}" as="script">
+  <!-- uikit -->
+  <script defer src="{% static 'js/vendors/uikit.min.js' %}"></script>
+  <!-- favicon -->
+  <script defer src="{% static 'js/project.js' %}"></script>
+  <script defer src="{% static 'js/bootstrap/5.2.3/js/bootstrap.min.js' %}"></script>
+
+  {% endblock javascript %}
+  {% endcompress js %}
+</head>
+
+<body class="{% block bodyclass %}{% endblock bodyclass %}">
+  <div class="page-loader">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  {% comment %} header {% endcomment %}
+  {% comment %} {% include "v1f/components/navbar.html" %} {% endcomment %}
+  {% block navbar %}{% endblock navbar %}
+  {% block body %}
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+  {% endblock body %}
+  <!-- /container -->
+  {% block modal %}
+  {% endblock modal %}
+  {% block inline_javascript %}
+
+  {% endblock inline_javascript %}
+  {% comment %} {% endcomment %}
+  {% block footer %}
+
+  {% endblock footer %}
+
+  <!-- footer end -->
+
+  <!-- to top begin -->
+  <a href="javascript:void(0)" class="to-top uk-visible@m" data-uk-scroll>
+    Top<i class="fas fa-chevron-up"></i>
+  </a>
+  <!-- to top end -->
+  <!-- javascript -->
+  <script src="{% static 'js/utilities.min.js' %}"></script>
+  <script src="{% static 'js/config-theme.js' %}"></script>
+
+  {% comment %} toats notifications {% endcomment %}
+  {% if messages %}
+  {% for message in messages %}
+  <script>
+    const msgTag = '{{ message.tags }}'
+    toastr.msgTag('{{ message }}');
+  </script>
+  {% endfor %}
+  {% endif %}
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- content here -->
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+
+</html>

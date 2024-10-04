@@ -1,0 +1,41 @@
+{% load static humanize %}
+
+<style>
+  .price-plan-media>img {
+    width: 100px !important;
+    height: 100px !important;
+  }
+</style>
+
+<div class="nk-block">
+  {% if plans_available %}
+  <div class="row g-gs">
+    {% for plan in plans_available %}
+    <div class="col-md-4">
+      <div class="price-plan card card-bordered text-center">
+        <div class="card-inner">
+          <div class="price-plan-media">
+            {% comment %} <img src="{{ plan.svg }}" alt=""> {% endcomment %}
+          </div>
+          <div class="price-plan-info mb-3">
+            <h5 class="title mb-2">{{ plan.type }}</h5>
+            <span>{{ plan.description }}</span>
+          </div>
+          <div class="price-plan-amount mb-2">
+            <div class="amount">
+              {{ plan.price|floatformat:2|intcomma}}
+              <span class="currency">KES</span>
+            </div>
+            <span class="bill">{{ plan.interval }}</span>
+          </div>
+
+          <div class="price-plan-action">
+            <a role="button" data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal" class="btn btn-primary">Choose Plan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

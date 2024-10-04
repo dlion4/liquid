@@ -1,0 +1,54 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static %}
+
+<div class="nk-content nk-content-lg nk-content-fluid">
+  <div class="container-xl wide-lg">
+    <div class="nk-content-inner">
+      <div class="nk-content-body">
+
+        {% block heading %}
+
+          <div class="nk-block-head nk-block-head-lg">
+            <div class="nk-block-head-content">
+              <div class="nk-block-head-sub">
+                {% if plans %}
+                  <a href="" class="back-to">
+                    <em class="icon ni ni-arrow-left"></em>
+                    <span>My Plans</span></a>
+                {% else %}
+                  <a href="" class="back-to">
+                    Plan Linked To Account!!
+                    <span>
+                      <em class="icon ni ni-arrow-right"></em>
+                    </span>
+                  </a>
+
+                {% endif %}
+              </div>
+              <div class="nk-block-head-content">
+                <h2 class="nk-block-title fw-normal">Start by selecting a plan</h2>
+              </div>
+            </div>
+          </div>
+
+        {% endblock heading %}
+
+        {% block main %}
+          <div class="nk-block invest-block">
+            <div class="invest-form">
+              <div class="row g-gs">
+                {% include "account/dashboard/v1/investment/components/schemes/forms.html" %}
+
+                <!--summary form-->
+                {% include "account/dashboard/v1/investment/components/schemes/summary.html" %}
+
+              </div>
+            </div>
+          </div>
+        {% endblock main %}
+
+      </div>
+    </div>
+  </div>
+</div>
+

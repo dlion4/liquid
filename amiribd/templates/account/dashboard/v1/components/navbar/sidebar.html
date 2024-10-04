@@ -1,0 +1,535 @@
+{% load static humanize %} {% load usergroups %}
+
+<div class="nk-sidebar nk-sidebar-fixed" data-content="sidebarMenu">
+    <div class="nk-sidebar-element nk-sidebar-head">
+        <div class="nk-sidebar-brand">
+            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:home' %}" class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo"><img class="logo-dark logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo-dark">
+                <span class="nio-version">Earnkraft</span></a>
+        </div>
+        <div class="nk-menu-trigger me-n2">
+            <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu">
+                <em class="icon ni ni-arrow-left"></em>
+            </a>
+        </div>
+    </div>
+    <div class="nk-sidebar-element">
+        <div class="nk-sidebar-body" data-simplebar="">
+            <div class="nk-sidebar-content">
+                {% if plans %}
+                <div class="nk-sidebar-widget d-none d-xl-block">
+                    <div class="user-account-info between-center">
+                        <div class="user-account-main">
+                            <h6 class="overline-title-alt">Available Balance</h6>
+                            <div class="amount user-balance">{{available_amount|floatformat:2|intcomma}}
+                                <span class="currency currency-btc">
+                                    KES
+                                </span>
+                            </div>
+                            <div class="amount user-balance-alt">{{locked_amount|floatformat:2|intcomma}}
+                                <span class="currency currency-btc">KES</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-white btn-icon btn-light">
+                            <em class="icon ni ni-line-chart"></em>
+                        </a>
+                    </div>
+                    <ul class="user-account-data gy-1">
+                        <li>
+                            <div class="user-account-label">
+                                <span class="sub-text">Profit</span>
+                            </div>
+                            <div class="user-account-value">
+                                <span class="lead-text">+ 0
+                                    <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">0%
+                                    <em class="icon ni ni-arrow-long-up"></em></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user-account-label">
+                                <span class="sub-text">Deposits</span>
+                            </div>
+                            <div class="user-account-value">
+                                <span class="sub-text">{{deposit_amount}}
+                                    <span class="currency currency-btc">KES</span></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="user-account-actions">
+                        <ul class="g-3">
+                            <li>
+                                <a href="#" class="btn btn-lg btn-primary me-2">
+                                    <span>Deposit</span>
+                                
+                                </a>
+                            </li>
+                            {% if available_amount > 0.00 %}
+                            <li>
+                                <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="btn btn-lg btn-warning">
+                                    <span>Withdraw</span>
+                                    
+                                </a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="#" class="btn btn-lg btn-warning disabled me-3">
+                                    <span>Withdraw</span>
+                                    
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+                {% endif %}
+                <div class="nk-sidebar-widget nk-sidebar-widget-full d-xl-none pt-0">
+                    <a class="nk-profile-toggle toggle-expand" data-target="sidebarProfile" href="#">
+                        <div class="user-card-wrap">
+
+                            <div class="user-card">
+                                <div class="user-avatar">
+                                    <span>{{profile.initials}}</span>
+                                </div>
+                                <div class="user-info">
+                                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span>
+                                </div>
+                                <div class="user-action">
+                                    <em class="icon ni ni-chevron-down"></em>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="nk-profile-content toggle-expand-content" data-content="sidebarProfile">
+
+                        {% if plans %}
+                        <div class="user-account-info between-center">
+
+                            <div class="user-account-main">
+                                <h6 class="overline-title-alt">Available Balance</h6>
+                                <div class="amount user-balance">{{available_amount}}
+                                    <span class="currency currency-btc">KES</span>
+                                </div>
+                                <div class="amount user-balance-alt">{{locked_amount}}
+                                    <span class="currency currency-btc">KES</span>
+                                </div>
+                            </div>
+
+                            <a href="#" class="btn btn-icon btn-light">
+                                <em class="icon ni ni-line-chart"></em>
+                            </a>
+                        </div>
+                        <ul class="user-account-data">
+                            <li>
+                                <div class="user-account-label">
+                                    <span class="sub-text">Profits</span>
+                                </div>
+                                <div class="user-account-value">
+                                    <span class="lead-text">+ 0.0526
+                                        <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">3.1%
+                                        <em class="icon ni ni-arrow-long-up"></em></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="user-account-label">
+                                    <span class="sub-text">Deposits</span>
+                                </div>
+                                <div class="user-account-value">
+                                    <span class="amount sub-text text-base">{{deposit_amount}}
+                                        <span class="currency currency-btc">KES</span></span>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="user-account-links">
+                            {% if available_amount > 0.00 %}
+                            <li>
+                                <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="link">
+                                    <span>Withdraw Funds</span>
+                                    
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <a href="#" class="link">
+                                    <span>Deposit Funds</span>
+                                    <em class="icon ni ni-wallet-in"></em>
+                                </a>
+                            </li>
+                        </ul>
+
+                        {% endif %}
+
+                        <ul class="link-list">
+                            <li>
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:profile' %}">
+                                    <em class="icon ni ni-user-alt"></em>
+                                    <span>View Profile</span></a>
+                            </li>
+                            <li>
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:profile' %}">
+                                    <em class="icon ni ni-setting-alt"></em>
+                                    <span>Account Setting</span></a>
+                            </li>
+                            <li>
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:profile' %}">
+                                    <em class="icon ni ni-activity-alt"></em>
+                                    <span>Login Activity</span></a>
+                            </li>
+                        </ul>
+                        <ul class="link-list">
+                            <li>
+                                <a role="button" class="link" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                                    <em class="icon ni ni-signout"></em>
+                                    <span>Sign out</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nk-sidebar-menu">
+                    <ul class="nk-menu">
+                        <!-- <li class="nk-menu-heading">
+                            <h6 class="overline-title">Menu</h6>
+                        </li> -->
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:home' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-dashboard"></em>
+                                </span><span class="nk-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:wallet' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-wallet-alt"></em>
+                                </span><span class="nk-menu-text">Wallets</span>
+                            </a>
+                        </li>
+                        {% comment %}
+                        <li class="nk-menu-item">
+                            <a role="button" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-coins"></em>
+                                </span><span class="nk-menu-text">Buy / Sell</span>
+                            </a>
+                        </li>
+                        {% endcomment %} {% comment %}
+
+                        <li class="nk-menu-item">
+                            <a role="button" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-article"></em>
+                                </span><span class="nk-menu-text">Articles</span>
+                            </a>
+                        </li> {% endcomment %}
+
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:referals' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
+                                <span class="nk-menu-text">Referals
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:bonus' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-gift"></em></span>
+                                <span class="nk-menu-text">Bonus</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:whatsapp' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-whatsapp"></em></span>
+                                <span class="nk-menu-text">Whatsapp</span>
+                            </a>
+                        </li>
+                          {% if plans %}
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:jobs:jobs' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
+                                <span class="nk-menu-text">Jobs</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:academic_writing_accounts' %}" class="nk-menu-link">
+                                <Span class="nk-menu-icon"><em class="icon ni ni-edit"></em></Span>
+                                <span class="nk-menu-text">Online Writing</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:vip' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-star"></em></span>
+                                <span class="nk-menu-text">VIP Role</span>
+                            </a>
+                        </li>
+                        {% comment %} <li class="nk-menu-item">
+                            <a role="button" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-repeat"></em>
+                                </span><span class="nk-menu-text">Investiments</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-chart-bar"></em></span>
+                                <span class="nk-menu-text">Investment plans
+
+                                </span>
+                            </a>
+                        </li> 
+                        {% endcomment %}
+                         {% if plans %}
+                            <li class="nk-menu-item">
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
+                                    <span class="nk-menu-text">Invest and Save</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:advertise' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                   <em class="icon ni ni-bulb"></em>
+                                </span>
+                                <span class="nk-menu-text">Advertise
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:monetize' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-money"></em></span>
+
+                                <span class="nk-menu-text">Monetize
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a href="{% url 'dashboard:invest:monetize' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
+
+                                <span class="nk-menu-text">Hookups
+                                </span>
+                            </a>
+                        </li>
+                        
+                        
+
+                        <li class="nk-menu-item">
+                            <a role="button" class="nk-menu-link" href="#">
+                                <span class="nk-menu-icon"><em class="icon ni ni-check"></em></span>
+                                <span class="nk-menu-text">Micro Tasks</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:comingsoon' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-notify"></em>
+                                </span>
+                                <span class="nk-menu-text">Comming Soon
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:qinfo' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-question-alt"></em>
+                                </span>
+                                <span class="nk-menu-text">Quick Info</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nk-sidebar-widget">
+                    {% if plans %}
+                    <div class="widget-title">
+                        <h6 class="overline-title">Active Plan
+                            <span>({{plans.count}})</span>
+                        </h6>
+                        <a href="{% url 'subscriptions:list' %}" class="link">Manage</a>
+                    </div>
+                    <ul class="wallet-list">
+                        {% for plan in plans %}
+                        <li class="wallet-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% if plan.is_paid %}{{plan.get_absolute_url}}{% else %}#{% endif %}">
+                                <div class="wallet-icon">
+                                    <em class="icon ni {{plan.type.icon}}"></em>
+                                </div>
+                                <div class="wallet-text">
+                                    <h6 class="wallet-name">{{plan.type}}</h6>
+                                    <span class="amount wallet-balance">{{plan.type.price}}
+                                        <span class="currency currency-nio">KES</span></span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <li class="wallet-item wallet-item-add">
+                            <a href="{% url 'subscriptions:plans' %}">
+                                <div class="wallet-icon">
+                                    <em class="icon ni ni-plus"></em>
+                                </div>
+                                <div class="wallet-text">
+                                    <h6 class="wallet-name" role="button">Upgrade Plan</h6>
+                                    <!--
+                                        data-bs-toggle="modal" data-bs-target="#addPlanPopupForm" data-bs-dismiss="modal"
+                                    -->
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+               
+                
+
+                <!--  -->
+                 <!-- TODO: set permission is_premium -->
+                <hr />
+                <div class="nk-sidebar-menu">
+                    {% if plans %}
+                    <ul class="nk-menu">
+                        <li class="nk-menu-heading mb-3">
+                            <h6 class="overline-title">AI & Content Creation</h6>
+                        </li>
+
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-files"></em>
+                                </span><span class="nk-menu-text">Blogging</span>
+                            </a>
+
+                            <ul class="nk-menu-sub">
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:articles:blogging-home' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">My content
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">AI Detector
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">AI Remover
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">Podcasts
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">Text To Video
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="#" class="nk-menu-link">
+                                        <span class="nk-menu-text">Video To Text
+                                        </span>
+                                    </a>
+                                </li>
+                                
+                                
+                                <li class="nk-menu-item">
+                                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">Pricing
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                <!--  -->
+                <div class="nk-sidebar-menu ">
+
+                    <ul class="nk-menu">
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon fas fa-upload"></em>
+
+                                </span><span class="nk-menu-text">Uploads</span>
+                            </a>
+                        </li>
+                    <ul class="nk-menu">
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-chat-circle"></em>
+                                </span><span class="nk-menu-text">Chats</span>
+                            </a>
+                        </li>
+
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-user-c"></em>
+                                </span><span class="nk-menu-text">Account</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'subscriptions:home' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-swap-alt"></em>
+                                </span><span class="nk-menu-text">Subscriptions</span>
+                            </a>
+                        </li>
+
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-headphone"></em>
+                                </span><span class="nk-menu-text">Assistant</span>
+                            </a>
+                        </li>
+
+                        
+
+                    </ul>
+                </div>
+                <hr />
+                <div class="nk-sidebar-footer">
+                    <ul class="nk-menu nk-menu-footer d-flex flex-wrap mb-3">
+                        <li class="nk-menu-item me-3">
+                            <a href="#" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-help-alt"></em>
+                                </span><span class="nk-menu-text">Support</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item me-3">
+                            <div class="dropup">
+                                {% include "account/dashboard/v1/components/languages.html" %}
+                            </div>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a data-bs-toggle="modal" href="#Community" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-chat-fill"></em>
+                                </span>
+                                <span class="nk-menu-text">Community</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a data-bs-toggle="modal" href="#EarningTips" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-info-fill"></em>
+                                </span>
+                                <span class="nk-menu-text">Earning Tips</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>

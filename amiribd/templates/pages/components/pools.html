@@ -1,0 +1,131 @@
+{% load static %}
+<style>
+  body {
+    font: 12px/1.5 'PT Sans', serif;
+  }
+
+  .tags {
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .tags li {
+    float: left;
+  }
+
+  .tag {
+    background: #eee;
+    border-radius: 3px 0 0 3px;
+    color: #999;
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 20px 0 23px;
+    position: relative;
+    margin: 0 10px 10px 0;
+    text-decoration: none;
+  }
+
+  .tag::before {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+    content: '';
+    height: 6px;
+    left: 10px;
+    position: absolute;
+    width: 6px;
+    top: 10px;
+  }
+
+  .tag::after {
+    background: #fff;
+    border-bottom: 13px solid transparent;
+    border-left: 10px solid #eee;
+    border-top: 13px solid transparent;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .tag:hover {
+    background-color: crimson;
+    color: white;
+  }
+
+  .tag:hover::after {
+    border-left-color: crimson;
+  }
+</style>
+<!-- section content begin -->
+<div class="uk-section in-wave-2">
+  <div class="uk-container">
+    <div class="uk-grid">
+      <div class="uk-width-3-4@m">
+        <h1 class="uk-margin-remove-bottom">
+          Account-<span class="in-highlight">Investment</span>pool
+        </h1>
+        <p class="uk-text-lead uk-text-muted uk-margin-small-top uk-margin-bottom">
+          Get extra bonuses and commissions across all investment levels. Receive even better rates as your level
+          increases.
+        </p>
+      </div>
+    </div>
+    <div class="uk-grid-medium uk-grid-match" data-uk-grid="data-uk-grid">
+      <div class="uk-width-1-2@s uk-width-1-4@m">
+        <div
+          class="uk-card uk-card-default uk-card-body uk-border-rounded uk-background-contain uk-background-bottom-center">
+          <h2 class="uk-margin-remove">
+            <a href="{% url 'dashboard:invest:invest' %}">Individual</a>
+          </h2>
+          <p>
+            The Individual package allows a single user to access extra bonuses and commissions. As your investment
+            level increases, you can unlock even better rates. This package also offers the option to select other
+            premium packages.
+          </p>
+        </div>
+      </div>
+      <div class="uk-width-1-2@s uk-width-1-4@m">
+        <div
+          class="uk-card uk-card-default uk-card-body uk-border-rounded uk-background-contain uk-background-bottom-center">
+          <h2 class="uk-margin-remove">
+            <a href="{% url 'dashboard:invest:invest' %}">Joint</a>
+          </h2>
+          <p>
+            The Joint package is designed for two or more friends who want to invest together. They can access premium
+            packages by subscribing with a shared amount. Once the returns are achieved, the payout is distributed among
+            the involved parties.
+          </p>
+        </div>
+      </div>
+      <div class="uk-width-1-2@s uk-width-1-4@m">
+        <div
+          class="uk-card uk-card-default uk-card-body uk-border-rounded uk-background-contain uk-background-bottom-center">
+          <h2 class="uk-margin-remove">
+            <a href="{% url 'dashboard:invest:invest' %}">Freelancer</a>
+          </h2>
+          <p>
+            The Freelancer package allows remote workers and freelancers to work on short-term and long-term online projects offered on our platform and earn substantial income in USD rates.
+          </p>
+        </div>
+      </div>
+      <div class="uk-width-1-2@s uk-width-1-4@m">
+        <div
+          class="uk-card uk-card-default uk-card-body uk-border-rounded uk-background-contain uk-background-bottom-center">
+          <h2 class="uk-margin-remove">
+            <a href="{% url 'dashboard:invest:invest' %}">Merchant</a>
+          </h2>
+          <p>
+            The Merchant package is tailored for individuals or businesses offering digital services and products, such
+            as online writing accounts. They can sell these on our platform and earn returns on their investments.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- section content end -->

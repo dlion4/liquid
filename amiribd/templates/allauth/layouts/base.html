@@ -1,0 +1,143 @@
+{% extends 'account/dashboard/layout.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+<main>
+
+  <style>
+    .centered {
+      position: absolute;
+      /* or absolute */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      margin: auto;
+    }
+
+    @media (max-width: 700px) {
+      .centered {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .centered {
+        width: 100%;
+        padding: 20px 60px;
+      }
+    }
+
+    .card {
+      box-shadow: 20px 30px 10 #ccc;
+      border-radius: 20px;
+    }
+
+    .py-2 {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .py-1 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .py-0_5 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .text-error {
+      color: coral;
+    }
+
+    .text-danger {
+      color: red;
+    }
+
+    .text-info {
+      color: cadetblue;
+    }
+
+    .text-warning {
+      color: rgb(242, 174, 39);
+    }
+  </style>
+  <!-- section content begin -->
+  {% block content %}
+  <div class="nk-wrap nk-wrap-nosidebar">
+    <div class="nk-content">
+      <div class="nk-block nk-block-middle nk-auth-body wide-xs">
+        <div class="brand-logo pb-4 text-center"></div>
+        <div class="card card-bordered">
+          <div class="card-inner card-inner-lg">
+            <div class="nk-block-head">
+              <div class="nk-block-head-content">
+                {% if request.path == "/users/login/" %}
+                <h4 class="nk-block-title">Sign-In</h4>
+                <div class="nk-block-des">
+                  <p>Access your Earnkraft dashboard using your email.</p>
+                  {% if messages %}
+                  {% for message in messages %}
+                  <p class="card py-0_5 text-{% if message.tags %}{{message.tags}}{% endif %}">
+                    {{message}}
+                  </p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+                {% elif request.path == "/users/signup/" %}
+                <h4 class="nk-block-title">Sign-Up</h4>
+                <div class="nk-block-des">
+                  <p>Create an account with us and start earning.</p>
+                </div>
+                {% endif %}
+                <!-- 
+                    MESSAGE CONCERNING TOKEN AUTHENTICATION
+                    -->
+              </div>
+            </div>
+
+            {% block inner %}{% endblock inner %}
+
+            <div class="form-note-s2 text-center pt-4">
+              {% if request.path == '/users/login/' %}
+              New on our platform?
+              <a href="{% url 'users:signup' %}">Create an account</a>
+              {% elif request.path == '/users/signup/' %}
+              Already have an account?
+              <a href="{% url 'users:login' %}">Login Now</a>
+              {% endif %}
+            </div>
+            {% if SOCIALACCOUNT_ENABLED %}
+            <div class="text-center pt-4 pb-3">
+              <h6 class="overline-title overline-title-sap">
+                <span>OR</span>
+              </h6>
+            </div>
+            <ul class="nav justify-center gx-4">
+              <li class="nav-item">
+                <a class="link link-primary fw-normal py-2 px-3" href="#">Facebook</a>
+              </li>
+              <li class="nav-item">
+                <a class="link link-primary fw-normal py-2 px-3" href="#">Google</a>
+              </li>
+            </ul>
+
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+      {% include "allauth/auth/footer.html" %}
+    </div>
+  </div>
+
+  {% endblock content %}
+
+  <!-- login form end -->
+
+</main>
+{% endblock body %}

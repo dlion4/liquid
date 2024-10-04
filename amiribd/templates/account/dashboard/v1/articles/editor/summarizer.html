@@ -1,0 +1,334 @@
+{% extends "account/dashboard/v1/articles/editor/base.html" %}
+
+{% block main %}
+  <style>
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Adjust the height as needed */
+    }
+
+    #summarize {
+      width: 100%;
+      /* Make the button take the full width of its parent */
+      max-width: 300px;
+      /* Optional: limit the maximum width */
+      box-sizing: border-box;
+      /* Ensure padding and border are included in the element's total width and height */
+      align-items: center;
+      display: inline-flex;
+      justify-content: center;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .bg-light {
+      background-color: #f8f9fa;
+      /* Adjust to your desired background color */
+    }
+  </style>
+
+  <h1>Youtube Summarizer</h1>
+
+  <form id="uploadVideo">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+      <small class="errorlist my-1 mb-1" id="errorvideo_url"></small>
+    </div>
+    <button type="submit" class="btn btn-lg btn-primary pb-3" id="upload-btn">Summarize</button>
+  </form>
+
+  <div class="d-none align-items-center bg-light py-4 px-4 my-2" id="upload-state-area">
+    <strong id="upload-state-text">Extracting audio from video...</strong>
+    <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+  </div>
+  <div class="d-none align-items-center bg-light py-5 px-5 my-2" id="transcript-area"></div>
+  <div class="button-container summarizebtn">
+    <button id="summarize" class="d-flex btn py-3 px-3 bg-light align-items-center">
+      Summarize
+    </button>
+  </div>
+
+  <div class="d-none align-items-center bg-light py-5 px-5 my-2" id="summary-area"></div>
+
+{% endblock main %}
+
+{% block js %}
+
+  <script>
+    class YoutubeSummarizer {
+      constructor() {
+        this.videoId = "";
+        this.videoTitle = "";
+        this.videoDescription = "";
+        this.upload_url = "{{request.path}}";
+        this.uploadStateArea = document.getElementById("upload-state-area");
+        this.uploadStateAreaText = document.getElementById("upload-state-text");
+        this.errorvideo_url = document.getElementById("errorvideo_url");
+        this.transcription_url = `{% url 'dashboard:articles:editor:transcription' %}`;
+        this.uploadBtn = document.getElementById("upload-btn");
+        this.transcriptArea = document.getElementById("transcript-area");
+        this.summarizationUrl = '{% url "dashboard:articles:editor:summarize" %}';
+        this.summarizationBtn = document.querySelector(".button-container.summarizebtn")
+        this.summaryArea = document.getElementById("summary-area")
+      }
+
+      async initialize() {
+        console.log("Initializing ...");
+        this.hideUploadStateArea();
+        await this.uploadVideoLink();
+
+        this.hideSummarizerBtn();
+
+      };
+
+      async getVideoInfo(videoId) {
+        const apiKey = "YOUR_YOUTUBE_API_KEY";
+        const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet,contentDetails`;
+      };
+
+      downloadVideo = async (url, uploadedData) => {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'X-CSRFToken': "{{csrf_token}}"
+          },
+          body: JSON.stringify({"video_url": uploadedData})
+        })
+
+        const data = await response.json();
+        return data;
+
+      };
+
+      transcribeAudioLink = async (audio_link, audio_pk) => {
+        // Transacribe audio link here
+        // return transcript_text;
+        this.showUploadStateArea();
+        // return transcript_
+        this.uploadStateAreaText.innerHTML = "Transacribing audio file ...";
+        const response = await fetch(this.transcription_url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'X-CSRFToken': "{{csrf_token}}"
+          },
+          body: JSON.stringify({"audio_link": audio_link, 'audio_pk': audio_pk})
+        })
+
+        const data = await response.json();
+        return data
+
+      };
+
+      uploadVideoLink() {
+        const form = document.getElementById("uploadVideo")
+
+        form.addEventListener("submit", async (e) => {
+
+          e.preventDefault();
+
+          this
+            .uploadBtn
+            .setAttribute("disabled", "disabled");
+
+          const link = document
+            .getElementById("video_url")
+            .value;
+
+          await this.showUploadStateArea();
+
+          const response = await this.downloadVideo(this.upload_url, link);
+
+          console.log(response)
+
+          if (!response.success) {
+            this.errorvideo_url.innerHTML = JSON
+              .parse(response.data)
+              .video_url;
+            this.hideUploadStateArea()
+            return;
+          }
+
+          const audio_link = response.data;
+          // TODO:audio transcript
+          console.log("Audio Link", response.data)
+
+          const audioTranscript = await this.transcribeAudioLink(response.instance.audio_url, response.instance.id)
+
+          if (!audioTranscript.success) {
+            this.hideUploadStateArea()
+            return;
+          }
+          // show the text
+          console.log(audioTranscript)
+          this.displayTranscript(audioTranscript.data)
+
+          // this is the sumarizer with the language model
+          // const summary = await this.summarizeTranscript(audioTranscript.response);
+
+          // console.log(summary);
+          this.showSummarizerBtn();
+          this.hideUploadStateArea();
+          await this.summarizeTranscription();
+          //
+
+          // to show the button
+          this
+            .uploadBtn
+            .removeAttribute("disabled");
+        })
+      }
+
+      showSummarizerBtn() {
+        this
+          .summarizationBtn
+          .classList
+          .remove("d-none");
+        this
+          .summarizationBtn
+          .classList
+          .add("d-flex");
+      }
+      hideSummarizerBtn() {
+        this
+          .summarizationBtn
+          .classList
+          .remove("d-flex");
+        this
+          .summarizationBtn
+          .classList
+          .add("d-none");
+      }
+
+      displayTranscript(data) {
+        this
+          .transcriptArea
+          .classList
+          .remove("d-none");
+        this
+          .transcriptArea
+          .classList
+          .add("d-flex");
+
+        this.transcriptArea.innerHTML = data.video_transcript;
+
+        localStorage.setItem("yt_transcript_instance", JSON.stringify(data));
+      }
+
+      removeTranscriptArea() {
+        this.transcriptArea.innerHTML = "";
+        this
+          .transcriptArea
+          .classList
+          .remove("d-flex");
+        this
+          .transcriptArea
+          .classList
+          .add("d-none");
+      }
+
+      hideUploadStateArea = async () => {
+        if (!this.uploadStateArea.classList.contains("d-none")) {
+          this
+            .uploadStateArea
+            .classList
+            .add("d-none")
+        };
+      };
+      showUploadStateArea = async () => {
+        // check if d-none present
+        if (this.uploadStateArea.classList.contains("d-none")) {
+          this
+            .uploadStateArea
+            .classList
+            .remove("d-none")
+        };
+        if (!this.uploadStateArea.classList.contains("d-flex")) {
+          this
+            .uploadStateArea
+            .classList
+            .add("d-flex")
+
+        }
+      };
+
+      summarizeTranscription = async () => {
+        // Implement your language model here
+        // return summarized_text;
+
+        const summarizeBtn = this
+          .summarizationBtn
+
+          console
+          .log("summarize box", summarizeBtn)
+
+        const transcript_instance = JSON.parse(localStorage.getItem("yt_transcript_instance"));
+
+        console.log("from the client ", transcript_instance)
+
+        let dataResponse;
+
+        summarizeBtn.addEventListener("click", async (e) => {
+
+          this
+            .uploadBtn
+            .setAttribute("disabled", "disabled");
+
+          e.preventDefault();
+
+          // change the text
+          this.showUploadStateArea()
+          this.uploadStateAreaText.innerHTML = 'Summarizing the transcript...';
+
+          this.removeTranscriptArea();
+
+          const response = await fetch(this.summarizationUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              'X-CSRFToken': "{{csrf_token}}"
+            },
+            body: JSON.stringify({"transcript_instance": transcript_instance})
+          });
+
+          localStorage.removeItem("yt_transcript_instance")
+
+          const data = await response.json();
+
+          return dataResponse;
+
+        });
+
+      };
+    }
+
+    const summarizer = new YoutubeSummarizer();
+    summarizer.initialize();
+
+    // Example usage:
+    // summarizer.getVideoInfo("your_video_id").then((data) => {
+    //   summarizer.videoId = data.id;
+    //   summarizer.videoTitle = data.snippet.title;
+    //   summarizer.videoDescription = data.snippet.description;
+    //   console.log(summarizer.videoTitle);
+    //   console.log(summarizer.videoDescription);
+    // });
+
+    // summarizer.downloadVideo("https://www.youtube.com/watch?v=your_video_id").then((file) => {
+    //   console.log(file);
+    // });
+
+    // Example usage:
+    // summarizer.uploadVideo(summarizer.videoTitle, summarizer.videoDescription, summarizer.downloadVideo("https://www
+  </script>
+{% endblock js %}

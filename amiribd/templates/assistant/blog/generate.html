@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generate Blog Post</title>
+</head>
+
+<body>
+    <h1>Generate Blog Post</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Generate</button>
+    </form>
+    {% if response %}
+    <h2>Generated Blog Post</h2>
+    <p>{{ response|safe }}</p>
+    {% endif %}
+</body>
+
+</html>

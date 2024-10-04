@@ -1,0 +1,17 @@
+{% extends "account/dashboard/v1/base.html" %}
+
+{% load static %}
+
+{% block heading %}
+  {% include "account/dashboard/v1/components/subscriptions/plans/head.html" %}
+{% endblock heading %}
+
+{% block main %}
+
+
+
+ {% include "account/dashboard/v1/components/subscriptions/plans/list.html" %}
+
+  {% include "account/dashboard/v1/components/support.html" %}
+
+{% endblock main %}

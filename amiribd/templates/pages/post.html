@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block breadcrumb %}
+  <!-- breadcrumb content begin -->
+  <div class="uk-section uk-padding-remove-vertical in-wave-breadcrumb">
+    <div class="uk-container">
+      <div class="uk-grid">
+        <div class="uk-width-1-1">
+          <ul class="uk-breadcrumb">
+            <li>
+              <a href="{% url 'home' %}">Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumb content end -->
+{% endblock breadcrumb %}
+
+{% block content %}
+
+  <!-- blog content begin -->
+  <div class="uk-section uk-margin-small-top">
+    <div class="uk-container">
+      <div class="uk-grid uk-flex uk-flex-center in-blog-1 in-article">
+        <div class="uk-width-3-4@m">
+          <article class="uk-card uk-card-default uk-border-rounded">
+            <div class="uk-card-body">
+              <div class="uk-flex">
+                <div class="uk-margin-small-right">
+                  <img class="uk-border-pill uk-background-muted" src="{% static 'img/user/author-85z9UC.jpg' %}" alt="author" width="32" height="32">
+                </div>
+                <div class="uk-flex uk-flex-middle">
+                  <p class="uk-text-small uk-text-muted uk-margin-remove">
+                    Warren Wong
+                    <span class="uk-margin-small-left uk-margin-small-right">•</span>
+                  </p>
+                </div>
+                <div class="uk-flex uk-flex-middle">
+                  <p class="uk-text-small uk-text-muted uk-margin-remove">
+                    December 29, 2022
+                  </p>
+                </div>
+              </div>
+              <h2 class="uk-margin-top uk-margin-medium-bottom">Biden and Harris celebrate Kwanzaa in social media posts</h2>
+              <p>The White House celebrated Kwanzaa in a pair of pre-recorded videos posted to Twitter on Monday, marking the seven-day non-denominational holiday aimed at honoring African Americans’ ancestral roots.</p>
+              <p>Kwanzaa is celebrated each year from December 26 to January 1, with a day dedicated to each of the Nguzo Saba, or seven principles. Celebrants light a kinara, or seven-pronged candle holder, for each principle: unity (umoja), self-determination (kujichagulia), collective responsibility (ujima), cooperative economics (ujamaa), purpose (nia), creativity (kuumba) and faith (imani).</p>
+              <p>In a video posted Monday, President Joe Biden and first lady Dr. Jill Biden offered thanks “for the rich heritage of African Americans, which is deep in the story of our nation.”</p>
+              <blockquote class="in-article-blockquote">
+                <p class="uk-margin-small-bottom">In 2023, it’s our hope that we’ll all remember the wisdom of the seven principles of Kwanzaa, especially the values of unity and faith, as we work to make the promise of our nation real in the lives of every American</p>
+                <footer>
+                  <cite>President USA, Joe Biden</cite>
+                </footer>
+              </blockquote>
+              <p>And Vice President Kamala Harris – the nation’s first Black vice president, in addition to being the first woman to hold the role – took the opportunity to share her own experience with Kwanzaa as a child.</p>
+              <p>“Growing up, Kwanzaa was always a special time – we came together with generations of friends and family and neighbors,” Harris said. “There were never enough chairs, so my sister and I and the other children would often sit on the floor, and together we lit the candles of the kinara, and then the elders would talk about how Kwanzaa is a time to celebrate culture, community and family, and they of course taught us about the seven principles.”</p>
+            </div>
+            <div class="uk-card-footer uk-clearfix">
+              <div class="uk-float-left in-article-tags">
+                <i class="fas fa-tags"></i>
+                <span class="uk-margin-small-left uk-text-bold">Tags: &nbsp;</span>
+                <a href="" class="uk-link-muted">biden</a>,&nbsp;
+                <a href="" class="uk-link-muted">usa</a>
+              </div>
+              <div class="uk-float-right in-article-share share-btn">
+                <a class="uk-label color-facebook" data-id="fb">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="uk-label color-twitter" data-id="tw">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a class="uk-label color-pinterest" data-id="pi">
+                  <i class="fab fa-pinterest-p"></i>
+                </a>
+                <a class="uk-label color-email" data-id="mail">
+                  <i class="fas fa-envelope"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- blog content end -->
+  <!-- disquss begin -->
+  <div class="uk-section uk-padding-remove-top">
+    <div class="uk-container">
+      <div class="uk-grid uk-flex uk-flex-center">
+        <div class="uk-width-3-4@m">
+          <div id="disqus_thread"></div>
+          <script>
+            (function () { // DON'T EDIT BELOW THIS LINE
+              var d = document,
+                s = d.createElement('script');
+              s.src = `https://html-demo.disqus.com/embed.js`;
+              s.setAttribute('data-timestamp', + new Date());
+              (d.head || d.body).appendChild(s);
+            })();
+          </script>
+          <noscript>Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          </noscript>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- disquss content end -->
+  {% endblock content %}

@@ -1,0 +1,312 @@
+{% load static %}
+
+<div class="nk-block" id="profile-account" data-bs-id="social">
+  <div class="nk-block">
+    <div class="nk-block-head">
+      <div class="nk-block-between">
+        <div class="nk-block-head-content">
+          <h5 class="nk-block-title">Connected with Social Account</h5>
+          <div class="nk-block-des">
+            <p>You can connect with your social accounts such as facebook, instagram, X, Snapchat etc to make easier to
+              post on your page.</p>
+          </div>
+        </div>
+        <div class="nk-block-head-content align-self-start d-lg-none">
+          <a href="#" class="toggle btn btn-icon btn-trigger mt-n1" data-target="userAside">
+            <em class="icon ni ni-menu-alt-r"></em>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--new-->
+    <h6 class="lead-text">Connect to Facebook</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-facebook-f"></em>
+            </div>
+            <div class="media-content">
+              <p>Connect with your online social platform to attract potential income from users you bring to our
+                platform.</p>
+
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <a id="shareFacebook" href="#" class="btn btn-lg btn-danger" target="_blank">Share on Facebook</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--new-->
+    <!--new-->
+    <h6 class="lead-text">Connect to Snapchat</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-snapchat"></em>
+            </div>
+            <div class="media-content">
+              <p>Connect with your online social platform to attract potential income from users you bring to our
+                platform.</p>
+
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" class="btn btn-lg btn-danger copyToClipboard" data-target-social="shareSnapchat">
+              Share on Snapchat
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--new-->
+    <!--new-->
+    <h6 class="lead-text">Connect to X (twitter)</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-twitter"></em>
+            </div>
+            <div class="media-content">
+              <p>
+                Connect with your online social platform to attract potential income from users you bring to our
+                platform.
+              </p>
+
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" class="btn btn-lg btn-danger" data-target-social="shareTwitter">
+              Share on Twitter
+            </button>
+
+            <div id="shareButtons" style="display:none; margin-top: 10px;">
+
+              <a id="shareTwitter" href="#" class="btn btn-lg btn-danger" target="_blank">Share on Twitter</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--new-->
+    <!--new-->
+    <h6 class="lead-text">Connect to Instagram</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-instagram"></em>
+            </div>
+            <div class="media-content">
+              <p>
+                Connect with your online social platform to attract potential income from users you bring to our
+                platform.
+              </p>
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <button type="button" role="button" {% if plans %} hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" {% else %} disabled="disabled" {% endif %} class="btn btn-lg btn-primary copyToClipboard" data-target-social="shareInstagram">
+              Share on Instagram
+            </button>
+
+            <div id="shareButtons" style="display:none; margin-top: 10px;">
+
+              <a id="shareInstagram" href="#" class="btn btn-instagram" target="_blank">Share on Instagram</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--new-->
+    <!--new-->
+    <h6 class="lead-text">Connect to Whatsapp</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-whatsapp"></em>
+            </div>
+            <div class="media-content">
+              <p>Connect with your online social platform to attract potential income from users you bring to our
+                platform.</p>
+
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" class="btn btn-lg btn-primary copyToClipboard" data-target-social="shareWhatsApp" data-target-social="shareWhatsApp">
+              Share on WhatsApp
+            </button>
+            <div id="shareButtons" style="display:none; margin-top: 10px;">
+              <a id="shareWhatsApp" href="#" class="btn btn-whatsapp" target="_blank">Share on WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--new-->
+    <h6 class="lead-text">Connect to Telegram</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-telegram"></em>
+            </div>
+            <div class="media-content">
+              <p>Connect with your online social platform to attract potential income from users you bring to our
+                platform.</p>
+
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" class="btn btn-lg btn-primary copyToClipboard" data-target-social="shareTelegram">
+              Share on Telegram
+            </button>
+
+            <div id="shareButtons" style="display:none; margin-top: 10px;">
+
+              <a id="shareTelegram" href="#" class="btn btn-telegram" target="_blank">Share on Telegram</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--new-->
+    <h6 class="lead-text">Copy to Clipboard</h6>
+    <div class="card card-bordered">
+      <div class="card-inner">
+        <div class="between-center flex-wrap flex-md-nowrap g-3">
+          <div class="media media-center gx-3 wide-xs">
+            <div class="media-object">
+              <em class="icon icon-circle icon-circle-lg ni ni-telegram"></em>
+            </div>
+            <div class="media-content">
+              <p>Connect with your online social platform to attract potential income from users you bring to our
+                platform.</p>
+
+            </div>
+          </div>
+          <div class="nk-block-actions flex-shrink-0">
+            <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" class="btn btn-primary copyToClipboard" data-target-social="copyToClipboard">
+              Generate
+            </button>
+
+            <div id="shareButtons" style="display:none; margin-top: 10px;">
+              <button id="copyToClipboard" class="btn btn-secondary">Copy to Clipboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" name="code" id="referral-code">
+
+<!--xxxxxxxxxxxxxxxx-->
+<!-- <button type="button" role="button" hx-post="{% url 'htmx:generate_referral_code' profile.id %}" hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" id="generateBtn" class="btn btn-primary"> Generate </button> <div id="shareButtons" style="display:none; margin-top: 20px;"> <a id="shareFacebook" href="#" class="btn btn-facebook" target="_blank">Share on Facebook</a> <a id="shareTwitter" href="#" class="btn btn-twitter" target="_blank">Share on Twitter</a> <a id="shareLinkedIn" href="#" class="btn btn-linkedin" target="_blank">Share on LinkedIn</a> <a id="shareWhatsApp" href="#" class="btn btn-whatsapp" target="_blank">Share on WhatsApp</a> <a id="shareTelegram" href="#" class="btn btn-telegram" target="_blank">Share on Telegram</a> <a id="shareInstagram" href="#" class="btn btn-instagram" target="_blank">Share on Instagram</a> <a id="shareSnapchat" href="#" class="btn btn-snapchat" target="_blank">Share on Snapchat</a> </div> -->
+
+<script>
+
+  // const SocialSharableLinks = {
+  //   shareSnapchat: '',
+  //   shareTwitter: '',
+  //   shareInstagram: '',
+  //   shareWhatsApp: '',
+  //   shareTelegram: ''
+  // }
+
+  const referenceCodeValue = document.getElementById("referral-code")
+
+  function handleHtmxAfterRequest() {
+    // window.location.reload()
+    console.log(referenceCodeValue.textContent);
+    const refCode = referenceCodeValue.textContent
+    // copyToClipboard(refCode)
+  }
+
+  function shopPopupModalForMessageShare() {
+
+  }
+
+  // function to update the button element for the class
+
+  const generateBtns = document.querySelectorAll(".copyToClipboard")
+
+
+  generateBtns.forEach((button) => {
+    button.addEventListener("click", async function (e) {
+      const platform = e.target.dataset.targetSocial
+
+      const callbackSiteUrl = generateUrlLink();
+      const message = "Discover an amazing income-generating platform! Earn referral bonuses, invest, get loans, save, find various jobs, and use ChatGPT for free blog writing. Partner with us for weekly bonuses from simple affiliate tasks. Join me on this amazing platform! Use my referral code for a special bonus: ";
+      let platfromLink = ''
+
+      switch (platform) {
+
+        case 'shareSnapchat':
+          platfromLink = 'https://www.snapchat.com/';
+          window.open(platfromLink, '_blank');
+          break;
+
+        case 'shareTwitter':
+          platfromLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(callbackSiteUrl)}&text=${encodeURIComponent(message)}`;
+          window.open(platfromLink, '_blank');
+          break;
+
+        case 'shareInstagram':
+          platfromLink = 'https://www.instagram.com/'
+          window.open(platfromLink, '_blank');
+          break;
+
+        case 'shareWhatsApp':
+          platfromLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(message + " " + callbackSiteUrl)}`;
+          window.open(platfromLink, '_blank');
+          break;
+
+        case 'shareTelegram':
+          platfromLink = `https://t.me/share/url?url=${encodeURIComponent(callbackSiteUrl)}&text=${encodeURIComponent(message)}`;
+          window.open(platfromLink, '_blank');
+          break;
+
+        case 'shareLinkedIn':
+          platfromLink = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(callbackSiteUrl)}&summary=${encodeURIComponent(message)}`;
+          window.open(platfromLink, '_blank');
+          break;
+
+        default:
+          break;
+      }
+
+    })
+  })
+
+  // function to copy the url to clipboard
+
+  function copyToClipboard(value) {
+    navigator.clipboard.writeText(value)
+  }
+
+  // now generate the url
+  function generateUrlLink() {
+    return `{{website_base_url}}{{profile.get_referral_signup_url}}`;
+  }
+</script>

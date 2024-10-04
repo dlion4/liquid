@@ -1,0 +1,68 @@
+{% load static %}
+
+<div class="uk-section uk-padding-remove-vertical in-slideshow-gradient">
+  <div class="in-slideshow" data-uk-slideshow="data-uk-slideshow">
+    <ul class="uk-slideshow-items uk-light">
+      <li>
+        <div class="uk-position-cover">
+          <img src="{% static 'img/in-lazy.gif' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="2230" height="1345" data-uk-img="data-uk-img" style="filter: brightness(50%) blur(2px);">
+        </div>
+        <span></span>
+        <div class="uk-container">
+          <div class="uk-grid" data-uk-grid="data-uk-grid">
+            <div class="uk-width-3-5@m">
+              <div class="uk-overlay">
+                <h1>All Possible ways of Earning</h1>
+                <p class="uk-text-lead uk-visible@m">With Access to the internet, we bring you various ways of earning income from you smartphone</p>
+                <p class="uk-text-lead uk-visible@m">You can now use chatGPT to earn with us</p>
+                <a href="{% if request.user.profile_user.plans %}{% url 'dashboard:invest:invest_plan' %}{% else %}{% url 'dashboard:invest:invest' %}{% endif %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                  <i class="fas fa-scroll uk-margin-small-right"></i>
+                  Get Started
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="uk-position-cover">
+          <img src="{% static 'img/in-lazy.gif' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1200" height="840" data-uk-img="data-uk-img" style="filter: brightness(50%) blur(2px);">
+        </div>
+        <span></span>
+        <div class="uk-container">
+          <div class="uk-grid" data-uk-grid="data-uk-grid">
+            <div class="uk-width-3-5@m">
+              <div class="uk-overlay">
+                <h1>We Deliver What We Promise</h1>
+                <p class="uk-text-lead uk-visible@m">You can earn from afflient marketing, commisions, bonuses, investiment returns, Blogs and so much more. Better earn small returns constanly daily with little capital to start with</p>
+                <a href="{% url 'dashboard:invest:invest' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                  <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="uk-position-cover">
+          <img src="{% static 'img/in-lazy.gif' %}" alt="slideshow-image" data-uk-cover="data-uk-cover" width="1920" height="700" data-uk-img="data-uk-img" style="filter: brightness(50%) blur(2px);">
+        </div>
+        <span></span>
+        <div class="uk-container">
+          <div class="uk-grid" data-uk-grid="data-uk-grid">
+            <div class="uk-width-3-5@m">
+              <div class="uk-overlay">
+                <h1>No Risk No Reward</h1>
+                <p class="uk-text-lead uk-visible@m">With our packages, Artificial Intelligence and the internet, the more you push beyond your limits, the greater the reward</p>
+                <a href="{% url 'dashboard:invest:invest' %}" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
+                  <i class="fas fa-scroll uk-margin-small-right"></i>Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="uk-container uk-light">
+      <ul class="uk-slideshow-nav uk-dotnav uk-position-bottom-center"></ul>
+    </div>
+  </div>
+</div>

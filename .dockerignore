@@ -1,0 +1,19 @@
+.editorconfig
+.gitattributes
+.github
+.gitignore
+.gitlab-ci.yml
+.idea
+.pre-commit-config.yaml
+.readthedocs.yml
+.travis.yml
+.venv/
+.git
+.envs/
+t copy.html
+t copy 2.html
+transcript.pdf
+image.ipynb
+.http
+ai.ipynb
+.prettierrc

@@ -1,0 +1,18 @@
+{% extends "account/dashboard/v1/base.html" %}
+
+{% block editorcss %}
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet"/>
+{% endblock editorcss %}
+
+{% block cssClass %}ui-light nk-nio-theme{% endblock cssClass %}
+
+{% block js %}
+  <!-- Include the Quill library -->
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script> {% endcomment %}
+{% comment %} 
+  <!-- Initialize Quill editor -->
+  <script>
+    const quill = new Quill('#editor', {theme: 'snow'});
+  </script> {% endcomment %}
+
+{% endblock js %}

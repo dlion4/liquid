@@ -1,0 +1,33 @@
+python-slugify  # https://github.com/un33k/python-slugify
+Pillow  # https://github.com/python-pillow/Pillow
+rcssmin  # https://github.com/ndparker/rcssmin
+argon2-cffi  # https://github.com/hynek/argon2_cffi
+whitenoise  # https://github.com/evansd/whitenoise
+redis  # https://github.com/redis/redis-py
+hiredis  # https://github.com/redis/hiredis-py
+
+# Django
+# ------------------------------------------------------------------------------
+django #  # pyup: < 5.0  # https://www.djangoproject.com/
+django-environ #  # https://github.com/joke2k/django-environ
+django-model-utils # # https://github.com/jazzband/django-model-utils
+django-allauth[mfa] #  # https://github.com/pennersr/django-allauth
+django-crispy-forms # https://github.com/django-crispy-forms/django-crispy-forms
+crispy-bootstrap5 #  # https://github.com/django-crispy-forms/crispy-bootstrap5
+django-compressor # https://github.com/django-compressor/django-compressor
+django-redis # # https://github.com/jazzband/django-redis
+django-widget-tweaks
+litestar
+requests
+uvicorn-worker
+SQLAlchemy
+werkzeug
+asyncpg
+advanced_alchemy
+aiosqlite
+django-unfold
+django-celery-beat
+django-silk
+google-generativeai
+markdown
+channels-redis

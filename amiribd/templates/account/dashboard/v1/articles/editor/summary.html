@@ -1,0 +1,55 @@
+{% extends "account/dashboard/v1/articles/editor/base.html" %}
+
+{% block main %}
+  <style>
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Adjust the height as needed */
+    }
+
+    #summarize {
+      width: 100%;
+      /* Make the button take the full width of its parent */
+      max-width: 300px;
+      /* Optional: limit the maximum width */
+      box-sizing: border-box;
+      /* Ensure padding and border are included in the element's total width and height */
+      align-items: center;
+      display: inline-flex;
+      justify-content: center;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .bg-light {
+      background-color: #f8f9fa;
+      /* Adjust to your desired background color */
+    }
+  </style>
+
+  <h1 class="d-flex align-items-center justify-content-center text-center">Youtube Summarizer</h1>
+
+  <form id="uploadVideo" method="post" action="{{request.path}}">
+    <div>
+      <small class="errorlist my-1 mb-1" id="errorvideo_url"></small>
+    </div>
+    <div class="button-container summarizebtn">
+      <button type="submit" id="summarize" class="d-flex btn py-3 px-3 bg-light align-items-center">
+        Summarize
+      </button>
+    </div>
+  </form>
+
+  <div class="d-none align-items-center bg-light py-5 px-5 my-2" id="transcript-area"></div>
+
+  <div class="d-none align-items-center bg-light py-5 px-5 my-2" id="summary-area"></div>
+
+{% endblock main %}

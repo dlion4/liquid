@@ -1,0 +1,175 @@
+{% extends "account/dashboard/kyc.html" %}
+
+{% block kycform %}
+
+  <form action="{% url 'kyc:detail' %}" method="post">
+    {% csrf_token %}
+    <div class="nk-kycfm-head">
+      <div class="nk-kycfm-count">01</div>
+      <div class="nk-kycfm-title">
+        <h5 class="title">Personal Details</h5>
+        <p class="sub-title">Your simple personal information required for identification</p>
+      </div>
+    </div>
+    <div class="nk-kycfm-content">
+      <div class="nk-kycfm-note">
+        <em class="icon ni ni-info-fill" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right"></em>
+        <p>Please type carefully and fill out the form with your personal details. Your can’t edit these details once you submitted the form.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.first_name.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.first_name}}
+              {% if form.first_name.errors %}
+                <ul class="errorlist">
+                  {% for error in form.first_name.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.last_name.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.last_name}}
+              {% if form.last_name.errors %}
+                <ul class="errorlist">
+                  {% for error in form.last_name.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.email_address.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.email_address}}
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.phone_number.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.phone_number}}
+              {% if form.phone_number.errors %}
+                <ul class="errorlist">
+                  {% for error in form.phone_number.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
+              <div style="margin-top: 5px!important;">
+                <small id="phone-number-error-message"></small>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.date_of_birth.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.date_of_birth}}
+              {% if form.date_of_birth.errors %}
+                <ul class="errorlist">
+                  {% for error in form.date_of_birth.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
+              <div style="margin-top: 5px!important;">
+                <small id="date-of-birth-error-message"></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.public_username.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.public_username}}
+              {% if form.public_username.errors %}
+                <ul class="errorlist">
+                  {% for error in form.public_username.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nk-kycfm-footer">
+      <div class="pt-2">
+        <button type="submit" id="proceedBtn" class="btn btn-lg btn-primary">Proceed next...</button>
+      </div>
+    </div>
+
+  </form>
+
+  <script>
+    document
+      .body
+      .addEventListener("htmx:afterSwap", function (event) {
+        console.log(event.detail.target)
+
+        const swappedElement = event.detail.target
+        try {
+          const phoneNumberResponseBox = document.getElementById('phone-number-error-message');
+          const responseBox = phoneNumberResponseBox.getAttribute("data-bt-state")
+
+          const proceedBtn = document.getElementById('proceedBtn');
+          if (responseBox === "disabled") {
+
+            proceedBtn.setAttribute("disabled", "disabled")
+          } else {
+            if (proceedBtn.getAttribute("disabled")) {
+              proceedBtn.removeAttribute("disabled")
+            }
+          }
+        } catch (e) {
+          console.log(e)
+        }
+
+      })
+
+    document
+      .body
+      .removeEventListener("htmx:afterSwap", function (event) {
+        console.log(event.detail.target)
+      })
+  </script>
+
+{% endblock kycform %}

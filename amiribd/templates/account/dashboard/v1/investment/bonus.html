@@ -1,0 +1,275 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static humanize %}
+
+{% block heading %}
+<div class="nk-block-head-content">
+  <h3 class="nk-block-title page-title">Bonuses</h3>
+  <div class="nk-block-des text-soft">
+    <p>You can unlock the bonuses when you reach the set targets</p>
+  </div>
+</div>
+{% endblock heading %}
+{% block main %}
+<br />
+
+<style type="text">
+  .unlock-link {
+      cursor: pointer;
+    }
+
+    .unlock-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+<div class="row g-gs">
+  <div class="col-sm-6 col-xxl-6">
+    <div class="card card-full bg-primary">
+      <div class="card-inner">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <div class="fs-6 text-white text-opacity-75 mb-0">Your Total Referals
+          </div>
+        </div>
+        <h5 class="fs-1 text-white">{{profile.referrals|intword}}
+          <small class="fs-3"></small>
+        </h5>
+        <div class="fs-7 text-white text-opacity-75 mt-1">
+          <span class="text-white">The more you refer others</span>
+          the bigger the bonus
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-xxl-6">
+    <div class="card card-full bg-grey is-dark">
+      <div class="card-inner">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <div class="fs-6 text-white text-opacity-75 mb-0">Total Bonus Earnings
+          </div>
+        </div>
+        <h5 class="amount fs-1 text-white">{{available_amount|floatformat:2|intcomma}}
+          <span class="currency fs-3">Ksh</span>
+        </h5>
+        <div class="fs-7 text-white text-opacity-75 mt-1">
+          <span class="text-white">The amount is withdrawable from your wallet
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+<br />
+
+<div class="card-inner p-3">
+  <table class="table table-orders">
+    <thead class="tb-odr-head">
+      <tr class="tb-odr-item">
+        <th class="tb-odr-info">
+          <span class="tb-odr-id">Type</span><span class="tb-odr-date d-none d-md-inline-block">Target</span>
+        </th>
+        <th class="tb-odr-amount">
+          <span class="tb-odr-total">Amount</span><span class="tb-odr-status d-none d-md-inline-block">Status</span>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="tb-odr-body">
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">Junior</span><span class="tb-odr-date">Refer 25 active
+            users</span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              1000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <a>
+              <span class="badge bg-danger">Tap to unlocked</span>
+            </a>
+          </span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            Teenager
+          </span>
+          <span class="tb-odr-date">
+            Refer 50 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              2000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status"><span class="badge bg-danger">Tap to unlock</span></span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            Adult
+          </span>
+          <span class="tb-odr-date">
+            Refer 100 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              5000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <span class="badge bg-danger">
+              Tap to unlock
+            </span>
+          </span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            Master
+          </span>
+          <span class="tb-odr-date">
+            Refer 200 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              7000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <span class="badge bg-danger">
+              Tap to unlock
+            </span>
+          </span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            Manager
+          </span>
+          <span class="tb-odr-date">
+            Refer 300 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              10000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <span class="badge bg-danger">
+              Tap to unlock
+            </span>
+          </span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            Boss
+          </span>
+          <span class="tb-odr-date">
+            Refer 500 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              15000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <span class="badge bg-danger">
+              Tap to unlock
+            </span>
+          </span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            CEO
+          </span>
+          <span class="tb-odr-date">
+            Refer 750 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              20000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <span class="badge bg-danger">
+              Tap to unlock
+            </span>
+          </span>
+        </td>
+      </tr>
+      <tr class="tb-odr-item">
+        <td class="tb-odr-info">
+          <span class="tb-odr-id">
+            King
+          </span>
+          <span class="tb-odr-date">
+            Refer 1000 active users
+          </span>
+        </td>
+        <td class="tb-odr-amount">
+          <span class="tb-odr-total">
+            <span class="amount">
+              25000 <span class="currency">ksh</span>
+            </span>
+          </span>
+          <span class="tb-odr-status">
+            <span class="badge bg-danger">Tap to unlock</span>
+          </span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="card-inner">
+  <ul class="pagination justify-content-center justify-content-md-start">
+    <li class="page-item">
+      <a class="page-link" href="#">Prev</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item">
+      <span class="page-link">
+        <em class="icon ni ni-more-h"></em></span>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">6</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">7</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</div>
+{% endblock main %}

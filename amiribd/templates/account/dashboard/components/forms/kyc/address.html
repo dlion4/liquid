@@ -1,0 +1,139 @@
+{% extends "account/dashboard/kyc.html" %}
+
+{% block kycform %}
+
+  <form action="{% url 'kyc:address' %}" method="post">
+    {% csrf_token %}
+
+    <div class="nk-kycfm-head">
+      <div class="nk-kycfm-count">02</div>
+      <div class="nk-kycfm-title">
+        <h5 class="title">Your Address</h5>
+        <p class="sub-title">Your simple personal information required for identification</p>
+      </div>
+    </div>
+    <div class="nk-kycfm-content">
+      <div class="nk-kycfm-note">
+        <em class="icon ni ni-info-fill" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right"></em>
+        <p>Your can’t edit these details once you submitted the form.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.addr_line1.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.addr_line1}}
+              {% if form.addr_line1.errors %}
+                <ul class="errorlist">
+                  {% for error in form.addr_line1.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.addr_line2.label}}</label>
+            </div>
+            <div class="form-control-group">
+              {{form.addr_line2}}
+              {% if form.addr_line2.errors %}
+                <ul class="errorlist">
+                  {% for error in form.addr_line2.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.city.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.city}}
+              {% if form.city.errors %}
+                <ul class="errorlist">
+                  {% for error in form.city.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.state.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.state}}
+              {% if form.state.errors %}
+                <ul class="errorlist">
+                  {% for error in form.state.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.country.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.country}}
+              {% if form.country.errors %}
+                <ul class="errorlist">
+                  {% for error in form.country.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">{{form.zip_code.label}}
+                <span class="text-danger">*</span></label>
+            </div>
+            <div class="form-control-group">
+              {{form.zip_code}}
+              {% if form.zip_code.errors %}
+                <ul class="errorlist">
+                  {% for error in form.zip_code.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nk-kycfm-footer">
+      <div class="nk-kycfm-action pt-2">
+        <button type="submit" class="btn btn-lg btn-primary">Proceed ...</button>
+      </div>
+    </div>
+
+  </form>
+
+{% endblock kycform %}

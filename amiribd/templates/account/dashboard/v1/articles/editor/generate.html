@@ -1,0 +1,276 @@
+{% extends "account/dashboard/v1/articles/editor/base.html" %}
+
+{% block main %}
+
+  <style>
+    .nk-editor-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    #ai-body-editor > #inner-html {
+      position: absolute;
+      top: 50%;
+      bottom: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Poppins'sans-serif;
+      font-weight: 600;
+      font-size: 34;
+      text-align: center;
+      text-transform: capitalize;
+    }
+
+    .nk-editor-body > #ai-body-editor {
+      width: 100% !important;
+      min-height: 300px !important;
+      overflow-y: scroll !important;
+    }
+
+    b,
+    strong {
+      font-size: 22px !important;
+      font-weight: 600 !important;
+    }
+  </style>
+
+  <div class="card">
+    <div class="nk-editor">
+      <div class="nk-editor-header">
+        <div class="nk-editor-title">
+          <h4 class="me-3 mb-0 line-clamp-1" id="ai-draft-title">Untitled</h4>
+          <ul class="d-inline-flex align-item-center">
+            <!-- <li> <button class="btn btn-sm btn-icon btn-trigger"> <em class="icon ni ni-pen"></em> </button> </li> <li> <button class="btn btn-sm btn-icon btn-trigger"> <em class="icon ni ni-star"></em> </button> </li> -->
+            <li class="d-xl-none">
+              <div class="dropdown">
+                <button class="btn btn-sm btn-icon btn-trigger" type="button" data-bs-toggle="dropdown">
+                  <em class="icon ni ni-download-cloud"></em>
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                  <div class="dropdown-content">
+                    <ul class="link-list-opt">
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-docs"></em>
+                          <span>Docs</span></a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-text"></em>
+                          <span>Text</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="d-xl-none ms-1">
+              <button class="btn btn-sm btn-icon btn-primary">
+                <em class="icon ni ni-save"></em>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="nk-editor-tools d-none d-xl-flex">
+          <ul class="d-inline-flex gx-3 gx-lg-4 pe-4 pe-lg-5">
+            <li>
+              <span class="sub-text text-nowrap">
+                <span class="text-dark">0</span>
+              </span>
+            </li>
+            <li>
+              <span class="sub-text text-nowrap">
+                <span class="text-dark">0</span>
+              </span>
+            </li>
+          </ul>
+          <ul class="d-inline-flex gx-3">
+            <li>
+              <div class="dropdown">
+                <button class="btn btn-md btn-light rounded-pill" type="button" data-bs-toggle="dropdown">
+                  <span>Export</span>
+                  <em class="icon ni ni-chevron-down"></em>
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                  <div class="dropdown-content">
+                    <ul class="link-list-opt">
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-doc"></em>
+                          <span>Docs</span></a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <em class="icon ni ni-file-text"></em>
+                          <span>Text</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <button class="btn btn-md btn-primary rounded-pill" type="button">
+                Save
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="nk-editor-main">
+        <div class="nk-editor-base">
+          <ul class="nav nav-tabs nav-sm nav-tabs-s1 px-3" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="tab" href="#AIWriter" aria-selected="true" role="tab">AI Writer</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#History" aria-selected="false" tabindex="-1" role="tab">History</a>
+            </li>
+          </ul>
+          <div class="tab-content mt-0">
+            <div class="tab-pane fade show active" id="AIWriter" role="tabpanel">
+              <form class="px-3 py-3" id="ai-generation-form">
+                <!-- {% url 'ai:generate' %} -->
+                {% csrf_token %}
+                <div class="row gy-4 gx-4">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="form-label">
+                        {{form.template.label}}
+                        (optional)
+                      </label>
+                      <div class="form-control-wrap">
+                        {{form.template}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <!-- <label class="form-label">What do you want to generate?</label> -->
+                      <div class="form-control-wrap">
+                        {{form.instructions}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="{{form.keywords.id_for_label}}" class="form-label">{{form.keywords.label}}</label>
+                      <div class="form-control-wrap">
+                        {{form.keywords}}
+                      </div>
+                      <div class="form-note d-flex justify-content-between">
+                        <span>Separated with a comma</span><span>0/10</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button type="button" class="btn btn-primary btn-block" id="ai-submit-btn">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner"></span>
+                      <span role="status" id="spinner-btn-display">Generate</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            {% include "account/dashboard/v1/articles/editor/tabs/history.html" %}
+          </div>
+        </div>
+        <div class="nk-editor-body">
+          <div class="tinymce-toolbar nk-editor-style-clean nk-editor-full p-4">
+            <!--Body content-->
+            <div id="ai-body-editor">
+              <p id="inner-html">Fill in the form to generate content in no time with our supercharged
+                <b>Generative AI (genAi)</b>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // function dom
+
+    //
+    const aiformsubmission = document.getElementById("ai-generation-form")
+    let aiBtnSpinner = document.getElementById("spinner")
+    let aiBtnDisplayText = document.getElementById("spinner-btn-display")
+
+    aiBtnSpinner.style.display = "none"
+
+    const draftTitlte = document.getElementById("ai-draft-title")
+
+    console.log(draftTitlte)
+
+    const aiSubmitBtn = document.getElementById("ai-submit-btn")
+
+    console.log(aiSubmitBtn)
+
+    function validate() {
+      return {
+        template: document
+          .getElementById("id_template")
+          .value,
+        instructions: document
+          .getElementById("id_instructions")
+          .value,
+        keywords: document
+          .getElementById("id_keywords")
+          .value
+      };
+    }
+
+    aiSubmitBtn.addEventListener("click", async function (e) {
+      e.preventDefault()
+      const canvas = document.getElementById("ai-body-editor")
+
+      canvas.innerHTML = `<div class="text-center mb-5" id="center-spinner">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                              <p>composing your article now</p>
+                          </div>`
+
+      aiBtnSpinner.style.display = "block"
+      aiBtnDisplayText.innerText = "generating..."
+
+      aiSubmitBtn.setAttribute("disabled", "disabled")
+
+      console.log(validate());
+
+      const url = `{% url 'dashboard:articles:editor:new-article-ai-generation-post' %}`
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(validate()),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        canvas.innerHTML = data.data
+      }
+
+      aiBtnSpinner.style.display = "none"
+      aiBtnDisplayText.innerText = "generate"
+
+      canvas.innerHTML = ''
+      draftTitlte.innerHTML = ''
+
+      canvas.innerHTML = data.data;
+
+      const serverHt2 = document.querySelector("#ai-body-editor h2");
+
+      draftTitlte.innerHTML = new String(serverHt2.textContent)
+
+      aiSubmitBtn.removeAttribute("disabled")
+
+    })
+  </script>
+
+{% endblock main %}

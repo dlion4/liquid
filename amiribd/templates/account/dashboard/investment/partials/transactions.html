@@ -1,0 +1,28 @@
+{% load humanize %}
+
+<tbody id="transaction-table-list">
+  {% for transaction in transactions %}
+    <tr>
+      <td class="tb-col-type">
+        <span class="sub-text">{{transaction.type}}</span>
+      </td>
+      <td class="tb-col-time tb-col-end">
+        <span class="sub-text ">{{transaction.created_at|date:"M, D Y"}}</span>
+      </td>
+      <td class="tb-col-date tb-col-end">
+        <span class="sub-text">{{transaction.source}}</span>
+      </td>
+      <td class="tb-col-time tb-col-end">
+        {% if transaction.type == "DEPOSIT" %}
+          <span class="lead-text text-success">{{transaction.paid|floatformat:2|intcomma}}
+            KES</span>
+        {% else %}
+          <span class="lead-text text-danger">-
+            {{transaction.paid|floatformat:2|intcomma}}
+            KES</span>
+        {% endif %}
+
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>

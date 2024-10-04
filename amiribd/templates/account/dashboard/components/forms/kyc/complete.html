@@ -1,0 +1,24 @@
+{% extends "account/dashboard/kyc.html" %}
+
+{% block h2 %}{% endblock h2 %}
+{% block headerDescription %}{% endblock headerDescription %}
+
+{% block kycform %}
+
+  <form action="{% url 'kyc:complete_verification' %}" method="post">
+    {% csrf_token %}
+    <div class="card-inner card-inner-lg">
+      <div class="nk-kyc-app p-sm-2 text-center">
+        <div class="nk-kyc-app-icon">
+          <em class="icon ni ni-thumbs-up"></em>
+        </div>
+        <div class="nk-kyc-app-text mx-auto">
+          <p class="lead">You have submitted all requirements. Now proceed to acquire the packages and start earning.</p>
+        </div>
+        <div class="nk-kyc-app-action">
+          <button type="submit" class="btn btn-lg btn-primary">Access Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock kycform %}

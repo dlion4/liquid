@@ -1,0 +1,194 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static %}
+{% load phone_number_filter %}
+
+{% block heading %}
+
+  <div class="components-preview wide-md mx-auto">
+    <div class="nk-block-head nk-block-head-lg wide-sm">
+      <div class="nk-block-head-content">
+        <div class="nk-block-head-sub"></div>
+        <h2 class="nk-block-title fw-normal">VIP Packages</h2>
+        <div class="nk-block-des">
+          <!-- <p class="lead">Form is most esential part of your project. We styled out nicely so you can build your form so quickly.</p> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="nk-block nk-block-lg">
+      <div class="nk-block-head">
+        <div class="nk-block-head-content">
+          <h4 class="title nk-block-title">Submit your filled detailed bellow to be attain extra income as a mentor, Team leader or an agent</h4>
+          <div class="nk-block-des">
+            <p>You might be subjected to verify you filled details in case your request is approved</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-bordered">
+        <div class="card-inner">
+          <div class="card-head">
+            <h5 class="card-title">Client Information</h5>
+          </div>
+          <form action="#">
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label" for="full-name-1">Full Name</label>
+                  <div class="form-control-wrap"><input value="{{profile.full_name}}" type="text" class="form-control" id="full-name-1"></div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label" for="phone-no-1">Phone No</label>
+                  <div class="form-control-wrap">
+                    <input value="{{ profile.phone_number|format_phone_number }}" type="text" class="form-control" id="phone-no-1">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">VIP Position</label>
+                  <ul class="custom-control-group g-3 align-center">
+                    {% for position in agent_form.position %}
+                      <li class="vip-position">
+                        {{position}}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Platforms You Use
+                  </label>
+                  <ul class="custom-control-group g-3 align-center">
+                    <!-- Existing platforms -->
+                    {% for field in platform_type %}
+                      <li class="vip-platform">
+                        <div class="custom-control custom-switch custom-control-sm custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" data-bs-id="{{field.pk}}" id="customSwitch{{field.pk}}">
+                          <label class="custom-control-label" for="customSwitch{{field.pk}}">{{field.name}}</label>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock heading %}
+
+{% block main %}
+
+  <script>
+    const vipLevelChoices = document.querySelectorAll(".vip-position input[type='radio']");
+    const vipPlatformChoices = document.querySelectorAll(".vip-platform input[type='checkbox']");
+    // listent for any change
+
+    vipLevelChoices.forEach((choice) => {
+      choice.addEventListener("change", () => {
+        CreateUserProfileVipLevel(choice)
+        updateTheVipPlatform();
+        // console.log(choice)
+      })
+    })
+    async function CreateUserProfileVipLevel(e) {
+      const response = await fetch(`/profiles/async/profile-register-vip-level/${e.value}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = await response.json()
+      console.log(data)
+      updateTheVipLevel();
+    }
+    // call the endpoint on the page load
+    window.addEventListener("load", () => {
+      // fetch the input fields
+
+      // reload the page to update the ui state
+      updateTheVipLevel();
+      updateTheVipPlatform();
+
+    })
+
+    async function updateTheVipLevel() {
+      const response = await fetch("/profiles/async/profile-filter-agent/")
+      const data = await response.json()
+
+      vipLevelChoices.forEach((position) => {
+        if (position.value == data.position) {
+          position.checked = true;
+        }
+      })
+    }
+
+    vipPlatformChoices.forEach((platform) => {
+      // check will call 1 can work just fine forms of view functions to determine the state of cehcked or unchecked
+
+      platform.addEventListener("change", async () => {
+        // call if the checked
+        if (platform.checked) {
+          const id = platform.dataset.bsId
+          createUserProfileVipPlatform(id)
+          // console.log(platform)
+        }
+        // call if the unchecked
+        if (!platform.checked) {
+          const id = platform.dataset.bsId
+          deleteUserProfileVipPlatform(id)
+          // console.log(platform)
+        }
+      })
+    })
+
+    async function createUserProfileVipPlatform(id) {
+      const response = await fetch(`/profiles/async/profile-agent-plantform-selection/${id}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const data = await response.json()
+    }
+    async function deleteUserProfileVipPlatform(id) {
+      const response = await fetch(`/profiles/async/profile-agent-plantform-selection/?platform_type_id=${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const data = await response.json()
+    }
+
+    async function updateTheVipPlatform() {
+      const response = await fetch("/profiles/async/profile-filter-agent-platform/")
+      const data = await response.json()
+      // console.log(data.platforms)
+
+      if (!data.success) {
+        return
+      }
+      vipPlatformChoices.forEach((platform) => {
+        if (data.platforms.includes(Number.parseInt(platform.dataset.bsId))) {
+          platform.checked = true;
+        } else {
+          platform.checked = false;
+        }
+      })
+    }
+  </script>
+
+{% endblock main %}

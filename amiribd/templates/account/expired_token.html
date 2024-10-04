@@ -1,0 +1,13 @@
+{% extends "allauth/layouts/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block inner %}
+<div class="form-label-group">
+    <label class="form-label">This token is already expired or is malformed.</label>
+</div>
+<div class="form-label-group">
+    <p>Kindly request the user who sent you the signup link to resent you a new signup link</p>
+</div>
+{% endblock inner %}

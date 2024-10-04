@@ -1,0 +1,67 @@
+# PRECAUTION: avoid production dependencies that aren't in development
+
+-r base.txt
+
+gunicorn   # https://github.com/benoitc/gunicorn
+psycopg2-binary   # https://github.com/psycopg/psycopg
+
+# Django
+# ------------------------------------------------------------------------------
+django-storages[google]   # https://github.com/jschneier/django-storages
+django-storages[s3]
+boto3
+django-anymail # https://github.com/anymail/django-anymail
+sentry-sdk[django]
+python-dotenv
+django-htmx
+django-after-response
+django-sesame
+django-extensions
+dj-database-url
+gunicorn
+django-debug-toolbar
+pytest
+django-nested-inline
+mypy
+isort
+django
+djangorestframework
+django-ninja
+django-filter
+django-easy-audit
+django-dbbackup
+django-apscheduler
+intasend-python
+Twisted[http2,tls]
+channels[daphne]
+channels-redis
+transformers
+tokenizers
+datasets
+g4f[all]
+django-ckeditor
+django-ckeditor-5
+yt-dlp
+
+deepgram-sdk
+
+langchain 
+ctransformers 
+transformers
+
+langchain-community
+langchain_openai
+langchain-openai 
+tiktoken
+chromadb 
+langchain
+g4f
+langchain-anthropic
+unstructured
+pdfminer
+pdfminer.six
+pymupdf
+django-ninja
+pyjwt
+pydantic-settings
+aioredis
