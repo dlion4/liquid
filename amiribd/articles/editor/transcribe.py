@@ -17,7 +17,7 @@ DEEPGRAM_API_KEY = os.environ.get("DEEPGRAM_API_KEY")
 TRANSCRIPT_DOWNLOAD_DIR = Path(APPS_DIR/"media"/"transcripts"/ "files")
 
 def generate_random_file_name(limit=8):
-    return "".join(secrets.choices(string.ascii_letters, k=limit))
+    return "".join(random.choices(string.ascii_letters, k=limit))
 
 class DeepgramAudioTranscription:
     deepgram:DeepgramClient
