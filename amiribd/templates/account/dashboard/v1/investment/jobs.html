@@ -157,9 +157,9 @@ Job Board Listing
   </li>
 </ul>
 
-{% for job in jobs %}
-<div class="row py-2">
-  <div class="col-sm-12">
+<div class="row" data-animation="true">
+  {% for job in jobs %}
+  <div class="col-sm-12 py-2 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
     <div class="card card-full">
       <div class="card-inner">
         {% if job.is_new %}
@@ -201,7 +201,7 @@ Job Board Listing
     </div>
   </div>
   <!-- modals -->
-  <div class="modal fade" tabindex="-1" id="modalZoom{{job.pk}}">
+  <div class="modal fade zoom" tabindex="-1" id="modalZoom{{job.pk}}">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -224,7 +224,7 @@ Job Board Listing
     </div>
   </div>
   <!-- application modal -->
-  <div class="modal fade" tabindex="-1" id="modalJobApplicationZoom{{job.pk}}">
+  <div class="modal fade zoom" tabindex="-1" id="modalJobApplicationZoom{{job.pk}}">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -296,14 +296,14 @@ Job Board Listing
       </div>
     </div>
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
 
 <!--the pop up for modal when user cliks the view button1-->
 
 <!--the pop up for modal when user cliks the view button1-->
 
-<!-- <script>
+<script>
   document.addEventListener('DOMContentLoaded', function () {
     const filterButtons = document.querySelectorAll('.filter-button');
     const filterItems = document.querySelectorAll('.filter-item');
@@ -412,6 +412,6 @@ Job Board Listing
     }
 
   });
-</script> -->
+</script>
 
 {% endblock main %}
