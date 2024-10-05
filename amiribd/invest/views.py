@@ -1,7 +1,7 @@
 import json
 from decimal import Decimal  # Import Decimal from the decimal module
 from typing import Any
-
+from django.core.cache import cache 
 from django.contrib import messages
 from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -605,7 +605,7 @@ class JobsView(InvestmentViewMixin):
     job_application_form = JobApplicationForm
 
     def get_jobs(self):
-        return self.jobs.objects.all()
+        return self.jobs.objects.all().order_by("-id")
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
@@ -616,6 +616,34 @@ class JobsView(InvestmentViewMixin):
 modified_jobs_view = JobsView.as_view()
 
 
+def obtain_all_job_type(request):
+    jobs = Job.objects.all().order_by("-id")
+    job_application_form = JobApplicationForm(job_id=1, applicant_id=1) 
+    return render(
+        request,
+        "account/dashboard/v1/investment/jobs/partials.html",
+        {
+            "jobs": jobs,
+            "job_application_form": job_application_form
+        }
+    )
+
+
+def fetch_job_type(request, location_type: str):
+    if location_type == "*":
+        jobs = Job.objects.all().order_by("-id")
+    else:
+        jobs = Job.objects.filter(location_type__iexact=location_type).order_by("-id")
+    job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
+    
+    return render(
+        request,
+        "account/dashboard/v1/investment/jobs/partials.html",
+        {
+            "jobs": jobs,
+            "job_application_form": job_application_form
+        }
+    )
 class InvestPlanView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_plan.html"  # noqa: E501, ERA001
     template_name = "account/dashboard/v1/investment/investment_plan.html"

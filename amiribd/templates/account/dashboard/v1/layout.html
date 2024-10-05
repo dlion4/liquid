@@ -69,9 +69,17 @@
   <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
   <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
   <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
-
+  
+  
+  
   {% endblock javascript %}
   {% endcompress %}
+  
+  <script src="{% static 'js/project.js' %}"></script>
+    {% block extendedJs %}
+  
+    {% endblock extendedJs %}
+
 
   <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script>
   {% block js %}{% endblock js %}

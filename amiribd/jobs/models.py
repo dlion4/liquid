@@ -19,17 +19,15 @@ class JobQuerySet(models.QuerySet):
         return self.filter(location_type__iexact="Abroad")
 
 class JobManager(models.Manager):
-    def get_queryset(self):
-        return JobQuerySet(self.model, using=self._db).all()
 
     def online_jobs(self):
-        return self.get_queryset().online_jobs()
+        return self.filter(location_type__iexact="Online")
 
     def physical_jobs(self):
-        return self.get_queryset().physical_jobs()
+        return self.filter(location_type__iexact="Physical")
 
     def abroad_jobs(self):
-        return self.get_queryset().abroad_jobs()
+        return self.filter(location_type__iexact="Abroad")
     
 class LocationTypeChoice(models.TextChoices):
     Online = "Online", "Online"
