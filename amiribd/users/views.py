@@ -85,7 +85,7 @@ class LoginView(
             if queryset.exists():
                 user = queryset.first()
                 self._one_time_token_authentication_link(user)
-                return render(request, self.template_name, {"form": form, "message": "Login link sent to your inbox"})
+                return render(request, self.template_name, {"form": form, "message": "Login link has been sent to your inbox"})
             return redirect("users:signup")
         return render(request, self.template_name, {"form": form, })
 
