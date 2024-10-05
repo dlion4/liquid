@@ -159,7 +159,7 @@ Job Board Listing
 
 <div class="row" data-animation="true">
   {% for job in jobs %}
-  <div class="col-sm-6 py-2 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
+  <div class="col-12 py-2 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
     <div class="card">
       <div class="card-inner">
         {% if job.is_new %}
