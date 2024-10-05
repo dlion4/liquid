@@ -28,8 +28,8 @@ from amiribd.articles.views import ArticleMixinView
 from .download import download_youtube_from_video_url
 from .forms import AIArticleGenerationModelForm
 from .forms import YoutubeSummarizerForm
-from .summarize import summarize_transcript
-from .transcribe import DeepgramAudioTranscription
+# from .summarize import summarize_transcript
+# from .transcribe import DeepgramAudioTranscription
 
 # configure genai
 
@@ -313,31 +313,31 @@ class YoutubeSummarizerView(ArticleMixinView):
 
 
 class AudioTranscriptionView(View):
-    deepgram = DeepgramAudioTranscription()
+    # deepgram = DeepgramAudioTranscription()
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        audio_link = data.get("audio_link")
-        audio_pk = data.get("audio_pk", "")
-        yt_summarizer = get_object_or_404(YtSummarizer, pk=audio_pk)
-        file_link, transcript, title_theme = self.deepgram.transcribe_audio(
-            filename=audio_link)
-        yt_summarizer.video_transcript = transcript
-        yt_summarizer.transcript_file = file_link
-        yt_summarizer.title = title_theme
+    # def post(self, request, *args, **kwargs):
+    #     data = json.loads(request.body)
+    #     audio_link = data.get("audio_link")
+    #     audio_pk = data.get("audio_pk", "")
+    #     yt_summarizer = get_object_or_404(YtSummarizer, pk=audio_pk)
+    #     file_link, transcript, title_theme = self.deepgram.transcribe_audio(
+    #         filename=audio_link)
+    #     yt_summarizer.video_transcript = transcript
+    #     yt_summarizer.transcript_file = file_link
+    #     yt_summarizer.title = title_theme
 
-        yt_summarizer.save()
+    #     yt_summarizer.save()
 
-        instance = YtSummarizerSerializer(yt_summarizer).data
-        return JsonResponse({
-                "success": True,
-                "data": instance,
-                "response": transcript,
-            },safe=False,
-        )
+    #     instance = YtSummarizerSerializer(yt_summarizer).data
+    #     return JsonResponse({
+    #             "success": True,
+    #             "data": instance,
+    #             "response": transcript,
+    #         },safe=False,
+    #     )
 
 
 
@@ -353,11 +353,11 @@ class SummarizeTranscriptionView(ArticleMixinView):
     def get_object(self, pk):
         return get_object_or_404(YtSummarizer, pk=pk)
 
-    def post(self, request, *args, **kwargs):
-        data = json.loads(request.body)
-        summarized_transcript = summarize_transcript(self.filename_url)
-        instance = self.get_object(pk=data["transcript_instance"]["id"])
-        transcript_text = instance.video_transcript  # noqa: F841
-        transcript_file = instance.transcript_file  # noqa: F841
-        data = {"summary": summarized_transcript}
-        return JsonResponse({"success": True, "response":data})
+    # def post(self, request, *args, **kwargs):
+    #     data = json.loads(request.body)
+    #     summarized_transcript = summarize_transcript(self.filename_url)
+    #     instance = self.get_object(pk=data["transcript_instance"]["id"])
+    #     transcript_text = instance.video_transcript  # noqa: F841
+    #     transcript_file = instance.transcript_file  # noqa: F841
+    #     data = {"summary": summarized_transcript}
+    #     return JsonResponse({"success": True, "response":data})

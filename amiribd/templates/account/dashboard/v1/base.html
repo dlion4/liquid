@@ -1,5 +1,5 @@
 {% extends 'account/dashboard/v1/layout.html' %}
-{% block title %} {{block.super}} {{profile.user.username}}{% endblock title %} 
+{% block title %} {{block.super}} {{profile.user.username}}{% endblock title %}
 
 {% load static humanize %} {% block sidebar %}
 <!---->{% include "account/dashboard/v1/components/navbar/sidebar.html" %}
@@ -11,15 +11,15 @@
     <div class="container-xl wide-lg">
         <div class="nk-content-body">
             {% block heading %}{% endblock heading %}
-                {% if not plans %}
-                    {% if not request.resolver_match.view_name == "dashboard:home" %}
-                        <div class="pb-3" style="display: flex; align-items:center; justify-content:center;">
-                            <h1>You have no active plan yet</h1>
-                        </div>
-                    {% endif %}
-                {% endif %}
+            {% if not plans %}
+            {% if not request.resolver_match.view_name == "dashboard:home" %}
+            <div class="pb-3" style="display: flex; align-items:center; justify-content:center;">
+                <h1>You have no active plan yet</h1>
+            </div>
+            {% endif %}
+            {% endif %}
             {% block main %}
-            
+
             {% endblock main %}
         </div>
     </div>
@@ -599,54 +599,54 @@
                 </div>
                 <ul class="btn-list-vr g-2">
                     <li>
-                        <a class="btn btn-round btn-indc btn-lighter" href="https://example.com/blog" target="_blank">
+                        <a class="btn btn-round btn-indc btn-lighter" href="https://earnkraft.com/" target="_blank">
                             <em class="icon text-primary fas fa-file-alt"></em>
                             <span>Blog and Articles website</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
                     </li>
                     <li>
-                        <a class="btn btn-round btn-indc btn-lighter" href="https://t.me/officialchannel" target="_blank">
+                        <a class="btn btn-round btn-indc btn-lighter" href="https://t.me/earnkraft" target="_blank">
                             <em class="icon text-primary fab fa-telegram-plane"></em>
                             <span>Official Telegram Channel</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
                     </li>
                     <li>
-                        <a class="btn btn-round btn-indc btn-lighter" href="https://chat.whatsapp.com/invite/community" target="_blank">
+                        <a class="btn btn-round btn-indc btn-lighter" href="https://chat.whatsapp.com/KOSzYRz5Th9G1aT7Aj0WPM" target="_blank">
                             <em class="icon text-primary fab fa-whatsapp"></em>
                             <span>Whatsapp Groups</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
                     </li>
                     <li>
-                        <a class="btn btn-round btn-indc btn-lighter" href="https://www.facebook.com/groups/yourgroup" target="_blank">
+                        <a class="btn btn-round btn-indc btn-lighter" href="https://www.facebook.com/people/Earn-Kraft/pfbid02gJKkd9csPNsvnpgusjwrdWtUEGZrRQc5hpBuVLS3HLZHaR1NwpkDxLbPnFAu2F6Zl/" target="_blank">
                             <em class="icon text-primary fab fa-facebook"></em>
                             <span>Facebook Group</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a class="btn btn-round btn-indc btn-lighter" href="https://www.instagram.com/yourpage" target="_blank">
                             <em class="icon text-primary fab fa-instagram"></em>
                             <span>Instagram Page</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
-                        <a class="btn btn-round btn-indc btn-lighter" href="https://www.linkedin.com/company/yourpage" target="_blank">
+                        <a class="btn btn-round btn-indc btn-lighter" href="https://www.linkedin.com/in/earnkraft-digital-marketing-5b4837311" target="_blank">
                             <em class="icon text-primary fab fa-linkedin"></em>
                             <span>Linkedin Page</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a class="btn btn-round btn-indc btn-lighter" href="https://example.com/livechat" target="_blank">
                             <em class="icon text-primary fas fa-comments"></em>
                             <span>Live Chat</span>
                             <em class="indc icon ni ni-chevron-right"></em>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="modal-footer bg-light justify-content-center py-1">
@@ -758,13 +758,13 @@
 
     // start looping the percentage display boxes
 
-    percentageDisplayBoxs.forEach((percentageBox)=>{
+    percentageDisplayBoxs.forEach((percentageBox) => {
 
-        percentageValues.forEach((percentageValue)=>{
+        percentageValues.forEach((percentageValue) => {
             // Set the absolute value
-    
+
             if (parseFloat(percentageValue.textContent) < 0) {
-                
+
                 percentageValue.textContent = Math.abs(parseFloat(percentageValue.textContent));
                 //
                 percentageBox.innerHTML = `
@@ -774,7 +774,7 @@
                 </span>
                 `;
             }
-            else if (parseFloat(percentageValue.textContent) > 0){
+            else if (parseFloat(percentageValue.textContent) > 0) {
                 percentageValue.textContent = Math.abs(parseFloat(percentageValue.textContent));
                 percentageBox.innerHTML = `
                 <span class="change down text-sucess percentageChange">
@@ -791,56 +791,56 @@
 
     // const ws = new WebSocket("ws://" + window.location.host + '/ws/streams/news/notification')
 
-    class Utility{
-        formatDate (date){
+    class Utility {
+        formatDate(date) {
             const now = new Date()
-            const secondsPast =  (now.getTime() - new Date(date).getTime()) / 1000;
-            if (secondsPast < 60){
+            const secondsPast = (now.getTime() - new Date(date).getTime()) / 1000;
+            if (secondsPast < 60) {
                 return `${Math.floor(secondsPast)} seconds ago`;
             }
-            else if (secondsPast < 3600){
+            else if (secondsPast < 3600) {
                 return `${Math.floor(secondsPast / 60)} minutes ago`;
             }
-            else if (secondsPast < 86400){
+            else if (secondsPast < 86400) {
                 return `${Math.floor(secondsPast / 3600)} hours ago`;
             }
-            else if (secondsPast < 2592000){
+            else if (secondsPast < 2592000) {
                 return `${Math.floor(secondsPast / 86400)} days ago`;
             }
-            else{
+            else {
                 return `${new Date(date).toLocaleDateString()}`;
             }
         }
     }
 
-    class WebSocketNotification{
-        constructor(){
+    class WebSocketNotification {
+        constructor() {
             this.base_url = `ws://${window.location.host}/ws/streams`;
             this.utility = new Utility();
         };
 
-        initiateConnection = async (endpoint) =>{
+        initiateConnection = async (endpoint) => {
             const ws = new WebSocket(`${this.base_url}/${endpoint}`);
 
-            ws.onmessage = async (event) =>{
+            ws.onmessage = async (event) => {
                 const data = JSON.parse(JSON.parse(event.data).message);
-                this.stream(this.updateRecentUpdate,data)
+                this.stream(this.updateRecentUpdate, data)
                 return data
             }
         }
 
-        stream(func, data){
+        stream(func, data) {
             console.log(data);
-            if(typeof func === 'function'){
+            if (typeof func === 'function') {
                 func(data);
             }
         }
 
-        init = async ()=>{
+        init = async () => {
             await this.initiateConnection('news/notifications')
         };
 
-        updateRecentUpdate = async (data, target)=>{
+        updateRecentUpdate = async (data, target) => {
             const holders = document.querySelectorAll(".home-recent-activities");
             const element = document.createElement("li");
 
@@ -852,7 +852,7 @@
                     <span class="time">${this.utility.formatDate(data.timestamp)}</span>
                 </div>
             `;
-            holders.forEach(holder=>{
+            holders.forEach(holder => {
                 holder.prepend(element)
             })
         };

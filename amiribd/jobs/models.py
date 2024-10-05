@@ -51,7 +51,7 @@ class Job(models.Model):
     resume_required = models.BooleanField(default=False, help_text="This is to show whether the applicant should attach resume letter a long the application")
     motivation_letter_required = models.BooleanField(default=False, help_text="This is to show whether the applicant should attach motivational letter a long the application")
     bidding_offer_required = models.BooleanField(default=False, help_text="This is to show whether the applicant should place his biding while applying")
-
+    
     objects = JobManager()
 
 

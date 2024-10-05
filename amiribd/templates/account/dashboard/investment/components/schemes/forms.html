@@ -279,75 +279,25 @@
         paymentBtnForm.removeAttribute("disabled");
 
         paymentBtnForm.addEventListener("click", () => {
-          const url = `{% url 'dashboard:invest:handle-payment' %}?phone=${phoneNo.value}&amount=${cleanedCurrency}&currency=KES&profile=${profileId}`;
+          const url = `{% url 'dashboard:invest:handle-payment' %}`;
           async function handlePayment() {
             const response = await fetch(url, {
-              method: "GET",
+              method: "POST",
               headers: {
                 "Content-Type": "application/json"
-              }
+              },
+              body: JSON.stringify({
+                phone:phoneN.value,
+                amount: cleanedCurrency,
+                currency: "KES",
+                profile: profileId
+              })
             });
 
             const data = await response.json();
             console.log(data);
 
             if (data.success) {
-              // window.location.href = data.url;
-
-              // if (data.response.invoice.state === "PENDING") {
-
-              //   paymentBtnSpinner.style.display = "block";
-              //   paymentBtnText.textContent = "Payment in progress...";
-              //   paymentBtnForm.setAttribute("disabled", "disabled");
-
-              //   let invoice_id = data.response.invoice.invoice_id;
-
-              //   let intervalId = setInterval(async () => {
-              //     const res = await checkPaymentStatus(invoice_id);
-              //     if (res.response.invoice.state === "PROCESSING") {
-              //       // clearInterval(intervalId);  Stop checking when the invoice is no longer pending
-              //       // paymentBtnSpinner.style.display = "none";
-              //       //  paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
-              //       // paymentBtnForm.removeAttribute("disabled");
-              //       console.log("processing")
-
-              //     } else if (res.response.invoice.state === "COMPLETE") {
-              //       clearInterval(intervalId); // Stop checking when the invoice is no longer pending
-              //       paymentBtnSpinner.style.display = "none";
-              //       paymentBtnText.textContent = `Payment ${res.response.invoice.state}`;
-              //       paymentBtnForm.removeAttribute("disabled");
-              //       // Set a timeout to clear the interval after 40 seconds
-              //       setTimeout(() => {
-              //         document
-              //           .getElementById("payment-btn-help-text")
-              //           .innerHTML = "Your payment was successfully. You will be redirected to the next step in 2 minutes"
-
-              //         setTimeout(() => {
-              //           handleCreateTransaction(poolId, accountId, planId)
-              //         }, 1000)
-
-              //       }, 30000); // Stop checking after 40 seconds
-              //     }
-              //   }, 10000); // Check every 10 seconds
-
-              // }
-
-              // async function checkPaymentStatus(invoice_id) {
-              //   // Implement the logic to check the payment status
-              //   console.log("Checking payment status...");
-              //   // You might need to make another API call here to check the status
-              //   const response = await fetch(`{% url 'dashboard:invest:check-payment-status' %}?invoice_id=${invoice_id}`, {
-              //     method: "GET",
-              //     headers: {
-              //       "Content-Type": "application/json"
-              //     }
-              //   });
-
-              //   const data = await response.json();
-
-              //   return data;
-
-              // }
 
               async function handleCreateTransaction(pool_id, account_id, plan_id) {
                 const response = await fetch(`/dashboard/invest/handle-payment-create-transaction/${pool_id}/${account_id}/${plan_id}/`, {

@@ -1,7 +1,6 @@
-import secrets
 import string
 from decimal import Decimal
-
+import random
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import F
@@ -25,7 +24,7 @@ from .types import PoolTypeObjects
 def generate_ssid(instance, k=10):
 
     return "".join(
-        secrets.choices(
+        random.choices(
             str(
                 str(instance.pk)
                 + str(instance.pool.profile.pk)
