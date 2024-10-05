@@ -159,8 +159,8 @@ Job Board Listing
 
 <div class="row" data-animation="true">
   {% for job in jobs %}
-  <div class="col-sm-12 py-2 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
-    <div class="card card-full">
+  <div class="col-sm-6 py-2 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
+    <div class="card">
       <div class="card-inner">
         {% if job.is_new %}
         <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
@@ -201,7 +201,7 @@ Job Board Listing
     </div>
   </div>
   <!-- modals -->
-  <div class="modal fade zoom" tabindex="-1" id="modalZoom{{job.pk}}">
+  <div class="modal fade zoom" tabindex="-1" id="modalZoom{{job.pk}}">  
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
