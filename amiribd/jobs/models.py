@@ -20,7 +20,7 @@ class JobQuerySet(models.QuerySet):
 
 class JobManager(models.Manager):
     def get_queryset(self):
-        return JobQuerySet(self.model, using=self._db)
+        return JobQuerySet(self.model, using=self._db).all()
 
     def online_jobs(self):
         return self.get_queryset().online_jobs()
