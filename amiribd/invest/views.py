@@ -605,7 +605,7 @@ class JobsView(InvestmentViewMixin):
     job_application_form = JobApplicationForm
 
     def get_jobs(self):
-        return self.jobs.objects.select_related("author").filter(is_active=True).order_by("?")  # noqa: E501
+        return self.jobs.objects.select_related("author").order_by("?")
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)

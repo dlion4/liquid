@@ -15,6 +15,7 @@ from django.views.generic import TemplateView
 
 from amiribd.invest.models import Account
 from amiribd.invest.models import Plan
+from amiribd.jobs.models import Job
 from amiribd.schemes.models import WhatsAppEarningScheme
 from amiribd.streams.models import Message
 from amiribd.streams.models import Post as NotificationPosts
@@ -211,6 +212,21 @@ class DashboardViewMixin(TemplateView):
             .all()
             .first()
         )
+    def _get_remote_jobs(self, **kwargs):
+        """
+        return RemoteJob.objects.filter(
+            user=self.__get_user().profile_user,
+        ).all()
+        """
+        profile = self.__get_user().profile_user
+        salary = profile.job_applications.filter(is_completed=True).aggregate(salary=Sum("salary_offer"))["salary"]  # noqa: E501
+        return {
+            "all_remote_jobs": Job.objects.online_jobs(),
+            "remote_jobs_done":profile.job_applications.filter(is_completed=True ),
+            "remote_jobs_rejected": profile.job_applications.filter(is_rejected=True),
+            "remote_jobs_done_completed":  profile.job_applications.filter(is_completed=True),
+            "remote_jobs_income":  salary or Decimal("0.00"),
+        }
 
     def get_account_transactions(self)->Transaction:
         """
@@ -312,6 +328,7 @@ class DashboardViewMixin(TemplateView):
         context.update(self.get_transactions_context())
         context.update(self.get_earnings_context())
         context.update(self.get_notifications_context())
+        context.update(self._get_remote_jobs())
         context["monthly_site_investments"] = self.get_monthly_site_investments()
         return context
 

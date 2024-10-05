@@ -30,8 +30,9 @@
         <div class="nk-upload-form">
           <h5 class="title mb-3">Submit Completed Assignment</h5>
           <div class="bg-lighter" id="uploadTrigger">
-            <form id="uploadForm" enctype="multipart/form-data">
-              <input type="file" id="fileInput" multiple="multiple" style="display: none!important;">
+            <form id="uploadForm" enctype="multipart/form-data" action="{% url 'dashboard:invest:jobs:upload_submission' application.pk %}">
+              {% csrf_token %}
+              <input name="submission-{{application.pk}}" type="file" id="fileInput" multiple="multiple" style="display: none!important;">
               <div id="progressContainer"></div>
               <div id="previewContainer"></div>
             </form>
@@ -44,7 +45,7 @@
               <a href="#" class="link link-primary">Cancel</a>
             </li>
             <li>
-              <button class="btn btn-primary">Add Files</button>
+              <button class="btn btn-primary" id="handleFileUpload">Submit Task</button>
             </li>
           </ul>
         </div>
@@ -54,25 +55,27 @@
 </div>
 
 <script defer="defer">
-  let taskCompletionfileUpload = document.getElementById('fileInput');
+
+
+  var taskCompletionfileUpload = document.getElementById('fileInput');
   taskCompletionfileUpload.addEventListener('change', handleFileSelect);
 
-  const uploadTrigger = document.getElementById('uploadTrigger');
+  var uploadTrigger = document.getElementById('uploadTrigger');
 
   uploadTrigger.addEventListener('click', function (e) {
     taskCompletionfileUpload.click();
   })
 
-  const uploadDisplayLocationBox = document.getElementById("file-preview-location")
+  var uploadDisplayLocationBox = document.getElementById("file-preview-location")
 
   function removeFileUpload(id) {
-    const filePreview = document.getElementById(`file-${id}`);
+    var filePreview = document.getElementById(`file-${id}`);
     uploadDisplayLocationBox.removeChild(filePreview);
 
   }
 
   function handleFileSelect(event) {
-    const files = event.target.files;
+    var files = event.target.files;
     uploadDisplayLocationBox.innerHTML = '';
 
     Array
@@ -109,4 +112,62 @@
         `;
       });
   }
+
+  var uploadBtn = document.getElementById("handleFileUpload");
+
+  function completeJobSubmission() {
+    var fileInput = document.getElementById("fileInput");
+    var files = fileInput.files;
+
+    if (files.length === 0) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    var formData = new FormData();
+    formData.append('submission', files[0]);
+
+    // Replace 'applicationId' with the actual application ID you need to pass
+    var url = document.getElementById("uploadForm").getAttribute("action");
+    uploadBtn.textContent = "submitting file ...";
+    uploadBtn.setAttribute("disabled", "disabled");
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        "X-CSRFToken": document.querySelector("input[name=csrfmiddlewaretoken]").value
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          uploadBtn.textContent = "Submission Succefull";
+          uploadBtn.removeAttribute("disabled");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000)
+        } else {
+          alert('File upload failed: ' + data.message);
+          uploadBtn.removeAttribute("disabled");
+          uploadBtn.textContent = "error submitting task";
+        }
+      })
+      .catch(error => {
+        Object.values(errors => {
+          errors.forEach(error => {
+            alert(error)
+          })
+        })
+      });
+  }
+
+  uploadBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    completeJobSubmission();
+  });
+
+
+
+
 </script>

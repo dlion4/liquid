@@ -1,14 +1,17 @@
+import json
 from django.contrib.auth import get_user
 from django.db import transaction
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.generic import View
-
+from django.views.decorators.csrf import csrf_exempt
 from amiribd.dashboard.guard import DashboardGuard
 from amiribd.dashboard.views import DashboardViewMixin
 from amiribd.invest.models import Account
-from amiribd.jobs.models import JobApplication
+from amiribd.jobs.models import JobApplication, JobApplicationSubmission
 from amiribd.users.models import Profile
-
+from django.db import IntegrityError
+from django.utils.decorators import method_decorator
+from django.core.exceptions import ValidationError
 
 class JobBoardView(DashboardGuard, DashboardViewMixin):
     """
@@ -82,3 +85,53 @@ class CancelJobApplicationView(View):
         application.status = "CANCELLED"
         application.save()
         return JsonResponse({"message": "success"})
+
+class ReactivateJobApplicationView(View):
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        """
+        This function handles the reactivation of a job application.
+        Parameters:    post_id: int
+                    applicant:Profile
+                    job_applied: Job
+        Procedure:
+        """
+        application = JobApplication.objects.get(pk=kwargs.get("application_id"))
+        job = application.job
+        profile = Profile.objects.get(user=get_user(request))
+        profile.job_applications.add(job)
+        profile.save()
+        application.status = "ACCEPTED"
+        application.save()
+        return JsonResponse({"message": "success"})
+
+
+class UploadCompletedJobFileView(View):
+
+    @transaction.atomic
+    def post(self, request:HttpRequest, *args, **kwargs):
+        try:
+            file = request.FILES.get("submission")
+            job_application = JobApplication.objects.get(
+                pk=kwargs.get("application_id")).job
+            submission = JobApplicationSubmission.objects.create(
+                job_application=job_application,
+                uploader=Profile.objects.get(user=get_user(request)),
+                submission_file=file,
+            )
+            submission.job_application.is_completed = True
+            submission.job_application.save()
+            submission.save()
+            return JsonResponse(
+                {"status": "success", "message": "File uploaded successfully!"},
+                status=201)
+        except (IntegrityError, ValidationError) as e:
+            return JsonResponse(
+                {"status": "failed", "message": json.dumps(e)}, status=400)
+
+
+
+
+upload_submission = UploadCompletedJobFileView.as_view()
+
+

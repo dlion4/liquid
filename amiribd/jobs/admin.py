@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import JobApplication, Job
+from .models import JobApplication, Job, JobApplicationSubmission
 from .forms import AddJobForm
 from amiribd.core.admin import earnkraft_site
 from unfold.admin import ModelAdmin
@@ -31,7 +31,14 @@ class JobApplicationInlineAdmin(unfold_admin.StackedInline):
             # app.save()
             pass
 
-
+class JobApplicationSubmissionInlineAdmin(unfold_admin.TabularInline):
+    model = JobApplicationSubmission
+    extra = 0
+    formfield_overrides={
+        models.TextField:{
+            "widget":UnfoldAdminTextInputWidget,
+        },
+    }
 @admin.register(Job, site=earnkraft_site)
 class JobAdmin(ModelAdmin):
     
@@ -58,13 +65,14 @@ class JobAdmin(ModelAdmin):
 
     inlines = [
         JobApplicationInlineAdmin,
+        JobApplicationSubmissionInlineAdmin,
     ]
-    
+
     formfield_overrides = {
         models.TextField:{
-            "widget":WysiwygWidget
+            "widget":WysiwygWidget,
         },
         models.BooleanField: {
-            'widget':UnfoldBooleanSwitchWidget
-        }               
+            "widget":UnfoldBooleanSwitchWidget,
+        }, 
     }

@@ -59,7 +59,7 @@
                     <h5 class="nk-wgw-title title">WhatsApp Earnings</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">{{earnings|floatformat:2|intcomma|default:"0.00"}}
+                    <div class="">{{earnings|floatformat:2|intcomma|default:"0.00"}}
                       <span class="currency currency-nio">KES</span>
                     </div>
                   </div>
@@ -79,7 +79,7 @@
                     <h5 class="nk-wgw-title title">Investments</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">{{investments|floatformat:2|intcomma|default:"0.00"}}
+                    <div class="">{{investments|floatformat:2|intcomma|default:"0.00"}}
                       <span class="currency currency-btc">KES</span>
                     </div>
                   </div>
@@ -99,7 +99,7 @@
                     <h5 class="nk-wgw-title title">Bonuses</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount">{{bonuses|floatformat:2|intcomma|default:"0.00"}}
+                    <div class="">{{bonuses|floatformat:2|intcomma|default:"0.00"}}
                       <span class="currency currency-eth">KES</span>
                     </div>
                   </div>
@@ -131,7 +131,7 @@
                     <h5 class="nk-wgw-title title">All Jobs</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount1">22
+                    <div class="1">22
                       <span class="currency-nio"></span>
                     </div>
                   </div>
@@ -150,7 +150,7 @@
                     <h5 class="nk-wgw-title title">Articles Written</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount1">{{investments|floatformat|intcomma|default:"0"}}
+                    <div class="1">{{investments|floatformat|intcomma|default:"0"}}
                       <span class="currency-btc"></span>
                     </div>
                   </div>
@@ -169,7 +169,7 @@
                     <h5 class="nk-wgw-title title">Purchases</h5>
                   </div>
                   <div class="nk-wgw-balance">
-                    <div class="amount1">{{bonuses|floatformat|intcomma|default:"0"}}
+                    <div class="1">{{bonuses|floatformat|intcomma|default:"0"}}
                       <span class="currency-eth"></span>
                     </div>
                   </div>
@@ -205,7 +205,7 @@
               <h5 class="nk-wgw-title title">All Remote Jobs</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount">{{ all_remote_jobs }}</div>
+              <div class="">{{ all_remote_jobs.count }}</div>
             </div>
           </a>
         </div>
@@ -224,7 +224,7 @@
               <h5 class="nk-wgw-title title">Remote Jobs Done</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount">{{ remote_jobs_done }}</div>
+              <div class="">{{ remote_jobs_done.count }}</div>
             </div>
           </a>
         </div>
@@ -243,7 +243,7 @@
               <h5 class="nk-wgw-title title">Remote Jobs Rejected</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount">{{ remote_jobs_rejected }}</div>
+              <div class="">{{ remote_jobs_rejected.count }}</div>
             </div>
           </a>
         </div>
@@ -262,7 +262,7 @@
               <h5 class="nk-wgw-title title">Remote Jobs Income</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount">$ {{ remote_jobs_income|floatformat:2|intcomma }} </div>
+              <div class="">$ {{ remote_jobs_income|floatformat:2|intcomma }} </div>
             </div>
           </a>
         </div>
@@ -295,7 +295,7 @@
               <h5 class="nk-wgw-title title">Status</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount1">Active<span class="currency-nio"></span></div>
+              <div class="1">Active<span class="currency-nio"></span></div>
             </div>
           </a>
         </div>
@@ -312,7 +312,7 @@
               <h5 class="nk-wgw-title title">Rank</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount1">Boss<span class="currency-btc"></span></div>
+              <div class="1">Boss<span class="currency-btc"></span></div>
             </div>
           </a>
         </div>
@@ -329,7 +329,7 @@
               <h5 class="nk-wgw-title title">VIP</h5>
             </div>
             <div class="nk-wgw-balance">
-              <div class="amount1">Agent<span class="currency-eth"></span></div>
+              <div class="1">Agent<span class="currency-eth"></span></div>
             </div>
           </a>
         </div>

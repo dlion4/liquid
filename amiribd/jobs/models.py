@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from amiribd.users.models import Profile
 from django_extensions.db.fields import AutoSlugField
 from amiribd.articles.models import my_slugify_function
+from django.core.exceptions import ValidationError
 
 
 class JobQuerySet(models.QuerySet):
@@ -20,6 +21,15 @@ class JobQuerySet(models.QuerySet):
 class JobManager(models.Manager):
     def get_queryset(self):
         return JobQuerySet(self.model, using=self._db)
+
+    def online_jobs(self):
+        return self.get_queryset().online_jobs()
+
+    def physical_jobs(self):
+        return self.get_queryset().physical_jobs()
+
+    def abroad_jobs(self):
+        return self.get_queryset().abroad_jobs()
     
 class LocationTypeChoice(models.TextChoices):
     Online = "Online", "Online"
@@ -37,7 +47,8 @@ class Job(models.Model):
     title = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from="title", slugify_function=my_slugify_function)
     location = models.CharField(max_length=255, help_text="online, Nairobi, Qatar, etc")
-    location_type = models.CharField(max_length=20, help_text="Online, Physical, Abroad, etc", choices=LocationTypeChoice.choices, default=LocationTypeChoice.Online)
+    location_type = models.CharField(
+        max_length=20, help_text="Online, Physical, Abroad, etc", choices=LocationTypeChoice.choices, default=LocationTypeChoice.Online)
     description = models.TextField(max_length=1000)
     content = models.TextField()
     salary_offer = models.DecimalField(max_digits=12, decimal_places=2, default=10.89)
@@ -51,7 +62,9 @@ class Job(models.Model):
     resume_required = models.BooleanField(default=False, help_text="This is to show whether the applicant should attach resume letter a long the application")
     motivation_letter_required = models.BooleanField(default=False, help_text="This is to show whether the applicant should attach motivational letter a long the application")
     bidding_offer_required = models.BooleanField(default=False, help_text="This is to show whether the applicant should place his biding while applying")
-    
+    is_completed = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+
     objects = JobManager()
 
 
@@ -109,3 +122,31 @@ class JobApplication(models.Model):
         return reverse("dashboard:invest:jobs:job_cancel_job_application", kwargs={
             "application_id": self.pk,
         })
+    def get_reactivation_url(self):
+        return reverse("dashboard:invest:jobs:job_reactivate_job_application", kwargs={
+            "application_id": self.pk,
+        })
+
+
+class JobApplicationSubmission(models.Model):
+    job_application = models.ForeignKey(
+        Job, on_delete=models.CASCADE, related_name="jobs_submissions")
+    uploader = models.ForeignKey(Profile,
+                                 null=True,
+                                 blank=True, related_name="submitted_by",
+                                 on_delete=models.SET_NULL)
+    submission_date = models.DateTimeField(auto_now_add=True)
+    submission_file = models.FileField(upload_to="submissions/")
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.uploader.first_name)
+
+    def clean(self):
+        if self.job_application.location_type != "Online":
+            msg = "You can only submit an application for online jobs."
+            raise ValidationError(msg)
+
+    class Meta:  # noqa: DJ012
+        verbose_name = "Job Application Submission"
+        verbose_name_plural = "Job Application Submissions"
