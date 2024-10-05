@@ -22,9 +22,11 @@ from amiribd.streams.models import Room
 from amiribd.streams.models import RoomMessage
 from amiribd.transactions.models import Transaction
 from amiribd.users.actions import build_signup_referral_link
-
+from amiribd.users.utils import BuildMagicLink, generate_referral_code
 from .guard import DashboardGuard
 
+
+magic_link = BuildMagicLink()
 
 # Create your views here.
 class DashboardViewMixin(TemplateView):

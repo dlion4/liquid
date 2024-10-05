@@ -273,4 +273,3 @@ class PostCleanFormPostViewMixin:
             return json.loads(request.body)
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid Post form data"})
-            

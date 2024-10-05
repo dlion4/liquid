@@ -5,7 +5,7 @@ from django.urls import reverse
 
 
 def generate_referral_code(user_pk):
-    random_str = "".join(random.choices(string.ascii_letters + string.digits, k=45))
+    random_str = "".join(random.choices(string.ascii_letters + string.digits, k=45))  # noqa: S311
     return f"LQ-{user_pk}-{random_str}"
 
 

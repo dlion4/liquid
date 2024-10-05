@@ -20,12 +20,14 @@
                     <div class="user-account-info between-center">
                         <div class="user-account-main">
                             <h6 class="overline-title-alt">Available Balance</h6>
-                            <div class="amount user-balance">{{available_amount|floatformat:2|intcomma}}
+                            <div class=" user-balance">{{available_amount|floatformat:2|intcomma}}
+                                <!-- amount -->
                                 <span class="currency currency-btc">
                                     KES
                                 </span>
                             </div>
-                            <div class="amount user-balance-alt">{{locked_amount|floatformat:2|intcomma}}
+                            <div class="user-balance-alt">{{locked_amount|floatformat:2|intcomma}}
+                                <!-- amount -->
                                 <span class="currency currency-btc">KES</span>
                             </div>
                         </div>
@@ -59,21 +61,21 @@
                             <li>
                                 <a href="#" class="btn btn-lg btn-primary me-2">
                                     <span>Deposit</span>
-                                
+
                                 </a>
                             </li>
                             {% if available_amount > 0.00 %}
                             <li>
                                 <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="btn btn-lg btn-warning">
                                     <span>Withdraw</span>
-                                    
+
                                 </a>
                             </li>
                             {% else %}
                             <li>
                                 <a href="#" class="btn btn-lg btn-warning disabled me-3">
                                     <span>Withdraw</span>
-                                    
+
                                 </a>
                             </li>
                             {% endif %}
@@ -106,10 +108,12 @@
 
                             <div class="user-account-main">
                                 <h6 class="overline-title-alt">Available Balance</h6>
-                                <div class="amount user-balance">{{available_amount}}
+                                <div class="user-balance">{{available_amount}}
+                                    <!-- amount -->
                                     <span class="currency currency-btc">KES</span>
                                 </div>
-                                <div class="amount user-balance-alt">{{locked_amount}}
+                                <div class="user-balance-alt">{{locked_amount}}
+                                    <!-- amount -->
                                     <span class="currency currency-btc">KES</span>
                                 </div>
                             </div>
@@ -144,7 +148,7 @@
                             <li>
                                 <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="link">
                                     <span>Withdraw Funds</span>
-                                    
+
                                 </a>
                             </li>
                             {% endif %}
@@ -241,7 +245,7 @@
                                 <span class="nk-menu-text">Whatsapp</span>
                             </a>
                         </li>
-                          {% if plans %}
+                        {% if plans %}
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:jobs:jobs' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span>
@@ -275,20 +279,20 @@
 
                                 </span>
                             </a>
-                        </li> 
+                        </li>
                         {% endcomment %}
-                         {% if plans %}
-                            <li class="nk-menu-item">
-                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
-                                    <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
-                                    <span class="nk-menu-text">Invest and Save</span>
-                                </a>
-                            </li>
+                        {% if plans %}
+                        <li class="nk-menu-item">
+                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
+                                <span class="nk-menu-text">Invest and Save</span>
+                            </a>
+                        </li>
                         {% endif %}
                         <li class="nk-menu-item">
                             <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:advertise' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon">
-                                   <em class="icon ni ni-bulb"></em>
+                                    <em class="icon ni ni-bulb"></em>
                                 </span>
                                 <span class="nk-menu-text">Advertise
                                 </span>
@@ -310,8 +314,8 @@
                                 </span>
                             </a>
                         </li>
-                        
-                        
+
+
 
                         <li class="nk-menu-item">
                             <a role="button" class="nk-menu-link" href="#">
@@ -355,7 +359,7 @@
                                 </div>
                                 <div class="wallet-text">
                                     <h6 class="wallet-name">{{plan.type}}</h6>
-                                    <span class="amount wallet-balance">{{plan.type.price}}
+                                    <span class="wallet-balance">{{plan.type.price}}
                                         <span class="currency currency-nio">KES</span></span>
                                 </div>
                             </a>
@@ -377,11 +381,11 @@
                     </ul>
                     {% endif %}
                 </div>
-               
-                
+
+
 
                 <!--  -->
-                 <!-- TODO: set permission is_premium -->
+                <!-- TODO: set permission is_premium -->
                 <hr />
                 <div class="nk-sidebar-menu">
                     {% if plans %}
@@ -434,8 +438,8 @@
                                         </span>
                                     </a>
                                 </li>
-                                
-                                
+
+
                                 <li class="nk-menu-item">
                                     <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}" class="nk-menu-link">
                                         <span class="nk-menu-text">Pricing
@@ -459,41 +463,41 @@
                                 </span><span class="nk-menu-text">Uploads</span>
                             </a>
                         </li>
-                    <ul class="nk-menu">
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-chat-circle"></em>
-                                </span><span class="nk-menu-text">Chats</span>
-                            </a>
-                        </li>
+                        <ul class="nk-menu">
+                            <li class="nk-menu-item">
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                    <span class="nk-menu-icon">
+                                        <em class="icon ni ni-chat-circle"></em>
+                                    </span><span class="nk-menu-text">Chats</span>
+                                </a>
+                            </li>
 
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-user-c"></em>
-                                </span><span class="nk-menu-text">Account</span>
-                            </a>
-                        </li>
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'subscriptions:home' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-swap-alt"></em>
-                                </span><span class="nk-menu-text">Subscriptions</span>
-                            </a>
-                        </li>
+                            <li class="nk-menu-item">
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'profile:profile' %}" class="nk-menu-link">
+                                    <span class="nk-menu-icon">
+                                        <em class="icon ni ni-user-c"></em>
+                                    </span><span class="nk-menu-text">Account</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'subscriptions:home' %}" class="nk-menu-link">
+                                    <span class="nk-menu-icon">
+                                        <em class="icon ni ni-swap-alt"></em>
+                                    </span><span class="nk-menu-text">Subscriptions</span>
+                                </a>
+                            </li>
 
-                        <li class="nk-menu-item">
-                            <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-headphone"></em>
-                                </span><span class="nk-menu-text">Assistant</span>
-                            </a>
-                        </li>
+                            <li class="nk-menu-item">
+                                <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
+                                    <span class="nk-menu-icon">
+                                        <em class="icon ni ni-headphone"></em>
+                                    </span><span class="nk-menu-text">Assistant</span>
+                                </a>
+                            </li>
 
-                        
 
-                    </ul>
+
+                        </ul>
                 </div>
                 <hr />
                 <div class="nk-sidebar-footer">

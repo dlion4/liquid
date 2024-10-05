@@ -177,7 +177,9 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        profile = Profile.objects.create(user=instance)
+        profile.referral_code = generate_referral_code(profile.user.pk)
+        profile.save()
 
 
 class Address(models.Model):

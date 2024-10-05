@@ -192,6 +192,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
+        print(request.body)
 
         profile = request.user.profile_user
         data = json.loads(request.body)
@@ -312,6 +313,8 @@ class HandleRegistrationPaymentView(HandlePaymentView):
 
     def post(self, request, *args, **kwargs):
         json.loads(request.body)
+        #TODO: CREATE THE PLAN SECTION
+        
         return JsonResponse({"success": True})
 
 class HandleAddPlanPaymentView(HandlePaymentView):

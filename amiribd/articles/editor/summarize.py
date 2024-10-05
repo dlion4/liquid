@@ -12,9 +12,12 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_community.llms.ctransformers import CTransformers
 
-from amiribd.articles.editor.transcribe import TRANSCRIPT_DOWNLOAD_DIR
-from amiribd.articles.editor.transcribe import generate_random_file_name
+# from amiribd.articles.editor.transcribe import
+from .transcribe import generate_random_file_name
 
+APPS_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+TRANSCRIPT_DOWNLOAD_DIR = Path(APPS_DIR/"media"/"transcripts"/ "files")
 
 class TranscriptSummarizer:
     def __init__(self,filename):

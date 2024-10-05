@@ -25,25 +25,28 @@
       <div class="tab-content mt-0">
         <div class="tab-pane  active show" id="overview" role="tabpanel">
           <div class="invest-ov gy-2">
-            <div class="subtitle">Currently Actived Investment</div>
+            <div class="subtitle">Currently Active Investment</div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">{{total_site_deposit}}
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Amount</div>
               </div>
               <div class="invest-ov-stats">
                 <div>
                   <span class="amount">56</span>
                   <span class="change up text-danger">
-                    <em class="icon ni ni-arrow-long-up"></em>1.93%</span></div>
+                    <em class="icon ni ni-arrow-long-up"></em>1.93%</span>
+                </div>
                 <div class="title">Plans</div>
               </div>
             </div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">{{total_paid_profits}}
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Paid Profit</div>
               </div>
             </div>
@@ -53,7 +56,8 @@
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">{{monthly_site_investments.current_month_deposits}}
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Amount</div>
               </div>
               <div class="invest-ov-stats">
@@ -74,21 +78,24 @@
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">89,395.395
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Amount</div>
               </div>
               <div class="invest-ov-stats">
                 <div>
                   <span class="amount">96</span>
                   <span class="change up text-danger">
-                    <em class="icon ni ni-arrow-long-up"></em>1.93%</span></div>
+                    <em class="icon ni ni-arrow-long-up"></em>1.93%</span>
+                </div>
                 <div class="title">Plans</div>
               </div>
             </div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">99,395.395
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Paid Profit</div>
               </div>
             </div>
@@ -98,14 +105,16 @@
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">149,395.395
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Amount</div>
               </div>
               <div class="invest-ov-stats">
                 <div>
                   <span class="amount">83</span>
                   <span class="change down text-danger">
-                    <em class="icon ni ni-arrow-long-down"></em>1.93%</span></div>
+                    <em class="icon ni ni-arrow-long-down"></em>1.93%</span>
+                </div>
                 <div class="title">Plans</div>
               </div>
             </div>
@@ -117,7 +126,8 @@
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">{{total_site_deposit}}
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Amount</div>
               </div>
               <div class="invest-ov-stats">
@@ -134,7 +144,8 @@
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">{{total_paid_profits}}
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Paid Profit</div>
               </div>
             </div>
@@ -144,7 +155,8 @@
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="amount">{{monthly_site_investments.current_month_deposits}}
-                  <span class="currency currency-usd">USD</span></div>
+                  <span class="currency currency-usd">USD</span>
+                </div>
                 <div class="title">Amount</div>
               </div>
               <div class="invest-ov-stats">
@@ -197,22 +209,22 @@
         </div>
       </div>
       {% if plans_popularity %}
-        <div class="progress-list gy-3">
-          {% for plan in plans_popularity %}
-            <div class="progress-wrap">
-              <div class="progress-text">
-                <div class="progress-label">
-                  {{plan.type__type|title}}
-                  Plan
-                </div>
-                <div class="progress-amount">{{plan.percentage_of_total}}%</div>
-              </div>
-              <div class="progress progress-md">
-                <div class="progress-bar" data-progress="{{plan.percentage_of_total}}" style="width: {{plan.percentage_of_total}}%"></div>
-              </div>
+      <div class="progress-list gy-3">
+        {% for plan in plans_popularity %}
+        <div class="progress-wrap">
+          <div class="progress-text">
+            <div class="progress-label">
+              {{plan.type__type|title}}
+              Plan
             </div>
-          {% endfor %}
+            <div class="progress-amount">{{plan.percentage_of_total}}%</div>
+          </div>
+          <div class="progress progress-md">
+            <div class="progress-bar" data-progress="{{plan.percentage_of_total}}" style="width: {{plan.percentage_of_total}}%"></div>
+          </div>
         </div>
+        {% endfor %}
+      </div>
       {% endif %}
       <div class="invest-top-ck mt-auto">
         <canvas class="iv-plan-purchase" id="planPurchase" width="306" height="50" style="display: block; box-sizing: border-box; height: 50px; width: 306px;"></canvas>
