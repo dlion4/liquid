@@ -5,7 +5,7 @@
 </li>
 {% if application.status == "ACCEPTED" %}
 <li>
-  <a href="#file-upload-{{application.id}}" data-bs-toggle="modal">
+  <a {% if not application.job.is_completed %} href="#file-upload-{{application.id}}" data-bs-toggle="modal" {% else %} role="button" {% endif %}>
     <em class="icon ni ni-check-round-cut"></em>
     <span>Mark completed</span>
   </a>

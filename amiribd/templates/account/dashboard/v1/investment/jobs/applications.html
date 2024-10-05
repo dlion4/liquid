@@ -81,11 +81,15 @@
                 </div>
                 <div class="nk-file-members">
                   <div class="tb-lead">
+                    {% if not application.job.is_completed %}
                     {{application.get_status_display|title}}
                     {% if application.status != 'PENDING' %}
                       Application
                     {% else %}
                       Approval
+                    {% endif %}
+                    {% else %}
+                    Task Completed
                     {% endif %}
                   </div>
                 </div>
