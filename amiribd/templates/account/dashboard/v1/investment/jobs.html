@@ -144,7 +144,7 @@ Job Board Listing
 
 <ul class="filter-button-group mb-4 pb-1">
   <li>
-    <button class="filter-button active" type="button" data-filter="*">All</button>
+    <button class="filter-button active" type="button" data-filter=".*">All</button>
   </li>
   <li>
     <button class="filter-button" type="button" data-filter=".online">Online/Remote</button>
@@ -308,29 +308,36 @@ Job Board Listing
     const filterButtons = document.querySelectorAll('.filter-button');
     const filterItems = document.querySelectorAll('.filter-item');
 
+    const itemCount = document.querySelector(".jobs_count");
+    let initialValue = itemCount.textContent;
+
     filterButtons.forEach(button => {
       button.addEventListener('click', function () {
         const filterValue = this.getAttribute('data-filter');
+        console.log(filterValue)
+        console.log(filterValue.substring(1))
 
         filterButtons.forEach(btn => btn.classList.remove('active'));
         this
           .classList
           .add('active');
 
+
         filterItems.forEach(item => {
-          if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
+          if (filterValue.substring(1) === "*" || item.classList.contains(filterValue.substring(1))) {
             item.style.display = 'block';
           } else {
             item.style.display = 'none';
-          }
-          const itemCount = document.querySelector(".jobs_count");
-          itemCount.textContent = filterItems.length
-        });
+          };
 
+          try{
+            itemCount.textContent = document.querySelectorAll(`${filterValue}`).length;
+          }catch (error){
+            itemCount.textContent = initialValue;
+          }
+        });
       });
     });
-
-    // post the application form
 
     document
       .getElementById('job_application_submit_btn')
