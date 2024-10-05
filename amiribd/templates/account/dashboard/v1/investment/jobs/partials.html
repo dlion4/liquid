@@ -78,7 +78,7 @@
                 </a>
             </div>
             <div class="modal-body">
-                <form id="applicationPostForm" method="post" enctype="multipart/form-data">
+                <form class="applicationPostForm" method="post" action="{% url 'jobs:application_view' job.pk request.user.profile_user.pk  %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="applicant_id" value="{{request.user.profile_user.pk}}">
                     <input type="hidden" name="job_id" value="{{job.pk}}">
@@ -125,7 +125,7 @@
                         <ul class="btn-toolbar g-1">
 
                             <li>
-                                <button type="button" id="job_application_submit_btn" class="btn btn-primary">
+                                <button type="submit" id="job_application_submit_btn" class="btn btn-primary">
                                     Submit Application
                                 </button>
 
@@ -133,7 +133,7 @@
                         </ul>
                     </div>
                 </form>
-                <div class="py-2" id="message"></div>
+                <div class="py-2" id="message-{{job.pk}}"></div>
             </div>
         </div>
     </div>

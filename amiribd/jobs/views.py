@@ -22,18 +22,7 @@ def job_application_view(request, job_id, applicant_id):
                 form = JobApplicationForm(request.POST, request.FILES, job_id=job_id, applicant_id=applicant_id)
                 if form.is_valid():
                     form.save(commit=True)
-
-                    # TODO: Send email to applicant and admin
-                    send_application_nofication_email_to_applicant(
-                        channel=str(form.cleaned_data.get("channel")),
-                        user=Profile.objects.get(pk=applicant_id),
-                        template_name="account/dashboard/v1/mails/jobs/application.html",
-                        context={
-                            "job":get_object_or_404(Job, pk=job_id),
-                            "profile":get_object_or_404(Profile, pk=applicant_id),
-                        },
-                    )
-                    # TODO: Send SMS to applicant and admin
+                    print(form.cleaned_data)
                     return JsonResponse({"message":"Application sent successfully", "success": True})
                 
                 return JsonResponse({"message":json.dumps(form.errors), "success": False})

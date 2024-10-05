@@ -47,6 +47,11 @@ Job Board Listing
                         <span id="filterItem">Approved Applications</span>
                       </a>
                     </li>
+                    <li>
+                      <a href="#">
+                        <span id="filterItem">Rejected Applications</span>
+                      </a>
+                    </li>
 
                   </ul>
                 </div>
@@ -176,7 +181,6 @@ Job Board Listing
           responseContainer.html(response);
           const filterItems = $('.filter-item');
           $(itemCount).text($(filterItems).length)
-          console.log($(itemCount))
         },
         error: function(xhr, status, error){
           alert(xhr.responseText)
@@ -212,128 +216,62 @@ Job Board Listing
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
- /*
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const filterItems = document.querySelectorAll('.filter-item');
+  $(document).ready(function () {
+    $(".applicationPostForm").each(()=>{
+    $(this).submit(function (event) {
+      event.preventDefault();
+      var form = $(this);
+      var formData = new FormData(form);
 
-    const itemCount = document.querySelector(".jobs_count");
-    let initialValue = itemCount.textContent;
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', function () {
-        const filterValue = this.getAttribute('data-filter');
-        console.log(filterValue)
-        console.log(filterValue.substring(1))
-
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        this
-          .classList
-          .add('active');
-
-
-        filterItems.forEach(item => {
-          // item.classList.contains(filterValue.substring(1))
-          console.log(item.getAttribute("data-category"))
-          if (filterValue.substring(1) === "*" ||  item.getAttribute("data-category") == filterValue ) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          };
-          try{
-            itemCount.textContent = document.querySelectorAll(`${filterValue}`).length;
-          }catch (error){
-            itemCount.textContent = initialValue;
-          }
-        });
-      });
-    });
- 
- */
-
-    document
-      .getElementById('job_application_submit_btn')
-      .addEventListener('click', async function (e) {
-        e.preventDefault();
-
-        console.log("hello people")
-        // do the spinner to show the user application is being sent
-        createSpinnerBtnSimulation()
-
-        var form = document.getElementById('applicationPostForm');
-        var formData = new FormData(form);
-
-        const jobId = document
-          .querySelector('[name=job_id]')
-          .value;
-        const applicantId = document
-          .querySelector('[name=applicant_id]')
-          .value;
-
-        var xhr = new XMLHttpRequest();
-
-        const url = `/jobs/applications/${jobId}/${applicantId}`
-
-        const response = await fetch(url, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'X-CSRFToken': form
-              .querySelector('[name=csrfmiddlewaretoken]')
-              .value
-          }
-        })
-
-        setTimeout(async () => {
-          const data = await response.json()
-          if (!data.success) {
-            document
-              .getElementById('message')
-              .innerHTML = data.message;
-            return false;
-          }
-
-          document
-            .getElementById('message')
-            .classList
-            .add("text-success");
-          document
-            .getElementById('message')
-            .innerHTML = data.message
-
-          resetTheSpinnerBtnSimulation()
-
-          setTimeout(() => {
-            window
-              .location
-              .reload();
-          }, 1000);
-        }, 2000);
-
+      const jobId = $("input[name=job_id]").val();
+      const applicantId = $("input[name=applicant_id]").val();
+      const url = `/jobs/applications/${jobId}/${applicantId}`;
+      const responseHolder = $(`#message-${jobId}`)
+      console.log(jobId, applicantId, url, responseHolder)
+      $.ajax({
+        url: $(this).attr("action"),
+        method: 'POST',
+        data: formData,
+        headers: {
+          "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function (data) {
+          console.log(data)
+          resetTheSpinnerBtnSimulation(data.message, responseHolder)
+          window.location.reload();
+        },
+        error: function (xhr, jQueryResponse, errorThrown) {
+          console.error(xhr.responseText);
+          resetTheSpinnerBtnSimulation(xhr.responseText, responseHolder)
+        }
       })
-    const submitApplicationBtn = document.getElementById("job_application_submit_btn")
-    // load the spinner
-    function createSpinnerBtnSimulation() {
-      submitApplicationBtn
-        .classList
-        .add("align-items-center", "justify-content-between")
-      submitApplicationBtn.innerHTML = `
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                <span role="status">submitting application...</span>
-            `
-      submitApplicationBtn.setAttribute("disabled", "disabled")
-    }
 
-    // remove the spiner after the response is received
-    function resetTheSpinnerBtnSimulation() {
-      submitApplicationBtn
-        .classList
-        .remove("align-items-center", "justify-content-between")
-      submitApplicationBtn.innerHTML = `Submit Application`
-      submitApplicationBtn.removeAttribute("disabled")
+      
+})
+   
+      const submitApplicationBtn = $("#job_application_submit_btn")
+
+      const createSpinnerBtnSimulation = (message='submitting application...')=>{
+          $(submitApplicationBtn).addClass("align-items-center justify-content-between");
+          $(submitApplicationBtn).html(`
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">${message}</span>
+          `)
+          $(submitApplicationBtn).attr('disabled',true)
+      }
+    const resetTheSpinnerBtnSimulation = (message, holder) => {
+      $(submitApplicationBtn).removeClass("align-items-center justify-content-between");
+      $(submitApplicationBtn).html("Application Submitted")
+      $(submitApplicationBtn).attr('disabled',false);
+      if(message){
+        holder.html(message)
+      } else {
+        holder.html("")
+      }
     }
 
   });
+})
 </script>
 
 {% endblock main %}
