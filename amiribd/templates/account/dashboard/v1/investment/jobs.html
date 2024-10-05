@@ -37,7 +37,8 @@ Job Board Listing
                 <div class="dropdown-menu dropdown-menu-end">
                   <ul class="link-list-opt no-bdr">
                     <li>
-                      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:invest:jobs:job_board_view' %}">
+                      <a hx-on::after-request="window.location.reload()" style="cursor:pointer" 
+                      hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:invest:jobs:job_board_view' %}">
                         <span id="filterItem">Applications</span>
                       </a>
                     </li>
@@ -69,6 +70,7 @@ Job Board Listing
   </div>
 </div>
 {% endblock heading %}
+
 {% block main %}
 <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 <style>
@@ -154,18 +156,17 @@ Job Board Listing
     <button class="filter-button" type="button" data-filter=".abroad">Abroad</button>
   </li>
 </ul>
-{% if jobs %}
-<div class="row g-gs" data-animation="true">
-  {% for job in jobs %}
 
-  <div class="col-sm-6 col-xxl-4 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
+{% for job in jobs %}
+<div class="row py-2">
+  <div class="col-sm-12">
     <div class="card card-full">
       <div class="card-inner">
-        <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
-          {% if job.is_new %}
+        {% if job.is_new %}
+        <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
           <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
-          {% endif %}
         </div>
+        {% endif %}
         <div class="d-flex items-center justify-content-between pb-2">
           <div class="tag" style="background-color: black; color: white;">{{job.location|upper}}</div>
           {% if job.location_type == "Online" %}
@@ -199,9 +200,8 @@ Job Board Listing
       </div>
     </div>
   </div>
-
   <!-- modals -->
-  <div class="modal fade zoom" tabindex="-1" id="modalZoom{{job.pk}}">
+  <div class="modal fade" tabindex="-1" id="modalZoom{{job.pk}}">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -213,7 +213,7 @@ Job Board Listing
           </a>
         </div>
         <div class="modal-body">
-          {{job.description|safe}}
+          {{job.content|safe}}
         </div>
         <div class="modal-footer bg-light">
           <span class="sub-text btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#modalJobApplicationZoom{{job.pk}}">
@@ -223,10 +223,8 @@ Job Board Listing
       </div>
     </div>
   </div>
-
   <!-- application modal -->
-
-  <div class="modal fade zoom" tabindex="-1" id="modalJobApplicationZoom{{job.pk}}">
+  <div class="modal fade" tabindex="-1" id="modalJobApplicationZoom{{job.pk}}">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -298,16 +296,14 @@ Job Board Listing
       </div>
     </div>
   </div>
-
-  {% endfor %}
 </div>
-{% endif %}
+{% endfor %}
 
 <!--the pop up for modal when user cliks the view button1-->
 
 <!--the pop up for modal when user cliks the view button1-->
 
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function () {
     const filterButtons = document.querySelectorAll('.filter-button');
     const filterItems = document.querySelectorAll('.filter-item');
@@ -416,6 +412,6 @@ Job Board Listing
     }
 
   });
-</script>
+</script> -->
 
 {% endblock main %}
