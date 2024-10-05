@@ -157,10 +157,9 @@ Job Board Listing
   </li>
 </ul>
 
-{% if jobs %}
-<div class="row g-gs pb-3" data-animation="true">
-  {% for job in jobs %}
-  <div class="col-12 col-sm-6 col-xxl-4 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
+{% for job in jobs %}
+<div class="row py-2" data-animation="true">
+  <div class="col-12 filter-item {{job.location_type|lower}}" data-category="{{job.location_type|lower}}">
     <div class="card card-full">
       <div class="card-inner">
         <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4 ">
@@ -291,10 +290,9 @@ Job Board Listing
       </div>
     </div>
   </div>
-
-  {% endfor %}
 </div>
-{% endif %}
+  {% endfor %}
+
 
 <!--the pop up for modal when user cliks the view button1-->
 
