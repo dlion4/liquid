@@ -57,7 +57,7 @@
   if (!roomSlug) {
     return
   }
-  const ws = new WebSocket(`ws://${window.location.host}/ws/streams/${roomSlug}`);
+  const ws = new WebSocket(`wss://${window.location.host}/ws/streams/${roomSlug}`);
 
   const messageForm = document.getElementById("stream-message-form");
   const messageBox = document.getElementById("default-textarea");

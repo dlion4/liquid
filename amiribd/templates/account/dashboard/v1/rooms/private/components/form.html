@@ -55,7 +55,7 @@
   const chatDiv = document.getElementById("private_chat_messages");
 
   const roomPk = "{{message.pk}}";
-  const ws = new WebSocket(`ws://${window.location.host}/ws/streams/private/${roomPk}`);
+  const ws = new WebSocket(`wss://${window.location.host}/ws/streams/private/${roomPk}`);
 
   const messageForm = document.getElementById("private-message-form");
   const messageBox = document.getElementById("default-textarea-send-message");

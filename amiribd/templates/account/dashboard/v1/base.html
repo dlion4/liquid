@@ -789,7 +789,7 @@
 
 
 
-    // const ws = new WebSocket("ws://" + window.location.host + '/ws/streams/news/notification')
+    // const ws = new WebSocket("wss://" + window.location.host + '/ws/streams/news/notification')
 
     class Utility {
         formatDate(date) {
@@ -815,7 +815,7 @@
 
     class WebSocketNotification {
         constructor() {
-            this.base_url = `ws://${window.location.host}/ws/streams`;
+            this.base_url = `wss://${window.location.host}/ws/streams`;
             this.utility = new Utility();
         };
 

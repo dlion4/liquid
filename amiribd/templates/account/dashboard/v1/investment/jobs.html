@@ -14,7 +14,7 @@ Job Board Listing
       <div class="nk-block-des text-soft">
         <p>
           We have a total of
-          {{jobs.count}}
+          <span class="jobs_count">{{jobs.count}}</span>
           <span>+</span>
           Active job{{jobs.count|pluralize}}.
         </p>
@@ -323,7 +323,10 @@ Job Board Listing
           } else {
             item.style.display = 'none';
           }
+          const itemCount = document.querySelector(".jobs_count");
+          itemCount.textContent = filterItems.length
         });
+
       });
     });
 
