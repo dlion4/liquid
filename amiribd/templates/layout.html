@@ -54,11 +54,7 @@
 </head>
 
 <body class="{% block bodyclass %}{% endblock bodyclass %}">
-  <div class="page-loader">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
+
   {% comment %} header {% endcomment %}
   {% comment %} {% include "v1f/components/navbar.html" %} {% endcomment %}
   {% block navbar %}{% endblock navbar %}
@@ -90,7 +86,7 @@
   <script src="{% static 'js/utilities.min.js' %}"></script>
   <script src="{% static 'js/config-theme.js' %}"></script>
 
-  {% comment %} toats notifications {% endcomment %}
+  {% comment %} toastr notifications {% endcomment %}
   {% if messages %}
   {% for message in messages %}
   <script>
@@ -99,7 +95,6 @@
   </script>
   {% endfor %}
   {% endif %}
-
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -107,9 +102,6 @@
       </div>
     </div>
   </div>
-
-
-
 </body>
 
 </html>
