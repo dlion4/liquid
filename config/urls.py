@@ -33,7 +33,6 @@ urlpatterns = [
     path(settings.STUFF_ADMIN_URL, earnkraft_site.urls, name='stuff_admin'),
     # User management
     path("users/", include("amiribd.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     # ...
     path("sesame/login/", LoginView.as_view(), name="sesame-login"),

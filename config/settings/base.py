@@ -99,10 +99,6 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
-    "allauth",
-    "allauth.account",
-    "allauth.mfa",
-    "allauth.socialaccount",
     "django_htmx",
     "after_response",
     "nested_inline",
@@ -111,8 +107,8 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",  # token authentication
     "django_filters",  # for filtering rest endpoints
     "easyaudit",  # for recording all the user events
-    "django_apscheduler",  # backup and other task scheduling
-    "dbbackup",  # django-dbbackup
+    # "django_apscheduler",  # backup and other task scheduling
+    # "dbbackup",  # django-dbbackup
     # "ckeditor",  # https://pypi.org/project/django-ckeditor/#installation
     "django_ckeditor_5",
     "ckeditor_uploader",  # https://pypi.org/project/django-ckeditor-uploader/#installation
@@ -170,9 +166,9 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # BACKUP FOLDER AD SETTINGS
 # ------------------------------------------------------------------------------
-DB_BACKUP_FOLDER = str(BASE_DIR / "db_backup")
-DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
-DBBACKUP_STORAGE_OPTIONS = {"location": DB_BACKUP_FOLDER}
+# DB_BACKUP_FOLDER = str(BASE_DIR / "db_backup")
+# DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
+# DBBACKUP_STORAGE_OPTIONS = {"location": DB_BACKUP_FOLDER}
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -184,7 +180,6 @@ MIGRATION_MODULES = {"sites": "amiribd.contrib.sites.migrations"}
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     "users.backends.TokenAuthenticationBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
@@ -297,7 +292,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "amiribd.users.context_processors.allauth_settings",
                 # liquid app processor
                 "amiribd.liquid.context_processors.liquid_site_data",
                 "amiribd.invest.context_processors.withdrawal_form_action",
@@ -306,6 +300,7 @@ TEMPLATES = [
 
                 # secret template processor from. the secrets
                 "amiribd.tokens.context_processors.load_secrets",
+                "amiribd.transactions.context_processors.deposit_form_action",
             ],
         },
     },
@@ -399,28 +394,6 @@ LOGGING = {
     },
 }
 
-
-# django-allauth
-# ------------------------------------------------------------------------------
-ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
-# https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-# https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_EMAIL_REQUIRED = True
-# https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_USERNAME_REQUIRED = False
-# https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-# https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_ADAPTER = "amiribd.users.adapters.AccountAdapter"
-# https://docs.allauth.org/en/latest/account/forms.html
-ACCOUNT_FORMS = {"signup": "amiribd.users.forms.UserSignupForm"}
-# https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_ADAPTER = "amiribd.users.adapters.SocialAccountAdapter"
-# https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_FORMS = {"signup": "amiribd.users.forms.UserSocialSignupForm"}
 # django-compressor
 # ------------------------------------------------------------------------------
 # https://django-compressor.readthedocs.io/en/latest/quickstart/#installation
@@ -431,8 +404,6 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 # ------------------------------------------------------------------------------
 
 # authentication
-
-
 LOGIN_BY_CODE_ENABLED = True
 
 # SESAME CONFIGURATIONS

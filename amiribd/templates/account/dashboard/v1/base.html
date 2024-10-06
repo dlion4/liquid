@@ -14,7 +14,7 @@
             {% if not plans %}
             {% if not request.resolver_match.view_name == "dashboard:home" %}
             <div class="pb-3" style="display: flex; align-items:center; justify-content:center;">
-                <h1>You have no active plan yet</h1>
+                <h1 class="plan-activation-status">No active plan or awaiting verification</h1>
             </div>
             {% endif %}
             {% endif %}
@@ -25,9 +25,21 @@
     </div>
 </div>
 {% include "account/dashboard/v1/components/footer.html" %}
+
+
+
+
+
 {% endblock content %} 
 
 {% block modals %}
+
+
+
+
+
+
+
 <div aria-modal="true" class="modal fade" id="withdrawalPopupForm" role="dialog">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -151,6 +163,28 @@
         </div>
     </div>
 </div>
+
+
+
+<div aria-modal="true" class="modal fade" id="depositMoneyPopupForm" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Topup Account</h5>
+                <a aria-label="Close" class="close" data-bs-dismiss="modal" href="#" onclick="window.location.reload()" role="button">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body">
+                {% comment %} content goes here {% endcomment %}
+                <!--  -->
+                {% include "account/dashboard/v1/investment/components/schemes/deposit_money_form.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <!-- add plan form popup -->
@@ -663,21 +697,7 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock modals %}
-
-
 
 {% block morejs %}
 <script>
@@ -822,7 +842,7 @@
         };
 
         initiateConnection = async (endpoint) => {
-            const ws = new WebSocket(`${this.base_url}/${endpoint}`);
+            const ws = new WebSocket(`wss://${window.location.host}/ws/streams/${endpoint}`);
 
             ws.onmessage = async (event) => {
                 const data = JSON.parse(JSON.parse(event.data).message);
@@ -866,4 +886,14 @@
     connection.init()
 
 </script>
+
+
+<script src="{% static 'v1/assets/js/chartmain.js' %}"></script>
+
+
+
+
+
+
+
 {% endblock morejs %}

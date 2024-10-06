@@ -6,7 +6,9 @@ from .views import HandleAddPlanPaymentView
 from .views import HandlePaymentCreateTransactionView
 from .views import HandlePlanSelectionView
 from .views import HandlePoolSelectionView
+from .views import VerifyTransactionPaymentView
 from .views import HandleRegistrationPaymentView
+from .views import CheckUserSubscriptionStatusView
 from .views import check_payment_status
 from .views import (
     # fetch_amount_tobe_paid_minus_discount,
@@ -30,6 +32,7 @@ from .views import modified_whatsapp_view
 from .views import modified_withdrawal_view
 from .views import plan
 from .views import plans
+from .views import delete_transaction_payment_view
 
 app_name = "invest"
 
@@ -66,6 +69,16 @@ urlpatterns = [
         "handle-payment-create-transaction/<pool_id>/<account_id>/<plan_id>/",
         HandlePaymentCreateTransactionView.as_view(),
         name="handle-payment-create-transaction",
+    ),
+    path(
+        "handle-payment-create-transaction/<pool_id>/<account_id>/<plan_id>/verify-transaction/<reference_code>",
+        VerifyTransactionPaymentView.as_view(),
+        name="verify-payment-transaction",
+    ),
+    path(
+        "handle-payment-create-transaction/<pool_id>/<account_id>/<plan_id>/delete-transaction/<reference_code>",
+        delete_transaction_payment_view,
+        name="delete-payment-transaction",
     ),
     path(
         "fetch-amount-to-be-paid-plus-discount/",
@@ -146,4 +159,14 @@ urlpatterns = [
     path("comingsoon/", modified_comingsoon_view, name="comingsoon"),
     path("advertise/", modified_advertise_view, name="advertise"),
     path("monetize/", modified_monetize_view, name="monetize"),
+    
+    
+    
+    # Custom action 
+    
+    path(
+        "profile/check-subscription-status",
+        CheckUserSubscriptionStatusView.as_view(),
+        name="profile-is-subscribed"
+    ),
 ]

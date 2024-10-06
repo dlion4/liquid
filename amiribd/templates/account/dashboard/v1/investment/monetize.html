@@ -2,129 +2,177 @@
 {% load static humanize %}
 {% block heading %}
 
-<style>
-    .devx {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    h1 {
-        position: relative;
-        font-size: 3em;
-    }
-    h2 {
-        font-size: 2em;
-    }
-    .hybrid {
-        margin: 0;
-        position: relative;
-        width: auto;
-        display: inline-block;
-    }
-    .hybrid span {
-        color: #1100f1;
-    }
-    .hybrid span::after {
-        content: '|';
-        animation: blink 1.5s infinite;
-    }
-    @keyframes blink {
-        0%, 50%, 100% {
-            opacity: 1;
-        }
-        25%, 75% {
-            opacity: 0;
-        }
-    }
-</style>
 
-  <div class="devx">
-    <h2>
-      <span>EarnKraft will introduce</span></h2>
-      <br>
-    <h1>Advanced Upcoming Features</h1>
-    <br>
-    <h2 class="hybrid">
-      <span id="typed"></span>
-    </h2>
-  </div>
-
-  <script>
-    // These are the words we want to display
-    const txt = [
-      "1. Monetization  ",
-      "....where you will monetize your content",
-      "....you will monetize your social links",
-      "...you will showcase your online business",
-      "2. Connections and Hookups   ",
-      "...where you will connect with relevant people according to your liking",
-      "..you will contact the personnel in charge of the service you want directly",
-      "..you will do more than just connect",
-      "..you will meet and bond with various people",
-      "3. Advertisement   ",
-      "..you will advertise and showcase your product",
-      "4. Micro Task    ",
-      "..you will do small repetitive tasks",
-      "... you will do micro tasks that pay per task",
-      "..you will earn from collecting, manipulating, and analyzing data"
-    ];
-
-    // These are increment and decrement counters
-    let i = 0,
-      j = 0;
-
-    // This is for checking if all the characters of the word have been typed
-    let end = false;
-
-    // This will be the waiting function, to give delay after typing
-    function wait(seconds) {
-      return new Promise((resolve) => setTimeout(resolve, seconds * 100));
-    }
-
-    // The main function to type and backspace multiple words
-    async function main() {
-
-      // Check if the value of i is less than array length of txt containing all the words
-      if (i < txt.length) {
-
-        // This is for the auto typing
-        if (end == false && j <= txt[i].length) {
-          document
-            .getElementById("typed")
-            .innerHTML += txt[i][j];
-          j++
-
-        }
-
-        //This is for backspacing the characters one by one
-        if (end == true && j <= txt[i].length) {
-          document
-            .getElementById("typed")
-            .innerHTML = txt[i]
-            .substring(0, j - 1);
-          j--
-
-        }
-
-        // This is for checking if all the characters have been typed
-        if (j == txt[i].length) {
-          end = true;
-          await wait(2)
-        }
-
-        // This is for going to the next word
-        if (end == true && j == 0) {
-          i++
-          end = false // If the value of i becomes greater than;
-        }
-      } else 
-        i = 0;
-      setTimeout(main, 100)
-
-    }
-    main();
-  </script>
 
 {% endblock heading %}
 
-{% block main %}{% endblock main %}
+{% block main %}
+
+<div class="nk-content-body">
+  <div class="nk-content-wrap">
+    <div class="nk-block-head">
+      <div class="nk-block-between g-3">
+        <div class="nk-block-head-content">
+          <h3 class="nk-block-title page-title">Payment History</h3>
+          <div class="nk-block-des text-soft">
+            <p>You have total 937 orders.</p>
+          </div>
+        </div>
+        <div class="nk-block-head-content">
+          <div class="nk-block-head-content">
+            <ul class="nk-block-tools gx-3">
+          
+              <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" href="{% url 'dashboard:invest:monetize' %}">
+                <a class="btn btn-icon btn-xl btn-dim btn-outline-light" role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#sendAndTransferMoneyPopupForm">
+                  <em class="icon ni ni-exchange"></em>
+                </a>
+                <span class="btn-extext">Transactions</span>
+              </li>
+              <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:send-to-wallet' %}">
+                <a class="btn btn-icon btn-xl btn-dim btn-outline-light" role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#sendAndTransferMoneyPopupForm">
+                  <em class="icon ni ni-arrow-from-right"></em>
+                </a>
+                <span class="btn-extext">Send</span>
+              </li>
+          
+              <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:deposit-to-wallet' %}">
+                <a class="btn btn-icon btn-xl btn-success">
+                  <em class="icon ni ni-wallet-in"></em>
+                </a>
+                <span class="btn-extext">Deposit</span>
+              </li>
+          
+              <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:withdraw-from-wallet' %}">
+                {% if available_amount > 0.00 %}
+                <a class="btn btn-icon btn-xl btn-warning" role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm">
+                  <em class="icon ni ni-wallet-out"></em>
+                </a>
+                <span class="btn-extext">Withdraw</span>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nk-block">
+      <div class="card card-bordered card-stretch">
+        <div class="card-inner-group">
+          <div class="card-inner">
+            <div class="card-title-group">
+              <div class="card-title">
+                <h5 class="title">All Orders</h5>
+              </div>
+              <div class="card-tools me-n1">
+                <ul class="btn-toolbar">
+                  <li><a href="#" class="btn btn-icon search-toggle toggle-search" data-target="search"><em class="icon ni ni-search"></em></a></li>
+                  <li class="btn-toolbar-sep"></li>
+                  <li>
+                    <div class="dropdown"><a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-setting"></em></a>
+                      <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                        <ul class="link-check">
+                          <li><span>Show</span></li>
+                          <li class="active"><a href="#">10</a></li>
+                          <li><a href="#">20</a></li>
+                          <li><a href="#">50</a></li>
+                        </ul>
+                        <ul class="link-check">
+                          <li><span>Order</span></li>
+                          <li class="active"><a href="#">DESC</a></li>
+                          <li><a href="#">ASC</a></li>
+                        </ul>
+                        <ul class="link-check">
+                          <li><span>Density</span></li>
+                          <li class="active"><a href="#">Regular</a></li>
+                          <li><a href="#">Compact</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-search search-wrap" data-search="search">
+                <div class="search-content"><a href="#" class="search-back btn btn-icon toggle-search" data-target="search"><em class="icon ni ni-arrow-left"></em></a><input type="text" class="form-control form-control-sm border-transparent form-focus-none" placeholder="Quick search by order id"><button class="search-submit btn btn-icon"><em class="icon ni ni-search"></em></button></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-inner p-0">
+            <table class="table table-tranx">
+              <thead>
+                <tr class="tb-tnx-head">
+                  <th class="tb-tnx-id"><span class="">#ID</span></th>
+                  <th class="tb-tnx-info"><span class="tb-tnx-desc d-none d-sm-inline-block"><span>Type</span></span><span class="tb-tnx-date d-md-inline-block d-none"><span class="d-md-none">Date</span><span class="d-none d-md-block"><span>Issue Date</span></span></span></th>
+                  <th class="tb-tnx-amount is-alt"><span class="tb-tnx-total">Total</span><span class="tb-tnx-status d-none d-md-inline-block">Status</span></th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tb-tnx-item">
+                  <td class="tb-tnx-id"><a href="#"><span>49RWEGVER47</span></a></td>
+                  <td class="tb-tnx-info">
+                    <div class="tb-tnx-desc"><span class="title">Widthdraw</span></div>
+                    <div class="tb-tnx-date"><span class="date">10-05-2019</span></div>
+                  </td>
+                  <td class="tb-tnx-amount is-alt">
+                    <div class="tb-tnx-total"><span class="#">KES 599.00</span></div>
+                    <div class="tb-tnx-status"><span class="badge badge-dot bg-warning">Pending</span></div>
+                  </td>
+                  
+                </tr>
+                <tr class="tb-tnx-item">
+                  <td class="tb-tnx-id"><a href="#"><span>WEDFWEFWE43</span></a></td>
+                  <td class="tb-tnx-info">
+                    <div class="tb-tnx-desc"><span class="title">Widthdraw</span></div>
+                    <div class="tb-tnx-date"><span class="date">06-19-2019</span></div>
+                  </td>
+                  <td class="tb-tnx-amount is-alt">
+                    <div class="tb-tnx-total"><span class="#">KES 2099.00</span></div>
+                    <div class="tb-tnx-status"><span class="badge badge-dot bg-success">Paid</span></div>
+                  </td>
+                  
+                </tr>
+                <tr class="tb-tnx-item">
+                  <td class="tb-tnx-id"><a href="#"><span>WEDFWEFWE43</span></a></td>
+                  <td class="tb-tnx-info">
+                    <div class="tb-tnx-desc"><span class="title">Widthdraw</span></div>
+                    <div class="tb-tnx-date"><span class="date">06-19-2019</span></div>
+                  </td>
+                  <td class="tb-tnx-amount is-alt">
+                    <div class="tb-tnx-total"><span class="#">KES 199.00</span></div>
+                    <div class="tb-tnx-status"><span class="badge badge-dot bg-success">Paid</span></div>
+                  </td>
+                  
+                </tr>
+                <tr class="tb-tnx-item">
+                  <td class="tb-tnx-id"><a href="#"><span>WEDFWEFWE43</span></a></td>
+                  <td class="tb-tnx-info">
+                    <div class="tb-tnx-desc"><span class="title">Deposit</span></div>
+                    <div class="tb-tnx-date"><span class="date">06-19-2019</span></div>
+                  </td>
+                  <td class="tb-tnx-amount is-alt">
+                    <div class="tb-tnx-total"><span class="#amount">KES 99.00</span></div>
+                    <div class="tb-tnx-status"><span class="badge badge-dot bg-success">Paid</span></div>
+                  </td>
+                  
+                </tr>
+                
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="card-inner">
+            <ul class="pagination justify-content-center justify-content-md-start">
+              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+{% endblock main %}

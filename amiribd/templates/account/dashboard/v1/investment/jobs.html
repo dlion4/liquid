@@ -29,27 +29,27 @@ Job Board Listing
           <ul class="nk-block-tools g-3">
             <li>
               <div class="drodown">
-                <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown">
-                  <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
-                  <span>Filtered By</span>
-                  <em class="dd-indc icon ni ni-chevron-right"></em>
+                <a href="#" class="dropdown-toggle btn btn-success" data-bs-toggle="dropdown">
+                  
+                  <span>jobs Applied</span>
+                 
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                   <ul class="link-list-opt no-bdr">
                     <li>
                       <a hx-on::after-request="window.location.reload()" style="cursor:pointer" 
                       hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:invest:jobs:job_board_view' %}">
-                        <span id="filterItem">Applications</span>
+                        <span id="filterItem"> Tasks Application</span>
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <span id="filterItem">Approved Applications</span>
+                        <span id="filterItem">Approved Tasks</span>
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <span id="filterItem">Rejected Applications</span>
+                        <span id="filterItem">Rejected Tasks</span>
                       </a>
                     </li>
 
@@ -59,8 +59,8 @@ Job Board Listing
             </li>
             <li class="nk-block-tools-opt d-none d-sm-block">
               <a href="#" class="btn btn-primary">
-                <em class="icon ni ni-share"></em>
-                <span>Share</span>
+                <em class="icon ni ni-folder"></em>
+                <span>Upload</span>
               </a>
             </li>
             <li class="nk-block-tools-opt d-block d-sm-none">
@@ -155,7 +155,7 @@ Job Board Listing
     <button class="filter-button" type="button" data-filter="online">Online/Remote</button>
   </li>
   <li>
-    <button class="filter-button" type="button" data-filter="physical">Physical</button>
+    <button class="filter-button" type="button" data-filter="physical">Physical/local</button>
   </li>
   <li>
     <button class="filter-button" type="button" data-filter="abroad">Abroad</button>

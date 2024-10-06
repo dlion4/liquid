@@ -93,7 +93,7 @@ class BasicAuthMiddleware:
         username, password = decoded_credentials.split(':', 1)
 
         # Replace 'your_username' and 'your_password' with your actual credentials
-        if username == 'your_username' and password == 'your_password':
+        if username == 'earnkraft_silk_username' and password == 'earnkraft_silk_password':
             return self.get_response(request)  # Allow access if credentials match
 
         return self._request_authentication()

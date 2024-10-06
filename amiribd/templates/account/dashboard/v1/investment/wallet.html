@@ -4,26 +4,39 @@
 {% block heading %}
   <div class="nk-block-head">
     <div class="nk-block-head-sub">
-      <span>Account Action</span></div>
+      <span>Wallet Actions</span></div>
     <div class="nk-block-between-md g-4">
       <div class="nk-block-head-content">
-        <h2 class="nk-block-title fw-normal">My Account</h2>
+        
         <div class="nk-block-des">
-          <p>Operate account at one point. Have fun!</p>
+          <p>Manage wallet account at one point</p>
         </div>
       </div>
       <div class="nk-block-head-content">
         <ul class="nk-block-tools gx-3">
 
-          <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:send-to-wallet' %}">
-            <a class="btn btn-icon btn-xl btn-dim btn-outline-light" role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#sendAndTransferMoneyPopupForm">
+          <li class="btn-wrap" style="cursor:pointer" href="{% url 'transactions:transactions' %}">
+            <a class="btn btn-icon btn-xl btn-dim btn-outline-light" >
+              <em class="icon ni ni-exchange"></em>
+            </a>
+            <span class="btn-extext">Transactions</span>
+          </li>
+          <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer"
+           hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" 
+           href="{% url 'users:profile:wallet:send-to-wallet' %}">
+
+            <a class="btn btn-icon btn-xl btn-dim btn-outline-light" role="button" 
+            data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#sendAndTransferMoneyPopupForm">
               <em class="icon ni ni-arrow-from-right"></em>
             </a>
             <span class="btn-extext">Send</span>
           </li>
 
-          <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true" href="{% url 'users:profile:wallet:deposit-to-wallet' %}">
-            <a class="btn btn-icon btn-xl btn-success">
+          <li class="btn-wrap" hx-on::after-request="window.location.reload()" style="cursor:pointer" 
+          hx-swap="none" hx-trigger="click" hx-push-url="true" hx-boost="true"
+           href="{% url 'users:profile:wallet:deposit-to-wallet' %}">
+            <a class="btn btn-icon btn-xl btn-success" role="button" 
+            data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#depositMoneyPopupForm">
               <em class="icon ni ni-wallet-in"></em>
             </a>
             <span class="btn-extext">Deposit</span>
@@ -42,6 +55,7 @@
     </div>
   </div>
 {% endblock heading %}
+
 
 {% block main %}
 
@@ -722,5 +736,6 @@
 
     </div>
   </div>
+  
 
 {% endblock main %}

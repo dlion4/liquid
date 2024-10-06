@@ -1,12 +1,14 @@
 import contextlib
+import json
 from typing import Any
-
+from django.contrib.auth import get_user
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.generic import View
 
 from amiribd.subscriptions.views import SubscriptionPlanView
-
+from amiribd.transactions.forms import AccountDepositModelForm
+from amiribd.invest.models import Pool, Account
 from .models import Transaction
 from .serializers import TransactionSerializer
 
@@ -53,19 +55,23 @@ class SubscriptionTransactionListAccountView(SubscriptionPlanView):
         return None
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
-        """
-        Get all the transaction for the current user
-        Returns: dict with transaction summary
-        context = super().get_context_data(**kwargs)
-        context["transactions_summary"] = self.get_account_transactions()
-        return context
-
-        Args: dict[str, Any]
-        Returns: Args
-        """
         context =  super().get_context_data(**kwargs)
         context["transactions_summary"] = self.get_account_transactions()[:6]
         return context
 
 
 
+class SubscriptionTopupAccountDepositView(LoginRequiredMixin, View):
+    def post(self, request:HttpRequest, *args, **kwargs):
+        form = AccountDepositModelForm(request=request, data=json.loads(request.body))
+        if form.is_valid():
+            profile = get_user(request).profile_user
+            pool = Pool.objects.get(profile=profile)
+            account = Account.objects.get(pool=pool)
+            data = {"poolId": pool.pk,"accountId": account.pk,"planId": profile.plans.latest().pk,
+                "amount": form.cleaned_data["amount"],
+                "profileUserId": profile.pk,
+                "emailAddress": profile.user.email,
+            }
+            return JsonResponse(data, safe=False)
+        return JsonResponse({"message": "This is data test for the account update"})

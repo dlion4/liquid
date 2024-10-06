@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 from amiribd.core.admin import earnkraft_site
 
 # Register your models here.
@@ -8,14 +8,14 @@ from .models import Transaction
 
 
 @admin.register(PaymentMethod, site=earnkraft_site)
-class PaymentMethod(admin.ModelAdmin):
+class PaymentMethod(UnfoldModelAdmin):
     list_display = [
         "channel",
     ]
 
 
 @admin.register(Transaction, site=earnkraft_site)
-class TransactionAdmin(admin.ModelAdmin):
+class TransactionAdmin(UnfoldModelAdmin):
     list_display = [
         "profile",
         "account",

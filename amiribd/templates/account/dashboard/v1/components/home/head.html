@@ -35,43 +35,26 @@
         <li>
           <a href="#" class="btn btn-primary">
             <span>Deposit</span>
-            <em class="icon ni ni-arrow-long-right"></em>
+            
           </a>
         </li>
         {% if plans %}
         <li>
+          <a href="{% url 'dashboard:invest:invest_plan' %}" class="btn btn-success">
+            <span>Withdraw</span>
+            
+          </a>
+        </li>
+        <li>
           <a href="{% url 'dashboard:invest:invest_plan' %}" class="btn btn-white btn-light">
             <span>Invest</span>
-            <em class="icon ni ni-arrow-long-right d-none d-sm-inline-block"></em>
+            
           </a>
         </li>
         {% endif %}
         {% endif %}
 
-        <li class="opt-menu-md dropdown">
-          <a href="#" class="btn btn-white btn-light btn-icon" data-bs-toggle="dropdown">
-            <em class="icon ni ni-setting"></em>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end">
-            <ul class="link-list-opt no-bdr">
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-coin-alt"></em>
-                  <span>Currency Settings</span></a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-notify"></em>
-                  <span>Push Notification</span></a>
-              </li>
-              <li>
-                <a href="#">
-                  <em class="icon ni ni-cart-fill"></em>
-                  <span>Plan Purchase</span></a>
-              </li>
-            </ul>
-          </div>
-        </li>
+        
       </ul>
     </div>
   </div>

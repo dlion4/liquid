@@ -14,7 +14,8 @@
     </div>
 
     <div class="text-center bg-lighter w-100">
-      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn" data-bs-profile="{{request.user.profile_user.id}}">
+      <button type="button" class="btn btn-lg btn-primary ttu w-100 text-center" id="confirm-and-proceed-btn" 
+      data-bs-profile="{{request.user.profile_user.id}}">
         Confirm &amp; proceed
       </button>
     </div>
@@ -98,7 +99,8 @@
           <!-- automated payment -->
           <div class="tab-pane" id="automated-payment">
             <input type="hidden" name="currency" value="UGH" class="country-currency">
-            <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn">click to pay</button>
+            <button data-bs-profile="{{request.user.profile_user.id}}" class="btn btn-lg px-3 py-2 btn-primary" 
+            id="paystackbtn">click to pay</button>
           </div>
         </div>
       </div>
@@ -170,7 +172,7 @@
           console.log(data)
           popupSubmitBtn.setAttribute("disabled", "disabled");
 
-          // listent for the change event for the account type
+          // listen for the change event for the account type
 
           accountType.addEventListener("change", async (e) => {
             console.log(poolFromServer);
@@ -253,6 +255,21 @@
         planType.innerHTML = "";
       }
     });
+    
+
+    async function fetchAmountToBePaid(profileUserId, plan_pk){
+           const response = await fetch(`{% url 'dashboard:invest:fetch-amount-to-be-paid-plus-discount' %}?profile=${profileUserId}&plan_pk=${planId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if(!response.ok){
+        return parseFloat("0.00")
+      }
+      return  await response.json();
+    }
 
     popupSubmitBtn.addEventListener("click", async (e) => {
       console.log(e.target.dataset);
@@ -266,29 +283,16 @@
       const paymentBtnForm = document.getElementById("mpesa-payment-btn-popup");
       paymentBtnForm.setAttribute("disabled", "disabled");
 
-      console.log("poolId:", poolId, "accountId:", accountId, "planId:", planId, "profileUserId:", profileUserId);
 
       const phoneNo = document.getElementById("phone-no");
       const mpesaTransactionCode = document.getElementById("transactioncode");
       const payAmount = document.getElementById("pay-amount");
 
-      // fethc the amount to be paid endpoint
-
-      const response = await fetch(`{% url 'dashboard:invest:fetch-amount-to-be-paid-plus-discount' %}?profile=${profileUserId}&plan_pk=${planId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      const data = await response.json();
+      const data = await fetchAmountToBePaid(profileUserId, planId);
 
       payAmount.value = parseFloat(data.amount).toFixed(2);
       payAmount.placeholder = `KES: ${payAmount.value}`;
-      // summary on top form overview for the customer to see the price he/she is to pay
-
       payAmount.value = `KES: ${parseFloat(data.amount).toFixed(2)}`;
-
       payAmount.setAttribute("disabled", "disabled");
 
       const cleanedCurrency = cleanCurrency(payAmount.value);
@@ -351,7 +355,16 @@
                 handlePlanCreationDestruction(profileUserId, poolId)
               }
 
-              handleCreateTransaction(poolId, accountId, planId, phoneN.value, cleanedCurrency, profileUserId, mpesaTransactionCode.value, 'KES', 'Kenya')
+              handleCreateTransaction(
+                poolId,
+                accountId, 
+                planId,
+                phoneN.value, 
+                cleanedCurrency, 
+                profileUserId,
+                 mpesaTransactionCode.value, 
+                 'KES', 
+                 'Kenya')
 
             }
 
@@ -433,28 +446,13 @@
     if (document.getElementById('paystackbtn')) {
 
       let paystackBtn = document.getElementById('paystackbtn');
-      paystackBtn.addEventListener('click', function (event) {
+      paystackBtn.addEventListener('click', async function (event) {
         event.preventDefault();
-        // the amount to be paid generated from the pool, account, and plan
-        const amountToBePaid = document
-          .querySelector(".currencyRate")
-          .value
+        profileUserId = event.target.dataset.bsProfile;
+        const data = await fetchAmountToBePaid(profileUserId, planId);
 
-        // amount dispaly to the user for payment tothe paystack
-        const amountToBePaidAfterConversion = parseFloat(amountToBePaid) * parseFloat(ammountToBePaidBeforeConversion)
-        // amount recived in our server in KShs
-        const amountReceivedInKShs = amountToBePaidAfterConversion / parseInt(amountToBePaid)
-
-        // country currecny type
-        const countryCurrencyCode = document
-          .querySelector(".currency-code")
-          .value
-          console
-          .log(countryCurrencyCode)
-        // country name
-        const countryName = document
-          .querySelector(".client-country-name")
-          .value
+        console.log(data)
+        let amountReceivedInKShs = parseFloat(data.amount).toFixed(2)
 
         let handler = PaystackPop.setup({
           key: 'pk_test_78a97775962282ab2ad167cd5d34c3b28f349316', // Replace with your public key
@@ -474,9 +472,18 @@
             fetch(url, {method: 'GET'})
               .then((response) => response.json())
               .then(data => {
-                if (data.status === 'success') {
+                if (data.success) {
                   // call the save method on the plan
-                  handleCreateTransaction(poolId, accountId, planId, data.email, amountReceivedInKShs, profileUserId, reference, countryCurrencyCode, countryName)
+                  handleCreateTransaction(
+                    poolId,
+                    accountId,
+                    planId,
+                    '{{request.user.email}}',
+                    amountReceivedInKShs,
+                    profileUserId,
+                    reference,
+                    'KES',
+                    'Kenya')
                     .then(response => response.json())
                     .then(data => data);
                 } else {
@@ -491,8 +498,8 @@
           }
         });
         handler.openIframe();
+       
       })
     };
-
   })()
 </script>

@@ -35589,13 +35589,13 @@ h6 .badge {
     display: flex
 }
 
-.user-account-actions ul li {
+/* .user-account-actions ul li {
     width: 44%
-}
+} */
 
-.user-account-actions ul li:last-child {
+/* .user-account-actions ul li:last-child {
     width: 56%
-}
+} */
 
 .dual-listbox .user-account-actions .dual-listbox__button,
 .user-account-actions .btn,
@@ -37220,7 +37220,7 @@ div.dataTables_wrapper div.dataTables_filter .nk-search-box input {
 
 .nk-block+.nk-block,
 .nk-block+.nk-block-head {
-    padding-top: 28px
+    padding-top: 15px
 }
 
 .nk-block+.nk-block-head-lg,

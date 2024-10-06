@@ -128,6 +128,7 @@ class Profile(models.Model):
         blank=True,
         related_name="profile_accepted_job_applications",
     )
+    is_subscribed = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.user.username}"
 

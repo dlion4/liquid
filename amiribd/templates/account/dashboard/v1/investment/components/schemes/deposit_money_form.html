@@ -1,0 +1,50 @@
+{% load static %}
+{% load widget_tweaks %}
+<form action="{% url 'transactions:deposit-account' %}" id="depositMoneyForm"
+ class="form-validate is-alter" method="post">
+    {% csrf_token %}
+    <div class="row gx-4 gy-3">
+        <div class="col-12">
+            <div class="form-group">
+                <div style="margin-top:10px!important">
+                    <label class="form-label">Destination Account</label>
+                    <div class="form-control-wrap">
+                        {{deposit_money_form.account}}
+                        <small id="id_destination_account" style="padding-top:10px!important"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">Amount to transfer</label>
+                <div class="form-control-wrap">
+                    {{deposit_money_form.amount}}
+                    <small id="id_error_amount" style="padding-top:10px!important"></small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">Reason for the deposit</label>
+                <div class="form-control-wrap">
+                    {{deposit_money_form.reason}}
+                    <small id="id_error_reason" style="padding-top:10px!important"></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <ul class="d-flex justify-content-between gx-4 mt-1">
+                <li>
+                    <button id="submitBtnDeposit" type="submit" class="btn btn-primary">Confirm and Proceed</button>
+                </li>
+                <li>
+                    <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Payment</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>

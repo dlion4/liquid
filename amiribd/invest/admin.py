@@ -34,6 +34,13 @@ class PoolAdmin(NestedModelAdmin, ModelAdmin):
         "updated_at",
     ]
     inlines = [AccountInline, PoolFeatureInline]
+        
+    def delete_model(self, request, obj: Pool) -> None:
+        if obj.profile:
+            obj.profile.is_subscribed = False
+            obj.profile.save()
+        return super().delete_model(request, obj)
+
 
 
 @admin.register(PoolType)
@@ -83,7 +90,11 @@ class AccountAdmin(ModelAdmin):
         "latest_invite_interest",
         "account_ssid",
     ]
-
+    def delete_model(self, request, obj: Account) -> None:
+        if obj.pool.profile:
+            obj.pool.profile.is_subscribed = False
+            obj.pool.profile.save()
+        return super().delete_model(request, obj)
 
 @admin.register(Plan, site=earnkraft_site)
 class PlanAdmin(ModelAdmin):

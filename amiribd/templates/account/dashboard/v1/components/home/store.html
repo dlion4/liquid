@@ -1,0 +1,335 @@
+<!-- HOME HERO SECTION -->
+
+<div class="nk-block">
+    <div class="row gy-gs">
+        <div class="col-lg-4 col-xl-4">
+            <div class="nk-block">
+
+                <div class="nk-block">
+                    <div class="card card-bordered text-light is-dark h-100">
+                        <div class="card-inner">
+                            <div class="nk-wg7">
+                                <div class="nk-wg7-stats">
+                                    <div class="nk-wg7-title">Available Balance</div>
+                                    <div class="number-lg">
+                                        <!-- number -->
+                                        {{available_amount|floatformat:2|intcomma}}
+                                        <span class="currency">KES</span>
+                                    </div>
+                                </div>
+                                <div class="nk-wg7-stats-group">
+                                    <div class="nk-wg7-stats w-50">
+                                        <div class="nk-wg7-title"> Expenses</div>
+                                        <div class="number">{{plans.count|default:"0"}} <span class="currency"> KES</span></div>
+                                    </div>
+                                    <div class="nk-wg7-stats w-50">
+                                        <div class="nk-wg7-title">Profits</div>
+                                        <div class="number">{{transactions.count|default:"0"}} <span class="currency"> KES</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-xl-8">
+            <div class="nk-block">
+
+                <div class="row g-2">
+
+                    <div class="col-sm-4">
+                        <div class="card bg-light">
+                            <div class="nk-wgw sm">
+                                <a class="nk-wgw-inner" href="{% url 'dashboard:invest:bonus' %}">
+                                    <div class="nk-wgw-name">
+                                        <div class="nk-wgw-icon">
+                                            <em class="icon ni ni-gift"></em>
+                                        </div>
+                                        <h5 class="nk-wgw-title title">Bonuses</h5>
+                                    </div>
+                                    <div class="nk-wgw-balance">
+                                        <div class="">{{bonuses|floatformat:2|intcomma|default:"0.00"}}
+                                            <span class="currency currency-eth">KES</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card bg-light">
+                            <div class="nk-wgw sm">
+                                <a class="nk-wgw-inner" href="">
+                                    <div class="nk-wgw-name">
+                                        <div class="nk-wgw-icon">
+                                            <em class="icon ni ni-building"></em>
+                                        </div>
+                                        <h5 class="nk-wgw-title title">Investments</h5>
+                                    </div>
+                                    <div class="nk-wgw-balance">
+                                        <div class="">{{investments|floatformat:2|intcomma|default:"0.00"}}
+                                            <span class="currency currency-btc">KES</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card bg-light">
+                            <div class="nk-wgw sm">
+                                <a class="nk-wgw-inner" href="{% url 'dashboard:invest:whatsapp' %}">
+                                    <div class="nk-wgw-name">
+                                        <div class="nk-wgw-icon">
+                                            <em class="icon ni ni-whatsapp"></em>
+                                        </div>
+                                        <h5 class="nk-wgw-title title">WhatsApp Earnings</h5>
+                                    </div>
+                                    <div class="nk-wgw-balance">
+                                        <div class="">{{earnings|floatformat:2|intcomma|default:"0.00"}}
+                                            <span class="currency currency-nio">KES</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <div class="nk-block">
+
+                <div class="row g-2">
+                    <div class="col-sm-4">
+                        <div class="card bg-light">
+                            <div class="nk-wgw sm">
+                                <a class="nk-wgw-inner" href="{% url 'dashboard:invest:jobs:jobs' %}">
+                                    <div class="nk-wgw-name">
+                                        <div class="nk-wgw-icon">
+                                            <em class="icon ni ni-clipboard"></em>
+                                        </div>
+                                        <h5 class="nk-wgw-title title">All Jobs</h5>
+                                    </div>
+                                    <div class="nk-wgw-balance">
+                                        <div class="1">22
+                                            <span class="currency-nio"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card bg-light">
+                            <div class="nk-wgw sm">
+                                <a class="nk-wgw-inner" href="">
+                                    <div class="nk-wgw-name">
+                                        <div class="nk-wgw-icon">
+                                            <em class="icon ni ni-building"></em>
+                                        </div>
+                                        <h5 class="nk-wgw-title title">Articles Written</h5>
+                                    </div>
+                                    <div class="nk-wgw-balance">
+                                        <div class="1">{{investments|floatformat|intcomma|default:"0"}}
+                                            <span class="currency-btc"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card bg-light">
+                            <div class="nk-wgw sm">
+                                <a class="nk-wgw-inner" href="{% url 'dashboard:invest:academic_writing_accounts' %}">
+                                    <div class="nk-wgw-name">
+                                        <div class="nk-wgw-icon">
+                                            <em class="icon ni ni-gift"></em>
+                                        </div>
+                                        <h5 class="nk-wgw-title title">Purchases</h5>
+                                    </div>
+                                    <div class="nk-wgw-balance">
+                                        <div class="1">{{bonuses|floatformat|intcomma|default:"0"}}
+                                            <span class="currency-eth"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="nk-block nk-block-md">
+    <div class="nk-block-head-xs">
+        <div class="nk-block-between-md g-2">
+            <div class="nk-block-head-content">
+                <h6 class="nk-block-title title">Remote Jobs Stats</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-2">
+        <!-- Card 1: All Remote Jobs -->
+        <div class="col-sm-3">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="#">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-briefcase"></em>
+                            </div>
+                            <h5 class="nk-wgw-title title">All Remote Jobs</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="">{{ all_remote_jobs.count }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Remote Jobs Done -->
+        <div class="col-sm-3">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="#">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-check-circle"></em>
+                            </div>
+                            <h5 class="nk-wgw-title title">Remote Jobs Done</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="">{{ remote_jobs_done.count }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Remote Jobs Rejected -->
+        <div class="col-sm-3">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="#">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-times-circle"></em>
+                            </div>
+                            <h5 class="nk-wgw-title title">Remote Jobs Rejected</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="">{{ remote_jobs_rejected.count }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Remote Jobs Income -->
+        <div class="col-sm-3">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="#">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-dollar-sign"></em>
+                            </div>
+                            <h5 class="nk-wgw-title title">Remote Jobs Income</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="">$ {{ remote_jobs_income|floatformat:2|intcomma }} </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nk-block nk-block-md">
+    <div class="nk-block-head-xs">
+        <div class="nk-block-between-md g-2">
+            <div class="nk-block-head-content">
+                <h6 class="nk-block-title title">User Profile</h6>
+            </div>
+            <div class="nk-block-head-content">
+                <a href="{% url 'users:profile:profile' %}" class="link link-primary"></a>
+            </div>
+        </div>
+    </div>
+    <div class="row g-2">
+        <div class="col-sm-4">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-check text-success"></em>
+                                <!-- Active status icon -->
+                                <!--<em class="icon fas fa-toggle-off text-danger"></em> --> <!-- Inactive status icon -->
+                            </div>
+                            <h5 class="nk-wgw-title title">Status</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="1">Active<span class="currency-nio"></span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-user-tie"></em>
+                            </div>
+                            <h5 class="nk-wgw-title title">Rank</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="1">level 1<span class="currency-btc"></span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card bg-light">
+                <div class="nk-wgw sm">
+                    <a class="nk-wgw-inner" href="">
+                        <div class="nk-wgw-name">
+                            <div class="nk-wgw-icon">
+                                <em class="icon fas fa-crown"></em>
+                            </div>
+                            <h5 class="nk-wgw-title title">VIP</h5>
+                        </div>
+                        <div class="nk-wgw-balance">
+                            <div class="1">User<span class="currency-eth"></span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- {% include "account/dashboard/v1/components/home/statsprofit.html" %}
+
+  {% include "account/dashboard/v1/components/home/actions.html" %}
+
+  <div class="row g-gs py-2 pb-4">
+    {% include "account/dashboard/v1/components/home/notifications/updates.html" %}
+  </div>
+
+  {% include "account/dashboard/v1/components/support.html" %} -->

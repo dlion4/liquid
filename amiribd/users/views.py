@@ -10,7 +10,6 @@ from django.views.generic import TemplateView
 from .forms import EmailLoginForm, EmailSignupForm, AuthTokenCodeForm
 from django.shortcuts import render, redirect
 from amiribd.users.models import User, Profile
-from allauth.account.views import LoginView as AuthLoginView
 from django.views.generic import FormView, View
 from django.contrib.auth import get_user_model
 import sesame.utils

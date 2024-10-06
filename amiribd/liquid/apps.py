@@ -9,6 +9,8 @@ class LiquidConfig(AppConfig):
 
     def ready(self) -> None:
 
-        from .schedular import schedular
+        # from .schedular import schedular
 
-        schedular.main()
+        # schedular.main()
+        return super().ready()
+    

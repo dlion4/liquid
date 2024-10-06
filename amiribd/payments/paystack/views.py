@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 import json
 from amiribd.payments.models import PaystackPaymentStatus
 from amiribd.payments.serializers import PaystackPaymentStatusSerializer
+import requests
 
 class PayStackPaymentCallbackView(View):
     @method_decorator(csrf_exempt)
@@ -48,4 +49,8 @@ class PayStackPaymentStatusView(View):
     def get(self, request, *args, **kwargs):
         # payment_status_object = get_object_or_404(PaystackPaymentStatus, reference=request.GET.get("reference"))
         # serialized_data = PaystackPaymentStatusSerializer(payment_status_object).data
+        # reference=request.GET.get("reference")
+        
+        
+        
         return JsonResponse({'data':'data', 'success': True}, safe=False)

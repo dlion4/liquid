@@ -1,12 +1,15 @@
 {% extends "account/dashboard/v1/base.html" %}
 
 {% load static %}
+{% block cssClass %}bg-lighter{% endblock cssClass %}
 
 {% block heading %}
-  {% include "account/dashboard/v1/components/home/head.html" %}
+<!-- {% include "account/dashboard/v1/components/home/head.html" %} -->
 {% endblock heading %}
 
 {% block main %}
+
+<div class="nk-block">
 
   {% include "account/dashboard/v1/components/home/statsprofit.html" %}
 
@@ -18,4 +21,18 @@
 
   {% include "account/dashboard/v1/components/support.html" %}
 
+
+</div>
+
+
+
 {% endblock main %}
+
+
+{% block extendedJs %}
+<script src="{% static 'dashboard/assets/js/charts/chart-lms.js' %}"></script>
+
+
+
+
+{% endblock extendedJs %}
