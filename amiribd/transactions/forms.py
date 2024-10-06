@@ -3,6 +3,8 @@ from .models import AccountDeposit
 from amiribd.users.models import Profile
 from django.shortcuts import get_object_or_404
 from amiribd.invest.models import Account
+from django.contrib.auth.models import AnonymousUser
+
 
 class AccountDepositModelForm(forms.ModelForm):
     class Meta:
@@ -20,9 +22,13 @@ class AccountDepositModelForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop("request", None)
+        self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
-        profile = get_object_or_404(Profile, user=self.request.user)
+        
+        if isinstance(self.request.user, AnonymousUser):
+            profile = None  # Handle case where user is anonymous
+        else:
+            profile = get_object_or_404(Profile, user=self.request.user)
         
         if profile.plans.exists():
             self.fields["account"].queryset = Account.objects.filter(pool__profile=profile)
