@@ -147,11 +147,7 @@ class DashboardViewMixin(TemplateView):
         if previous_month_deposits == 0:
             percentage_change = 0
         else:
-            percentage_change = (
-                f"{((
-                    (current_month_deposits - previous_month_deposits)
-                    / previous_month_deposits) * 100):.2f}",
-            )
+            percentage_change = (f"{(((current_month_deposits - previous_month_deposits)/ previous_month_deposits) * 100):.2f}")
         return {
             "current_month_deposits": current_month_deposits,
             "previous_month_deposits": previous_month_deposits,
