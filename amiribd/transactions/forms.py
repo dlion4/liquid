@@ -36,10 +36,3 @@ class AccountDepositModelForm(forms.ModelForm):
             self.fields["account"].empty_label = None
         self.fields['account'].widget.attrs.update({"class": "form-control py-3"})
 
-        
-        
-        
-# profile
-# account
-# amount
-# reason
