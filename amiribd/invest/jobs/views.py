@@ -101,7 +101,7 @@ class ReactivateJobApplicationView(View):
         profile = Profile.objects.get(user=get_user(request))
         profile.job_applications.add(job)
         profile.save()
-        application.status = "ACCEPTED"
+        application.status = "PENDING"
         application.save()
         return JsonResponse({"message": "success"})
 
