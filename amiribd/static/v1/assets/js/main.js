@@ -57,7 +57,7 @@ function AutomateAccountDepositPayment(data){
     const { poolId, accountId, planId, amount, profileUserId, emailAddress } = data;
     let discount_price = parseFloat("0.00")
     let handler = PaystackPop.setup({
-        key: 'pk_test_78a97775962282ab2ad167cd5d34c3b28f349316', // Replace with your public key
+        key: 'pk_live_94d90234cd2007c23e450c8cb398ac2970cd61d9',
         email: emailAddress,
         amount: amount * 100,
         currency: "KES",
