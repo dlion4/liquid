@@ -337,30 +337,7 @@
   <div class="row g-gs">
 
 
-    <div class="col-xxl-3 col-sm-6">
-      <div class="card">
-        <div class="nk-ecwg nk-ecwg6">
-          <div class="card-inner">
-            <div class="card-title-group">
-              <div class="card-title">
-                <h6 class="title">WhatsApp Earnings</h6>
-              </div>
-            </div>
-            <div class="data">
-              <div class="data-group">
-                <div class="">
-                  {{earnings|floatformat:2|intcomma|default:"0.00"}}
-                  <span class="currency currency-nio f-12">KES</span>
-                </div>
-                <div class="nk-ecwg6-ck">
-                  <canvas class="ecommerce-line-chart-s3" id="ipdIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
-              </div>
-              <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><span> vs. last week</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
     <div class="col-xxl-3 col-sm-6">
       <div class="card">
         <div class="nk-ecwg nk-ecwg6">
@@ -409,12 +386,37 @@
           <div class="card-inner">
             <div class="card-title-group">
               <div class="card-title">
-                <h6 class="title">Promotions Tokens</h6>
+                <h6 class="title">WhatsApp Earnings</h6>
               </div>
             </div>
             <div class="data">
               <div class="data-group">
-                <div class="amount">$23,485</div>
+                <div class="">
+                  {{earnings|floatformat:2|intcomma|default:"0.00"}}
+                  <span class="currency currency-nio f-12">KES</span>
+                </div>
+                <div class="nk-ecwg6-ck">
+                  <canvas class="ecommerce-line-chart-s3" id="ipdIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas>
+                </div>
+              </div>
+              <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><span> vs. last week</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card">
+        <div class="nk-ecwg nk-ecwg6">
+          <div class="card-inner">
+            <div class="card-title-group">
+              <div class="card-title">
+                <h6 class="title">Bonuses</h6>
+              </div>
+            </div>
+            <div class="data">
+              <div class="data-group">
+                <div class="amount"> {{bonuses|floatformat:2|intcomma|default:"0.00"}} KES</div>
                 <div class="nk-ecwg6-ck">
                   <canvas class="ecommerce-line-chart-s3" id="todayExpense" width="100" height="40" 
                   style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
@@ -456,22 +458,22 @@
             </li>
             <li class="item">
               <div class="info">
-                <div class="title">Patients</div>
-                <div class="count">2,327</div>
+                <div class="title">All Jobs</div>
+                <div class="count">129</div>
               </div><em class="icon bg-info-dim ni ni-users"></em>
             </li>
             <li class="item">
               <div class="info">
-                <div class="title">Nurses</div>
+                <div class="title">Products</div>
                 <div class="count">674</div>
               </div><em class="icon bg-pink-dim ni ni ni-plus-fill-c"></em>
             </li>
             <li class="item">
               <div class="info">
-                <div class="title">Bonuses</div>
+                <div class="title">Rank</div>
                 <div class="count">
-                  {{bonuses|floatformat:2|intcomma|default:"0.00"}}
-                  <span class="currency currency-eth f-12">KES</span>
+                  Level 
+                  <span class="currency currency-eth f-12">1</span>
                 </div>
               </div><em class="icon bg-purple-dim ni ni-network"></em>
             </li>
@@ -520,14 +522,14 @@
             </div>
             <div class="analytic-ov-ck"><canvas class="analytics-line-large" id="analyticOvData" width="682" height="175" style="display: block; box-sizing: border-box; height: 175px; width: 682px;"></canvas></div>
             <div class="chart-label-group ms-5">
-              <div class="chart-label">01 Jan, 2020</div>
-              <div class="chart-label d-none d-sm-block">15 Jan, 2020</div>
-              <div class="chart-label">30 Jan, 2020</div>
+              <div class="chart-label">01 Oct, 2024</div>
+              <div class="chart-label d-none d-sm-block">15 Oct, 2024</div>
+              <div class="chart-label">30 Oct, 2024</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
+
   </div>
 </div>

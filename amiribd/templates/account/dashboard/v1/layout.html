@@ -394,7 +394,7 @@
             } else {
               $(".pmo-lv").fadeIn(3000, function(){
                 $(this).addClass("active");
-                $(".pmo-pmo-text").text(`Hello, ${response.first_name.charAt(0).toUpperCase() + response.first_name.slice(1).toLowerCase()}! You have no plan yet. Purchase Now!`);
+                $(".pmo-pmo-text").text(`Hello, ${response.first_name.charAt(0).toUpperCase() + response.first_name.slice(1).toLowerCase()}! You have no plan yet. Activate Now!`);
               });
               subscriptionStatus = true;
             }
@@ -416,8 +416,8 @@
           $(this).html(`
           <small style="text-align:center;">You do not have a plan yet.
            <a
-           style='font-size: 22px; padding: 10px 15px; border: 2px solid #ccc; text-align: center; border-radius: 40px;transform:translateY(-20px);' 
-           href='{% url 'dashboard:invest:invest' %}'>Purchase Now</a>
+           style='font-size: 20px; padding: 10px 15px; border: 2px solid #ccc; text-align: center; border-radius: 40px;transform:translateY(-20px);' 
+           href='{% url 'dashboard:invest:invest' %}'>Activate</a>
           </small>`)
         }
       })
