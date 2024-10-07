@@ -1,26 +1,21 @@
 from django.urls import path
 from .views import upload_submission
 
-from amiribd.invest.views import modified_jobs_view, fetch_job_type, obtain_all_job_type
+from amiribd.invest.views import modified_jobs_view, fetch_job_type # obtain_all_job_type
 
 from . import views
 
 app_name = "jobs"
 
 urlpatterns = [
+    path("",modified_jobs_view,name="jobs"),
+    # path(
+    #     "job-obtain-onload/home-load",
+    #     obtain_all_job_type,
+    #     name="obtain_jobs",
+    # ),
     path(
-        "",
-        modified_jobs_view,
-    
-        name="jobs",
-    ),
-    path(
-        "job-obtain-onload/home-load",
-        obtain_all_job_type,
-        name="obtain_jobs",
-    ),
-    path(
-        "filter/<location_type>/",
+        "filter/<location_type>/<page>/<per_page>/",
         fetch_job_type,
         name="filter_jobs",
     ),

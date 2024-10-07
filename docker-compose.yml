@@ -6,7 +6,7 @@ services:
     container_name: redis
 
   db_earnkaft:
-    image: postgres
+    image: postgres:alpine
     volumes:
      - postgres_data:/var/lib/postgresql/data
     environment:

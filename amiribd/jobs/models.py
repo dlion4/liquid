@@ -64,13 +64,14 @@ class Job(models.Model):
     is_rejected = models.BooleanField(default=False)
 
     objects = JobManager()
+    
+    class Meta:
+        ordering = ["-id"]
 
 
     @property
     def is_popular(self):
-        if self.job_applications >= 1000:
-            return True
-        return False
+        return self.job_applications >= 1000
     
     @property
     def job_applications(self):
@@ -78,9 +79,7 @@ class Job(models.Model):
     
     @property
     def is_new(self):
-        if self.date_posted <= timezone.now() - timezone.timedelta(days=30):
-            return True
-        return False
+        return self.date_posted <= timezone.now() - timezone.timedelta(days=30)
     
 
     def __str__(self):

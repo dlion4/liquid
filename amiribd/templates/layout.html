@@ -26,6 +26,7 @@
   <link rel="preload" href="{% static 'css/toastr.min.css' %}" as="style">
   <!-- stylesheet -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"> -->
   <link rel="stylesheet" href="{% static 'css/partner.css' %}">
   <link rel="stylesheet" href="{% static 'css/fontawesome.all.min.css' %}">
   <!-- UIkit CSS -->
@@ -37,17 +38,17 @@
   <!-- Bootstrap JS -->
   <!-- Your stuff: Third-party javascript libraries go here -->
   <!-- place project specific Javascript in this file -->
-  <link rel="preload" href="{% static 'js/vendors/uikit.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/vendors/htmx.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/vendors/axios.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/vendors/toastr.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/utilities.min.js' %}" as="script">
-  <link rel="preload" href="{% static 'js/config-theme.js' %}" as="script">
+  <script src="{% static 'js/vendors/uikit.min.js' %}"></script>
+  <script src="{% static 'js/vendors/htmx.min.js' %}"></script>
+  <script src="{% static 'js/vendors/axios.min.js' %}"></script>
+  <script src="{% static 'js/vendors/toastr.min.js' %}"></script>
+  <script src="{% static 'js/utilities.min.js' %}"></script>
+  <script src="{% static 'js/config-theme.js' %}"></script>
   <!-- uikit -->
-  <script defer src="{% static 'js/vendors/uikit.min.js' %}"></script>
+  <script src="{% static 'js/vendors/uikit.min.js' %}"></script>
   <!-- favicon -->
-  <script defer src="{% static 'js/project.js' %}"></script>
-  <script defer src="{% static 'js/bootstrap/5.2.3/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/project.js' %}"></script>
+  <script src="{% static 'js/bootstrap/5.2.3/js/bootstrap.min.js' %}"></script>
 
   {% endblock javascript %}
   {% endcompress js %}

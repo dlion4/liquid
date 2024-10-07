@@ -30,9 +30,8 @@ Job Board Listing
             <li>
               <div class="drodown">
                 <a href="#" class="dropdown-toggle btn btn-success" data-bs-toggle="dropdown">
-                  
-                  <span>jobs Applied</span>
-                 
+                  <em class="icon ni ni-folder"></em>
+                  <span>Filter Status</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                   <ul class="link-list-opt no-bdr">
@@ -88,7 +87,7 @@ Job Board Listing
 
   .tag {
     display: inline-block;
-    background-color: #fd7d1e;
+    background-color: rgb(157 114 255);
     /* Customize the background color as needed */
     color: white;
     padding: 2px 8px;
@@ -117,7 +116,7 @@ Job Board Listing
     font-weight: bold;
   }
 
-  /* General Card Styles */
+  /* General Card Styles
 
   .card {
     border: 1px solid #ccc;
@@ -128,11 +127,30 @@ Job Board Listing
     background-color: #fff;
   }
 
-  /* Card Inner Content */
+  /* Card Inner Content 
 
   .card-inner {
     position: relative;
   }
+ */
+.skeleton,
+  .card {
+    min-height: 300px; /* Set a minimum height to prevent shrinking */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure content fills the card */
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(79, 77, 77, 0.1);
+}
+
+.card-inner {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+
 
   .btn-primary {
     display: inline-block;
@@ -144,10 +162,79 @@ Job Board Listing
 
   /* Ensure Card Adjusts to Content */
   /* Responsive Adjustments */
+
+  /* General styles for the list */
+/* General styles for the list */
+.filter-button-group {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: .2rem;
+}
+
+.filter-button-group li {
+  display: inline-block;
+}
+
+/* Button base styles */
+.filter-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-image: linear-gradient(to right, #854fff, #1EE0AC);
+  background-size: 200%;
+  background-position: left;
+  border-radius: 30px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effect */
+.filter-button:hover {
+  background-position: right;
+  box-shadow: 0 0 15px rgba(133, 79, 255, 0.5), 0 0 30px rgba(30, 224, 172, 0.5);
+}
+
+/* Glowing ring effect for active state */
+.filter-button.active {
+  background-image: linear-gradient(to right, #1EE0AC, #854fff);
+  background-size: 200%;
+  background-position: right;
+  animation: glow-ring 2s infinite;
+  box-shadow: 0 0 10px #1EE0AC, 0 0 20px #854fff;
+}
+
+/* Water-ring-like glowing effect animation */
+@keyframes glow-ring {
+  0% {
+    box-shadow: 0 0 8px #1EE0AC, 0 0 10px #1EE0AC, inset 0 0 4px #854fff;
+  }
+  50% {
+    box-shadow: 0 0 10px #854fff, 0 0 12px #854fff, inset 0 0 6px #1EE0AC;
+  }
+  100% {
+    box-shadow: 0 0 8px #1EE0AC, 0 0 10px #1EE0AC, inset 0 0 4px #854fff;
+  }
+}
+
+/* Active and hover text color */
+.filter-button.active:hover,
+.filter-button:hover {
+  color: white;
+}
+
+
 </style>
 <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
-<ul class="filter-button-group mb-4 pb-1">
+<ul class="filter-button-group mb-4 pb-1 d-flex g-3">
   <li>
     <button class="filter-button active" type="button" data-filter="*">All</button>
   </li>
@@ -162,53 +249,102 @@ Job Board Listing
   </li>
 </ul>
 
-<div class="row" data-animation="true" id="jobsFiltration"></div>
+<style>
+  /* Base styles for the loading placeholder */
+
+
+/* Pulse animation */
+@keyframes pulse {
+  0% {
+    background-color: #f0f0f0df;
+  }
+  50% {
+    background-color: #e0e0e0d9;
+  }
+  100% {
+    background-color: #f0f0f0c0;
+  }
+}
+
+/* Apply the pulse animation to the skeleton */
+.skeleton {
+  animation: pulse 1.5s infinite;
+}
+
+</style>
+
+<div class="row" data-animation="true" id="jobsFiltration">
+  <div class="col-12 col-md-6 mb-3">
+    <div class="skeleton"></div>
+  </div>
+  <div class="col-12 col-md-6 mb-3">
+    <div class="skeleton"></div>
+  </div>
+  <div class="col-12 col-md-6 mb-3">
+    <div class="skeleton"></div>
+  </div>
+  <div class="text-center mt-3">
+    <button type="button" id="loadMoreBtn" class="btn btn-primary" style="display:none;">Load More</button>
+  </div>
+</div>
+
+<div class="text-center mt-3">
+  <button id="loadMoreBtn" class="btn btn-primary" style="display:none;">Load More</button>
+</div>
+
+
   {% block extendedJs %}
+
+  <script src="{% static 'js/project.js' %}"></script>
   
   <script>
     $(document).ready(function(){
+      let currentPage = 0;
+      const jobsPerPage = 4;
       const filterButtons = $('.filter-button');
       const itemCount = $(".jobs_count");
       let initialValue = $(itemCount).text();
-      $(itemCount).text("0")
+      $(itemCount).text("0");
+      const timestamp = new Date().getTime();
 
-      $.ajax({
-        url: '/dashboard/invest/jobs/filter/*/',
-        method: 'GET',
-        dataType: "html",
-        success: function(response){
-          const responseContainer = $("#jobsFiltration");
-          responseContainer.html(response);
-          const filterItems = $('.filter-item');
-          $(itemCount).text($(filterItems).length)
-        },
-        error: function(xhr, status, error){
-          alert(xhr.responseText)
+     const loadJobs = (lookup="*")=> { 
+        $.ajax({
+          url: `/dashboard/invest/jobs/filter/${lookup}/${currentPage}/${jobsPerPage}/`, // Update URL to include pagination
+          method: 'GET',
+          dataType: "html",
+          success: function (response) {
+            const responseContainer = $("#jobsFiltration");
+            const filterItems = $('.filter-item');
+            $(itemCount).text($(filterItems).length);
+            if (response.trim() === '') {$("#loadMoreBtn").hide()}
+            else {$("#loadMoreBtn").show()}
+            if (currentPage === 0){
+              responseContainer.html(response);
+            }else{responseContainer.append(response)}
+          },
+          error: function (xhr, status, error) {
+            $("#jobsFiltration").html(`<p class='d-flex align-items-center justify-content-center'>${error}</p>`)
+          }
         }
-      })
+      );
+    }
 
-      $(filterButtons).each(function(){
-        let url = `/dashboard/invest/jobs/filter/${$(this).attr("data-filter")}/`;
-        $(this).click(function(){
-          $(filterButtons).each(function(){$(this).removeClass("active")});
-          const filterValue = $(this).attr('data-filter').toLocaleLowerCase();
-            $.ajax({
-              url: url,
-              method: 'GET',
-              dataType: "html",
-              success: function(response){
-                const responseContainer = $("#jobsFiltration");
-                responseContainer.html(response);
-                const filterItems = $('.filter-item');
-                $(itemCount).text($(filterItems).length)
-              },
-              error: function(xhr, status, error){
-                alert(xhr.responseText)
-              }
-            });
-          $(this).addClass("active")
-        })
+    loadJobs();
+    
+    $("#loadMoreBtn").click(function () {
+      currentPage += 1;
+      loadJobs();
+    });
+    
+    $(filterButtons).each(function(){
+      $(this).click(function(){
+        $(filterButtons).each(function(){$(this).removeClass("active")});
+        const filterValue = $(this).data('filter').toLocaleLowerCase();
+          loadJobs(filterValue)
+        $(this).addClass("active")
       })
+    });
+
     })
   </script>
   {% endblock extendedJs %}

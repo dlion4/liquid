@@ -617,26 +617,31 @@ class JobsView(InvestmentViewMixin):
 modified_jobs_view = JobsView.as_view()
 
 
-def obtain_all_job_type(request):
-    jobs = Job.objects.all().order_by("-id")
-    job_application_form = JobApplicationForm(job_id=1, applicant_id=1) 
-    return render(
-        request,
-        "account/dashboard/v1/investment/jobs/partials.html",
-        {
-            "jobs": jobs,
-            "job_application_form": job_application_form
-        }
-    )
+# def obtain_all_job_type(request):
+#     jobs = Job.objects.all().order_by("-id")
+#     job_application_form = JobApplicationForm(job_id=1, applicant_id=1) 
+#     return render(
+#         request,
+#         "account/dashboard/v1/investment/jobs/partials.html",
+#         {
+#             "jobs": jobs,
+#             "job_application_form": job_application_form
+#         }
+#     )
 
 
-def fetch_job_type(request, location_type: str):
-    if location_type == "*":
-        jobs = Job.objects.all().order_by("-id")
-    else:
-        jobs = Job.objects.filter(location_type__iexact=location_type).order_by("-id")
-    job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
+def fetch_job_type(request, location_type, page=0, per_page=4):
+    page = int(page)
+    per_page = int(per_page)
+    offset = page * per_page
     
+    if location_type == "*":
+        jobs = Job.objects.all()[offset:offset + per_page]
+    else:
+        jobs = Job.objects.filter(location_type__iexact=location_type)[offset:offset + per_page]
+
+    job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
+
     return render(
         request,
         "account/dashboard/v1/investment/jobs/partials.html",
@@ -645,6 +650,12 @@ def fetch_job_type(request, location_type: str):
             "job_application_form": job_application_form
         }
     )
+
+    
+
+
+
+
 class InvestPlanView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_plan.html"  # noqa: E501, ERA001
     template_name = "account/dashboard/v1/investment/investment_plan.html"
