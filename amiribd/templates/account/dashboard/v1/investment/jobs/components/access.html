@@ -1,3 +1,14 @@
+<style>
+  .nk-file-item.nk-file.card {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .nk-file-item.nk-file.card:hover>div.nk-file-info {
+    transform: scale(1.09);
+    transition: ease 0.65s;
+  }
+</style>
+
 <div class="nk-block-head-xs">
   <div class="nk-block-between g-2">
     <div class="nk-block-head-content">
@@ -14,7 +25,7 @@
 <div class="toggle-expand-content expanded" data-content="quick-access">
   <div class="nk-files nk-files-view-grid">
     <div class="nk-files-list">
-      <div class="nk-file-item nk-file">
+      <div class="nk-file-item nk-file card">
         <div class="nk-file-info">
           <a href="#" class="nk-file-link">
             <div class="nk-file-title">
@@ -30,13 +41,14 @@
               </div>
               <div class="nk-file-name">
                 <div class="nk-file-name-text">
-                  <span class="title">SUBMISSIONS</span></div>
+                  <span class="title">SUBMISSIONS</span>
+                </div>
               </div>
             </div>
           </a>
         </div>
       </div>
-      <div class="nk-file-item nk-file">
+      <div class="nk-file-item nk-file card">
         <div class="nk-file-info">
           <a href="{% url 'dashboard:invest:jobs:job_board_applications_view' %}" class="nk-file-link">
             <div class="nk-file-title">
@@ -52,13 +64,14 @@
               </div>
               <div class="nk-file-name">
                 <div class="nk-file-name-text">
-                  <span class="title">APPLICATIONS</span></div>
+                  <span class="title">APPLICATIONS</span>
+                </div>
               </div>
             </div>
           </a>
         </div>
       </div>
-      <div class="nk-file-item nk-file">
+      <div class="nk-file-item nk-file card">
         <div class="nk-file-info">
           <a href="#" class="nk-file-link">
             <div class="nk-file-title">
@@ -74,13 +87,14 @@
               </div>
               <div class="nk-file-name">
                 <div class="nk-file-name-text">
-                  <span class="title">CANCELLED</span></div>
+                  <span class="title">CANCELLED</span>
+                </div>
               </div>
             </div>
           </a>
         </div>
       </div>
-      <div class="nk-file-item nk-file">
+      <div class="nk-file-item nk-file card">
         <div class="nk-file-info">
           <a href="#" class="nk-file-link">
             <div class="nk-file-title">
@@ -96,13 +110,14 @@
               </div>
               <div class="nk-file-name">
                 <div class="nk-file-name-text">
-                  <span class="title">PENDING APPROVAL</span></div>
+                  <span class="title">PENDING APPROVAL</span>
+                </div>
               </div>
             </div>
           </a>
         </div>
       </div>
-      <div class="nk-file-item nk-file">
+      <div class="nk-file-item nk-file card">
         <div class="nk-file-info">
           <a href="#" class="nk-file-link">
             <div class="nk-file-title">
@@ -118,7 +133,8 @@
               </div>
               <div class="nk-file-name">
                 <div class="nk-file-name-text">
-                  <span class="title">CLOSED</span></div>
+                  <span class="title">CLOSED</span>
+                </div>
               </div>
             </div>
           </a>

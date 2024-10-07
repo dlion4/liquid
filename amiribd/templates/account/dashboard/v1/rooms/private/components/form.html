@@ -65,7 +65,7 @@
 
     const message = messageBox.value;
 
-    ws.send(JSON.stringify({message: message, messagePk: roomPk, sender: "{{message.sender}}"}));
+    ws.send(JSON.stringify({ message: message, messagePk: roomPk, sender: "{{message.sender}}" }));
 
     messageBox.value = ""
   });
@@ -79,7 +79,7 @@
       hour12: true
     })
     console.log(data)
-    
+
     const recipientIntitials = data.message.inbox.message.receiver.name_initials
 
     if (data.message.sender === "{{message.sender}}") {
@@ -161,7 +161,7 @@
   const messageBodyContent = document.getElementById("messageBodyContent");
 
   function scrollToBottom() {
-    messageBodyContent.scroll({top: messageBodyContent.scrollHeight, behavior: 'smooth'});
+    messageBodyContent.scroll({ top: messageBodyContent.scrollHeight, behavior: 'smooth' });
   }
 
   scrollToBottom()

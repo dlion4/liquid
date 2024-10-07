@@ -6,103 +6,49 @@
   <div class="container-fluid">
     <div class="nk-header-wrap">
       <div class="nk-menu-trigger d-xl-none ms-n1">
-        <a
-          href="#"
-          class="nk-nav-toggle nk-quick-nav-icon"
-          data-target="sidebarMenu"
-        >
+        <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu">
           <em class="icon ni ni-menu"></em>
         </a>
       </div>
       <div class="nk-header-brand d-xl-none">
-        <a href="index.html" class="logo-link"
-          ><img
-            class="logo-light logo-img"
-            src="{% static 'img/earnkraftfull2.png' %}"
-            srcset="{% static 'img/earnkraftfull2.png' %} 2x"
-            alt="logo"
-          /><img
-            class="logo-dark logo-img"
-            src="{% static 'img/earnkraftfull2.png' %}"
-            srcset="{% static 'img/earnkraftfull2.png' %} 2x"
-            alt="logo-dark"
-          />
-          <span class="nio-version">EARNKRAFT</span></a
-        >
+        <a href="index.html" class="logo-link"><img class="logo-light logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo" /><img class="logo-dark logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo-dark" />
+          <span class="nio-version">EARNKRAFT</span></a>
       </div>
       {% block headerNews %}
-      <div
-        class="nk-header-app-name d-none d-md-flex flex-row justify-content-center align-items-center"
-      >
+      <div class="nk-header-app-name d-none d-md-flex flex-row justify-content-center align-items-center">
         <div class="nk-header-app-logo me-2">
-          <em
-            class="icon ni ni-chat bg-success-dim fs-3"
-            style="font-size: 0.95rem !important"
-          ></em>
+          <em class="icon ni ni-chat bg-success-dim fs-3" style="font-size: 0.95rem !important"></em>
         </div>
         <div class="nk-header-app-info">
-          <span class="sub-text">Messages</span
-          ><span class="lead-text">Support Ticket</span>
+          <span class="sub-text">Messages</span><span class="lead-text">Support Ticket</span>
         </div>
       </div>
       {% endblock headerNews %}
       <div class="nk-header-tools">
         <ul class="nk-quick-nav">
           <li class="dropdown language-dropdown d-none d-sm-block me-n1">
-            <a
-              href="#"
-              class="dropdown-toggle nk-quick-nav-icon"
-              data-bs-toggle="dropdown"
-            >
+            <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
               <div class="quick-icon border border-light">
-                <img
-                  class="icon"
-                  src="{% static 'dashboard/images/flags/english-sq.png' %}"
-                  alt=""
-                />
+                <img class="icon" src="{% static 'dashboard/images/flags/english-sq.png' %}" alt="" />
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-s1">
               <ul class="language-list">
                 <li>
-                  <a href="#" class="language-item"
-                    ><img
-                      src="{% static 'dashboard/images/flags/english.png' %}"
-                      alt=""
-                      class="language-flag"
-                    />
-                    <span class="language-name">English</span></a
-                  >
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/english.png' %}" alt="" class="language-flag" />
+                    <span class="language-name">English</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"
-                    ><img
-                      src="{% static 'dashboard/images/flags/spanish.png' %}"
-                      alt=""
-                      class="language-flag"
-                    />
-                    <span class="language-name">Español</span></a
-                  >
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/spanish.png' %}" alt="" class="language-flag" />
+                    <span class="language-name">Español</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"
-                    ><img
-                      src="{% static 'dashboard/images/flags/french.png' %}"
-                      alt=""
-                      class="language-flag"
-                    />
-                    <span class="language-name">Français</span></a
-                  >
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/french.png' %}" alt="" class="language-flag" />
+                    <span class="language-name">Français</span></a>
                 </li>
                 <li>
-                  <a href="#" class="language-item"
-                    ><img
-                      src="{% static 'dashboard/images/flags/turkey.png' %}"
-                      alt=""
-                      class="language-flag"
-                    />
-                    <span class="language-name">Türkçe</span></a
-                  >
+                  <a href="#" class="language-item"><img src="{% static 'dashboard/images/flags/turkey.png' %}" alt="" class="language-flag" />
+                    <span class="language-name">Türkçe</span></a>
                 </li>
               </ul>
             </div>
@@ -128,20 +74,14 @@
                 </div>
               </div>
             </a>
-            <div
-              class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1"
-            >
-              <div
-                class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block"
-              >
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+              <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                 <div class="user-card">
                   <div class="user-avatar">
                     <span>{{profile.initials}}</span>
                   </div>
                   <div class="user-info">
-                    <span class="lead-text"
-                      >{{profile.full_name|truncatewords:"3"}}</span
-                    ><span class="sub-text">{{profile.user.email}}</span>
+                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span>
                   </div>
                 </div>
               </div>
@@ -154,20 +94,12 @@
                 </div>
                 <div class="user-balance-sub">
                   Locked
-                  <span
-                    >{{locked_amount}}
-                    <span class="currency currency-btc">KES</span></span
-                  >
+                  <span>{{locked_amount}}
+                    <span class="currency currency-btc">KES</span></span>
                 </div>
 
                 {% if available_amount > 0.00 %}
-                <a
-                  role="button"
-                  data-bs-toggle="modal"
-                  data-bs-dismiss="modal"
-                  data-bs-target="#withdrawalPopupForm"
-                  class="link"
-                >
+                <a role="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#withdrawalPopupForm" class="link">
                   <span>Withdraw Funds</span>
                   <em class="icon ni ni-wallet-out"></em>
                 </a>
@@ -177,42 +109,26 @@
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a
-                      href="{% if request.user.verified %}{% url 'profile:profile' %}{% else %}#{% endif %}"
-                    >
+                    <a href="{% if request.user.verified %}{% url 'profile:profile' %}{% else %}#{% endif %}">
                       <em class="icon ni ni-user-alt"></em>
-                      <span>View Profile</span></a
-                    >
+                      <span>View Profile</span></a>
                   </li>
                   <li>
-                    <a
-                      href="{% if request.user.verified %}#{% else %}#{% endif %}"
-                    >
+                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
                       <em class="icon ni ni-setting-alt"></em>
-                      <span>Account Setting</span></a
-                    >
+                      <span>Account Setting</span></a>
                   </li>
                   <li>
-                    <a
-                      href="{% if request.user.verified %}#{% else %}#{% endif %}"
-                    >
+                    <a href="{% if request.user.verified %}#{% else %}#{% endif %}">
                       <em class="icon ni ni-activity-alt"></em>
-                      <span>Login Activity</span></a
-                    >
+                      <span>Login Activity</span></a>
                   </li>
                 </ul>
               </div>
               <div class="dropdown-inner">
                 <ul class="link-list">
                   <li>
-                    <a
-                      role="button"
-                      hx-post="{% url 'users:logout' %}"
-                      hx-trigger="click"
-                      hx-swap="none"
-                      hx-on::after-request="window.location.reload()"
-                      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-                    >
+                    <a role="button" hx-post="{% url 'users:logout' %}" hx-trigger="click" hx-swap="none" hx-on::after-request="window.location.reload()" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
                       <em class="icon ni ni-signout"></em>
                       <span>Sign out</span>
                     </a>
@@ -222,18 +138,12 @@
             </div>
           </li>
           <li class="dropdown notification-dropdown me-n1">
-            <a
-              href="#"
-              class="dropdown-toggle nk-quick-nav-icon"
-              data-bs-toggle="dropdown"
-            >
+            <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
               <div class="icon-status icon-status-info">
                 <em class="icon ni ni-bell"></em>
               </div>
             </a>
-            <div
-              class="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1"
-            >
+            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
               <div class="dropdown-head">
                 <span class="sub-title nk-dropdown-title">Notifications</span>
                 <a href="#">Mark All as Read</a>
@@ -242,9 +152,7 @@
                 <div class="nk-notification">
                   <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
-                      <em
-                        class="icon icon-circle bg-warning-dim ni ni-curve-down-right"
-                      ></em>
+                      <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     <div class="nk-notification-content">
                       <div class="nk-notification-text">
@@ -255,9 +163,7 @@
                   </div>
                   <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
-                      <em
-                        class="icon icon-circle bg-success-dim ni ni-curve-down-left"
-                      ></em>
+                      <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                     </div>
                     <div class="nk-notification-content">
                       <div class="nk-notification-text">
@@ -270,9 +176,7 @@
                   </div>
                   <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
-                      <em
-                        class="icon icon-circle bg-warning-dim ni ni-curve-down-right"
-                      ></em>
+                      <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     <div class="nk-notification-content">
                       <div class="nk-notification-text">
@@ -283,9 +187,7 @@
                   </div>
                   <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
-                      <em
-                        class="icon icon-circle bg-success-dim ni ni-curve-down-left"
-                      ></em>
+                      <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                     </div>
                     <div class="nk-notification-content">
                       <div class="nk-notification-text">
@@ -298,9 +200,7 @@
                   </div>
                   <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
-                      <em
-                        class="icon icon-circle bg-warning-dim ni ni-curve-down-right"
-                      ></em>
+                      <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     <div class="nk-notification-content">
                       <div class="nk-notification-text">
@@ -311,9 +211,7 @@
                   </div>
                   <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
-                      <em
-                        class="icon icon-circle bg-success-dim ni ni-curve-down-left"
-                      ></em>
+                      <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                     </div>
                     <div class="nk-notification-content">
                       <div class="nk-notification-text">
@@ -347,48 +245,29 @@
       <div class="d-block">
         <ul class="nk-msg-tags">
           <li>
-            <span class="label-tag"
-              ><em class="icon ni ni-flag-fill"></em>
-              <span>Technical Problem</span></span
-            >
+            <span class="label-tag"><em class="icon ni ni-flag-fill"></em>
+              <span>Technical Problem</span></span>
           </li>
         </ul>
       </div>
-  
+
       <ul class="nk-msg-actions">
         <li>
-          <a href="#" class="btn btn-dim btn-sm btn-outline-light"
-            ><em class="icon ni ni-check"></em><span>Mark as Closed</span></a
-          >
+          <a href="#" class="btn btn-dim btn-sm btn-outline-light"><em class="icon ni ni-check"></em><span>Mark as Closed</span></a>
         </li>
 
         <li class="dropdown">
-          <a
-            href="#"
-            class="btn btn-icon btn-sm btn-white btn-light dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            ><em class="icon ni ni-more-h"></em
-          ></a>
+          <a href="#" class="btn btn-icon btn-sm btn-white btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
           <div class="dropdown-menu dropdown-menu-end" style="">
             <ul class="link-list-opt no-bdr">
               <li>
-                <a href="#"
-                  ><em class="icon ni ni-user-add"></em
-                  ><span>Assign To Member</span></a
-                >
+                <a href="#"><em class="icon ni ni-user-add"></em><span>Assign To Member</span></a>
               </li>
               <li>
-                <a href="#"
-                  ><em class="icon ni ni-archive"></em
-                  ><span>Move to Archive</span></a
-                >
+                <a href="#"><em class="icon ni ni-archive"></em><span>Move to Archive</span></a>
               </li>
               <li>
-                <a href="#"
-                  ><em class="icon ni ni-done"></em
-                  ><span>Mark as Close</span></a
-                >
+                <a href="#"><em class="icon ni ni-done"></em><span>Mark as Close</span></a>
               </li>
             </ul>
           </div>
@@ -401,26 +280,20 @@
   </div>
   <div class="nk-msg-reply nk-reply" data-simplebar="init">
     <div class="simplebar-wrapper" style="margin: 0px">
-   
+
       <div class="simplebar-mask">
         <div class="simplebar-offset">
-          <div
-            class="simplebar-content-wrapper"
-            tabindex="0"
-            role="region"
-            aria-label="scrollable content"
-            style="height: 100%;"
-          >
+          <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%;">
             <div class="simplebar-content" style="padding: 0px">
- 
+
               <div class="nk-reply-item">
                 <div class="nk-reply-header">
                   <div class="user-card">
                     <div class="user-avatar sm bg-blue">
                       <span>
-                      {{profile.full_name|generate_initials|default:profile.initials}}
-                    </span>
-                  </div>
+                        {{profile.full_name|generate_initials|default:profile.initials}}
+                      </span>
+                    </div>
                     <div class="user-name">{{profile.full_name}}</div>
                   </div>
                   <div class="date-time">14 Jan, 2020</div>
@@ -441,24 +314,14 @@
                   <div class="attach-files">
                     <ul class="attach-list">
                       <li class="attach-item">
-                        <a class="download" href="#"
-                          ><em class="icon ni ni-img"></em
-                          ><span>error-show-On-order.jpg</span></a
-                        >
+                        <a class="download" href="#"><em class="icon ni ni-img"></em><span>error-show-On-order.jpg</span></a>
                       </li>
                       <li class="attach-item">
-                        <a class="download" href="#"
-                          ><em class="icon ni ni-img"></em
-                          ><span>full-page-error.jpg</span></a
-                        >
+                        <a class="download" href="#"><em class="icon ni ni-img"></em><span>full-page-error.jpg</span></a>
                       </li>
                     </ul>
                     <div class="attach-foot">
-                      <span class="attach-info">2 files attached</span
-                      ><a class="attach-download link" href="#"
-                        ><em class="icon ni ni-download"></em
-                        ><span>Download All</span></a
-                      >
+                      <span class="attach-info">2 files attached</span><a class="attach-download link" href="#"><em class="icon ni ni-download"></em><span>Download All</span></a>
                     </div>
                   </div>
                 </div>
@@ -536,15 +399,12 @@
                   </div>
                 </div>
               </div>
-             {% include "account/dashboard/v1/components/assistance/admin.html" %}
+              {% include "account/dashboard/v1/components/assistance/admin.html" %}
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="simplebar-placeholder"
-        style="width: auto; height: 1376px"
-      ></div>
+      <div class="simplebar-placeholder" style="width: auto; height: 1376px"></div>
     </div>
 
   </div>
@@ -561,27 +421,27 @@
 
 
 
-let supportWebsocket = new WebSocket(`wss${window.location.host}/ws/streams/support/${supportRequestUser}`);
+  let supportWebsocket = new WebSocket(`wss://${window.location.host}/ws/streams/support/${supportRequestUser}`);
 
 
-let supportForm = document.getElementById("support-form-reply")
-let messageTextArea = document.getElementById("supportmessage");
+  let supportForm = document.getElementById("support-form-reply")
+  let messageTextArea = document.getElementById("supportmessage");
 
-supportForm.addEventListener("submit", (e)=>{
-  e.preventDefault();
-  let message = messageTextArea.value;
+  supportForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let message = messageTextArea.value;
 
-  supportWebsocket.send(
-    JSON.stringify({message, "sender": supportRequestUser, "receiver": "support@example.com"})
+    supportWebsocket.send(
+      JSON.stringify({ message, "sender": supportRequestUser, "receiver": "support@example.com" })
     );
     messageTextArea.value = ""
-})
+  })
 
-supportWebsocket.addEventListener("message",async (data)=>{
-  const response = await JSON.parse(data.data);
-  console.log(response)
+  supportWebsocket.addEventListener("message", async (data) => {
+    const response = await JSON.parse(data.data);
+    console.log(response)
 
-})
+  })
 </script>
 
 

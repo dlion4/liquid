@@ -1,141 +1,132 @@
 {% load static humanize%}
 
-<style>
-    .col-md-c {
-        width: 50%;
-        transition: transform 0.3s ease;
-    }
-</style>
-
-    {% for job in jobs %}
-    <div class="col-md-6 col-12 py-2 filter-item" data-category="{{job.location_type|lower}}">
-        <div class="card">
-            <div class="card-inner">
-                {% if job.is_new %}
-                <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
-                    <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
-                </div>
+{% for job in jobs %}
+<div class="col-md-6 col-12 py-2 filter-item" data-category="{{ job.location_type }}">
+    <div class="card">
+        <div class="card-inner">
+            {% if job.is_new %}
+            <div class="d-inline-flex position-absolute end-0 top-0 me-4 mt-4">
+                <div class="badge border-0 text-bg-light rounded-pill text-uppercase">New</div>
+            </div>
+            {% endif %}
+            <div class="d-flex items-center justify-content-between pb-2">
+                <div class="tag" style="background-color: black; color: white;">{{ job.location|upper }}</div>
+                {% if job.location_type == "Online" %}
+                {% if job.is_completed %}
+                <div class="tag" style="background-color: rgb(103, 235, 222); color: white;">Completed</div>
                 {% endif %}
-                <div class="d-flex items-center justify-content-between pb-2">
-                    <div class="tag" style="background-color: black; color: white;">{{ job.location|upper }}</div>
-                    {% if job.location_type == "Online" %}
-                    {% if job.is_completed %}
-                    <div class="tag" style="background-color: rgb(103, 235, 222); color: white;">Completed</div>
-                    {% endif %}
-                    {% if job.is_rejected %}
-                    <div class="tag" style="background-color: rgb(221, 69, 39); color: white;">Rejected</div>
-                    {% endif %}
-                    <div class="tag"></div>
-                    {% endif %}
-                </div>
-                <h5 class="title py-1">{{ job.title|safe|title }}</h5>
-                <p class="sub-text">{{ job.description|safe|truncatewords:"10" }}</p>
-                <div class="py-2">
-                    <span class="tag price-tag">Pay ${{ job.salary_offer|floatformat:2|intcomma }}</span>
-                    <span class="tag date-tag">{{ job.date_posted|date:"M Y" }}</span>
-                    <span class="tag academic-level-tag">{{ job.get_level_display|title }}</span>
-                </div>
-                <div class="relative d-flex mt-3">
-                    {% if job in request.user.profile_user.job_applications.all %}
-                    <button type="button" disabled="disabled" class="btn btn-primary rounded-pill w-full flex-grow-1">
-                        You've applied Already
-                    </button>
-                    {% else %}
-                    <button type="button" class="btn btn-primary rounded-pill w-full flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalZoom{{ job.pk }}">
-                        View and Apply
-                    </button>
-                    {% endif %}
-                </div>
+                {% if job.is_rejected %}
+                <div class="tag" style="background-color: rgb(221, 69, 39); color: white;">Rejected</div>
+                {% endif %}
+                <div class="tag"></div>
+                {% endif %}
+            </div>
+            <h5 class="title py-1">{{ job.title|safe|title }}</h5>
+            <p class="sub-text">{{ job.description|safe|truncatewords:"10" }}</p>
+            <div class="py-2">
+                <span class="tag price-tag">Pay ${{ job.salary_offer|floatformat:2|intcomma }}</span>
+                <span class="tag date-tag">{{ job.date_posted|date:"M Y" }}</span>
+                <span class="tag academic-level-tag">{{ job.get_level_display|title }}</span>
+            </div>
+            <div class="relative d-flex mt-3">
+                {% if job in request.user.profile_user.job_applications.all %}
+                <button type="button" disabled="disabled" class="btn btn-primary rounded-pill w-full flex-grow-1">
+                    You've applied Already
+                </button>
+                {% else %}
+                <button type="button" class="btn btn-primary rounded-pill w-full flex-grow-1" data-bs-toggle="modal" data-bs-target="#modalZoom{{ job.pk }}">
+                    View and Apply
+                </button>
+                {% endif %}
             </div>
         </div>
     </div>
-    <!-- Modal for Job Details -->
-    <div class="modal fade zoom" tabindex="-1" id="modalZoom{{ job.pk }}">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Job Title: {{ job.title }}</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    {{ job.content|safe }}
-                </div>
-                <div class="modal-footer bg-light">
-                    <span class="sub-text btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#modalJobApplicationZoom{{ job.pk }}">
-                        Chat Admin
-                    </span>
-                </div>
+</div>
+<div class="modal fade zoom" tabindex="-1" id="modalZoom{{ job.pk }}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Job Title: {{ job.title }}</h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body">
+                {{ job.content|safe }}
+            </div>
+            <div class="modal-footer bg-light">
+                <span class="sub-text btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#modalJobApplicationZoom{{ job.pk }}">
+                    Chat Admin
+                </span>
             </div>
         </div>
     </div>
-    <!-- Modal for Job Application -->
-    <div class="modal fade zoom" tabindex="-1" id="modalJobApplicationZoom{{ job.pk }}">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Job Application: {{ job.title }}</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <form class="applicationPostForm" method="post" action="{% url 'jobs:application_view' job.pk request.user.profile_user.pk %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="applicant_id" value="{{ request.user.profile_user.pk }}">
-                        <input type="hidden" name="job_id" value="{{ job.pk }}">
-                        <div class="form-group">
-                            <label class="form-label" for="{{ job_application_form.email_or_phone.id_for_label }}">
-                                {{ job_application_form.email_or_phone.label }}
-                            </label>
-                            <div class="form-control-wrap">
-                                {{ job_application_form.email_or_phone }}
-                            </div>
+</div>
+<div class="modal fade zoom" tabindex="-1" id="modalJobApplicationZoom{{ job.pk }}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Job Application: {{ job.title }}</h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body">
+                <form class="applicationPostForm" method="post" action="{% url 'jobs:application_view' job.pk request.user.profile_user.pk %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="applicant_id" value="{{ request.user.profile_user.pk }}">
+                    <input type="hidden" name="job_id" value="{{ job.pk }}">
+                    <div class="form-group">
+                        <label class="form-label" for="{{ job_application_form.email_or_phone.id_for_label }}">
+                            {{ job_application_form.email_or_phone.label }}
+                        </label>
+                        <div class="form-control-wrap">
+                            {{ job_application_form.email_or_phone }}
                         </div>
-                        {% if job.motivation_letter_required %}
-                        <div class="form-group">
-                            <label class="form-label" for="{{ job_application_form.motivational_letter.id_for_label }}">
-                                {{ job_application_form.motivational_letter.label }}
-                            </label>
-                            <div class="form-control-wrap">
-                                {{ job_application_form.motivational_letter }}
-                            </div>
+                    </div>
+                    {% if job.motivation_letter_required %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{ job_application_form.motivational_letter.id_for_label }}">
+                            {{ job_application_form.motivational_letter.label }}
+                        </label>
+                        <div class="form-control-wrap">
+                            {{ job_application_form.motivational_letter }}
                         </div>
-                        {% endif %}
-                        {% if job.bidding_offer_required %}
-                        <div class="form-group">
-                            <label class="form-label" for="{{ job_application_form.bidding_offer.id_for_label }}">
-                                {{ job_application_form.bidding_offer.label }}
-                            </label>
-                            <div class="form-control-wrap">
-                                {{ job_application_form.bidding_offer }}
-                            </div>
+                    </div>
+                    {% endif %}
+                    {% if job.bidding_offer_required %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{ job_application_form.bidding_offer.id_for_label }}">
+                            {{ job_application_form.bidding_offer.label }}
+                        </label>
+                        <div class="form-control-wrap">
+                            {{ job_application_form.bidding_offer }}
                         </div>
-                        {% endif %}
-                        {% if job.resume_required %}
-                        <div class="form-group">
-                            <label class="form-label" for="{{ job_application_form.resume.id_for_label }}">
-                                {{ job_application_form.resume.label }}
-                            </label>
-                            <div class="form-control-wrap">
-                                {{ job_application_form.resume }}
-                            </div>
+                    </div>
+                    {% endif %}
+                    {% if job.resume_required %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{ job_application_form.resume.id_for_label }}">
+                            {{ job_application_form.resume.label }}
+                        </label>
+                        <div class="form-control-wrap">
+                            {{ job_application_form.resume }}
                         </div>
-                        {% endif %}
-                        <div class="align-center justify-between mt-3">
-                            <ul class="btn-toolbar g-1">
-                                <li>
-                                    <button type="submit" id="job_application_submit_btn" class="btn btn-primary">
-                                        Submit Application
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
-                    <div class="py-2" id="message-{{ job.pk }}"></div>
-                </div>
+                    </div>
+                    {% endif %}
+                    <div class="align-center justify-between mt-3">
+                        <ul class="btn-toolbar g-1">
+                            <li>
+                                <button type="submit" id="job_application_submit_btn" class="btn btn-primary">
+                                    Submit Application
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+                <div class="py-2" id="message-{{ job.pk }}"></div>
             </div>
         </div>
     </div>
-    {% endfor %}
+</div>
+{% endfor %}

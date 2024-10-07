@@ -19,8 +19,11 @@ urlpatterns = [
         fetch_job_type,
         name="filter_jobs",
     ),
-    
-    path('upload-submission/<int:application_id>/', upload_submission, name='upload_submission'),
+    path(
+        "upload-submission/<int:application_id>/",
+        upload_submission,
+        name="upload_submission",
+    ),
     path(
         "shelves/board/",
         views.JobBoardView.as_view(),

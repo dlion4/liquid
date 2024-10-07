@@ -634,24 +634,20 @@ def fetch_job_type(request, location_type, page=0, per_page=4):
     page = int(page)
     per_page = int(per_page)
     offset = page * per_page
-    
-    if location_type == "*":
-        jobs = Job.objects.all()[offset:offset + per_page]
+    context = {}
+    if location_type in ("all", "*"):
+        jobs = Job.objects.all().distinct()[offset:offset + per_page]
     else:
-        jobs = Job.objects.filter(location_type__iexact=location_type)[offset:offset + per_page]
-
+        jobs = Job.objects.filter(
+            location_type__iexact=location_type).distinct()[offset:offset + per_page]
+    context["jobs"] = jobs
     job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
-
+    context |= {"job_application_form": job_application_form}
     return render(
         request,
         "account/dashboard/v1/investment/jobs/partials.html",
-        {
-            "jobs": jobs,
-            "job_application_form": job_application_form
-        }
+        context,
     )
-
-    
 
 
 

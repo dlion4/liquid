@@ -67,7 +67,7 @@
 
     const message = messageBox.value;
 
-    ws.send(JSON.stringify({message, roomSlug, sender: "{{request.user.profile_user}}"}));
+    ws.send(JSON.stringify({ message, roomSlug, sender: "{{request.user.profile_user}}" }));
     messageBox.value = ""
 
   });
@@ -141,13 +141,13 @@
           `;
       scrollToBottom();
 
-    } else {}
+    } else { }
 
   })
   const messageBodyContent = document.getElementById("messageBodyContent");
 
   function scrollToBottom() {
-    messageBodyContent.scroll({top: messageBodyContent.scrollHeight, behavior: 'smooth'});
+    messageBodyContent.scroll({ top: messageBodyContent.scrollHeight, behavior: 'smooth' });
   }
 
   scrollToBottom()

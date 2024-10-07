@@ -15,24 +15,23 @@ from amiribd.users.views import send_welcome_email
 @require_POST
 @transaction.atomic
 def job_application_view(request, job_id, applicant_id):
-    if request.method == 'POST':
-        try:
-            # Example: Saving form data to database
-            with transaction.atomic():
-                form = JobApplicationForm(request.POST, request.FILES, job_id=job_id, applicant_id=applicant_id)
-                if form.is_valid():
-                    form.save(commit=True)
-                    print(form.cleaned_data)
-                    return JsonResponse({"message":"Application sent successfully", "success": True})
-                
-                return JsonResponse({"message":json.dumps(form.errors), "success": False})
-                
-        except Exception as e:
-            return JsonResponse({"message": str(e), "success": False})
-        
-    raise PermissionDenied()
+    try:
+        # Example: Saving form data to database
+        with transaction.atomic():
+            url = request.POST.pop("path")
+            form = JobApplicationForm(
+                request.POST, request.FILES, job_id=job_id, applicant_id=applicant_id)
+            if form.is_valid():
+                form.save(commit=True)
+                return JsonResponse(
+                    {"message":"Application sent successfully", 
+                     "success": True,
+                     "url": url,
+                     })
+            return JsonResponse({"message":json.dumps(form.errors), "success": False})
+    except Exception as e:
+        return JsonResponse({"message": str(e), "success": False})
 
-    
 
 def send_application_nofication_email_to_applicant(channel, user, template_name, context:dict={}):
     if "@" in channel:
