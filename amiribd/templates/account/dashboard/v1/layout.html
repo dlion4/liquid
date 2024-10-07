@@ -16,7 +16,9 @@
   {% endblock meta %}
   <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
   {% compress css %}
+  {% block mainCss %}
   <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite1.min.css' %}?ver=3.2.3" />
+  {% endblock mainCss %}
   <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3" />
   <link rel="stylesheet" href="{% static 'v1/assets/css/fontawesome.css' %}" />
   <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}" />

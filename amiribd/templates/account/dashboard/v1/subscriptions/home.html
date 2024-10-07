@@ -1,9 +1,9 @@
-{% extends "account/dashboard/v1/base.html" %}
+{% extends "account/dashboard/v1/subscriptions/base.html" %}
 
 {% load static %}
 
 {% block heading %}
-  {% include "account/dashboard/v1/components/subscriptions/head.html" %}
+{% include "account/dashboard/v1/components/subscriptions/head.html" %}
 {% endblock heading %}
 
 {% block main %}
@@ -20,4 +20,3 @@
 {% comment %} {% include "account/dashboard/v1/components/scripts.html" %} {% endcomment %}
 
 {% endblock main %}
-
