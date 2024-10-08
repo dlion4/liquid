@@ -17,7 +17,7 @@ from .base import os
 
 # Debug mode on
 # ------------------------------------------------------------------------------
-DEBUG = True
+DEBUG = False
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -170,7 +170,7 @@ INSTALLED_APPS += ["anymail"]
 # if DEBUG:
 #     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # else:
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 ANYMAIL = {}
 

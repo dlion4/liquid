@@ -3,9 +3,9 @@ from django.db import models
 
 class PoolTypeObjects(models.TextChoices):
     INDIVIDUAL = "INDIVIDUAL", "Individual"
-    FAMILY = "FAMILY", "Family"
+    MERCHANT = "MERCHANT", "Merchant"
     JOINT = "JOINT", "Joint"
-    INSTITUTON = "INSTITUTON", "Instituton"
+    FREELANCE = "FREELANCE", "Freelance"
 
 
 class AccountTypeObjects(models.TextChoices):

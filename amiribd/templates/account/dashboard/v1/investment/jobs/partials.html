@@ -1,7 +1,7 @@
 {% load static humanize%}
 
 {% for job in jobs %}
-<div class="col-md-6 col-12 py-2 filter-item" data-category="{{ job.location_type }}">
+<div class="col-12 py-2 filter-item" data-category="{{ job.location_type }}">
     <div class="card">
         <div class="card-inner">
             {% if job.is_new %}
