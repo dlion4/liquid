@@ -6,8 +6,8 @@ def liquid_site_data(request):
         "site_name": "AmiriBD",
         "contact_form": ContactForm(),
         "address": "Satrio Tower 16th Floor, Jl. Prof Dr Satrio Kuningan, Jakarta",
-        "officephone": "(888)234-5686",
-        "officeemail": "contact@liquid.co.ke",
+        "officephone": "contact Us",
+        "officeemail": "support@earnkraft.com",
         "company_privacy_document":CompanyTermsAndPolicy.objects.first(),
         "external_links": {
             "blogging_site":{

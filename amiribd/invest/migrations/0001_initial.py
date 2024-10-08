@@ -239,7 +239,7 @@ class Migration(migrations.Migration):
                             ("INSTITUTON", "Instituton"),
                         ],
                         default="INDIVIDUAL",
-                        max_length=10,
+                        max_length=12,
                         unique=True,
                     ),
                 ),

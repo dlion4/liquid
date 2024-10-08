@@ -204,7 +204,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         plan = Plan.objects.get(account=account, account__pool__profile=profile, pk=kwargs.get("plan_id"))
         
         total_investment = data.get("amount", sum(instance.type.price for instance in [pool, account, plan]))
-        discountPrice = data.get("discount_price", Decimal(Decimal("0.2") * Decimal(total_investment)))  # noqa: N806
+        discountPrice = data.get("discount_price", Decimal(Decimal("0.0") * Decimal(total_investment)))  # noqa: N806
         # discountPrice = Decimal(total_investment)  # noqa: ERA001
         
 
@@ -307,7 +307,7 @@ def fetch_amount_tobe_paid_plus_discount(request):
         account=account, account__pool__profile=profile, pk=request.GET.get("plan_pk"),
     )
     total_investment = sum(instance.type.price for instance in [pool, account, plan])
-    discountPrice = Decimal(Decimal("0.2") * Decimal(total_investment))  # noqa: N806
+    discountPrice = Decimal(Decimal("0.0") * Decimal(total_investment))  # noqa: N806
     amount_to_be_paid = total_investment - discountPrice
     return JsonResponse({"amount": amount_to_be_paid})
 

@@ -170,7 +170,7 @@ INSTALLED_APPS += ["anymail"]
 # if DEBUG:
 #     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # else:
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 ANYMAIL = {}
 
