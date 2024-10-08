@@ -66,7 +66,7 @@ class InvestmentSetupView(DashboardGuard, TemplateView):
         if (
             not Pool.objects.filter(profile=self._get_user().profile_user).exists()
             and request.resolver_match.view_name != "dashboard:invest:invest"
-            and not request.profile_user.is_subscribed
+            and not request.user.profile_user.is_subscribed
         ):
             return redirect(reverse("dashboard:invest:invest"))
         return super().dispatch(request, *args, **kwargs)
