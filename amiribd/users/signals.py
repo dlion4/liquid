@@ -10,9 +10,11 @@ import threading
 @receiver(post_save, sender=User)
 def create_validated_email_on_signup(sender, instance, created, **kwargs):
     if created:
+        print("created instance: ", instance)
         threading.Thread(target=create_validated_email_address, args=(instance.email)).start()
+    print("present not created: sender: ", sender, "not created same instance: ", instance)
 
-def create_validated_email_address(user: User, email_address:str)->None:
+def create_validated_email_address(email_address:str)->None:
     """
     Validates an email address.
     """

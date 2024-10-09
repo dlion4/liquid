@@ -133,7 +133,68 @@ THIRD_PARTY_APPS = [
     # for monitoring application healths
     "silk",
     "django_extensions",
+    
+    'allauth',
+    'allauth.account',
+
+    # Optional -- requires install using `django-allauth[socialaccount]`.
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
 ]
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': env.str("GOOGLE_OAUTH_CLIENT_ID"),
+            'secret': env.str("GOOGLE_OAUTH_CLIENT_SECRET"),
+        },
+        'SCOPE': ['email', 'profile'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'INIT_PARAMS': {'login_hint': 'email'},
+        'FIELDS': [
+            'id', 'email', 'name', 'first_name', 'last_name',
+            'username', 'picture', 'account_type'],
+        'EXCHANGE_TOKEN': True,
+        "METHOD": "oauth2",
+        'LOCALE_FUNC': 'django_localflavor_br.i18n.locale_name_to_python',
+        "VERIFIED_EMAIL": True,
+        'EMAIL_AUTHENTICATION': True,
+    },
+    'github': {
+        'APP': {
+            'client_id': env.str("GITHUB_OAUTH_CLIENT_ID"),
+            'secret': env.str("GITHUB_OAUTH_CLIENT_SECRET"),
+        },
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+    }
+}
+
+
+
+# django-allauth
+# ------------------------------------------------------------------------------
+# https://docs.allauth.org/en/latest/socialaccount/configuration.html
+SOCIALACCOUNT_ADAPTER = "amiribd.users.adapters.SocialAccountAdapter"
+# Disable automatic redirect to signup when user exists
+ACCOUNT_ALLOW_REGISTRATION=env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+SOCIALACCOUNT_AUTO_SIGNUP=True
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT=True
+SOCIALACCOUNT_EMAIL_VERIFICATION = False
+SOCIALACCOUNT_ONLY =True
+ACCOUNT_EMAIL_VERIFICATION = "none"  # or "none"
+
 LOCAL_APPS = [
     "amiribd.users",
     # Your stuff: custom apps go here
@@ -195,6 +256,8 @@ MIGRATION_MODULES = {"sites": "amiribd.contrib.sites.migrations"}
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     "users.backends.TokenAuthenticationBackend",
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
@@ -235,6 +298,10 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
+    
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     # cahcing
@@ -315,6 +382,10 @@ TEMPLATES = [
                 # secret template processor from. the secrets
                 "amiribd.tokens.context_processors.load_secrets",
                 "amiribd.transactions.context_processors.deposit_form_action",
+                "amiribd.users.context_processors.allauth_settings",
+                
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -350,6 +421,7 @@ EMAIL_BACKEND = env(
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
+
 
 # ADMIN
 # ------------------------------------------------------------------------------

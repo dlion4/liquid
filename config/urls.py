@@ -32,6 +32,7 @@ urlpatterns = [
     # path(settings.STUFF_ADMIN_URL, include(earnkraft_site.urls)),
     path(settings.STUFF_ADMIN_URL, earnkraft_site.urls, name='stuff_admin'),
     # User management
+    path('accounts/', include('allauth.urls')),
     path("users/", include("amiribd.users.urls", namespace="users")),
     # Your stuff: custom urls includes go here
     # ...

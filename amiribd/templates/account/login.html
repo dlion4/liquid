@@ -1,9 +1,13 @@
-{% extends "allauth/layouts/base.html" %}
+ {% extends "account/layout.html" %}
+{% load socialaccount %}
 
 {% load static %}
 {% load i18n %}
 
 {% block inner %}
+
+<a href="{% provider_login_url 'google' %}">Login with google</a>
+<a href="{% provider_login_url 'github' %}">Login with github</a>
 
 <form action="{% url 'users:login' %}" method="post">
   {% csrf_token %}
