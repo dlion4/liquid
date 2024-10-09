@@ -223,3 +223,16 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.profile.user.username} Verification Document"
+# The `ValidatedEmailAddress` class represents a model in Django with fields for email address and
+# creation timestamp.
+
+class ValidatedEmailAddress(models.Model):
+    email_address = models.EmailField(unique=True, max_length=300)
+    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name = "Validated Email Address"
+        verbose_name_plural = "Validated Email Address"
+        app_label = "email_validation"
+
+    def __str__(self):
+        return self.email_address

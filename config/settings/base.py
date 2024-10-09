@@ -59,8 +59,23 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db("DATABASE_URL")}
+DATABASES = {
+    "default": env.db("DATABASE_URL"),
+    'email_validation': { 
+        'ENGINE': "django.db.backends.sqlite3",
+        'NAME': BASE_DIR /  "db" / "email_validation_db.sqlite3",
+    },
+}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["email_validation"]["ATOMIC_REQUESTS"] = True
+# ROUTERS
+# The above code in Python is setting the `DATABASE_ROUTERS` variable to a list containing the string
+# `'config.settings.db_routers.EmailValidationRouter'`. This is typically used in Django settings to
+# specify a list of router classes to use for database routing. In this case, it seems to be
+# specifying a custom database router called `EmailValidationRouter` located in the `db_routers`
+# module within the `config.settings` package.
+DATABASE_ROUTERS = ['config.settings.db_routers.EmailValidationRouter']
+
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # URLS

@@ -34,7 +34,7 @@ from django.contrib.auth.models import User as UserObject
 from amiribd.tokens.models import AuthToken
 import random
 from django.contrib import messages
-from .models import Profile as ProfileObject
+from .models import Profile as ProfileObject, ValidatedEmailAddress
 import string
 from .utils import BuildMagicLink, expiring_token_generator, PostCleanFormPostViewMixin, generate_referral_code
 
@@ -104,9 +104,13 @@ class LoginView(
 
 class SignupView(
     AuthenticationGuard,BuildMagicLink, FormView):
+    """
+    """
     form_class = EmailSignupForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("home")
+
+
     def post(self, request:HttpRequest, *args, **kwargs)->HttpResponse|JsonResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -369,3 +373,10 @@ class LinkAuthenticationView(View):
         return redirect("users:login")
 
 
+class ValidatedEmailAddressView(View):
+    def get(self, request, *args, **kwargs):
+        email = request.GET.get("email")
+        validated = ValidatedEmailAddress.objects.using("email_validation").filter(email_address=email)
+        if validated.exists():
+            return JsonResponse({"message": "Your account exist. 🔥", "is_valid": True}, status=200)
+        return JsonResponse({"message": "Can't find such an account!", "is_valid": False})

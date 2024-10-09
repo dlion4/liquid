@@ -24,14 +24,11 @@
   <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
 
   <link rel="stylesheet" href="{% static 'css/fontawesome.all.min.css' %}">
-  <style>
-    .errorlist {
-      color: red !important;
-    }
-  </style>
+  <style>.errorlist {color: red !important}</style>
   {% endcompress css %}
 
   {% block css %}{% endblock css %}
+    <script src="{% static 'js/project.js' %}"></script>
 
 </head>
 

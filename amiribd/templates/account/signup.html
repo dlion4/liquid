@@ -3,21 +3,9 @@
 {% load i18n %}
 {% block inner %}
 
-  <form action="{% url 'users:signup' %}" method="post">
+  <form action="{% url 'users:signup' %}" method="post"  class="signupform">
     {% csrf_token %}
-    <div class="form-group">
-      <label class="form-label" for="name">Username</label>
-      <div class="form-control-wrap">
-        {{form.username}}
-        {% if form.username.errors %}
-          <ul class="errorlist">
-            {% for error in form.username.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-    </div>
+
     <div class="form-group">
       <label class="form-label" for="email">Email Address</label>
       <div class="form-control-wrap">
@@ -50,12 +38,105 @@
       </div>
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-lg btn-primary btn-block" id="submitBtn">Register</button>
+      <div class="form-text text-muted" id="email-lookup-result">
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-lg btn-primary btn-block" 
+      id="submitBtn">Register</button>
     </div>
   </form>
 
   <script>
-    document
+
+    $(document).ready(function(){
+      // call the verify email first before the signup url
+      const apiUrl = "http://127.0.0.1:8000/api/v1/services/mails/validate-email?emailAddress&smtpCheck&username";
+      // Function to handle email validation response
+     function handleEmailValidation(response) {
+        const data = JSON.parse(response)
+        // Check if smtpCheck is false
+        const {username, emailAddress , smtpCheck } = data
+        if (smtpCheck==='false') {
+          $("#email-lookup-result").text("Email is not deliverable.");
+          $("#submitBtn").text("Invalid Email address!.");
+          $("#submitBtn").prop("disabled", false);  // Disable the submit button on invalid email
+          return false;  // Stop further execution if the email is not valid
+        }
+        // If smtpCheck is true, proceed with signup
+        $("#submitBtn").text("Valid Email creating account ...");
+        $("#email-lookup-result").text("");
+        submitSignupForm(emailAddress, username);
+      }
+
+
+      // Function to submit signup form
+      function submitSignupForm(email, username) {
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("email", email);
+        $("#submitBtn").prop("disabled",true)
+      
+         $("#submitBtn").text("Valid creating account...");
+
+        $.ajax({
+          type: "POST",
+          url: $(".signupform").attr("action"),
+          headers: {
+            "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+          },
+          data: formData,
+          processData: false, // Prevent jQuery from automatically processing the data
+          contentType: false, // Prevent jQuery from overriding the content type
+          success: function (response) {
+            console.log("Form submitted successfully.");
+            // check the validity of emai and then redirect to the login page if required
+          },
+          error: function (xhr, status, error) {
+            console.error("Error: " + error);
+            console.error("Response: " + xhr.responseText);
+          }
+        });
+      }
+
+      // Function to validate email
+      function validateEmail(email, apiKey) {
+        $("#submitBtn").text("Validating email...");
+        $("#submitBtn").prop("disabled", true);
+        $.ajax({
+          type: "POST",
+          url: apiUrl,
+          headers: {
+            "X-Mail-API-KEY": apiKey,
+            "Content-Type": "application/json"
+          },
+          data: JSON.stringify({  email }),
+          success:handleEmailValidation,
+          error: function (xhr, status, error) {
+            console.error("Error: " + error);
+            console.error("Response: " + xhr.responseText);
+          }
+        });
+      }
+
+
+     // Form submission handler
+      $(".signupform").submit(function (event) {
+        event.preventDefault(); // Prevent traditional form submission
+        
+        const email = $("#id_email").val();
+        const apiKey = $("input[data-zero-bounce-token=ZERO_BOUNCE_TOKEN]").val();
+        
+        if (!email || !apiKey) {
+          console.error("Email or API Key is missing.");
+          return;
+        }
+        validateEmail(email, apiKey); // Validate the email before proceeding
+        
+      });
+   })
+   
+   document
       .body
       .addEventListener("htmx:afterSwap", function (event) {
         console.log(event.detail.target)

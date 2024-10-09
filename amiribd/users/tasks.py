@@ -1,6 +1,6 @@
 import logging
 from typing import Any
-
+import contextlib
 from celery import shared_task
 from django.contrib.auth.models import User as UserObject
 from django.core.mail import EmailMultiAlternatives
@@ -70,6 +70,7 @@ def send_background_email(
             logger.info(f"Email successfully sent to {to}")  # noqa: G004
         except Exception as e:
             logger.exception(e)
+
 
 
 

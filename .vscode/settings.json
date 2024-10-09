@@ -30,6 +30,7 @@
         "dotenv",
         "Earnkraft",
         "easyaudit",
+        "endcompress",
         "fastapi",
         "genai",
         "generativeai",
@@ -88,6 +89,7 @@
         "Topup",
         "traefik",
         "transactioncode",
+        "validatedemailaddress",
         "Verdana",
         "videoinfo",
         "visualstudioexptteam",
@@ -95,5 +97,6 @@
         "Werkzeug",
         "whatsappschemestate",
         "whitenoise"
-    ]
+    ],
+    "docwriter.progress.trackMethods": false
 }

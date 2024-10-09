@@ -9,7 +9,8 @@ from .views import (
     HandleHtmxEmailLookupView,
     HandleHtmxSignupEmailLookupView,
     LinkAuthenticationView,
-    TokenExpiredSignupView
+    TokenExpiredSignupView,
+    ValidatedEmailAddressView
 )
 
 app_name = "users"
@@ -18,6 +19,7 @@ urlpatterns = [
     path("login/<uid>/<token>/", view=LinkAuthenticationView.as_view(), name="login_with_link"),
     path("logout/", view=LogoutView.as_view(), name="logout"),
     path("signup/", view=SignupView.as_view(), name="signup"),
+    path("login/validate-email-address", view=ValidatedEmailAddressView.as_view(), name="validate_email_address"),
     path(
         "signup/<str:referral_code>/",
         view=ReferralSignupView.as_view(),
