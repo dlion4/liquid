@@ -205,7 +205,7 @@ class BuildMagicLink:
     def validate_email_address(self, email_address, *args, **kwargs) -> bool:
         """Validates an email address."""
         api_key = settings.ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN
-        headers = {"X-Mail-API-KEY": "Hello there guys this is a header test from the zerobounce api point"}
+        headers = {"X-Mail-API-KEY": "Hello there guys this is a header test from the zerobunce api endpoitn"}
         endpoint = "https://zerobounce.pythonanywhere.com/api/v1/services/mails/validate"
         # try:
         #     response = requests.post(endpoint, data={"email": email_address}, headers=headers)

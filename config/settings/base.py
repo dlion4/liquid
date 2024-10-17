@@ -26,7 +26,7 @@ if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
-resend.api_key = env.str("RESEND_EMAIL_SERVICE_API_KEY")
+# resend.api_key = env.str("RESEND_EMAIL_SERVICE_API_KEY")
 
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])

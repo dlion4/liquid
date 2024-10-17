@@ -131,13 +131,12 @@ STORAGES = {
 }
 
 
-
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env(
     "DJANGO_DEFAULT_FROM_EMAIL",
-    default="Earnkraft <noreply@example.com>",
+    default="Earnkraft <postmaster@earnkraft.com>",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
@@ -146,15 +145,11 @@ EMAIL_SUBJECT_PREFIX = env(
     "DJANGO_EMAIL_SUBJECT_PREFIX",
     default="Earnkraft Agencies",
 )
-# EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST = env.str("DJANGO_EMAIL_HOST", default="smtp.mailgun.org")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER", default="")
-# EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD", default="")
-
-EMAIL_HOST = env("DJANGO_EMAIL_HOST")
-EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD",)
+EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD")
 
 
 # ADMIN
@@ -257,7 +252,6 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 
 
-
 # Sentry
 # ------------------------------------------------------------------------------
 SENTRY_DSN = env("SENTRY_DSN")
@@ -305,12 +299,12 @@ INTASEND_TEST_MODE = env.bool("INTASEND_TEST_MODE", default=False)
 # }
 
 
-# DEEP GRAM SETTINGS 
+# DEEP GRAM SETTINGS
 
-#---------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 
-#REDIS SETTINGS
-#---------------------------------------------------------------------------------------
+# REDIS SETTINGS
+# ---------------------------------------------------------------------------------------
 
 REDIS_HOST = env.str("DJANGO_REDIS_HOST", "")
 REDIS_PORT = env.str("DJANGO_REDIS_PORT", "")
@@ -318,4 +312,3 @@ REDIS_DB=env.str("DJANGO_REDIS_DB", 0)
 REDIS_DECODE_RESPONSE=env.bool("DJANGO_REDIS_DECODE_RESPONSES", True)
 REDIS_SSL=env.bool("DJANGO_REDIS_SSL", False)
 REDIS_SSL_CERT_REQUIRED=env.get_value("DJANGO_REDIS_SSL_CERT", None)
-
