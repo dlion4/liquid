@@ -57,7 +57,7 @@ def send_background_email(
         logger.info(f'Sending email from {from_email} to {to} with subject "{subject}"')  # noqa: E501, G004
         response = send_email_with_attachment(
             "",
-            "Earnkraft <postmaster@earnkraft.com>",
+            "Earnkraft <no-reply@earnkraft.com>",
             to,
             subject,
             html_message,
