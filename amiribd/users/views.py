@@ -55,7 +55,7 @@ from .utils import BuildMagicLink
 from .utils import PostCleanFormPostViewMixin
 from .utils import expiring_token_generator
 from .utils import generate_referral_code
-
+from .tasks import send_background_email
 
 @after_response.enable
 def send_welcome_email(
@@ -64,22 +64,11 @@ def send_welcome_email(
     context: dict[str, Any] | None = None,
 ):
     if context is None:
-        context = {
-            "team":"Earnkraft",
-        }
+        context = {"team":"Earnkraft"}
     html_message = render_to_string(template_name, context)
     plain_message = strip_tags(html_message)
-
-    message = EmailMultiAlternatives(
-        subject=context.get("subject", "[Liquid Investment] Successful onboarding"),
-        body=plain_message,
-        from_email=None,
-        to=[context.get("email", user.email)],
-    )
-
-    message.attach_alternative(html_message, "text/html")
-
-    message.send()
+    context["subject"] = context.get("subject", "[Liquid Investment] Successful onboarding")
+    send_background_email(user, template_name, context, [context.get("email", user.email)])
 
 
 class LoginView(AuthenticationGuard,BuildMagicLink,TemplateView):

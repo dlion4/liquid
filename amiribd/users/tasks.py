@@ -54,39 +54,21 @@ def send_background_email(
                 "team": "Earnkraft",
             })
 
-        # try:
-        html_message = render_to_string(template_name, context)
-        #     plain_message = strip_tags(html_message)
-        subject = context.get("subject", "[Earnkraft Investment] Successful onboarding")
-        #     from_email = context.get("from_email", sender.email if sender else None)
-        to = recipients or [context.get("email")]
+        try:
+            html_message = render_to_string(template_name, context)
+            subject = context.get("subject", "[Earnkraft Investment] Successful onboarding")
+            to = recipients or [context.get("email")]
 
-        #     logger.info(f'Sending email from {from_email} to {to} with subject "{subject}"')  # noqa: E501, G004
-
-        #     message = EmailMultiAlternatives(
-        #         subject=subject,
-        #         body=plain_message,
-        #         from_email=from_email,
-        #         to=to,
-        #     )
-
-        #     message.attach_alternative(html_message, "text/html")
-        #     message.send()
-            # Now, using resend API
-        params: resend.Emails.SendParams = {
-            "from": "Earnkraft <email@earnkraft.com>",
-            "to": to,
-            "subject": subject,
-            "html": html_message,
-        }
-
-        email = resend.Emails.send(params)
-        print(email)
-        logger.info(f"Email successfully sent via Resend API to {to}")
-
-        #     logger.info(f"Email successfully sent to {to}")  # noqa: G004
-        # except Exception as e:
-        #     logger.exception(e)
+            params: resend.Emails.SendParams = {
+                "from": sender if sender else "Earnkraft <email@earnkraft.com>",
+                "to": to,
+                "subject": subject,
+                "html": html_message,
+            }
+            email = resend.Emails.send(params)
+            logger.info(f"Email successfully sent via Resend API to {to}")
+        except Exception as e:
+            logger.exception(str(e))
 
 
 
