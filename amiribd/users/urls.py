@@ -1,17 +1,14 @@
-from django.urls import path, include
+from django.urls import include
+from django.urls import path
 
-from .views import (
-    LoginView,
-    SignupView,
-    SuccessAuthenticationView,
-    LogoutView,
-    ReferralSignupView,
-    HandleHtmxEmailLookupView,
-    HandleHtmxSignupEmailLookupView,
-    LinkAuthenticationView,
-    TokenExpiredSignupView,
-    ValidatedEmailAddressView
-)
+from .views import LinkAuthenticationView
+from .views import LoginView
+from .views import LogoutView
+from .views import ReferralSignupView
+from .views import SignupView
+from .views import SuccessAuthenticationView
+from .views import TokenExpiredSignupView
+from .views import ValidatedEmailAddressView
 
 app_name = "users"
 urlpatterns = [
@@ -30,15 +27,5 @@ urlpatterns = [
         view=TokenExpiredSignupView.as_view(),
         name="expired_token"),
     path("success/", view=SuccessAuthenticationView.as_view(), name="success"),
-    path(
-        "htmx-email-lookup/",
-        view=HandleHtmxEmailLookupView.as_view(),
-        name="email-lookup",
-    ),
-    path(
-        "htmx-signup-email-lookup/",
-        view=HandleHtmxSignupEmailLookupView.as_view(),
-        name="signup-email-lookup",
-    ),
     path("profile/", include("amiribd.profiles.urls", namespace="profile")),
 ]

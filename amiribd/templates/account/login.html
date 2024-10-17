@@ -1,15 +1,12 @@
- {% extends "account/layout.html" %}
-{% load socialaccount %}
+{% extends "allauth/layouts/base.html" %}
 
 {% load static %}
 {% load i18n %}
 
 {% block inner %}
 
-<a href="{% provider_login_url 'google' %}">Login with google</a>
-<a href="{% provider_login_url 'github' %}">Login with github</a>
 
-<form action="{% url 'users:login' %}" method="post">
+<form action="{% url 'users:login' %}" method="post" style="margin: auto; min-width: 300px">
   {% csrf_token %}
   <div class="form-group">
     <div class="form-label-group">
@@ -22,11 +19,11 @@
       </div>
     </div>
   </div>
+
   <div class="form-group">
-    <button class="btn btn-lg btn-primary btn-block" id="submitBtn">Sign in</button>
+    <button type="submit" class="btn btn-lg btn-primary btn-block" id="submitBtn">Sign in</button>
   </div>
 </form>
-
 
 
 <script>
@@ -39,7 +36,7 @@
       $.ajax({
         url: "{% url 'users:validate_email_address' %}",
         method: "GET",
-        data: { email: email }, // Send email as a query parameter
+        data: { email: email },
         success: function(response){
           const emailResponseBox = $('#email-lookup-result');
           if(!response.is_valid){
@@ -49,11 +46,13 @@
             $('#submitBtn').attr("disabled", "disabled")
           }
           else{
-             $(emailResponseBox).fadeIn(3000, function () {
-              $(this).text(response.message).removeClass("text-danger").addClass("text-success")
-            });
-            $('#submitBtn').removeAttr("disabled")
-          }
+            $(emailResponseBox).fadeIn(3000, function () {
+             $(this).text(response.message).removeClass("text-danger").addClass("text-success")
+           });
+           $('#submitBtn').removeAttr("disabled")
+         }
+         
+      
         },
         error: function(error){
           console.log(error);

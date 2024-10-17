@@ -2,10 +2,12 @@ import json
 import secrets
 import string
 import threading
+import requests
 import time
+import logging
 from typing import Any
 from urllib.parse import parse_qs
-
+from django.conf import settings
 from django.contrib.auth.models import User as UserObject
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import models
@@ -19,6 +21,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.timezone import timedelta
 
 from .tasks import send_background_email
+
+logger = logging.Logger(__file__)
 
 
 class ConcatField(models.Func):
@@ -198,6 +202,31 @@ class BuildMagicLink:
         ))
         thread.start()
         # Wait for the thread to complete
+    def validate_email_address(self, email_address, *args, **kwargs) -> bool:
+        """Validates an email address."""
+        api_key = settings.ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN
+        headers = {"X-Mail-API-KEY": "Hello there guys this is a header test from the zerobounce api point"}
+        endpoint = "https://zerobounce.pythonanywhere.com/api/v1/services/mails/validate"
+        # try:
+        #     response = requests.post(endpoint, data={"email": email_address}, headers=headers)
+        #     response.raise_for_status()  # Raises an error for 4xx/5xx responses
+        #     print(response.json())  # Log the response for debugging
+        #     return response.status_code == 200
+        # except requests.exceptions.HTTPError as http_err:
+        #     logger.error(f"HTTP error occurred: {http_err} - Response content: {response.content if response else 'No response'}")
+        #     if response and response.status_code == 403:
+        #         try:
+        #             error_response = response.json()  # Try to decode JSON response
+        #             logger.error(f"Error detail: {error_response}")
+        #         except ValueError:
+        #             logger.error("Error response is not JSON")
+        #     print(response.json())
+        #     return False
+        # except Exception as e:
+        #     logger.error(f"Other error occurred: {e}")
+        #     return False
+        return True
+
 
 
     def validate_referral_code(self, code:str)->bool:

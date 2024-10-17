@@ -1,48 +1,67 @@
 import contextlib
-from typing import Any, Optional
-from django.contrib.auth import authenticate
-from django import http
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse, reverse_lazy
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
-from .forms import EmailLoginForm, EmailSignupForm, AuthTokenCodeForm
-from django.shortcuts import render, redirect
-from amiribd.users.models import User, Profile
-from django.views.generic import FormView, View
-from django.contrib.auth import get_user_model
-import sesame.utils
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth import get_user_model, login
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
-from django.contrib.auth import login, logout
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from .guard import AuthenticationGuard
-import after_response
-from django.conf import settings
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
-from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
-from django.utils.html import strip_tags
-from django.contrib.auth.models import User as UserObject
-from amiribd.tokens.models import AuthToken
 import random
-from django.contrib import messages
-from .models import Profile as ProfileObject, ValidatedEmailAddress
 import string
-from .utils import BuildMagicLink, expiring_token_generator, PostCleanFormPostViewMixin, generate_referral_code
+from typing import Any
+from typing import Optional
+
+import after_response
+import sesame.utils
+from django import http
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User as UserObject
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import send_mail
+from django.http import HttpRequest
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+from django.utils.html import strip_tags
+from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
+from django.utils.translation import gettext_lazy as _
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import FormView
+from django.views.generic import TemplateView
+from django.views.generic import View
+
+from amiribd.tokens.models import AuthToken
+from amiribd.users.models import Profile
+from amiribd.users.models import User
+
+from .forms import AuthTokenCodeForm
+from .forms import EmailLoginForm
+from .forms import EmailSignupForm
+from .guard import AuthenticationGuard
+from .models import Profile as ProfileObject
+from .models import ValidatedEmailAddress
+from .utils import BuildMagicLink
+from .utils import PostCleanFormPostViewMixin
+from .utils import expiring_token_generator
+from .utils import generate_referral_code
+
 
 @after_response.enable
 def send_welcome_email(
     user: UserObject | None = None,
     template_name: str = "",
-    context: dict[str, Any] = None,
+    context: dict[str, Any] | None = None,
 ):
     if context is None:
         context = {
@@ -63,10 +82,7 @@ def send_welcome_email(
     message.send()
 
 
-class LoginView(
-    AuthenticationGuard,
-    BuildMagicLink,
-    TemplateView):
+class LoginView(AuthenticationGuard,BuildMagicLink,TemplateView):
     form_class = EmailLoginForm
     template_name = "account/login.html"
     success_url = reverse_lazy("users:success")
@@ -83,62 +99,55 @@ class LoginView(
             queryset = User.objects.filter(email=email)
             if queryset.exists():
                 user = queryset.first()
-                self._one_time_token_authentication_link(user)
-                return render(request, self.template_name, {"form": form, "message": "Login link has been sent to your inbox"})
+                self.send_login_email(user, "account/dashboard/v1/mails/login.html")
+                return render(
+                    request, self.template_name,
+                    {"form": form, "message": "Login link has been sent to your inbox"})
             return redirect("users:signup")
-        return render(request, self.template_name, {"form": form, })
-
-    def _one_time_token_authentication_link(self, user):
-        # Generate a one-time use token for the user
-        # Create a unique link for the user to log in
-        self.__send_login_email(user)
-
-    def __send_login_email(self, user):
-        self.send_login_email(user,"account/dashboard/v1/mails/login.html")
+        return render(request, self.template_name, {"form": form})
 
 
-
-    # create the token code
-
-
-
-class SignupView(
-    AuthenticationGuard,BuildMagicLink, FormView):
+class SignupView(AuthenticationGuard,BuildMagicLink, FormView):
     """
     """
     form_class = EmailSignupForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("home")
 
-
-    def post(self, request:HttpRequest, *args, **kwargs)->HttpResponse|JsonResponse:
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse|JsonResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            return self.form_valid(form)
-        return render(request, self.template_name, {'form': form})
+            if response := self.validate_email_address(
+                email_address=form.cleaned_data["email"],
+            ):
+                return self.form_valid(form)
+            return JsonResponse(
+                {"message": "Could not validate email address"}, status=400)
+        return render(request, self.template_name, {"form": form})
 
     def form_valid(self, form:EmailSignupForm) -> JsonResponse:
         email:str = form.cleaned_data["email"]
         username:str = form.cleaned_data["username"]
         context:dict[str, Any] = {"url":self.success_url}
         try:
-            user = User.objects.get(email=email)
-            return redirect("users:login")
+            if user := User.objects.get(email=email):
+                return JsonResponse({
+                    "url": str(reverse("users:login")),
+                    "message": "Email or username already taken",
+                })
         except User.DoesNotExist:
-            return self._handle_user_does_not_exists_creation_and_mailing(email, username, context)
+            return self._handle_user_does_not_exists_creation_and_mailing(
+                email, username, context)
 
     def _handle_user_does_not_exists_creation_and_mailing(
         self, email, username, context):
-        user = self._handle_newuser_creation(email, username)
+        user = self._create_user_in_background(email, username)
         self.send_welcome_email(
-            email,"account/dashboard/v1/mails/welcome.html", 
+            email,"account/dashboard/v1/mails/welcome.html",
             {"link":self.build_login_link_from_user(self.request, user),"user": user})
-        return redirect("users:login")
+        return JsonResponse({"url": str(reverse("users:login"))})
 
-    def _handle_newuser_creation(self, email:str, username:str|None =None)->UserObject:
-        return self._create_user_in_background(email, username)
-
-    def _create_user_in_background(self, email: str, username: str) -> UserObject:
+    def _create_user_in_background(self, email: str, username: str) -> UserObject|None:
         user =  User.objects.create_user(email=email, username=username)
         profile:Profile = Profile.objects.get(user=user)
         profile.first_name = username
@@ -151,7 +160,7 @@ class SignupView(
 class SuccessAuthenticationView(AuthenticationGuard, TemplateView):
 
     template_name = "account/email_login_success.html"
-    authToken = AuthToken
+    auth_token = AuthToken
     form_class = AuthTokenCodeForm
 
 
@@ -161,75 +170,11 @@ class LogoutView(View):
         logout(request)
         return redirect("home")
 
-
-class ReferralSignupView(AuthenticationGuard, TemplateView):
-    form_class = EmailSignupForm
-    template_name = "account/signup.html"
-    success_url = reverse_lazy("home")
-
-    def get_referrer(self, *args, **kwargs):
-        return (
-            Profile.objects.get(referral_code=referral_code).user
-            if (referral_code := kwargs.get("referral_code"))
-            else None
-        )
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["form"] = self.form_class()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data["email"]
-            username = form.cleaned_data["username"]
-            # TODO: email magic link to user.
-            try:
-                user = User.objects.get(email=email)
-                # self.email_submitted(user.email)
-                return redirect("users:login")
-
-            except User.DoesNotExist:
-                user = User.objects.create_user(email=email, username=username)
-                user.save()
-                # create profile after successful user creation
-                profile = Profile.objects.get(user=user)
-                # save the referred by field
-                profile.referred_by = self.get_referrer(*args, **kwargs)
-                profile.save()
-                # redirect to home page after login
-                # login the user without having to send him/her email
-                self.email_submitted(user)
-                login(self.request, user)
-                return redirect(self.success_url)
-
-        context = {"form": form}
-        return render(request, self.template_name, context)
-    
-    
-    def email_submitted(
-            self, 
-            user, 
-            template:Optional[str]="account/dashboard/v1/mails/welcome.html", 
-            context:Optional[dict[str, str]]={}
-        ):
-        send_welcome_email.after_response(
-            user,template,
-            {"profile": user.profile_user,
-             "link": self.request.build_absolute_uri(reverse("users:login")),
-             "policies":self.request.build_absolute_uri(reverse("policies")),
-             "subject": "Earnkraft Agencies"
-             }
-        )
-
-class ReferralSignupView(
-    BuildMagicLink, FormView):
+class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
     form_class = EmailSignupForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("users:login")
     expired_code_template_name = ""
-
 
     def dispatch(self, request, *args:Any, **kwargs:dict):
         """
@@ -237,7 +182,8 @@ class ReferralSignupView(
         """
         code  = kwargs.get("referral_code")
         if not code or not self.validate_referral_code(code):
-            return redirect(reverse("users:expired_token", kwargs={"referral_code": code}))
+            return redirect(reverse(
+                "users:expired_token", kwargs={"referral_code": code}))
         return super().dispatch(request, *args, **kwargs)
 
     def get_referrer(self, *args, **kwargs):
@@ -266,8 +212,15 @@ class ReferralSignupView(
             user = User.objects.get(email=email)
             return redirect("users:login")
         except User.DoesNotExist:
+            if not self.validate_email_address(email_address=email):
+                messages.error("Invalid or undeliverable email address")
+                if referer := self.request.META.get("HTTP_REFERER"):
+                    return redirect(referer)
+                return redirect(reverse("users:referred-signup", kwargs={
+                    "referral_code":kwargs.get("referral_code"),
+                }))
             user = self._create_user_if_unavailable(email, username, *args, **kwargs)
-            return redirect(self.success_url)
+            return JsonResponse({"url": str(reverse(self.success_url))})
 
     def _create_user_if_unavailable(
         self, email: str, username: str,*args:Any, **kwargs:Any,
@@ -301,57 +254,6 @@ class HtmxSetupView(View):
         return super().dispatch(request, *args, **kwargs)
 
 
-class HandleHtmxEmailLookupView(HtmxSetupView):
-
-    def filter_user(self, request):
-        email = request.GET.get("email")
-        return User.objects.filter(email=email).first()
-
-    def success_html_response(self, *args, **kwargs):
-        self.html_swap_message = """
-                <small class='text-muted uk-text-success' id='email-lookup-result'>Email address found</small>
-            """
-
-        return self.html_swap_message
-
-    def fail_html_response(self, *args, **kwargs):
-        self.html_swap_message = """
-            <small class='text-muted uk-text-danger' data-bt-state='disabled' id='email-lookup-result'>No such email address found</small>
-        """
-
-        return self.html_swap_message
-
-    def get(self, request, *args, **kwargs):
-
-        if self.filter_user(request):
-
-            return HttpResponse(self.success_html_response(*args, **kwargs))
-
-        return HttpResponse(self.fail_html_response(*args, **kwargs))
-
-class HandleHtmxSignupEmailLookupView(HandleHtmxEmailLookupView):
-    def fail_html_response(self, *args, **kwargs):
-        self.html_swap_message = """
-            <small class='text-muted uk-text-danger' data-bt-state='disabled' id='email-lookup-result'>Email address already taken</small>
-        """
-
-        return self.html_swap_message
-
-    def success_html_response(self, *args, **kwargs):
-        self.html_swap_message = """
-                <small class='text-muted uk-text-success' id='email-lookup-result'></small>
-            """
-
-        return self.html_swap_message
-
-    def get(self, request, *args, **kwargs):
-
-        if self.filter_user(request):
-
-            return HttpResponse(self.fail_html_response(*args, **kwargs))
-
-        return HttpResponse(self.success_html_response(*args, **kwargs))
-
 class LinkAuthenticationView(View):
     """
     Invalid test login link:
@@ -376,7 +278,8 @@ class LinkAuthenticationView(View):
 class ValidatedEmailAddressView(View):
     def get(self, request, *args, **kwargs):
         email = request.GET.get("email")
-        validated = ValidatedEmailAddress.objects.using("email_validation").filter(email_address=email)
-        if validated.exists():
-            return JsonResponse({"message": "Your account exist. 🔥", "is_valid": True}, status=200)
-        return JsonResponse({"message": "Can't find such an account!", "is_valid": False})
+        # validated = ValidatedEmailAddress.objects.using("email_validation").filter(email_address=email)  # noqa: E501, ERA001
+        # if validated.exists():
+        # return JsonResponse({"message": "Can't find such an account!", "is_valid": False})  # noqa: E501, ERA001
+        return JsonResponse(
+            {"message": "Your account exist. 🔥", "is_valid": True}, status=200)

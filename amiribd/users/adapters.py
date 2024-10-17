@@ -23,6 +23,9 @@ class AccountAdapter(DefaultAccountAdapter):
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
+    def get_login_redirect_url(self, request):
+        # Redirect to the home page or wherever you want
+        return '/'
 
     def populate_user(self,request,sociallogin,data) -> User:
         user = super().populate_user(request, sociallogin, data)
@@ -30,13 +33,10 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         if User.objects.filter(email=user.email).exists():
             # User already exists, handle authentication and redirect
             existing_user = User.objects.get(email=user.email)
-            
             # Log the user in
             login(request, existing_user, backend='allauth.account.auth_backends.AuthenticationBackend')
-            
             # Redirect to home page
             return redirect('home')  # Make sure 'home' is the name of your home URL pattern
-        
         # If user doesn't exist, continue with the default flow (populate and return)
         return user
     def save_user(self, request, sociallogin, form=None):

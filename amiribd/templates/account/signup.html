@@ -1,171 +1,181 @@
-{% extends "account/layout.html" %}
+{% extends "allauth/layouts/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block inner %}
 
-  <form action="{% url 'users:signup' %}" method="post"  class="signupform">
-    {% csrf_token %}
+<form action="{% url 'users:signup' %}" method="post" class="signupform" style="margin: auto; min-width: 300px;">
 
-    <div class="form-group">
-      <label class="form-label" for="email">Email Address</label>
-      <div class="form-control-wrap">
-        {{form.email}}
-        {% if form.email.errors %}
-          <ul class="errorlist">
-            {% for error in form.email.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+  {% csrf_token %}
+  <div class="form-group">
+    <label class="form-label" for="email">Username</label>
+    <div class="form-control-wrap">
+      {{form.username}}
+      {% if form.username.errors %}
+      <ul class="errorlist">
+        {% for error in form.username.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
 
-        <div style="margin-top:5px !important;">
-
-          <small id="email-lookup-result"></small>
-
-        </div>
+  <div class="form-group">
+    <label class="form-label" for="email">Email Address</label>
+    <div class="form-control-wrap">
+      {{form.email}}
+      {% if form.email.errors %}
+      <ul class="errorlist">
+        {% for error in form.email.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div style="margin-top:5px !important;">
+        <small id="email-lookup-result"></small>
       </div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <div class="custom-control custom-control-xs custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="checkbox"/>
-        <label class="custom-control-label" for="checkbox">I agree to Liquid
-          <a href="#">Privacy Policy</a>
-          &amp;
-          <a href="#">
-            Terms.</a>
-        </label>
-      </div>
+  <div class="form-group">
+    <div class="custom-control custom-control-xs custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="checkbox" />
+      <label class="custom-control-label" for="checkbox">I agree to Liquid
+        <a href="#">Privacy Policy</a>
+        &amp;
+        <a href="#">
+          Terms.</a>
+      </label>
     </div>
+  </div>
+
+
+ 
+  <div class="form-group">
+
     <div class="form-group">
       <div class="form-text text-muted" id="email-lookup-result">
       </div>
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-lg btn-primary btn-block" 
-      id="submitBtn">Register</button>
-    </div>
-  </form>
+    <button type="submit" class="btn btn-lg btn-primary btn-block" id="submitBtn">Register</button>
+    <button type="button" class="btn btn-lg btn-light btn-block mt-2" id="loginBtn">Login</button>
+  </div>
+</form>
 
-  <script>
+<script>
 
-    $(document).ready(function(){
-      // call the verify email first before the signup url
-      const apiUrl = "http://127.0.0.1:8000/api/v1/services/mails/validate-email?emailAddress&smtpCheck&username";
-      // Function to handle email validation response
-     function handleEmailValidation(response) {
-        const data = JSON.parse(response)
-        // Check if smtpCheck is false
-        const {username, emailAddress , smtpCheck } = data
-        if (smtpCheck==='false') {
-          $("#email-lookup-result").text("Email is not deliverable.");
-          $("#submitBtn").text("Invalid Email address!.");
-          $("#submitBtn").prop("disabled", false);  // Disable the submit button on invalid email
-          return false;  // Stop further execution if the email is not valid
+  $(document).ready(function () {
+    // call the verify email first before the signup url
+
+    // Function to submit signup form
+    function submitSignupForm(email, username) {
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("email", email);
+      $("#submitBtn").prop("disabled", true)
+
+      $("#submitBtn").text("submitting...");
+
+      $.ajax({
+        type: "POST",
+        url: $(".signupform").attr("action"),
+        headers: {
+          "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        data: formData,
+        processData: false, // Prevent jQuery from automatically processing the data
+        contentType: false, // Prevent jQuery from overriding the content type
+        success: function (response) {
+          console.log("Form submitted successfully.");
+          console.log(response)
+          $("#email-lookup-result").fadeIn(1000, function(){
+            $(this).text(response.message).addClass("text-danger")
+          })
+          setTimeout(()=>{window.location.href = response.url}, 3000)
+        },
+        error: function (xhr, status, error) {
+          $("#email-lookup-result").fadeIn(500, function(){
+            $(this).text(JSON.parse(xhr.responseText).message).addClass("text-danger")
+          }).fadeOut(4000)
+        },
+        complete: function(){
+          $("#submitBtn").prop("disabled", false)
+          $("#submitBtn").text("Register");
         }
-        // If smtpCheck is true, proceed with signup
-        $("#submitBtn").text("Valid Email creating account ...");
-        $("#email-lookup-result").text("");
-        submitSignupForm(emailAddress, username);
-      }
-
-
-      // Function to submit signup form
-      function submitSignupForm(email, username) {
-        const formData = new FormData();
-        formData.append("username", username);
-        formData.append("email", email);
-        $("#submitBtn").prop("disabled",true)
-      
-         $("#submitBtn").text("Valid creating account...");
-
-        $.ajax({
-          type: "POST",
-          url: $(".signupform").attr("action"),
-          headers: {
-            "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
-          },
-          data: formData,
-          processData: false, // Prevent jQuery from automatically processing the data
-          contentType: false, // Prevent jQuery from overriding the content type
-          success: function (response) {
-            console.log("Form submitted successfully.");
-            // check the validity of emai and then redirect to the login page if required
-          },
-          error: function (xhr, status, error) {
-            console.error("Error: " + error);
-            console.error("Response: " + xhr.responseText);
-          }
-        });
-      }
-
-      // Function to validate email
-      function validateEmail(email, apiKey) {
-        $("#submitBtn").text("Validating email...");
-        $("#submitBtn").prop("disabled", true);
-        $.ajax({
-          type: "POST",
-          url: apiUrl,
-          headers: {
-            "X-Mail-API-KEY": apiKey,
-            "Content-Type": "application/json"
-          },
-          data: JSON.stringify({  email }),
-          success:handleEmailValidation,
-          error: function (xhr, status, error) {
-            console.error("Error: " + error);
-            console.error("Response: " + xhr.responseText);
-          }
-        });
-      }
-
-
-     // Form submission handler
-      $(".signupform").submit(function (event) {
-        event.preventDefault(); // Prevent traditional form submission
-        
-        const email = $("#id_email").val();
-        const apiKey = $("input[data-zero-bounce-token=ZERO_BOUNCE_TOKEN]").val();
-        
-        if (!email || !apiKey) {
-          console.error("Email or API Key is missing.");
-          return;
-        }
-        validateEmail(email, apiKey); // Validate the email before proceeding
-        
       });
-   })
-   
-   document
-      .body
-      .addEventListener("htmx:afterSwap", function (event) {
-        console.log(event.detail.target)
+    }
 
-        const swappedElement = event.detail.target
-        try {
-          const emailResponseBox = document.getElementById('email-lookup-result');
-          const responseBox = emailResponseBox.getAttribute("data-bt-state")
+    // Function to validate email
+    /*   function validateEmail(email, apiKey) {
+         $("#submitBtn").text("Validating email...");
+         $("#submitBtn").prop("disabled", true);
+         $.ajax({
+           type: "POST",
+           url: apiUrl,
+           headers: {
+             "X-Mail-API-KEY": apiKey,
+             "Content-Type": "application/json"
+           },
+           data: JSON.stringify({  email }),
+           success:handleEmailValidation,
+           error: function (xhr, status, error) {
+             console.error("Error: " + error);
+             console.error("Response: " + xhr.responseText);
+           }
+         });
+       }
+ 
+ */
+    // Form submission handler
+    // When the form is submitted, call the validateEmail function with the email and API Key provided in the form fields.
+    // If the email is valid and the SMTP server is accessible, the signup form will be submitted. Otherwise, the error message will be displayed.
+    // Note: Replace "ZERO_BOUNCE_TOKEN" with the actual ZeroBounce API Key. This can be found in your ZeroBounce account settings.
+    $(".signupform").submit(function (event) {
+      event.preventDefault(); // Prevent traditional form submission
 
-          let submitButton = document.getElementById('submitBtn');
-          if (responseBox === "disabled") {
+      const email = $("#id_email").val();
+      const username = $("#id_username").val();
+      submitSignupForm(email, username)
 
-            submitButton.setAttribute("disabled", "disabled")
-          } else {
-            if (submitButton.getAttribute("disabled")) {
-              submitButton.removeAttribute("disabled")
-            }
+    });
+  })
+
+  $("#loginBtn").click(function(){
+    const loginUlr = "{% url 'users:login' %}"
+    window.location.href = loginUlr
+  })
+
+  document
+    .body
+    .addEventListener("htmx:afterSwap", function (event) {
+      console.log(event.detail.target)
+
+      const swappedElement = event.detail.target
+      try {
+        const emailResponseBox = document.getElementById('email-lookup-result');
+        const responseBox = emailResponseBox.getAttribute("data-bt-state")
+
+        let submitButton = document.getElementById('submitBtn');
+        if (responseBox === "disabled") {
+          submitButton.setAttribute("disabled", "disabled")
+        } else {
+          if (submitButton.getAttribute("disabled")) {
+            submitButton.removeAttribute("disabled")
           }
-        } catch (e) {
-          console.log(e)
         }
+      } catch (e) {
+        console.log(e)
+      }
 
-      })
+    })
 
-    document
-      .body
-      .removeEventListener("htmx:afterSwap", function (event) {
-        console.log(event.detail.target)
-      })
-  </script>
+  document
+    .body
+    .removeEventListener("htmx:afterSwap", function (event) {
+      console.log(event.detail.target)
+    })
+</script>
 
 {% endblock inner %}

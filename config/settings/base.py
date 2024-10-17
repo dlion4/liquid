@@ -3,7 +3,7 @@
 
 import os
 from pathlib import Path
-
+import resend
 import environ
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -26,6 +26,7 @@ if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
+resend.api_key = env.str("RESEND_EMAIL_SERVICE_API_KEY")
 
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
@@ -179,7 +180,6 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
     }
 }
-
 
 
 # django-allauth
@@ -497,7 +497,6 @@ LOGIN_BY_CODE_ENABLED = True
 # MAINTENANCE MODE
 
 MAINTENANCE_MODE = False
-
 
 
 # NINJA API
@@ -908,8 +907,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
-
-
 UNFOLD = {
     "SITE_SYMBOL": "speed",
     "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
@@ -947,8 +944,8 @@ UNFOLD = {
 }
 
 
-
 # GOOGLE GEMINI API  SETTINGS
 
 GOOGLE_GEMINI_API_KEY = env.str("GOOGLE_GEMINI_API_KEY", default="")
 
+ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN=env.str("ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN",  default="")
