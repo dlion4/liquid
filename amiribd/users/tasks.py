@@ -7,6 +7,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+from config.settings.base import env
+
+MAIL_GUN_API_KEY = env.str("MAIL_GUN_API_KEY", "")
 
 
 @shared_task()
@@ -48,27 +51,7 @@ def send_background_email(
                 "team": "Earnkraft",
             })
 
-<<<<<<< HEAD
-        try:
-            html_message = render_to_string(template_name, context)
-            subject = context.get("subject", "[Earnkraft Investment] Successful onboarding")
-            to = recipients or [context.get("email")]
-
-            params: resend.Emails.SendParams = {
-                "from": sender if sender else "Earnkraft <email@earnkraft.com>",
-                "to": to,
-                "subject": subject,
-                "html": html_message,
-            }
-            email = resend.Emails.send(params)
-            logger.info(f"Email successfully sent via Resend API to {to}")
-        except Exception as e:
-            logger.exception(str(e))
-
-
-
-
-=======
+    print("Key", MAIL_GUN_API_KEY)
     try:
         html_message = render_to_string(template_name, context)
         from_email = settings.DEFAULT_FROM_EMAIL
@@ -77,7 +60,7 @@ def send_background_email(
 
         logger.info(f'Sending email from {from_email} to {to} with subject "{subject}"')  # noqa: E501, G004
         response = send_email_with_attachment(
-            "",
+            MAIL_GUN_API_KEY,
             "Earnkraft <no-reply@earnkraft.com>",
             to,
             subject,
@@ -110,4 +93,3 @@ def send_email_with_attachment(
     )
     response.raise_for_status()
     return response
->>>>>>> 3e878abe868c7df8d7fe8a61799fcad31b32be15
