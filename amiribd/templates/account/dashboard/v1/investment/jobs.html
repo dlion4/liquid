@@ -14,9 +14,9 @@ Job Board Listing
       <div class="nk-block-des text-soft">
         <p>
           We have a total of
-          <span class="jobs_count">{{jobs.count}}</span>
+          <span>200</span>
           <span>+</span>
-          Active job{{jobs.count|pluralize}}.
+          Active jobs.
         </p>
       </div>
     </div>
@@ -65,9 +65,15 @@ Job Board Listing
               </div>
             </li>
             <li class="nk-block-tools-opt d-none d-sm-block">
-              <a href="#" class="btn btn-primary">
+              <a href="{% url 'dashboard:invest:jobs:job_board_view' %}" class="btn btn-primary">
                 <em class="icon ni ni-folder"></em>
                 <span>Upload</span>
+              </a>
+            </li>
+            <li class="nk-block-tools-opt d-none d-sm-block">
+              <a href="" class="btn btn-primary">
+                <em class="icon ni ni-folder"></em>
+                <span>Tips</span>
               </a>
             </li>
             <li class="nk-block-tools-opt d-block d-sm-none">

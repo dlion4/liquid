@@ -377,10 +377,10 @@
             </div>
             <div class="data">
               <div class="data-group">
-                <div class="amount">$20,847</div>
+                <div class=""> {{referral_earnings}} <span class="currency currency-nio f-12">KES</span></div>
                 <div class="nk-ecwg6-ck"><canvas class="ecommerce-line-chart-s3" id="labIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
               </div>
-              <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><span> vs. last week</span></div>
+              <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>0%</span><span> vs. last week</span></div>
             </div>
           </div>
         </div>
@@ -422,7 +422,7 @@
             </div>
             <div class="data">
               <div class="data-group">
-                <div class="amount"> {{bonuses|floatformat:2|intcomma|default:"0.00"}} KES</div>
+                <div class=""> {{bonuses|floatformat:2|intcomma|default:"0.00"}} KES</div>
                 <div class="nk-ecwg6-ck">
                   <canvas class="ecommerce-line-chart-s3" id="todayExpense" width="100" height="40" 
                   style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
@@ -448,8 +448,7 @@
               <div class="info">
                 <div class="title">Articles Written</div>
                 <div class="count">
-                  {{investments|floatformat|intcomma|default:"0"}}
-                  
+                  0
                 </div>
               </div><em class="icon ni bg-blue-dim ni-list-index-fill"></em>
             </li>
@@ -457,7 +456,7 @@
               <div class="info">
                 <div class="title">Investment</div>
                 <div class="count">
-                  {{investments|floatformat|intcomma|default:"0"}}
+                  {{investments|floatformat|intcomma|default:"0.00"}}
                   <span class="currency-btc f-12">KES</span>
                 </div>
               </div><em class="icon bg-primary-dim ni ni-plus-medi"></em>
@@ -465,13 +464,13 @@
             <li class="item">
               <div class="info">
                 <div class="title">All Jobs</div>
-                <div class="count">129</div>
+                <div class="count">300+</div>
               </div><em class="icon bg-info-dim ni ni-users"></em>
             </li>
             <li class="item">
               <div class="info">
                 <div class="title">Products</div>
-                <div class="count">674</div>
+                <div class="count">78+</div>
               </div><em class="icon bg-pink-dim ni ni ni-plus-fill-c"></em>
             </li>
             <li class="item">
