@@ -1,28 +1,13 @@
-import contextlib
-import random
-import string
+import json
 from typing import Any
-from typing import Optional
 
 import after_response
-import sesame.utils
-from django import http
-from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from django.contrib.auth import logout
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User as UserObject
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail import send_mail
 from django.http import HttpRequest
 from django.http import HttpResponse
-from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -30,11 +15,9 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.utils.html import strip_tags
 from django.utils.http import urlsafe_base64_decode
-from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
@@ -50,12 +33,11 @@ from .forms import EmailLoginForm
 from .forms import EmailSignupForm
 from .guard import AuthenticationGuard
 from .models import Profile as ProfileObject
-from .models import ValidatedEmailAddress
+from .tasks import send_background_email
 from .utils import BuildMagicLink
-from .utils import PostCleanFormPostViewMixin
 from .utils import expiring_token_generator
 from .utils import generate_referral_code
-from .tasks import send_background_email
+
 
 @after_response.enable
 def send_welcome_email(
@@ -89,11 +71,12 @@ class LoginView(AuthenticationGuard,BuildMagicLink,TemplateView):
             if queryset.exists():
                 user = queryset.first()
                 self.send_login_email(user, "account/dashboard/v1/mails/login.html")
-                return render(
-                    request, self.template_name,
-                    {"form": form, "message": "Login link has been sent to your inbox"})
-            return redirect("users:signup")
-        return render(request, self.template_name, {"form": form})
+                return JsonResponse(
+                    {"message": "Login link sent to your email"}, status=200)
+            return JsonResponse(
+                {"errors": json.dumps(["Invalid email address", "Unregistered user"])}, status=400
+            )
+        return JsonResponse({"errors": json.dumps(form.errors.as_json())}, status=400)
 
 
 class SignupView(AuthenticationGuard,BuildMagicLink, FormView):
@@ -270,5 +253,4 @@ class ValidatedEmailAddressView(View):
         # validated = ValidatedEmailAddress.objects.using("email_validation").filter(email_address=email)  # noqa: E501, ERA001
         # if validated.exists():
         # return JsonResponse({"message": "Can't find such an account!", "is_valid": False})  # noqa: E501, ERA001
-        return JsonResponse(
-            {"message": "Your account exist. 🔥", "is_valid": True}, status=200)
+        return JsonResponse({"message": "Your account exist. 🔥", "is_valid": True}, status=200)

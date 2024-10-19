@@ -6,7 +6,7 @@
 {% block inner %}
 
 
-<form action="{% url 'users:login' %}" method="post" style="margin: auto; min-width: 300px">
+<form action="{% url 'users:login' %}" id="loginForm" method="post" style="margin: auto; min-width: 300px">
   {% csrf_token %}
   <div class="form-group">
     <div class="form-label-group">
@@ -25,41 +25,83 @@
   </div>
 </form>
 
+<div class="" id="errorList"></div>
+
 
 <script>
 
 
-  $(document).ready(function(){
-    $("#id_email").on("keyup", function(event){
+  $(document).ready(function () {
+    $("#id_email").on("keyup", function (event) {
       event.preventDefault();
       const email = $(this).val();
       $.ajax({
         url: "{% url 'users:validate_email_address' %}",
         method: "GET",
         data: { email: email },
-        success: function(response){
+        success: function (response) {
           const emailResponseBox = $('#email-lookup-result');
-          if(!response.is_valid){
-            $(emailResponseBox).fadeIn(3000, function(){
+          if (!response.is_valid) {
+            $(emailResponseBox).fadeIn(3000, function () {
               $(this).text(response.message).removeClass("text-success").addClass("text-danger")
-              });
+            });
             $('#submitBtn').attr("disabled", "disabled")
           }
-          else{
+          else {
             $(emailResponseBox).fadeIn(3000, function () {
-             $(this).text(response.message).removeClass("text-danger").addClass("text-success")
-           });
-           $('#submitBtn').removeAttr("disabled")
-         }
-         
-      
+              $(this).text(response.message).removeClass("text-danger").addClass("text-success")
+            });
+            $('#submitBtn').removeAttr("disabled")
+          }
+
+
         },
-        error: function(error){
+        error: function (error) {
           console.log(error);
         }
       })
-    })
-  })
+    });
+
+    $("form#loginForm").submit(function (event) {
+      event.preventDefault();
+      $(this).find("button").prop("disabled", true).text("submitting...");
+      const form = $(this);
+      console.log(form);
+      $.ajax({
+        url: form.attr("action"),
+        method: form.attr("method"),
+        data: form.serialize(),
+        success: function (response) {
+          console.log(response);
+          $("form#loginForm").find("button").prop("disabled", true).text(response.message)
+          $("#email-lookup-result").text("")
+        },
+        error: function (xhr, status, error) {
+          var errors = JSON.parse(xhr.responseJSON.errors)
+          var errorMessages = [];
+          var errorList = $('#errorList');
+          errorList.empty();
+          try {
+            for (let i = 0; i < errors.length; i++) {
+              errorMessages.push(errors[i])
+              errorMessages.forEach(function (error) {
+                errorList.append('<li>' + error + '</li>');
+              }
+              )
+            }
+          } catch (error) {
+            console.error("Error parsing error messages:", error);
+          }
+
+        },
+        complete: function () {
+          setTimeout(() => {
+            $("form#loginForm").find("button").prop("disabled", false).text("log in")
+          }, 3000)
+        }
+      })
+    });
+  });
 
 
   document
