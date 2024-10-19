@@ -232,7 +232,6 @@ class ValidatedEmailAddress(models.Model):
     class Meta:
         verbose_name = "Validated Email Address"
         verbose_name_plural = "Validated Email Address"
-        app_label = "email_validation"
 
     def __str__(self):
         return self.email_address

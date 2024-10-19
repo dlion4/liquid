@@ -17,7 +17,7 @@ from .models import Address
 from .models import Document
 from .models import Profile
 from .models import User
-from .models import ValidatedEmailAddress
+# from .models import ValidatedEmailAddress
 
 
 
@@ -58,9 +58,9 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
 
 
 
-@admin.register(ValidatedEmailAddress)
-class ValidatedEmailAddressModelAdmin(ModelAdmin):
-    list_display = ["email_address", "created_at"]
+# @admin.register(ValidatedEmailAddress)
+# class ValidatedEmailAddressModelAdmin(ModelAdmin):
+#     list_display = ["email_address", "created_at"]
 
 class NotificationSubscriptionInline(unfold_admin.TabularInline):
     model = NotificationSubscription
