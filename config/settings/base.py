@@ -62,13 +62,13 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": env.db("DATABASE_URL"),
-    'email_validation': { 
-        'ENGINE': "django.db.backends.sqlite3",
-        'NAME': BASE_DIR /  "db" / "email_validation_db.sqlite3",
-    },
+    # # 'email_validation': { 
+    #     'ENGINE': "django.db.backends.sqlite3",
+    #     'NAME': BASE_DIR /  "db" / "email_validation_db.sqlite3",
+    # },
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["email_validation"]["ATOMIC_REQUESTS"] = True
+# DATABASES["email_validation"]["ATOMIC_REQUESTS"] = True
 # ROUTERS
 # The above code in Python is setting the `DATABASE_ROUTERS` variable to a list containing the string
 # `'config.settings.db_routers.EmailValidationRouter'`. This is typically used in Django settings to
