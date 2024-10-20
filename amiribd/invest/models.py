@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 import string
 from decimal import Decimal
 import random
@@ -34,7 +35,6 @@ def generate_ssid(instance, k=10):
             k=k,
         ),
     )
-
 
 
 class PoolType(models.Model):
@@ -81,7 +81,6 @@ class Pool(models.Model):
         return self.account_pool.type
 
 
-
 class PoolFeature(models.Model):
     pool = models.OneToOneField(
         Pool, on_delete=models.CASCADE, related_name="pool_feature",
@@ -90,7 +89,6 @@ class PoolFeature(models.Model):
 
     def __str__(self):
         return str(self.pool.type.type)
-
 
 
 class AccountType(models.Model):
@@ -125,6 +123,7 @@ class Account(models.Model):
     class Meta:
         verbose_name = _("Account")
         verbose_name_plural = _("Accounts")
+        get_latest_by = "updated_at"
 
     def __str__(self):
         return f"{self.pool.profile.profile_identity} ~ {self.account_ssid}"
@@ -182,8 +181,6 @@ class Account(models.Model):
     @cached_property
     def percentage_profit(self):
         return round((self.latest_invite_interest / self.invite_profit) * 100, 1)
-
-
 
 
 class PlanType(models.Model):
@@ -292,11 +289,13 @@ class Plan(models.Model):
     @property
     def percentage_return(self):
         return self.type.percentage_return
+    @property
+    def plan_profile_email(self):
+        return self.plan_profile.user.email
 
     @property
     def interest_return(self):
         return round(self.account.balance * Decimal(self.percentage_return) / 100, 2)
-
 
 
 class AccountWithdrawalAction(models.Model):
@@ -404,3 +403,64 @@ class SavingInvestmentPlan(models.Model):
 
     def __str__(self):
         return self.scheme
+
+
+class InvestMentSaving(models.Model):
+    profile = models.ForeignKey(
+        Profile, on_delete=models.SET_NULL,
+        blank=True, null=True)
+    principal_amount = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0.00)
+    duration_of_saving_investment = models.CharField(max_length=300, blank=True)
+    interest_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    expected_daily_interest_plus_amount = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0.00)
+    instruction = models.TextField(blank=True,max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.profile} - {self.principal_amount}"
+    def save(self, *args, **kwargs):
+        self.interest_amount = Decimal(self.interest_amount) * Decimal(
+            self.extract_days().days,
+        )
+        self.expected_daily_interest_plus_amount = (
+            self.principal_amount + self.interest_amount,
+        )
+        super().save(*args, **kwargs)
+
+    def extract_days(self):
+        """
+        Extract the number of days from the `duration_of_saving_investment` field.
+        For example, if the duration is '2 weeks', this will return 14 days.
+        """
+        duration_parts = self.duration_of_saving_investment.split()
+        if len(duration_parts) >= 2:
+            number = int(duration_parts[0])  # Extracts the numerical part (e.g., 2)
+            unit = duration_parts[
+                1
+            ].lower()  # Extracts the time unit (e.g., 'days' or 'weeks')
+
+            if unit in ("days", "day"):
+                return timedelta(days=number)
+            if unit in ("weeks", "week"):
+                return timedelta(weeks=number)
+        return timedelta(0)  # Default to 0 days if invalid input
+
+    def lock_end_date(self):
+        """
+        Calculate the end date when the investment will be unlocked.
+        Adds the extracted days to the creation date.
+        """
+        duration_days = self.extract_days()
+        return self.created_at + duration_days
+
+    def can_withdraw(self):
+        """
+        Check if the investment can be withdrawn based on the current date.
+        The amount is locked until the lock_end_date.
+        """
+        return date.today() >= self.lock_end_date()  # noqa: DTZ011
+
+    @property
+    def earned_interest(self):
+        return f"{(self.principal_amount * Decimal("2.00"))}"

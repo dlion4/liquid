@@ -383,9 +383,8 @@ TEMPLATES = [
                 "amiribd.tokens.context_processors.load_secrets",
                 "amiribd.transactions.context_processors.deposit_form_action",
                 "amiribd.users.context_processors.allauth_settings",
-                
                 # `allauth` needs this from django
-                'django.template.context_processors.request',
+                "django.template.context_processors.request",
             ],
         },
     },

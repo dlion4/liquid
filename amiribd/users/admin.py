@@ -1,14 +1,19 @@
 # for handling aws file download requests
+import time
 from boto3.session import Session
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 from unfold import admin as unfold_admin
 from unfold.admin import ModelAdmin
 
 from amiribd.core.admin import earnkraft_site
+from amiribd.liquid.actions import send_email_to_user
+from amiribd.liquid.forms import EmailCategoryForm
+from amiribd.liquid.models import AdminSendMail, AdminSendMailCategory
 from amiribd.profilesettings.models import NotificationSubscription
 
 from .forms import UserAdminChangeForm
@@ -18,7 +23,6 @@ from .models import Document
 from .models import Profile
 from .models import User
 # from .models import ValidatedEmailAddress
-
 
 
 @admin.register(User)
@@ -55,17 +59,46 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
         ),
     )
     readonly_fields = ["date_joined"]
+    actions = ["send_payment_email","send_application_email","send_task_email"]
+    @admin.action(description="Send Payment Email")
+    def send_payment_email(self, request, queryset):
+        for user in queryset:
+            time.sleep(2)
+            send_email_to_user(
+                self,
+                request,
+                recipient=user,
+                mail_group="Payment",
+                template="liquid/mails/payment.html",
+            )
 
+    @admin.action(description="Send Application Email")
+    def send_application_email(self, request, queryset):
+        for user in queryset:
+            time.sleep(2)
+            send_email_to_user(
+                self,
+                request,
+                recipient=user,
+                mail_group="Application",
+                template="liquid/mails/application.html",
+            )
 
-
-# @admin.register(ValidatedEmailAddress)
-# class ValidatedEmailAddressModelAdmin(ModelAdmin):
-#     list_display = ["email_address", "created_at"]
+    @admin.action(description="Send Task Response Email")
+    def send_task_email(self, request, queryset):
+        for user in queryset:
+            time.sleep(2)
+            send_email_to_user(
+                self,
+                request,
+                recipient=user,
+                mail_group="Task",
+                template="liquid/mails/task.html",
+            )
 
 class NotificationSubscriptionInline(unfold_admin.TabularInline):
     model = NotificationSubscription
     extra = 0
-
 
 
 @admin.register(Profile)
@@ -110,10 +143,6 @@ class AddressAdmin(ModelAdmin):
     ]
 
 
-
-
-
-
 session = Session(
     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
@@ -125,7 +154,6 @@ s3_files_resource = session.resource("s3")
 s3_bucket_name = settings.AWS_STORAGE_BUCKET_NAME
 
 s3_project_bucket_name = s3_files_resource.Bucket(s3_bucket_name)
-
 
 
 @admin.register(Document, site=earnkraft_site)
@@ -156,5 +184,3 @@ class DocumentAdmin(ModelAdmin):
             TODO: ::
                     implement the code block later
             """
-
-

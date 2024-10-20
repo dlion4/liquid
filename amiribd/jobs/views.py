@@ -1,37 +1,39 @@
-import json
-from django.http import JsonResponse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_POST
-from amiribd.jobs.models import Job
-from amiribd.users.models import Profile
-from .forms import JobApplicationForm
-from django.core.exceptions import PermissionDenied
 from django.db import transaction
+from django.shortcuts import redirect
+from django.urls import  reverse_lazy
+from django.views.decorators.http import require_POST
+
 from amiribd.users.views import send_welcome_email
+
+from .forms import JobApplicationForm
+
 # Create your views here.
 
 @login_required
 @require_POST
 @transaction.atomic
 def job_application_view(request, job_id, applicant_id):
+    page_url = reverse_lazy("dashboard:invest:jobs:jobs")
     try:
-        # Example: Saving form data to database
-        with transaction.atomic():
-            url = request.POST.pop("path")
-            form = JobApplicationForm(
-                request.POST, request.FILES, job_id=job_id, applicant_id=applicant_id)
-            if form.is_valid():
-                form.save(commit=True)
-                return JsonResponse(
-                    {"message":"Application sent successfully", 
-                     "success": True,
-                     "url": url,
-                     })
-            return JsonResponse({"message":json.dumps(form.errors), "success": False})
+        form = JobApplicationForm(
+            request.POST, request.FILES, job_id=job_id, applicant_id=applicant_id)
+        if form.is_valid():
+            form.save(commit=True)
+            messages.success(
+                request,
+                "Application submitted successfully. We'll communicate with you in a few"
+            )
+            return redirect(page_url)
+        messages.error(
+            request,
+            "Could not process application. Kindly check your application request")
+        return redirect(page_url)
     except Exception as e:
-        return JsonResponse({"message": str(e), "success": False})
-
+        messages.warning(
+            request, "Oops! Something went wrong with your application")
+        return redirect(page_url)
 
 def send_application_nofication_email_to_applicant(channel, user, template_name, context:dict={}):
     if "@" in channel:

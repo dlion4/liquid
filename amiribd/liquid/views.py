@@ -1,11 +1,18 @@
+from mimetypes import guess_type
+
+from django.contrib import messages
+from django.http import Http404
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from .forms import ContactForm
-from .models import Contact
-from django.urls import reverse_lazy
-from django.contrib import messages
+
 from .actions import send_email_after_response
+from .forms import ContactForm
+from .models import CompanyTermsAndPolicy
+from .models import Contact
 
 # Create your views here.
 
@@ -71,30 +78,27 @@ class PolicyView(TemplateView):
 
 
 
-from django.http import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
-from mimetypes import guess_type
-from .models import CompanyTermsAndPolicy
 
 def view_policy(request, pk):
-    # Get the latest policy file
     policy = CompanyTermsAndPolicy.objects.get(pk=pk)
     file_path = policy.file.path
-
-    # Try to open the file
     try:
-        with open(file_path, 'rb') as f:
+        with open(file_path, "rb") as f:
             file_content = f.read()
-    except FileNotFoundError:
-        raise Http404("File does not exist")
+    except FileNotFoundError as e:
+        msg = "File does not exist"
+        raise Http404(msg) from e
 
     # Guess the content type of the file
     content_type, encoding = guess_type(file_path)
     if content_type is None:
-        content_type = 'application/octet-stream'
+        content_type = "application/octet-stream"
 
     # Create the response
     response = HttpResponse(file_content, content_type=content_type)
-    response['Content-Disposition'] = 'inline; filename=' + policy.file.name
+    response["Content-Disposition"] = "inline; filename=" + policy.file.name
 
     return response
+
+class CareerApplication(TemplateView):
+    template_name = "career/application.html"

@@ -1,15 +1,16 @@
 from django.urls import include
 from django.urls import path
 
+from .views import CheckUserSubscriptionStatusView
 from .views import HandleAccountSelectionView
 from .views import HandleAddPlanPaymentView
 from .views import HandlePaymentCreateTransactionView
 from .views import HandlePlanSelectionView
 from .views import HandlePoolSelectionView
-from .views import VerifyTransactionPaymentView
 from .views import HandleRegistrationPaymentView
-from .views import CheckUserSubscriptionStatusView
+from .views import VerifyTransactionPaymentView
 from .views import check_payment_status
+from .views import delete_transaction_payment_view
 from .views import (
     # fetch_amount_tobe_paid_minus_discount,
     fetch_amount_tobe_paid_plus_discount,
@@ -32,7 +33,6 @@ from .views import modified_whatsapp_view
 from .views import modified_withdrawal_view
 from .views import plan
 from .views import plans
-from .views import delete_transaction_payment_view
 
 app_name = "invest"
 

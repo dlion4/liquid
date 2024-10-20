@@ -1,22 +1,26 @@
 from django.contrib import admin
-
-from django.contrib import admin
-from unfold.admin import ModelAdmin
-from unfold.contrib.forms.widgets import UnfoldAdminTextInputWidget
-from django_celery_beat.models import (
-    ClockedSchedule,
-    CrontabSchedule,
-    IntervalSchedule,
-    PeriodicTask,
-    SolarSchedule,
-)
-from unfold.widgets import UnfoldAdminEmailInputWidget
-from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
-from unfold.admin import UnfoldAdminSelectWidget
 from django_celery_beat.admin import ClockedScheduleAdmin as BaseClockedScheduleAdmin
 from django_celery_beat.admin import CrontabScheduleAdmin as BaseCrontabScheduleAdmin
 from django_celery_beat.admin import PeriodicTaskAdmin as BasePeriodicTaskAdmin
-from django_celery_beat.admin import PeriodicTaskForm, TaskSelectWidget
+from django_celery_beat.admin import PeriodicTaskForm
+from django_celery_beat.admin import TaskSelectWidget
+from django_celery_beat.models import ClockedSchedule
+from django_celery_beat.models import CrontabSchedule
+from django_celery_beat.models import IntervalSchedule
+from django_celery_beat.models import PeriodicTask
+from django_celery_beat.models import SolarSchedule
+from unfold.admin import ModelAdmin
+from unfold.admin import UnfoldAdminSelectWidget
+from unfold.contrib.forms.widgets import UnfoldAdminTextInputWidget
+from unfold.contrib.forms.widgets import WysiwygWidget
+from unfold.widgets import UnfoldAdminEmailInputWidget
+
+from amiribd.core.admin import earnkraft_site
+
+from .models import AdminSendMail
+from .models import AdminSendMailCategory
+from .models import CompanyTermsAndPolicy
+from .models import Contact
 
 admin.site.unregister(PeriodicTask)
 admin.site.unregister(IntervalSchedule)
@@ -60,9 +64,6 @@ class ClockedScheduleAdmin(BaseClockedScheduleAdmin, ModelAdmin):
     pass
 
 
-from .models import CompanyTermsAndPolicy, Contact
-from amiribd.core.admin import earnkraft_site
-
 @admin.register(Contact, site=earnkraft_site)
 class ContactAdmin(ModelAdmin):
     list_display = [
@@ -72,16 +73,33 @@ class ContactAdmin(ModelAdmin):
         "message",
     ]
     formfield_overrides = {
-        'name': {'widget': UnfoldAdminTextInputWidget()},
-        'email': {'widget': UnfoldAdminEmailInputWidget()},
-        'subject': {'widget': UnfoldAdminTextInputWidget()},
-        'message': {'widget': WysiwygWidget()}
+        "name": {"widget": UnfoldAdminTextInputWidget()},
+        "email": {"widget": UnfoldAdminEmailInputWidget()},
+        "subject": {"widget": UnfoldAdminTextInputWidget()},
+        "message": {"widget": WysiwygWidget()},
     }
 
 @admin.register(CompanyTermsAndPolicy, site=earnkraft_site)
 class CompanyTermsAndPolicyAdmin(ModelAdmin):
     list_display = [
-        'file',
-        'created_at',
-        'updated_at',
+        "file",
+        "created_at",
+        "updated_at",
     ]
+
+
+@admin.register(AdminSendMailCategory)
+class AdminSendMailCategoryModelAdmin(ModelAdmin):
+    list_display = ["name"]
+
+@admin.register(AdminSendMail)
+class AdminSendMailModelAdmin(ModelAdmin):
+    list_display = [
+        "category",
+        "subject",
+        "sent_at",
+    ]
+    formfield_overrides = {
+        "message": {"widget": WysiwygWidget()},
+    }
+

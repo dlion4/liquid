@@ -34,13 +34,12 @@ class PoolAdmin(NestedModelAdmin, ModelAdmin):
         "updated_at",
     ]
     inlines = [AccountInline, PoolFeatureInline]
-        
+
     def delete_model(self, request, obj: Pool) -> None:
         if obj.profile:
             obj.profile.is_subscribed = False
             obj.profile.save()
         return super().delete_model(request, obj)
-
 
 
 @admin.register(PoolType)
@@ -100,6 +99,8 @@ class AccountAdmin(ModelAdmin):
 class PlanAdmin(ModelAdmin):
     list_display = [
         "account",
+        "plan_profile_email",
+        "plan_profile",
         "type",
         "min_amount",
         "max_amount",
@@ -110,19 +111,25 @@ class PlanAdmin(ModelAdmin):
         "created_at",
         "updated_at",
         "status",
-        "plan_profile",
         "payment_method",
         "mpesa_transaction_code",
         "payment_phone_number",
+        "is_paid",
     ]
 
     actions = [
         "verified_mpesa_code_transaction",
         "unverified_mpesa_code_transaction",
     ]
+    list_filter = ["is_paid", "payment_method", "status"]
+    search_fields = [
+        "account__account_ssid",
+        "mpesa_transaction_code",
+    ]
 
     @admin.action(description="Mark selected as paid")
     def verified_mpesa_code_transaction(self, request, queryset):
+
         queryset.update(is_paid=True)
 
     @admin.action(description="Mark selected as unpaid")

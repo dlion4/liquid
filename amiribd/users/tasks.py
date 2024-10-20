@@ -51,7 +51,6 @@ def send_background_email(
                 "team": "Earnkraft",
             })
 
-    print("Key", MAIL_GUN_API_KEY)
     try:
         html_message = render_to_string(template_name, context)
         from_email = settings.DEFAULT_FROM_EMAIL

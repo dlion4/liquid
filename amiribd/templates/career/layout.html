@@ -1,0 +1,213 @@
+{% load static i18n compress %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}" class="js">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>{% block title %}Earnkraft Dashboard{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="investment app" />
+    <meta name="author" content="kwasa" />
+    {% block meta %}
+    <!-- Inside your base template or specific view template -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    {% endblock meta %}
+    <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
+    {% compress css %}
+    {% block mainCss %}
+    <link rel="stylesheet" href="{% static 'v1/assets/css/dashlite1.min.css' %}?ver=3.2.3" />
+    {% endblock mainCss %}
+    <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3" />
+    <link rel="stylesheet" href="{% static 'v1/assets/css/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}" />
+
+
+    <style>
+        .errorlist {
+            color: red !important;
+        }
+    </style>
+
+    {% block css %}{% endblock css %}
+    {% endcompress css %}
+
+    <!-- <link rel="stylesheet" href="https://dashlite.net/demo2/assets/css/dashlite.css?ver=3.2.3"> -->
+
+    {% block editorcss %}{% endblock editorcss %}
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+
+</head>
+
+
+<body class="nk-body bg-white npc-default pg-survey no-touch nk-nio-theme" data-select2-id="15">
+    <div class="nk-app-root" data-select2-id="14">
+        <div class="nk-main " data-select2-id="13">
+            <div class="nk-wrap nk-wrap-nosidebar" data-select2-id="12">
+                <div class="nk-content " data-select2-id="11">
+                    <div class="nk-split nk-split-page nk-split-lg" data-select2-id="10">
+                        <div class="nk-split-content bg-dark is-dark p-5 d-flex justify-between flex-column text-center">
+                            <a href="{% url 'home' %}" class="logo-link nk-sidebar-logo">
+                                <img class="logo-light logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo">
+                                <img class="logo-dark logo-img" src="{% static 'img/earnkraftfull2.png' %}" srcset="{% static 'img/earnkraftfull2.png' %} 2x" alt="logo-dark"></a>
+                            <div class="text-block wide-xs mx-auto">
+                                <h3 class="text-white">We are Hiring</h3>
+                                <p>
+                                    Tation argumentum et usu, dicit viderer evertitur te has.
+                                    Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
+                                </p>
+                                <img class="nk-survey-gfx mt-5" src="{% static 'images/gfx/job-survey.svg' %}" alt="">
+                            </div>
+                            <p>© 2024 Earnkraft Agencies | Sync Developers | All Rights Reserved</p>
+                        </div>
+                        <div class="nk-split-content nk-split-stretch bg-white p-5 d-flex justify-center align-center flex-column" data-select2-id="9">
+                            <div class="wide-xs-fix" data-select2-id="8">
+                                <form class="nk-stepper stepper-init is-alter" action="#" id="stepper-survey-v2" data-step-current="first" novalidate="novalidate" data-select2-id="stepper-survey-v2" style="display: block;">
+                                    <div class="nk-stepper-content" data-select2-id="7">
+                                        <div class="nk-stepper-progress stepper-progress mb-4">
+                                            <div class="stepper-progress-count mb-2">1 of 4</div>
+                                            <div class="progress progress-md">
+                                                <div class="progress-bar stepper-progress-bar" style="width: 25%;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="nk-stepper-steps stepper-steps" data-select2-id="6">
+                                            <div class="nk-stepper-step done active">
+                                                <div class="nk-stepper-step-head mb-4">
+                                                    <h5 class="title">What are you looking for ?</h5>
+                                                    <p>Tation argumentum et usu, dicit viderer evertitur te has</p>
+                                                </div>
+                                                <ul class="row g-3">
+                                                    <li class="col-sm-6">
+                                                        <div class="custom-control custom-control-sm custom-radio pro-control custom-control-full"><input type="radio" class="custom-control-input valid" name="sv2-preference" id="sv2-preference-fedev" value="sv2-preference-fedev" required=""><label class="custom-control-label" for="sv2-preference-fedev"><span class="d-flex flex-column text-center py-1 py-sm-2"><span class="icon-wrap xl"><img class="img" src="{% static 'images/icons/fornt-end-developer.svg' %}" alt=""></span><span class="lead-text mb-1 mt-3">Front End Developer</span><span class="sub-text">Postea democritum mnesarchum ne nam, ad vim aperiri tractatos.</span></span></label></div>
+                                                    </li>
+                                                    <li class="col-sm-6">
+                                                        <div class="custom-control custom-control-sm custom-radio pro-control custom-control-full checked"><input type="radio" class="custom-control-input valid" name="sv2-preference" id="sv2-preference-uxdis" value="sv2-preference-uxdis" required=""><label class="custom-control-label" for="sv2-preference-uxdis"><span class="d-flex flex-column text-center py-1 py-sm-2"><span class="icon-wrap xl"><img class="img" src="{% static 'images/icons/ux-designer.svg' %}" alt=""></span><span class="lead-text mb-1 mt-3">Ux designer</span><span class="sub-text">Prioritize and solve your tasks in short time cycles.</span></span></label></div>
+                                                    </li>
+                                                    <li class="col-12">
+                                                        <div class="custom-control custom-control-sm custom-radio pro-control custom-control-full"><input type="radio" class="custom-control-input valid" name="sv2-preference" id="sv2-preference-freelance" value="sv2-preference-freelance" required=""><label class="custom-control-label" for="sv2-preference-freelance"><span class="d-flex flex-column text-center py-1 py-sm-2"><span class="icon-wrap xl"><img class="img" src="{% static 'images/icons/freelancing-service.svg' %}" alt=""></span><span class="lead-text mb-1 mt-3">Freelancing Serivces</span><span class="sub-text">Prioritize and solve your tasks in short time cycles.</span></span></label></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="nk-stepper-step done">
+                                                <div class="nk-stepper-step-head mb-4">
+                                                    <h5 class="title">How much time you work ?</h5>
+                                                    <p>Tation argumentum et usu, dicit viderer evertitur te has</p>
+                                                </div>
+                                                <div class="row g-4">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <div class="form-control-wrap">
+                                                                <ul class="custom-control-group flex-column align-start">
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input valid" name="sv2-time-avilability" id="sv2-time-avilability-full" required=""><label class="custom-control-label" for="sv2-time-avilability-full">Full time</label></div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio checked"><input type="radio" class="custom-control-input valid" name="sv2-time-avilability" id="sv2-time-avilability-part" required=""><label class="custom-control-label" for="sv2-time-avilability-part">Part time</label></div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input valid" name="sv2-time-avilability" id="sv2-time-avilability-freelance" required=""><label class="custom-control-label" for="sv2-time-avilability-freelance">Freelance / Contract</label></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nk-stepper-step done" data-select2-id="5">
+                                                <div class="nk-stepper-step-head mb-4">
+                                                    <h5 class="title">what are your expected benefits ?</h5>
+                                                    <p>Tation argumentum et usu, dicit viderer evertitur te has</p>
+                                                </div>
+                                                <div class="row g-4" data-select2-id="4">
+                                                   
+                                                    <div class="col-12">
+                                                        <div class="form-group"><label class="form-label" for="sv1-asking-salary">Asking Salary (monthly)</label>
+                                                            <div class="form-control-wrap"><input type="text" class="form-control valid" id="sv1-asking-salary" name="sv1-asking-salary" placeholder="eg:$1200" required=""></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group"><label class="form-label">Workplace preference ? </label>
+                                                            <div class="form-control-wrap">
+                                                                <ul class="custom-control-group">
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input valid" name="sv2-work-place" id="sv2-work-place-office" value="in-ofice" required=""><label class="custom-control-label" for="sv2-work-place-office">In Office</label></div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio checked"><input type="radio" class="custom-control-input valid" name="sv2-work-place" id="sv2-work-place-remote" value="remote-home" required=""><label class="custom-control-label" for="sv2-work-place-remote">Remote / Home office</label></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nk-stepper-step">
+                                                <div class="nk-stepper-step-head mb-4">
+                                                    <h5 class="title">Lets learn about yourself</h5>
+                                                    <p>Tation argumentum et usu, dicit viderer evertitur te has</p>
+                                                </div>
+                                                <div class="row g-3">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group"><label class="form-label" for="sv1-first-name">First Name</label>
+                                                            <div class="form-control-wrap"><input type="text" class="form-control valid" id="sv1-first-name" name="sv1-first-name" placeholder="First name" required=""></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group"><label class="form-label" for="sv1-last-name">Last Name</label>
+                                                            <div class="form-control-wrap"><input type="text" class="form-control valid" id="sv1-last-name" name="sv1-last-name" placeholder="Last name" required=""></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group"><label class="form-label" for="sv1-email-address">Email Address</label>
+                                                            <div class="form-control-wrap"><input type="text" class="form-control valid" id="sv1-email-address" name="sv1-email-address" placeholder="Email Address" required=""></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group"><label class="form-label">Gender </label>
+                                                            <div class="form-control-wrap">
+                                                                <ul class="custom-control-group">
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input valid" name="sv2-gender" id="sv2-gender-male" value="gender-male" required=""><label class="custom-control-label" for="sv2-gender-male">Male</label></div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="custom-control custom-radio checked"><input type="radio" class="custom-control-input valid" name="sv2-gender" id="sv2-gender-female" value="gender-female" required=""><label class="custom-control-label" for="sv2-gender-female">Female</label></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group"><label class="form-label">Upload Documents</label><span class="form-note mb-2">( Files accepted: .pdf. doc/docx - Max file size: 190k for demo limit )</span>
+                                                            <div class="form-control-wrap">
+                                                                <div class="form-file"><input type="file" multiple="" class="form-file-input" id="sv2-file-attachment"><label class="form-file-label" for="sv2-file-attachment">README.md</label></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nk-stepper-pagination pt-4 gx-4 gy-2 stepper-pagination">
+                                            <li class="step-prev" style="display: none;"><button class="btn btn-dim btn-primary">Back</button></li>
+                                            <li class="step-next" style="display: block;"><button class="btn btn-primary">Continue</button></li>
+                                            <li class="step-submit" style="display: none;"><button class="btn btn-primary">Submit</button></li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/vendors/axios.min.js' %}"></script>
+    <script src="{% static 'dashboard/assets/js/bundle.js' %}?ver=3.2.3"></script>
+    <script src="{% static 'dashboard/assets/js/scripts.js' %}?ver=3.2.3"></script>
+    <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
+
+
+</body>
+
+</html>

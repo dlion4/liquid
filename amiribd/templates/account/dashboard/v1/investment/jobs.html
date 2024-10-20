@@ -141,7 +141,26 @@ Job Board Listing
 
 
 
+/* Responsive for tablets and above */
+@media (min-width: 688px) {
+  .filter-button-group {
+    justify-content: flex-start;
+    gap: 2rem; /* Increase space between buttons for larger screens */
+  }
+}
 
+/* Responsive for small screens (mobiles) */
+@media (max-width: 575px) {
+  .filter-button-group {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center the buttons */
+  }
+
+  .filter-button {
+    width: 100%; /* Make buttons take full width on small screens */
+    max-width: 300px; /* Limit the maximum width for buttons */
+  }
+}
 
   .btn-primary {
     display: inline-block;
@@ -262,7 +281,16 @@ Job Board Listing
 
 
 
-
+{% if messages %}
+<div>
+  {% for message in messages %}
+  <div class="alert alert-{% if message.tags %}{{message.tags}}{% endif %} alert-dismissible" role="alert">
+    <div>{{message}}</div> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
 
 <div class="row" data-animation="true" id="jobsFiltration">
   <div class="col-12 col-md-6 mb-3">
@@ -346,13 +374,16 @@ Job Board Listing
 
 <script>
   $(document).ready(function () {
+    const pageUrl = window.location.href
     $(".applicationPostForm").each(() => {
       $(this).submit(function (event) {
-        createSpinnerBtnSimulation()
+        // createSpinnerBtnSimulation()
         event.preventDefault();
         var form = $(this);
-        var formData = new FormData(form);
+        /*var formData = new FormData(form);
         formData.append("path", window.location.href);
+        console.log(formData);
+        */
 
         const jobId = $("input[name=job_id]").val();
         const applicantId = $("input[name=applicant_id]").val();
@@ -362,20 +393,23 @@ Job Board Listing
         $.ajax({
           url: $(this).attr("action"),
           method: 'POST',
-          data: formData,
+          data: form.serialize(),
           headers: {
             "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
           },
           success: function (data) {
             console.log(data)
             resetTheSpinnerBtnSimulation(data.message, responseHolder);
-            setTimeout(() => {
-              window.location.href = data.url;
-            }, 3000)
           },
           error: function (xhr, jQueryResponse, errorThrown) {
             console.error(xhr.responseText);
             resetTheSpinnerBtnSimulation(xhr.responseText, responseHolder)
+          },
+          complete: function() {
+            // remove spinner from btn
+            setTimeout(() => {
+              window.location.href = pageUrl;
+            }, 3000)
           }
         })
 

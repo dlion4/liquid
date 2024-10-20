@@ -55,9 +55,10 @@ $("#depositMoneyForm").submit(function (event) {
 
 function AutomateAccountDepositPayment(data){
     const { poolId, accountId, planId, amount, profileUserId, emailAddress } = data;
+    const paystackKey = $("input[name=active_paystack_key]").val()
     let discount_price = parseFloat("0.00")
     let handler = PaystackPop.setup({
-        key: 'pk_live_94d90234cd2007c23e450c8cb398ac2970cd61d9',
+        key: paystackKey,
         email: emailAddress,
         amount: amount * 100,
         currency: "KES",

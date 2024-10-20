@@ -1,4 +1,8 @@
+
+
 from django import forms
+
+from .models import AdminSendMailCategory
 from .models import Contact
 
 
@@ -22,3 +26,13 @@ class ContactForm(forms.ModelForm):
         self.fields["message"].widget.attrs.update(
             {"class": "uk-textarea uk-border-rounded", "rows": "6"}
         )
+
+
+
+class EmailCategoryForm(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+    email_category = forms.ModelChoiceField(
+        queryset=AdminSendMailCategory.objects.all(),
+        required=True,
+        label="Select Email Category",
+    )

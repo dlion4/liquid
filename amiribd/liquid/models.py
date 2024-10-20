@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+from amiribd.users.models import Profile
+
 # Create your models here.
 
 
@@ -35,4 +37,17 @@ class CompanyTermsAndPolicy(models.Model):
             existing_instance.delete()
         # Save the new instance
         super().save(*args, **kwargs)
-    
+
+class AdminSendMailCategory(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    def __str__(self):
+        return self.name
+
+class AdminSendMail(models.Model):
+    category = models.OneToOneField(AdminSendMailCategory, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    sent_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.subject}"

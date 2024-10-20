@@ -1,0 +1,12 @@
+{% extends "liquid/mails/layout.html" %}
+
+
+
+
+{% block content %}
+
+<h3>{{title|safe}}</h3>
+
+{{message|safe}}
+
+{% endblock content %}

@@ -1,10 +1,13 @@
 import json
 from decimal import Decimal  # Import Decimal from the decimal module
 from typing import Any
-from django.core.cache import cache 
+
 from django.contrib import messages
 from django.contrib.auth import get_user
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
+
 from django.db import models
 from django.db import transaction
 from django.db.models import Sum
@@ -19,11 +22,13 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
+from django.views.generic import FormView
+from django.views.generic import TemplateView
+
 from amiribd.dashboard.views import DashboardGuard
 from amiribd.dashboard.views import DashboardViewMixin
+from amiribd.invest.mixins import CustomTransactionCreationView
 from amiribd.jobs.forms import JobApplicationForm
 from amiribd.jobs.models import Job
 from amiribd.payments.helpers import MpesaStkPushSetUp
@@ -43,6 +48,7 @@ from .forms import AccountEventWithdrawalForm
 from .forms import AccountRegistrationForm
 from .forms import AddPlanForm
 from .forms import CancelPlanForm
+from .forms import InvestMentSavingForm
 from .forms import PlanRegistrationForm
 from .forms import PoolRegistrationForm
 from .models import Account
@@ -186,7 +192,9 @@ class HandlePlanSelectionView(LoginRequiredMixin, View):
         )
 
 
-class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
+class HandlePaymentCreateTransactionView(
+    LoginRequiredMixin, CustomTransactionCreationView,
+):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -200,23 +208,21 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
         currency=data.get("currency", "KES")
         country = data.get("country", "Kenya")
         pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool_id"))
-        account = Account.objects.get(pool=pool, pool__profile=profile, pk=kwargs.get("account_id"))
-        plan = Plan.objects.get(account=account, account__pool__profile=profile, pk=kwargs.get("plan_id"))
-        
-        total_investment = data.get("amount", sum(instance.type.price for instance in [pool, account, plan]))
-        discountPrice = data.get("discount_price", Decimal(Decimal("0.0") * Decimal(total_investment)))  # noqa: N806
+        account = Account.objects.get(
+            pool=pool, pool__profile=profile, pk=kwargs.get("account_id"))
+        plan = Plan.objects.get(
+            account=account, account__pool__profile=profile, pk=kwargs.get("plan_id"))
+        total_investment = data.get(
+            "amount", sum(instance.type.price for instance in [pool, account, plan]))
+        discount_price = data.get(
+            "discount_price", Decimal(Decimal("0.0") * Decimal(total_investment)))
         # discountPrice = Decimal(total_investment)  # noqa: ERA001
-        
-
         mpesa_code = data.get("mpesa_transaction_code")
-
-        transaction = Transaction.objects.create(
+        transaction = self.create_transaction_method(
             profile=profile,
             account=account,
-            type="DEPOSIT",
             amount=total_investment,
-            discount=discountPrice,
-            source="Account Registration",
+            discount=discount_price,
             payment_phone=phone_number,
             mpesa_transaction_code=mpesa_code,
             payment_phone_number=phone_number,
@@ -271,6 +277,7 @@ class HandlePaymentCreateTransactionView(LoginRequiredMixin, View):
             transaction.save()
             referrer_profile_account.balance += transaction.paid
             referrer_profile_account.save()
+
 
 class VerifyTransactionPaymentView(LoginRequiredMixin, View):
     @method_decorator(csrf_exempt)
@@ -355,9 +362,10 @@ class HandleAddPlanPaymentView(HandlePaymentView):
         )
 
         if profile.plans.filter(id=plan.id).exists():
-            return JsonResponse({"error": "Plan already exists in the profile", "success": False}, status=400)
+            return JsonResponse(
+                {"error": "Plan already exists in the profile", "success": False},
+                status=400)
         profile.plans.add(plan)
-        
 
         self.handle_transaction_creation(
             request,
@@ -418,7 +426,6 @@ class HandleAddPlanPaymentView(HandlePaymentView):
             currency=currency,
             country=country,
         )
-
 
 
 def check_payment_status(request):
@@ -539,15 +546,12 @@ class MonetizeView(InvestmentViewMixin):
 modified_monetize_view = MonetizeView.as_view()
 
 
-
-
 class BonusView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/bonus.html"  # noqa: ERA001
     template_name = "account/dashboard/v1/investment/bonus.html"
 
 
 modified_bonus_view = BonusView.as_view()
-
 
 
 class WhatsappView(InvestmentViewMixin):
@@ -598,7 +602,6 @@ class WhatsappView(InvestmentViewMixin):
 modified_whatsapp_view = WhatsappView.as_view()
 
 
-
 class JobsView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/jobs.html"  # noqa: ERA001
     template_name = "account/dashboard/v1/investment/jobs.html"
@@ -619,7 +622,7 @@ modified_jobs_view = JobsView.as_view()
 
 # def obtain_all_job_type(request):
 #     jobs = Job.objects.all().order_by("-id")
-#     job_application_form = JobApplicationForm(job_id=1, applicant_id=1) 
+#     job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
 #     return render(
 #         request,
 #         "account/dashboard/v1/investment/jobs/partials.html",
@@ -650,8 +653,6 @@ def fetch_job_type(request, location_type, page=0, per_page=4):
     )
 
 
-
-
 class InvestPlanView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_plan.html"  # noqa: E501, ERA001
     template_name = "account/dashboard/v1/investment/investment_plan.html"
@@ -671,6 +672,11 @@ modified_investplan_view = InvestPlanView.as_view()
 class InvestOrderView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_order.html"  # noqa: E501, ERA001
     template_name = "account/dashboard/v1/investment/investment_order.html"
+    invest_save_form = InvestMentSavingForm
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["invest_save_form"] = self.invest_save_form()
+        return context
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if not self.get_profile_plans(**kwargs):
@@ -682,13 +688,10 @@ modified_investorder_view = InvestOrderView.as_view()
 
 
 class InvestRecordView(InvestmentViewMixin):
-    # template_name = "account/dashboard/investment/investment_record.html"  # noqa: E501, ERA001
     template_name = "account/dashboard/v1/investment/investment_record.html"
 
 
 modified_investrecord_view = InvestRecordView.as_view()
-
-
 
 
 class AcademicView(InvestmentViewMixin):
@@ -734,7 +737,6 @@ class VipView(DashboardGuard, InvestmentViewMixin):
 modified_vip_view = VipView.as_view()
 
 
-
 class CheckUserSubscriptionStatusView(LoginRequiredMixin, View):
     def get(self, request:HttpRequest, *args, **kwargs):
         profile = Profile.objects.get(user=get_user(request))
@@ -742,3 +744,10 @@ class CheckUserSubscriptionStatusView(LoginRequiredMixin, View):
             "is_subscribed": profile.is_subscribed,
             "first_name": profile.first_name,
             })
+
+
+class InvestMentSavingView(FormView):
+    form_class = InvestMentSavingForm
+    def post(self, request, *args, **kwargs):
+        print()
+        return JsonResponse({}, status=200)

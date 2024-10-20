@@ -1,10 +1,9 @@
-
 from django import forms
 
 from amiribd.transactions.models import PaymentMethod
 from amiribd.transactions.models import Transaction
 
-from .models import Account
+from .models import Account, InvestMentSaving
 from .models import AccountType
 from .models import AccountWithdrawalAction
 from .models import Plan
@@ -274,7 +273,6 @@ class AddPlanForm(forms.ModelForm):
             )
 
 
-
 class AdminAddPlanForm(forms.ModelForm):
     class Meta:
         model = Plan
@@ -305,12 +303,25 @@ class AdminTransactionForm(forms.ModelForm):
         fields = "__all__" # noqa: DJ007
 
 
-
 class AdminPlanTypeForm(forms.ModelForm):
     class Meta:
         model = PlanType
         fields = "__all__" # noqa: DJ007
 
 
+class InvestMentSavingForm(forms.ModelForm):
+    principal_amount = forms.DecimalField(widget=forms.HiddenInput())
+    duration_of_saving_investment = forms.CharField(widget=forms.HiddenInput())
+    interest_amount = forms.DecimalField(widget=forms.HiddenInput())
+    expected_daily_interest_plus_amount = forms.DecimalField(widget=forms.HiddenInput())
+    instruction = forms.CharField(widget=forms.HiddenInput())
 
-
+    class Meta:
+        model = InvestMentSaving
+        fields = [
+            "principal_amount",
+            "duration_of_saving_investment",
+            "interest_amount",
+            "expected_daily_interest_plus_amount",
+            "instruction",
+        ]

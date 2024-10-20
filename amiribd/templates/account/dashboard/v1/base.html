@@ -423,6 +423,7 @@
                 paystackBtn.addEventListener('click',
                     function (event) {
                         event.preventDefault();
+                        const paystackKey = $("input[name=active_paystack_key]").val()
                         // the amount to be paid generated from the pool, account, and plan
                         // const amountToBePaid = document.querySelector(".currencyRate").value
 
@@ -438,7 +439,7 @@
                         const countryName = document.querySelector(".client-country-name").value
 
                         let handler = PaystackPop.setup({
-                            key: 'pk_live_94d90234cd2007c23e450c8cb398ac2970cd61d9', // Replace with your public key
+                            key: paystackKey, // Replace with your public key
                             email: '{{request.user.email}}',
                             amount: actualAmountInKenyaShillings * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
                             // amount: parseInt(amountToBePaidAfterConversion) * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit

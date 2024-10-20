@@ -450,12 +450,13 @@
         event.preventDefault();
         profileUserId = event.target.dataset.bsProfile;
         const data = await fetchAmountToBePaid(profileUserId, planId);
+        const paystackKey = $("input[name=active_paystack_key]").val()
 
         console.log(data)
         let amountReceivedInKShs = parseFloat(data.amount).toFixed(2)
 
         let handler = PaystackPop.setup({
-          key: 'pk_live_94d90234cd2007c23e450c8cb398ac2970cd61d9', // Replace with your public key
+          key: paystackKey, // Replace with your public key
           email: '{{request.user.email}}',
           amount: amountReceivedInKShs * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
           // amount: parseInt(amountToBePaidAfterConversion) * 100,  the amount value is multiplied by 100 to convert to the lowest currency unit

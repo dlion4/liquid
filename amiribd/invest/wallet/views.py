@@ -30,3 +30,5 @@ class WalletWithdrawMoneyView(WalletViewMixin, TemplateView):
 
 class WalletDepositMoneyView(WalletViewMixin, TemplateView):
     template_name = "account/dashboard/v1/investment/wallet/deposit.html"
+
+
