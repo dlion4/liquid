@@ -463,4 +463,4 @@ class InvestMentSaving(models.Model):
 
     @property
     def earned_interest(self):
-        return f"{(self.principal_amount * Decimal("2.00"))}"
+        return self.principal_amount * Decimal("2.00")
