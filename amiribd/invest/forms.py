@@ -3,9 +3,10 @@ from django import forms
 from amiribd.transactions.models import PaymentMethod
 from amiribd.transactions.models import Transaction
 
-from .models import Account, InvestMentSaving
+from .models import Account
 from .models import AccountType
 from .models import AccountWithdrawalAction
+from .models import InvestMentSaving
 from .models import Plan
 from .models import PlanType
 from .models import Pool
