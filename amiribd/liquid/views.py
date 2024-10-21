@@ -18,8 +18,8 @@ from .models import Contact
 
 
 class HomeView(TemplateView):
-    template_name = "pages/home.html"
-    
+    template_name = "home/home.html"
+
 
 
 class AboutView(TemplateView):

@@ -1,0 +1,123 @@
+{% load static %}
+
+
+<!-- footer-section start -->
+<footer class="footer-section">
+    <div class="footer-top bg_img" data-background="{% static 'home/images/footer-bg.png' %}">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="section-header text-white text-center">
+                        <span class="section-subtitle">Subscribe to Earnkraft</span>
+                        <h2 class="section-title">To Get Exclusive Benefits</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="subscribe-wrapper style--two">
+                        <form class="subscribe-form">
+                            <input type="text" name="subs_name" id="subs_name" placeholder="Your Email Address">
+                            <button type="submit" class="subs-btn">subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-none-30">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget mb-30">
+                        <h3 class="widget-title">About Behoof</h3>
+                        <ul class="footer-menu-list">
+                            <li><a href="#0">About us</a></li>
+                            <li><a href="#0">Contact Us</a></li>
+                            <li><a href="#0">Latest Blog</a></li>
+                            <li><a href="#0">Authenticity Guarantee</a></li>
+                            <li><a href="#0">Customer Reviews</a></li>
+                            <li><a href="#0">Privacy Policy</a></li>
+                            <li><a href="#0">Business License</a></li>
+                        </ul>
+                    </div>
+                </div><!-- footer-widget end -->
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget mb-30">
+                        <h3 class="widget-title">My Account</h3>
+                        <ul class="footer-menu-list">
+                            <li><a href="#0">Manage Your Account</a></li>
+                            <li><a href="#0">How to Deposit</a></li>
+                            <li><a href="#0">How to Withdraw</a></li>
+                            <li><a href="#0">Account Varification</a></li>
+                            <li><a href="#0">Safety & Security</a></li>
+                            <li><a href="#0">Investments</a></li>
+                            <li><a href="#0">Membership Level</a></li>
+                        </ul>
+                    </div>
+                </div><!-- footer-widget end -->
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget mb-30">
+                        <h3 class="widget-title">help center</h3>
+                        <ul class="footer-menu-list">
+                            <li><a href="#0">Investor help centre</a></li>
+                            <li><a href="#0">Entrepreneur help centre</a></li>
+                            <li><a href="#0">FAQ</a></li>
+                            <li><a href="#0">Quick Start Guide</a></li>
+                            <li><a href="#0">Associate Blog</a></li>
+                            <li><a href="#0">Tutorials</a></li>
+                            <li><a href="#0">Returns & Claims</a></li>
+                        </ul>
+                    </div>
+                </div><!-- footer-widget end -->
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget mb-30">
+                        <h3 class="widget-title">legal info</h3>
+                        <ul class="footer-menu-list">
+                            <li><a href="#0">Risk Warnings</a></li>
+                            <li><a href="#0">Privacy Notice</a></li>
+                            <li><a href="#0">Security</a></li>
+                            <li><a href="#0">Terms of Service</a></li>
+                            <li><a href="#0">Become Affiliate</a></li>
+                            <li><a href="#0">Complaints Policy</a></li>
+                        </ul>
+                    </div>
+                </div><!-- footer-widget end -->
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="btn-area text-center border-top-bottom">
+                        <a href="#0" class="wow zoomIn" data-wow-duration="0.3s" data-wow-delay="0.5s">
+                            <img src="{% static 'home/images/buttons/google.png' %}" alt="button"></a>
+                        <a href="#0" class="wow zoomIn" data-wow-duration="0.7s" data-wow-delay="0.5s">
+                            <img src="{% static 'home/images/buttons/apple.png' %}" alt="button"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="copy-right-text text-md-left text-center mb-md-0 mb-3 nk-footer-copyright">
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-list text-md-right text-center">
+                        <a href="#0"><img src="{% static 'home/images/icons/card-options/americanexpress.png' %}" alt="image"></a>
+                        <a href="#0"><img src="{% static 'home/images/icons/card-options/maestro.png' %}" alt="image"></a>
+                        <a href="#0"><img src="{% static 'home/images/icons/card-options/visa.png' %}" alt="image"></a>
+                        <a href="#0"><img src="{% static 'home/images/icons/card-options/paypal.png' %}" alt="image"></a>
+                        <a href="#0"><img src="{% static 'home/images/icons/card-options/mastercard.png' %}" alt="image"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer-section end -->
+
+
+<script>
+    document.querySelector(".nk-footer-copyright").innerHTML = `
+    © ${new Date().getFullYear()} Earnkraft Agencies | Sync Developers | All Rights Reserved
+    `;
+
+</script>

@@ -74,7 +74,8 @@ class LoginView(AuthenticationGuard,BuildMagicLink,TemplateView):
                 return JsonResponse(
                     {"message": "Login link sent to your email"}, status=200)
             return JsonResponse(
-                {"errors": json.dumps(["Invalid email address", "Unregistered user"])}, status=400
+                {"errors": "Invalid email address or Unregistered user"},
+                status=400,
             )
         return JsonResponse({"errors": json.dumps(form.errors.as_json())}, status=400)
 
@@ -105,8 +106,8 @@ class SignupView(AuthenticationGuard,BuildMagicLink, FormView):
             if user := User.objects.get(email=email):
                 return JsonResponse({
                     "url": str(reverse("users:login")),
-                    "message": "Email or username already taken",
-                })
+                    "errors": "Email or username already taken",
+                }, status=400)
         except User.DoesNotExist:
             return self._handle_user_does_not_exists_creation_and_mailing(
                 email, username, context)
@@ -117,7 +118,10 @@ class SignupView(AuthenticationGuard,BuildMagicLink, FormView):
         self.send_welcome_email(
             email,"account/dashboard/v1/mails/welcome.html",
             {"link":self.build_login_link_from_user(self.request, user),"user": user})
-        return JsonResponse({"url": str(reverse("users:login"))})
+        login(self.request, user, backend="users.backends.TokenAuthenticationBackend")
+        return JsonResponse({
+            "url": str(reverse("dashboard:home")),
+            "message": "Account created successfully"})
 
     def _create_user_in_background(self, email: str, username: str) -> UserObject|None:
         user =  User.objects.create_user(email=email, username=username)

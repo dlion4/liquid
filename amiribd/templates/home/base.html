@@ -1,0 +1,18 @@
+{% extends "home/layout.html" %}
+{% load static %}
+
+
+<!-- handle authentication
+
+
+-->
+{% block javascript %}
+
+<script>
+    // Your JavaScript code here
+    loadHiddenJavascript('{% static "home/js/auth.js" %}', function () {
+        console.log('Script loaded at the end of body!');
+    }, 'body');
+</script>
+
+{% endblock javascript %}

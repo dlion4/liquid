@@ -1,0 +1,120 @@
+{% load static i18n compress %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Earnkraft{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="investment app" />
+    <meta name="author" content="kwasa" />
+    <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
+    {% compress css inline %}
+    <!-- Your stuff: Third-party CSS libraries go here -->
+    <!-- This file stores project-specific CSS -->
+    <link rel="icon" href="{% static 'img/elogosmall.png' %}" />
+    <!-- preload assets -->
+    <link rel="preload" href="{% static 'fonts/fa-brands-400.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/inter-v12-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/inter-v12-latin-500.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/inter-v12-latin-700.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <!-- UIkit CSS -->
+    {% endcompress css %}
+
+</head>
+
+<body class="{% block bodyclass %}{% endblock bodyclass %}">
+
+    <!-- preloader start -->
+    <div class="preloader">
+        <div class="preloader-box">
+            <div>E</div>
+            <div>A</div>
+            <div>R</div>
+            <div>N</div>
+            <div>K</div>
+            <div>R</div>
+            <div>A</div>
+            <div>T</div>
+        </div>
+    </div>
+    <!-- preloader end -->
+
+
+    <!-- 
+        ======== NAVBAR COMPONENT START =================
+    -->
+    {% block navbar %}
+    {% include 'home/components/Navbar.html' %}
+    {% endblock navbar %}
+    <!-- 
+        ======== /NAVBAR COMPONENT END =================
+    -->
+    {% block body %}
+    {% block content %}
+    {% endblock content %}
+    {% endblock body %}
+    <!-- /container -->
+
+    {% block modal %}
+    <!-- 
+        ======== AUTHENTICATION MODAL START =================-->
+
+    {% include 'home/components/modals/auth.html' %}
+    <!-- 
+        ======== /AUTHENTICATION MODAL END =================-->
+
+    {% endblock modal %}
+
+
+    <!-- 
+        ======== Footer Component START ================= -->
+    {% block footer %}
+    {% include 'home/components/Footer.html' %}
+    {% endblock footer %}
+    <!-- 
+        ======== /Footer Component END =================-->
+
+
+    <!-- scroll-to-top start -->
+    <div class="scroll-to-top">
+        <span class="scroll-icon">
+            <i class="fa fa-rocket"></i>
+        </span>
+    </div>
+    <!-- scroll-to-top end -->
+
+
+    <!-- Le javascript ================================================== -->
+    {# Placed at the top of the document so pages load faster with defer #}
+    {% compress js inline %}
+
+
+
+    <script src="{% static 'home/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'home/js/jquery.nice-select.js' %}"></script>
+    <script src="{% static 'home/js/lightcase.js' %}"></script>
+    <script src="{% static 'home/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'home/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'home/js/wow.min.js' %}"></script>
+    <script src="{% static 'home/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'home/js/jquery.countup.min.js' %}"></script>
+    <script src="{% static 'home/js/jquery.paroller.min.js' %}"></script>
+    <script src="{% static 'home/js/main.js' %}"></script>
+
+
+    {% block javascript %}
+    <!-- Bootstrap JS -->
+
+
+    {% endblock javascript %}
+    {% endcompress js %}
+
+</body>
+
+
+</html>

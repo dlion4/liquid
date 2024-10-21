@@ -31,3 +31,4 @@ django-silk
 google-generativeai
 markdown
 channels-redis
+django-htmlmin
