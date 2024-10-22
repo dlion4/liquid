@@ -1,6 +1,9 @@
 {% extends "home/layout.html" %}
 {% load static %}
 
+{% block css %}
+
+{% endblock css %}
 
 <!-- handle authentication
 
@@ -16,3 +19,27 @@
 </script>
 
 {% endblock javascript %}
+
+
+
+{% block reactJs %}
+
+
+
+<script>
+    // Initialize the Owl Carousel
+        $('.offer-slider').owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 10,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+        });
+</script>
+
+{% block sectionalComponent %}
+{% endblock sectionalComponent %}
+
+{% endblock reactJs %}

@@ -54,12 +54,7 @@
  ========================== */
 @import url('reset.css');
 @import url('global.css');
-
-@import url("fontawesome.min.css");
-@import url("icofont.css");
 @import url("bootstrap.min.css");
-@import url("lightcase.css");
-@import url("owl.carousel.min.css");
 @import url("jquery-ui.min.css");
 @import url("nice-select.css");
 @import url("animate.css");
@@ -1072,7 +1067,7 @@ span.is-active:after {
 .choose-us-slider .owl-nav button:hover,
 .choose-us-slider__two .owl-nav button:hover,
 .choose-us-slider__three .owl-nav button:hover,
-.choose-us-slider__four .owl-nav button:hover,
+.choose-us-slider__four .owl-nav button:hover
 {
 background-image: -moz-linear-gradient(90deg, rgb(228, 91, 45) 0%, rgb(240, 121, 33) 33%, rgb(252, 151, 21) 100%);
 background-image: -webkit-linear-gradient(90deg, rgb(228, 91, 45) 0%, rgb(240, 121, 33) 33%, rgb(252, 151, 21) 100%);

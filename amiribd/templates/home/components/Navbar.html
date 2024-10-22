@@ -54,7 +54,7 @@
 
                     <div class="header-join-part">
                         {% if request.user.is_authenticated %}
-                        <a  href='{% url "dashboard:home" %}' type="button" class="btn btn-primary btn-hover">
+                        <a style="margin-left: 1rem;" href='{% url "dashboard:home" %}' type="button" class="btn btn-primary btn-hover">
                             Hi,{{request.user.username|title}}!
                         </a>
                         {% else %}

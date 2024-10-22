@@ -1,0 +1,29 @@
+{% load static %}
+
+
+<!-- banner-section start -->
+<section class="banner-section banner--three" >
+    <div class="banner-elements-image anim-bounce"><img src="{% static 'home/images/elements/home3-banner.png' %}" alt="image"></div>
+    <div class="shape"><img src="{% static 'home/images/elements/banner-three-shape.png' %}" alt="image"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="banner-content-area">
+                    <div class="banner-content">
+                        <span class="banner-sub-title">Turn Your Passion to Profit !</span>
+                        <h2 class="banner-title">A Perfect Place of Solution</h2>
+                        <p>Investment For Your Future.Just Join , And You Will Be Delighted</p>
+                    </div>
+                    <div class="banner-btn-area">
+                        <a href="{% url 'dashboard:home' %}" class="btn btn-primary btn-round" style="padding: 0.76rem 0.5rem 0 0.5rem;">get started now!</a>
+                        <a href="#0" class="video-btn">
+                            <span class="icon"><i class="icofont-ui-play"></i></span>
+                            <span class="text">watch video</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner-section end -->

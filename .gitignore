@@ -296,3 +296,6 @@ bookly
 .env.local
 cert.crt
 cert.key
+
+# 
+frontend/

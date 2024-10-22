@@ -10,8 +10,14 @@
     <meta name="description" content="investment app" />
     <meta name="author" content="kwasa" />
     <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
-    {% compress css inline %}
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'home/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/icofont.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/lightcase.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/css' %}">
     <!-- Your stuff: Third-party CSS libraries go here -->
+    {% block css %}
+    {% endblock css %}
     <!-- This file stores project-specific CSS -->
     <link rel="icon" href="{% static 'img/elogosmall.png' %}" />
     <!-- preload assets -->
@@ -20,7 +26,9 @@
     <link rel="preload" href="{% static 'fonts/inter-v12-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{% static 'fonts/inter-v12-latin-500.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{% static 'fonts/inter-v12-latin-700.woff2' %}" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'react/index.css' %}">
+
+
     <!-- UIkit CSS -->
     {% endcompress css %}
 
@@ -44,19 +52,9 @@
     <!-- preloader end -->
 
 
-    <!-- 
-        ======== NAVBAR COMPONENT START =================
-    -->
-    {% block navbar %}
-    {% include 'home/components/Navbar.html' %}
-    {% endblock navbar %}
-    <!-- 
-        ======== /NAVBAR COMPONENT END =================
-    -->
-    {% block body %}
-    {% block content %}
-    {% endblock content %}
-    {% endblock body %}
+
+<div id="app"></div> <!-- Your React app will mount here -->
+
     <!-- /container -->
 
     {% block modal %}
@@ -68,13 +66,9 @@
         ======== /AUTHENTICATION MODAL END =================-->
 
     {% endblock modal %}
-
-
     <!-- 
         ======== Footer Component START ================= -->
-    {% block footer %}
-    {% include 'home/components/Footer.html' %}
-    {% endblock footer %}
+
     <!-- 
         ======== /Footer Component END =================-->
 
@@ -88,10 +82,10 @@
     <!-- scroll-to-top end -->
 
 
+
     <!-- Le javascript ================================================== -->
     {# Placed at the top of the document so pages load faster with defer #}
     {% compress js inline %}
-
 
 
     <script src="{% static 'home/js/jquery-3.3.1.min.js' %}"></script>
@@ -113,6 +107,13 @@
 
     {% endblock javascript %}
     {% endcompress js %}
+    <!-- React JS -->
+    {% block reactJs %}
+    {% endblock reactJs %}
+
+    <!-- Load the Vite-generated React app -->
+    <script type="module" src="{% static 'react/index.js' %}" defer></script>
+
 
 </body>
 

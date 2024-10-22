@@ -52,6 +52,12 @@ def send_welcome_email(
     context["subject"] = context.get("subject", "[Liquid Investment] Successful onboarding")
     send_background_email(user, template_name, context, [context.get("email", user.email)])
 
+class UserView(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        user_data = {"id": 1, "username": "Jeckonia"}
+        return JsonResponse(user_data, safe=False)
 
 class LoginView(AuthenticationGuard,BuildMagicLink,TemplateView):
     form_class = EmailLoginForm
