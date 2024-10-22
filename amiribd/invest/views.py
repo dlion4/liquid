@@ -535,10 +535,10 @@ class ComingSoonView(InvestmentViewMixin):
 
 modified_comingsoon_view = ComingSoonView.as_view()
 
-class AdvertiseView(InvestmentViewMixin):
-    template_name = "account/dashboard/v1/investment/advertise.html"
+class UpgradeView(InvestmentViewMixin):
+    template_name = "account/dashboard/v1/investment/upgrade.html"
 
-modified_advertise_view = AdvertiseView.as_view()
+modified_upgrade_view = UpgradeView.as_view()
 
 class MonetizeView(InvestmentViewMixin):
     template_name = "account/dashboard/v1/investment/monetize.html"

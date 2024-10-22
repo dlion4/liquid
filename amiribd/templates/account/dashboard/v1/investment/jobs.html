@@ -70,12 +70,16 @@ Job Board Listing
                 <span>Upload</span>
               </a>
             </li>
-            <li class="nk-block-tools-opt d-none d-sm-block">
+            <!-- <li class="nk-block-tools-opt d-none d-sm-block">
               <a href="" class="btn btn-primary">
-                <em class="icon ni ni-folder"></em>
+                <em class="fas fa-lightbulb"></em>
                 <span>Tips</span>
               </a>
-            </li>
+            </li> -->
+            <li class="preview-item"><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTabs">Tips & Info</button></li>
+            
+            
+            
             <li class="nk-block-tools-opt d-block d-sm-none">
               <a href="#" class="btn btn-icon btn-primary">
                 <em class="icon ni ni-plus"></em>
@@ -90,6 +94,159 @@ Job Board Listing
 {% endblock heading %}
 
 {% block main %}
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalTabs">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+      <div class="modal-body modal-body-md">
+        <h4 class="title">Remote Task Guidelines</h4>
+        <ul class="nk-nav nav nav-tabs">
+          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabItem1">Earning Tips</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem2">General Guidelines</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem3">Package Upgrade</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem4">Payments</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem5">Contact us</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tabItem1">
+            <h6 class="title">Earning Tips</h6>
+              <p>You should focus on writing quality articles, with SEO-optimized features and high-ranking keywords to boost visibility.</p>
+              <p>Write the article or blog post in the <strong>blogging tab</strong>, or <a href="#">click here</a> to go to the page.</p>
+              <p>Write consistently and don’t focus on individual articles, but on growth. Each quality article earns you a pay that will be credited to your account balance.</p>
+              <p>The not-so-high-quality articles you submit will still be posted on our blog platform.</p>
+              <p><strong>Upgrade</strong> to increase your article limit and write more articles, completing more tasks per day.</p>
+              <p>For online writing and other tasks, follow the given guidelines and earn high payouts.</p>
+
+          </div>
+          <div class="tab-pane" id="tabItem2">
+            <h6 class="title">General Guidelines</h6>
+            <p>We get remote tasks from trusted sources like online writing platforms, direct clients, Canvas dashboards for students, or third-party sources and post them on our platform for you to work on and earn.</p>
+            <p>Jobs are posted daily and consistently, giving you ample opportunities to engage and earn.</p>
+            <p>The Diamond package gives you a limit of 10 tasks per day. For example, whether you choose articles, academic tasks, or development tasks, they are limited to 10 tasks per day.</p>
+            <p>Upgrade your account to earn more from our endless job offers and maximize your potential earnings.</p>
+            <p>Tasks we offer range from article writing, blogging, academic tasks, transcription, data entry tasks, and more.</p>
+            <p>When we receive a task from a trusted source that requires daily articles, we will assign it to you. Upon completion, we hand it to the client, who pays upon satisfaction.</p>
+            <p>Each successful article or task earns you the indicated pay, which is withdrawable twice a week.</p>
+          </div>
+          <div class="tab-pane" id="tabItem3">
+            <h6 class="title">Package Upgrade</h6>
+
+              <p>Upgrade your task limit by choosing your desired package and depositing the required amount to secure your package. We charge for the packages since we acquire these task sources at high prices, which necessitates a small fee that guarantees you more task access and thus higher earning potential.</p>
+
+              <p><strong>Pro Package:</strong> Gives you a limit of 10 to 20 tasks per day. Activation fee: 10,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+
+              <p><strong>Master Package:</strong> Gives you a limit of 20 to 30 tasks per day. Activation fee: 15,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+
+              <p><strong>Guru Package:</strong> Gives you a limit of 30 to 40 tasks per day. Activation fee: 20,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+
+              <p><strong>Professor Package:</strong> Gives you a limit of 40 to 50 tasks per day. Activation fee: 30,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+
+              <p><strong>Supreme Package:</strong> Gives you a limit of 50 to 60 tasks per day. Activation fee: 40,000 KES. Articles payout: $0.5 - $2 per article.</p>
+
+              <p>To activate your package, go to the deposit section and click the deposit button. Enter the amount you have opted for from the packages and input the reason for the deposit to indicate your upgrade. For example, you can write: "Made a deposit for activating Master Package." You will receive an email to confirm your request, after which you can start completing tasks according to your new increased limit.</p>
+
+          </div>
+          <div class="tab-pane" id="tabItem4">
+            <h6 class="title">Payments</h6>
+            <p>We will credit you for quality tasks completed, and the amount will be available in your account balance.</p>
+
+              <p>For other tasks you submit, some might be returned for revision, while others could be canceled. However, for articles, we will publish those that are not sold to our publishers on our site.</p>
+
+              <p>We will grant you bonuses from earnings we get from AdSense, ensuring you still earn even if the articles are not sold.</p>
+
+              <p>For example, if you write 10 articles, each with a cost per page of $1, and we successfully sell 8 to our third-party publishers, we will credit 8 payments to your account balance. The earnings from the remaining 2 articles will be credited into your bonus section.</p>
+
+              <p>You can request a withdrawal for your earnings twice a week. We process withdrawals every Monday and Friday.</p>
+
+              <p>Upgrade your package to earn more; the key to earning more is consistency and choosing the highest effective package.</p>
+
+          </div>
+          <div class="tab-pane" id="tabItem5">
+            <h6 class="title">Contact Us</h6>
+              <p>Contact us for any clarification or confirmation regarding the platform. Be brief and to the point to simplify communication.</p>
+
+              <p>Contact the admin if you encounter task problems or need guidance on how to complete a task. Be brief and to the point to simplify communication.</p>
+
+              <p>Contact the admin for withdrawals from your remote task earnings. Be brief and to the point to simplify communication.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<ul class="nk-sticky-toolbar">
+  
+  <li class="demo-thumb">
+    <a class="toggle tipinfo" data-target="settingPanel" href="#" title="Tips & Info"><em class="icon ni ni-menu-squared"></em></a>
+  </li>
+ 
+  
+</ul>
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<div class="nk-demo-panel toggle-slide toggle-slide-right" data-content="settingPanel" data-toggle-overlay="true" data-toggle-body="true" data-toggle-screen="any">
+  <div class="nk-demo-head">
+    <h6 class="mb-0">Tips and Infomation</h6>
+    <a class="nk-demo-close toggle btn btn-icon btn-trigger revarse mr-n2" data-target="settingPanel" href="#"><em class="icon ni ni-cross"></em></a>
+  </div>
+  <div class="nk-opt-panel" data-simplebar="">
+    <div class="nk-opt-set">
+      <div class="nk-opt-set-title">General Tips</div>
+      <div class="nk-opt-list col-2x">
+        <div>
+          
+          <ul class="nk-nav nav nav-tabs">
+          
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem2">General Guidelines</a></li>
+          
+          </ul>
+          
+         
+        </div>
+        
+      </div>
+    </div>
+    <div class="nk-opt-set">
+      <div class="nk-opt-set-title">Earning Tips</div>
+      <div class="nk-opt-list col-2x">
+        <div>
+          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabItem1">Earning Tips</a></li>
+        </div>
+        
+      </div>
+    </div>
+    <div class="nk-opt-set nk-opt-set-aside">
+      <div class="nk-opt-set-title">Package Upgrade</div>
+      <div class="nk-opt-list col-4x">
+        <div>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem3">Package Upgrade</a></li>
+        </div>
+        
+      </div>
+    </div>
+    <div class="nk-opt-set nk-opt-set-header">
+      <div class="nk-opt-set-title">Payments</div>
+      <div class="nk-opt-list col-4x">
+        <div>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem4">Payments</a></li>
+        </div>
+       
+      </div>
+    </div>
+    <div class="nk-opt-set nk-opt-set-skin">
+      <div class="nk-opt-set-title">Contact Us</div>
+      <div class="nk-opt-list">
+        <div class="nk-opt-item active" data-key="skin" data-update="default">
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem5">Contact us</a></li>
+        </div>
+        
+      </div>
+    </div>
+   
+  </div>
+</div>
 <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 <style>
   /* Existing styles for cards and tags */
@@ -440,5 +597,10 @@ Job Board Listing
     });
   })
 </script>
+
+
+
+<!--xxxxxxxx-->
+
 
 {% endblock main %}

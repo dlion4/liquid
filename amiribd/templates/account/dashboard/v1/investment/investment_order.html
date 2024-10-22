@@ -1,19 +1,112 @@
 {% extends "account/dashboard/v1/base.html" %} {% load static %} {% block heading %}
-<div class="nk-block-head nk-block-head-lg">
-    <div class="nk-block-head-content">
-        <div class="nk-block-head-sub">
-            <a href="" class="back-to">
-                <em class="icon ni ni-arrow-left"></em>
-                <span>Back to plan</span></a>
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+      <div class="nk-block-head-content">
+        <h3 class="nk-block-title page-title">Invest & Save</h3>
+        <div class="nk-block-des text-soft">
+          <p>
+            You can invest or save with us
+          </p>
         </div>
-        <div class="nk-block-head-content">
-            <h2 class="nk-block-title fw-normal">Ready to get started?</h2>
+      </div>
+      <div class="nk-block-head-content">
+        <div class="toggle-wrap nk-block-tools-toggle">
+          <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+            <em class="icon ni ni-menu-alt-r"></em>
+          </a>
+          <div class="toggle-expand-content" data-content="pageMenu">
+            <ul class="nk-block-tools g-3">
+  
+  
+  
+  
+              <li class="preview-item"><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTab1s">Tips & Info</button></li>
+              
+              
+    
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
 {% endblock heading %}
 
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalTab1s">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+        <div class="modal-body modal-body-md">
+          <h4 class="title">Remote Task Guidelines</h4>
+          <ul class="nk-nav nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabItem1">Investiment</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem2">Savings</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem3">Loans</a></li>
+         
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tabItem1">
+              <h6 class="title">Investiment</h6>
+                <p>You should focus on writing quality articles, with SEO-optimized features and high-ranking keywords to boost visibility.</p>
+                <p>Write the article or blog post in the <strong>blogging tab</strong>, or <a href="#">click here</a> to go to the page.</p>
+                <p>Write consistently and don’t focus on individual articles, but on growth. Each quality article earns you a pay that will be credited to your account balance.</p>
+                <p>The not-so-high-quality articles you submit will still be posted on our blog platform.</p>
+                <p><strong>Upgrade</strong> to increase your article limit and write more articles, completing more tasks per day.</p>
+                <p>For online writing and other tasks, follow the given guidelines and earn high payouts.</p>
+  
+            </div>
+            <div class="tab-pane" id="tabItem2">
+              <h6 class="title">Savings</h6>
+              <p>We get remote tasks from trusted sources like online writing platforms, direct clients, Canvas dashboards for students, or third-party sources and post them on our platform for you to work on and earn.</p>
+              <p>Jobs are posted daily and consistently, giving you ample opportunities to engage and earn.</p>
+              <p>The Diamond package gives you a limit of 10 tasks per day. For example, whether you choose articles, academic tasks, or development tasks, they are limited to 10 tasks per day.</p>
+              <p>Upgrade your account to earn more from our endless job offers and maximize your potential earnings.</p>
+              <p>Tasks we offer range from article writing, blogging, academic tasks, transcription, data entry tasks, and more.</p>
+              <p>When we receive a task from a trusted source that requires daily articles, we will assign it to you. Upon completion, we hand it to the client, who pays upon satisfaction.</p>
+              <p>Each successful article or task earns you the indicated pay, which is withdrawable twice a week.</p>
+            </div>
+            <div class="tab-pane" id="tabItem3">
+              <h6 class="title">loans</h6>
+  
+                <p>Upgrade your task limit by choosing your desired package and depositing the required amount to secure your package. We charge for the packages since we acquire these task sources at high prices, which necessitates a small fee that guarantees you more task access and thus higher earning potential.</p>
+  
+                <p><strong>Pro Package:</strong> Gives you a limit of 10 to 20 tasks per day. Activation fee: 10,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+  
+                <p><strong>Master Package:</strong> Gives you a limit of 20 to 30 tasks per day. Activation fee: 15,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+  
+                <p><strong>Guru Package:</strong> Gives you a limit of 30 to 40 tasks per day. Activation fee: 20,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+  
+                <p><strong>Professor Package:</strong> Gives you a limit of 40 to 50 tasks per day. Activation fee: 30,000 KES. Articles payout: $0.5 - $1.5 per article.</p>
+  
+                <p><strong>Supreme Package:</strong> Gives you a limit of 50 to 60 tasks per day. Activation fee: 40,000 KES. Articles payout: $0.5 - $2 per article.</p>
+  
+                <p>To activate your package, go to the deposit section and click the deposit button. Enter the amount you have opted for from the packages and input the reason for the deposit to indicate your upgrade. For example, you can write: "Made a deposit for activating Master Package." You will receive an email to confirm your request, after which you can start completing tasks according to your new increased limit.</p>
+  
+            </div>
+            <div class="tab-pane" id="tabItem4">
+              <h6 class="title">Payments</h6>
+              <p>We will credit you for quality tasks completed, and the amount will be available in your account balance.</p>
+  
+                <p>For other tasks you submit, some might be returned for revision, while others could be canceled. However, for articles, we will publish those that are not sold to our publishers on our site.</p>
+  
+                <p>We will grant you bonuses from earnings we get from AdSense, ensuring you still earn even if the articles are not sold.</p>
+  
+                <p>For example, if you write 10 articles, each with a cost per page of $1, and we successfully sell 8 to our third-party publishers, we will credit 8 payments to your account balance. The earnings from the remaining 2 articles will be credited into your bonus section.</p>
+  
+                <p>You can request a withdrawal for your earnings twice a week. We process withdrawals every Monday and Friday.</p>
+  
+                <p>Upgrade your package to earn more; the key to earning more is consistency and choosing the highest effective package.</p>
+  
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
 <style>
     [class*=dropdown-indicator]:after {
@@ -103,7 +196,7 @@
 
 <div class="nk-block invest-block" style="position: relative;">
     <div class="row g-gs gx-3">
-        <div class="col-lg-8" style="position: relative;">
+        <div class="col-lg-6" style="position: relative;">
             <form action="#" class="invest-form">
                 <div class="col-lg-12 col-sm-12">
                     <div class="invest-field form-group">
@@ -113,7 +206,7 @@
                                 <div class="coin-item">
                                     <div class="coin-icon"><em class="fs-20px far fa-hand-scissors"></em></div>
                                     <div class="coin-info"><span class="coin-name">Select Investment Plan</span>
-                                        <span class="coin-text">Invest for 21 days and get daily profit 4.76%</span>
+                                        <span class="coin-text">Invest for 7 days and get daily profit 2.5%</span>
                                     </div>
                                 </div>
                             </a>
@@ -126,7 +219,7 @@
                                                 </div>
                                                 <div class="coin-info"><span class="coin-name">Investment</span>
                                                     <span class="coin-text">
-                                                        Invest and earn from the returns invested
+                                                        Invest and earn from the returns invested evry 7 days
                                                     </span>
                                                 </div>
                                             </div>
@@ -141,8 +234,8 @@
                                                 </div>
                                                 <div class="coin-info"><span class="coin-name">Savings</span>
                                                     <span class="coin-text">
-                                                        Save for 21 days and get daily profit
-                                                        4.76%
+                                                        Save for 10 days and get daily profit
+                                                        bonus from 500 KES
                                                     </span>
                                                 </div>
                                             </div>
@@ -161,15 +254,15 @@
                         <div class="invest-amount-group g-2">
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="1-day" id="iv-amount-1">
-                                <label class="invest-amount-label" for="iv-amount-1">1 Day</label>
+                                <label class="invest-amount-label" for="iv-amount-1">5 Days</label>
                             </div>
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="1-week" id="iv-amount-2">
-                                <label class="invest-amount-label" for="iv-amount-2">1 Week</label>
+                                <label class="invest-amount-label" for="iv-amount-2">10 days</label>
                             </div>
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="2-weeks" id="iv-amount-3">
-                                <label class="invest-amount-label" for="iv-amount-3">2 Weeks</label>
+                                <label class="invest-amount-label" for="iv-amount-3">15 days</label>
                             </div>
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="1-month" id="iv-amount-4">
@@ -246,7 +339,7 @@
                                                     <em class="icon ni ni-money"></em>
                                                 </div>
                                                 <div class="coin-info">
-                                                    <span class="coin-name" data-bs-pay-text="coin-pay-select">Manual</span>
+                                                    <span class="coin-name" data-bs-pay-text="coin-pay-select">Manual Payment</span>
                                                     <span class="coin-text">Current</span>
                                                 </div>
                                             </div>
@@ -259,7 +352,7 @@
                     </div>
                     <div class="invest-field form-group">
                         <div class="custom-control custom-control-xs custom-checkbox"><input type="checkbox" class="custom-control-input" id="checkbox">
-                            <label class="custom-control-label" for="checkbox">I agree the
+                            <label class="custom-control-label" for="checkbox">I agree with the
                                 <a href="#">terms and &amp; conditions.</a>
                             </label>
                         </div>

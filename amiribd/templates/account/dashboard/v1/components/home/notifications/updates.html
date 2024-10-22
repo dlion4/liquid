@@ -5,8 +5,8 @@
     <div class="card-inner">
       <div class="card-title-group mb-1">
         <div class="card-title">
-          <h6 class="title">Investment Overview</h6>
-          <p>The investment overview of your platform.
+          <h6 class="title">Platform Statistics</h6>
+          <p>The total successful transactions in our platform.
             <a href="#">All Investment</a>
           </p>
         </div>
@@ -16,7 +16,7 @@
           <a class="nav-link active" data-bs-toggle="tab" href="#overview" aria-selected="false" role="tab" tabindex="-1">Overview</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" data-bs-toggle="tab" href="#thisyear" aria-selected="false" role="tab" tabindex="-1">This Year</a>
+          <a class="nav-link" data-bs-toggle="tab" href="#thisyear" aria-selected="false" role="tab" tabindex="-1">This month</a>
         </li>
         <li class="nav-item" role="presentation">
           <a class="nav-link " data-bs-toggle="tab" href="#alltime" aria-selected="true" role="tab">All Time</a>
@@ -25,7 +25,7 @@
       <div class="tab-content mt-0">
         <div class="tab-pane  active show" id="overview" role="tabpanel">
           <div class="invest-ov gy-2">
-            <div class="subtitle">Currently Active Investment</div>
+            <div class="subtitle">Total Active Deposits</div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="">{{total_site_deposit}}
@@ -35,11 +35,11 @@
               </div>
               <div class="invest-ov-stats">
                 <div>
-                  <span class="">56</span>
+                  <span class="">14</span>
                   <span class="change up text-danger">
                     <em class="icon ni ni-arrow-long-up"></em>1.93%</span>
                 </div>
-                <div class="title">Plans</div>
+                <div class="title">Active Plans</div>
               </div>
             </div>
             <div class="invest-ov-details">
@@ -47,12 +47,12 @@
                 <div class="">{{total_paid_profits}}
                   <span class="currency currency-usd">USD</span>
                 </div>
-                <div class="title">Paid Profit</div>
+                <div class="title">Total Successful Paid Profit</div>
               </div>
             </div>
           </div>
           <div class="invest-ov gy-2">
-            <div class="subtitle">Investment in this Month</div>
+            <div class="subtitle">Total Investment this Month</div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="">{{monthly_site_investments.current_month_deposits}}
@@ -122,7 +122,7 @@
         </div>
         <div class="tab-pane" id="alltime" role="tabpanel">
           <div class="invest-ov gy-2">
-            <div class="subtitle">Currently Actived Investment</div>
+            <div class="subtitle">Total deposits</div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="">{{total_site_deposit}}
@@ -132,7 +132,7 @@
               </div>
               <div class="invest-ov-stats">
                 <div>
-                  <span class="">556</span>
+                  <span class="">14</span>
                   <span class="change up text-danger">
                     <em class="icon ni ni-arrow-long-up"></em>
                     1.93%
@@ -146,12 +146,12 @@
                 <div class="">{{total_paid_profits}}
                   <span class="currency currency-usd">USD</span>
                 </div>
-                <div class="title">Paid Profit</div>
+                <div class="title">Total Paid Profits</div>
               </div>
             </div>
           </div>
           <div class="invest-ov gy-2">
-            <div class="subtitle">Investment in this Month</div>
+            <div class="subtitle">Total Investments this Month</div>
             <div class="invest-ov-details">
               <div class="invest-ov-info">
                 <div class="">{{monthly_site_investments.current_month_deposits}}
