@@ -119,16 +119,12 @@
     <script src="{% static 'home/js/jquery.paroller.min.js' %}"></script>
     <script src="{% static 'home/js/main.js' %}"></script>
 
-
     {% block javascript %}
     <!-- Bootstrap JS -->
-
-
     {% endblock javascript %}
     <!-- React JS -->
     {% block reactJs %}
     {% endblock reactJs %}
-
     <!-- Load the Vite-generated React app -->
     <script type="module" src="{% static 'react/index.js' %}" defer></script>
 
