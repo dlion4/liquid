@@ -1,0 +1,128 @@
+{
+    "AboutAffiliateEarn": [
+        {
+            "sectionSubtitle": "Earn The Big Money",
+            "sectionTitle": "Affiliate Program",
+            "content": [
+                "Behoof is a global online investment platform that allows qualifying investors to invest in financial innovation including FinTech (Financial Technology) companies, funds, and other new alternative financial products.",
+                "We believe that the future of finance looks very different to how it looks today and we offer qualifying investors the opportunity to invest in the companies and products that are building the future of finance."
+            ],
+            "cta": "read more",
+            "ctaLink": "#0",
+            "statistics": [
+                {
+                    "icon": "/static/home/images/icons/about/1.svg",
+                    "counter": "634",
+                    "suffix": "k",
+                    "caption": "Registered Members"
+                },
+                {
+                    "icon": "/static/home/images/icons/about/2.svg",
+                    "counter": "08",
+                    "suffix": "M",
+                    "caption": "Satisfied customers"
+                },
+                {
+                    "icon": "/static/home/images/icons/about/3.svg",
+                    "counter": "10",
+                    "suffix": "B",
+                    "caption": "Total Investment"
+                },
+                {
+                    "icon": "/static/home/images/icons/about/4.svg",
+                    "prefix": "$",
+                    "counter": "14",
+                    "suffix": "k",
+                    "caption": "Average Investment"
+                },
+                {
+                    "icon": "/static/home/images/icons/about/5.svg",
+                    "prefix": "$",
+                    "counter": "20",
+                    "suffix": "k",
+                    "caption": "Financial Products"
+                }
+            ]
+        }
+    ],
+    "whyChooseUs": [
+        {
+            "sectionSubtitle": "A Few Reasons Why",
+            "sectionTitle": "Investors Choose Us",
+            "description": "Our service gives you better result and savings, as per your requirement and you can manage your investments from anywhere either from home or workplace, at any time.",
+            "video": {
+                "thumbnail": "/static/home/images/elements/makbook.png",
+                "videoLink": "#0"
+            },
+            "chooseItems": [
+                {
+                    "icon": "/static/home/images/icons/choose-us/1.svg",
+                    "title": "Fast Profit",
+                    "description": "We're talking about ways you can make money fast. Invest money and get reward, bonus, and profit."
+                },
+                {
+                    "icon": "/static/home/images/icons/choose-us/2.svg",
+                    "title": "Secure Investment",
+                    "description": "Your investments are safe with us. We offer secure platforms for managing all of your financial needs."
+                },
+                {
+                    "icon": "/static/home/images/icons/choose-us/3.svg",
+                    "title": "24/7 Support",
+                    "description": "We offer round-the-clock support to ensure your investments are well taken care of."
+                }
+            ]
+        }
+    ],
+    "companyTeam": {
+        "sectionSubtitle": "Meet our Creative",
+        "sectionTitle": "Management Team",
+        "description": "Our team of creative programmers, marketing experts, and members of the global investment community have worked together to build the ultimate investment site, happy Investor reminds us how lucky we are to be doing what we love.",
+        "background": "/static/home/images/team-section-bg.jpg",
+        "teamMembers": [
+            {
+                "name": "Al Burns",
+                "designation": "CEO",
+                "image": "/static/home/images/team/1.png",
+                "socialLinks": {
+                    "facebook": "#0",
+                    "twitter": "#0",
+                    "googlePlus": "#0",
+                    "instagram": "#0"
+                }
+            },
+            {
+                "name": "Rosie Holt",
+                "designation": "Advisory Member",
+                "image": "/static/home/images/team/2.png",
+                "socialLinks": {
+                    "facebook": "#0",
+                    "twitter": "#0",
+                    "googlePlus": "#0",
+                    "instagram": "#0"
+                }
+            },
+            {
+                "name": "Tony Welch",
+                "designation": "IT Specialist",
+                "image": "/static/home/images/team/3.png",
+                "socialLinks": {
+                    "facebook": "#0",
+                    "twitter": "#0",
+                    "googlePlus": "#0",
+                    "instagram": "#0"
+                }
+            },
+            {
+                "name": "Robin Price",
+                "designation": "Consultant",
+                "image": "/static/home/images/team/4.png",
+                "socialLinks": {
+                    "facebook": "#0",
+                    "twitter": "#0",
+                    "googlePlus": "#0",
+                    "instagram": "#0"
+                }
+            }
+        ]
+    }
+}
