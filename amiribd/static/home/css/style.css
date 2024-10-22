@@ -54,11 +54,7 @@
  ========================== */
 @import url('reset.css');
 @import url('global.css');
-@import url("bootstrap.min.css");
-@import url("jquery-ui.min.css");
-@import url("nice-select.css");
-@import url("animate.css");
-@import url("responsive.css");
+
 
 /*  header-section css start */
 .header-section {

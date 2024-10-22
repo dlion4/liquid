@@ -1,0 +1,19 @@
+{
+  "counters": [
+    {
+      "icon": "assets/images/icons/counter/1.svg",
+      "value": 961,
+      "caption": "Invested in Pitches"
+    },
+    {
+      "icon": "assets/images/icons/counter/2.svg",
+      "value": 634,
+      "caption": "Registered Members"
+    },
+    {
+      "icon": "assets/images/icons/counter/3.svg",
+      "value": 14,
+      "caption": "Average Investment"
+    }
+  ]
+}

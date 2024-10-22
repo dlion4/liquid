@@ -10,10 +10,16 @@
     <meta name="description" content="investment app" />
     <meta name="author" content="kwasa" />
     <link rel="shortcut icon" href="{% static 'img/elogosmall.png' %}" />
-    {% compress css %}
     <link rel="stylesheet" href="{% static 'home/css/fontawesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'home/css/icofont.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'home/css/lightcase.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/animate.css' %}">
+
+
     <link rel="stylesheet" href="{% static 'home/css/css' %}">
     <!-- Your stuff: Third-party CSS libraries go here -->
     {% block css %}
@@ -26,11 +32,25 @@
     <link rel="preload" href="{% static 'fonts/inter-v12-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{% static 'fonts/inter-v12-latin-500.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{% static 'fonts/inter-v12-latin-700.woff2' %}" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="{% static 'react/index.css' %}">
-
-
     <!-- UIkit CSS -->
-    {% endcompress css %}
+    <link rel="stylesheet" href="{% static 'react/index.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/responsive.css' %}">
+    <style>
+        .banner-elements-image img,
+        .banner-content-area {
+            transform: translateY(-10rem);
+        }
+        @media (max-width: 1165px) {
+            .banner-content-area {
+                transform: translateY(-7rem);
+            }
+        }
+        @media (max-width: 600px) {
+            .banner-content-area {
+                transform: translateY(0rem);
+            }
+        }
+    </style>
 
 </head>
 
@@ -53,7 +73,7 @@
 
 
 
-<div id="app"></div> <!-- Your React app will mount here -->
+    <div id="app"></div>
 
     <!-- /container -->
 
@@ -85,7 +105,6 @@
 
     <!-- Le javascript ================================================== -->
     {# Placed at the top of the document so pages load faster with defer #}
-    {% compress js inline %}
 
 
     <script src="{% static 'home/js/jquery-3.3.1.min.js' %}"></script>
@@ -106,7 +125,6 @@
 
 
     {% endblock javascript %}
-    {% endcompress js %}
     <!-- React JS -->
     {% block reactJs %}
     {% endblock reactJs %}
