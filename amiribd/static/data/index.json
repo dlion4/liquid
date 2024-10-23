@@ -460,5 +460,352 @@
             "id": 5,
             "image": "/static/home/images/partners/5.png"
         }
-    ]
+    ],
+    "affiliate": {
+        "sectionTitle": "Take a look at our latest",
+        "sectionSubTitle": "Affiliate Bonus",
+        "sectionDescription": "Our partners always get the best cost-effective transparent solutions and we are always ready to help on any issue.",
+        "bonuses": [
+            {
+                "affiliateId": "10****45",
+                "bonus": "$3200.00"
+            },
+            {
+                "affiliateId": "10****46",
+                "bonus": "$1500.00"
+            },
+            {
+                "affiliateId": "10****47",
+                "bonus": "$2200.00"
+            }
+        ],
+        "membershipLevelAndCommission": {
+            "sectionTitle": "Referral commission and",
+            "sectionSubTitle": "Membership Level",
+            "sectionDescription": "Refferal Commission and Membership Levels are of 3 levels as below",
+            "levels": [
+                {
+                    "id": 1,
+                    "badgeStatus": "newbie",
+                    "level": "1st Level",
+                    "percentage": "5%",
+                    "icon": "/static/home/images/icons/membership/1.png"
+                },
+                {
+                    "id": 2,
+                    "badgeStatus": "great",
+                    "level": "2nd Level",
+                    "percentage": "10%",
+                    "icon": "/static/home/images/icons/membership/2.png"
+                },
+                {
+                    "id": 3,
+                    "badgeStatus": "master",
+                    "level": "3rd Level",
+                    "percentage": "25%",
+                    "icon": "/static/home/images/icons/membership/3.png"
+                }
+            ]
+        },
+        "howItWorks": {
+            "sectionTitle": "Here's How it Works",
+            "sectionSubTitle": "Getting Started?It's Simple",
+            "sectionDescription": "The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!",
+            "icon": "/static/home/images/how-work-bg.png",
+            "steps": [
+                {
+                    "id": 1,
+                    "title": "Join Program",
+                    "description": "Once you sign up, you’ll get a personalized link to send to your friends. Click Join Now below and start EARNING in just a few clicks.",
+                    "buttonText": "join now",
+                    "icon": "/static/home/images/icons/how-work/1.png",
+                    "link": "#0"
+                },
+                {
+                    "id": 2,
+                    "title": "Promote",
+                    "description": "Share your referral link wherever, whenever (don’t be selfish). Monetize your traffic with a Tracking Link.",
+                    "buttonText": "Tracking Link",
+                    "icon": "/static/home/images/icons/how-work/2.png",
+                    "link": "#0"
+                },
+                {
+                    "id": 3,
+                    "title": "Earn",
+                    "description": "Get up to 50% commission. Earn from ALL products with your 30-day cookie, not just those you advertise.",
+                    "buttonText": "Commission Model",
+                    "icon": "/static/home/images/icons/how-work/3.png",
+                    "link": "#0"
+                }
+            ]
+        },
+        "testimonial": {
+            "sectionTitle": "Testimonials",
+            "sectionSubTitle": "Already Earning With Us",
+            "sectionDescription": "We pay 24% on each purchase from your referrals. Our average user makes purchases for $48.39 per month, meaning you can receive $11.61 monthly from each referral.",
+            "testimonials": [
+                {
+                    "id": 1,
+                    "name": "Kevin Ohashi",
+                    "designation": "Award winning blogger",
+                    "feedback": "behoof has one of the friendliest affiliate programs. They’re definitely one of the best investment websites in the world. I’ve been using them for a long time and have never had any problems.",
+                    "image": "/static/home/images/testimonial/2.png"
+                },
+                {
+                    "id": 2,
+                    "name": "Kevin Ohashi",
+                    "designation": "Award winning blogger",
+                    "feedback": "behoof has one of the friendliest affiliate programs. They’re definitely one of the best investment websites in the world. I’ve been using them for a long time and have never had any problems.",
+                    "image": "/static/home/images/testimonial/3.png"
+                }
+            ]
+        }
+    },
+    "promotion": {
+        "items": [
+            {
+                "id": 1,
+                "title": "YOUR REFERRAL GIFT",
+                "subTitle": "Be rewarded when you spread the word",
+                "description": "Invite your family and friends, our exclusive referral program for those important to you. Invite them for a complimentary financial consultation. You can look forward to a generous cash bonus.",
+                "icon": "/static/home/images/promotion/1.png",
+                "link": "#0"
+            },
+            {
+                "id": 2,
+                "title": "NEW FUNDS TOP-UP BONUS",
+                "subTitle": "Get rewarded for any additional new funds",
+                "description": "Receive an attractive cash bonus whenever you bring in new funds and build your wealth with us.",
+                "icon": "/static/home/images/promotion/2.png",
+                "link": "#0"
+            },
+            {
+                "id": 3,
+                "title": "Relationship BONUS",
+                "subTitle": "Be rewarded for your Relationship with us",
+                "description": "Earn up to 30% more annual Relationship Bonus based on your relationship with us.",
+                "icon": "/static/home/images/promotion/3.png",
+                "link": "#0"
+            }
+        ]
+    },
+    "howItWorks": {
+        "videoView": {
+            "bgImageUrl": "/static/home/images/video-bg.jpg",
+            "videoUrl": "https://www.youtube.com/embed/aFYlAzQHnY4",
+            "title": "How to invest",
+            "description": "Risk-free secure investment anywhere, anytime."
+        },
+        "sectionA": {
+            "sectionTitle": "How you can invest your",
+            "sectionSubTitle": "Money More Smartly",
+            "sectionDescription": "It’s a simple way to start invest.You don’t need a deep wallet to start behoof. Pick an amount you can afford, and build your behoof over time",
+            "steps": [
+                {
+                    "id": 1,
+                    "title": "Sign up",
+                    "description": "To start investing using the behoof Invest platform, you need to register. Registration is incredibly simple; it should take you no more than 5 min",
+                    "icon": "/static/home/images/icons/how-work/4.png",
+                    "link": "#0",
+                    "link_title": "sign up"
+                },
+                {
+                    "id": 2,
+                    "title": "Invest",
+                    "description": "After you have created your account, your identity has been verified & you have added funds, you can start searching for the invest",
+                    "icon": "/static/home/images/icons/how-work/5.png",
+                    "link": "#0",
+                    "link_title": "Invest Now"
+                },
+                {
+                    "id": 3,
+                    "title": "Grow your Income",
+                    "description": "After you have created your account, your identity has been verified & you have added funds, you can start searching for the invest",
+                    "icon": "/static/home/images/icons/how-work/6.png",
+                    "link": "#0",
+                    "link_title": "Read more"
+                }
+            ]
+        },
+        "sectionB": {
+            "bannerImage": "/static/home/images/elements/about.png",
+            "sectionTitle": "OUR SMART APP",
+            "sectionSubTitle": "Manage your money more easily",
+            "sectionDescriptions": [
+                "Invest with us, and you'll be making the most of your money. We'll help you understand the risks and rewards of investing, and we'll guide you through the process of finding the right investments for your needs.",
+                "Intuitively designed for newcomers and experts alike, behoof gives you a clear picture of your portfolio’s performance over time, so you can adjust your positions and learn by doing.Stay up to date on Your account balance, details and request withdrawals / make deposits."
+            ],
+            "appItems": [
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/3.png",
+                    "caption": "Keep track of your moneymore simply"
+                },
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/4.png",
+                    "caption": "Get a personalised budget,automatically"
+                },
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/1.png",
+                    "caption": "See all your money in one place"
+                },
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/2.png",
+                    "caption": "Invest your money more smartly"
+                }
+            ]
+        }
+    },
+    "championshipContest": {
+        "icon": "/static/home/images/elements/contest.png",
+        "content": {
+            "title": "Championship 2024",
+            "contestName": "Global Championship",
+            "registrationLink": "0#",
+            "startDate": "2024-11-01",
+            "totalRegistrations": "2500"
+        },
+        "duration": "3 months",
+        "withdrawablePrice": {
+            "title": "Withdrawable Prizes",
+            "prices": [
+                {
+                    "position": "1ST",
+                    "amount": "5000"
+                },
+                {
+                    "position": "2ND",
+                    "amount": "3000"
+                },
+                {
+                    "position": "3RD",
+                    "amount": "2000"
+                },
+                {
+                    "position": "4TH",
+                    "amount": "1000"
+                }
+            ]
+        },
+        "platForm": {
+            "title": "Platform",
+            "platforms": [
+                {
+                    "item": "PC",
+                    "logo": "/images/platforms/pc-logo.png"
+                },
+                {
+                    "item": "Xbox",
+                    "logo": "/images/platforms/xbox-logo.png"
+                },
+                {
+                    "item": "PlayStation",
+                    "logo": "/images/platforms/playstation-logo.png"
+                }
+            ]
+        },
+        "contestAchievement": {
+            "icon": "/static/home/images/elements/common-shape.png",
+            "roundLeaders": {
+                "sectionTitle": "Take a Look Current",
+                "sectionSubTitle": "Top Performers",
+                "sectionDescription": "These are the leading contestants in the current round.",
+                "leaders": [
+                    {
+                        "name": "John Doe",
+                        "image": "/static/home/images/withdraw/t-1.png",
+                        "position": "1ST",
+                        "rank": "1"
+                    },
+                    {
+                        "name": "Jane Smith",
+                        "image": "/static/home/images/withdraw/t-1.png",
+                        "position": "2ND",
+                        "rank": "2"
+                    },
+                    {
+                        "name": "Alice Johnson",
+                        "image": "/static/home/images/withdraw/t-1.png",
+                        "position": "3RD",
+                        "rank": "3"
+                    }
+                ]
+            },
+            "latestContestWinners": {
+                "sectionTitle": "Winners",
+                "sectionSubTitle": "Latest contest!",
+                "sectionDescription": "These are the latest winners from our contests.",
+                "winners": [
+                    {
+                        "image": "/static/home/images/contest-winner/1.png",
+                        "amount": "$5,000",
+                        "date": "2024-10-01"
+                    },
+                    {
+                        "image": "/static/home/images/contest-winner/1.png",
+                        "amount": "$3,000",
+                        "date": "2024-10-10"
+                    },
+                    {
+                        "image": "/static/home/images/contest-winner/1.png",
+                        "amount": "$1,000",
+                        "date": "2024-10-15"
+                    }
+                ]
+            }
+        }
+    },
+    "FAQPage": {
+        "sectionTitle": "We've Got Answers",
+        "sectionSubTitle": "got any questions",
+        "faqs": [
+            {
+                "question": "Why is my withdrawal pending?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How do I deposit funds?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How do I deposit Euro?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How do I verify my account?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "Why is my deposit pending?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How are the fees structured?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            }
+        ]
+    }
 }
