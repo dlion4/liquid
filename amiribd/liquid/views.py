@@ -18,7 +18,7 @@ from .models import Contact
 
 
 class HomeView(TemplateView):
-    template_name = "home/home.html"
+    template_name = "pages/home.html"
 
 
 
@@ -33,9 +33,6 @@ class InvestmentView(TemplateView):
 class EducationView(TemplateView):
     template_name = "pages/learn.html"
 
-
-class EducationView(TemplateView):
-    template_name = "pages/learn.html"
 
 
 class ContactView(FormView):
@@ -73,10 +70,6 @@ class CareerView(TemplateView):
 
 class PolicyView(TemplateView):
     template_name = "pages/policies.html"
-
-
-
-
 
 
 def view_policy(request, pk):
