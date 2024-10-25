@@ -126,16 +126,27 @@
                             </a>
                         </div>
                         <ul class="user-account-data">
+                            
+                            
+                            <li>
+                                <div class="user-account-label">
+                                    <span class="sub-text">Remote Tasks</span>
+                                </div>
+                                <div class="user-account-value">
+                                    <span class="lead-text">$ 
+                                        <span class="currency-btc">{{ remote_jobs_income|floatformat:2|intcomma }}</span></span>
+                                </div>
+                            </li>
                             <li>
                                 <div class="user-account-label">
                                     <span class="sub-text">Profits</span>
                                 </div>
                                 <div class="user-account-value">
-                                    <span class="lead-text">+ 0.0526
-                                        <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">3.1%
-                                        <em class="icon ni ni-arrow-long-up"></em></span>
+                                    <span class="lead-text">0.0
+                                        <span class="currency currency-btc">KES</span></span>
                                 </div>
                             </li>
+
                             <li>
                                 <div class="user-account-label">
                                     <span class="sub-text">Deposits</span>
@@ -266,6 +277,12 @@
                                 <span class="nk-menu-text">Invest and Save</span>
                             </a>
                         </li>
+                        <li class="nk-menu-item">
+                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:loans' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span>
+                                <span class="nk-menu-text">Loans</span>
+                            </a>
+                        </li>
                         {% endif %}
                         
                         
@@ -315,7 +332,7 @@
                         <li class="nk-menu-item has-sub">
                             <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon">
-                                    <em class="icon ni ni-files"></em>
+                                    <em class="icon ni ni-cloud"></em>
                                 </span><span class="nk-menu-text">AI Services</span>
                             </a>
 
@@ -425,6 +442,13 @@
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-headphone"></em>
                                 </span><span class="nk-menu-text">Support</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a  style="cursor:pointer"  href="{% url 'dashboard:admin_assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-shield"></em>
+                                </span><span class="nk-menu-text">Admin</span>
                             </a>
                         </li>
                     </ul>

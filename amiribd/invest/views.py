@@ -609,7 +609,7 @@ class JobsView(InvestmentViewMixin):
     job_application_form = JobApplicationForm
 
     def get_jobs(self):
-        return self.jobs.objects.all().order_by("-id")
+        return self.jobs.objects.all().order_by("-id").order_by("?")
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
@@ -633,16 +633,16 @@ modified_jobs_view = JobsView.as_view()
 #     )
 
 
-def fetch_job_type(request, location_type, page=0, per_page=4):
+def fetch_job_type(request, location_type, page=0, per_page=6):
     page = int(page)
     per_page = int(per_page)
     offset = page * per_page
     context = {}
     if location_type in ("all", "*"):
-        jobs = Job.objects.all().distinct()[offset:offset + per_page]
+        jobs = Job.objects.all().distinct().order_by("?")[offset:offset + per_page]
     else:
         jobs = Job.objects.filter(
-            location_type__iexact=location_type).distinct()[offset:offset + per_page]
+            location_type__iexact=location_type).distinct().order_by("?")[offset:offset + per_page]
     context["jobs"] = jobs
     job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
     context |= {"job_application_form": job_application_form}
