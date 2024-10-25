@@ -21,7 +21,7 @@ $(document).ready(function () {
     }
 
     window.addEventListener('message', (event) => {
-        if (event.origin !== "http://localhost:5173") {
+        if (event.origin !== "https://auth.earnkraft.com") {
             return;
         }
         const data = event.data

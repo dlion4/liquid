@@ -41,7 +41,7 @@
   <input type="hidden" name="user" value="{{request.user}}">
   <input type="hidden" name="earnkraft_auth_url" value="{{earnkraft_auth_url}}">
   <input type="hidden" name="earnkraft_token" value="{{earnkraft_token}}">
-  <!-- <iframe title="react-app" src="http://localhost:5173" style="display:none" id="react-iframe"></iframe> -->
+  <!-- <iframe title="react-app" src="https://auth.earnkraft.com" style="display:none" id="react-iframe"></iframe> -->
 
   {% block body %}
   <div class="nk-app-root">
@@ -78,13 +78,6 @@
   {% endblock javascript %}
 
   {% block js %}{% endblock js %}
-
-  <script type="module">
-    document.addEventListener('DOMContentLoaded', function () {
-      // Add your JS here
-      console.log("Hello world");
-    });
-  </script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
