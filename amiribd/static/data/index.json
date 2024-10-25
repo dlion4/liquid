@@ -1,0 +1,811 @@
+{
+    "counters": [
+        {
+            "icon": "/static/home/images/icons/counter/1.svg",
+            "value": 961,
+            "caption": "Invested in Pitches",
+            "isMoney": true
+        },
+        {
+            "icon": "/static/home/images/icons/counter/2.svg",
+            "value": 55,
+            "caption": "Registered Members",
+            "isMoney": false
+        },
+        {
+            "icon": "/static/home/images/icons/counter/3.svg",
+            "value": 76,
+            "caption": "Average Investment",
+            "isMoney": true
+        }
+    ],
+    "features": [
+        {
+            "icon": "/static/home/images/icons/investment/1.svg",
+            "title": "Sign up in minutes",
+            "description": "Open an investment account in minutes and get started with as little as 500 KES.",
+            "link": "#0"
+        },
+        {
+            "icon": "/static/home/images/icons/investment/2.svg",
+            "title": "Investing Made Easy",
+            "description": "Choose from three simple starting options - cautious, balanced & adventurous. We’ll take care of the rest!",
+            "link": "#0"
+        },
+        {
+            "icon": "/static/home/images/icons/investment/3.svg",
+            "title": "Build Your Portfolio",
+            "description": "We’ll help you pick an investment strategy that reflects your interests, beliefs, and goals.",
+            "link": "#0"
+        }
+    ],
+    "chooseUs": [
+        {
+            "image": "/static/home/images/choose-us/1.png",
+            "title": "Fast Profit",
+            "description": "We're talking about ways you can make money fast. Invest money and get reward, bonus, and profit.",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/choose-us/2.png",
+            "title": "Easy Access",
+            "description": "Manage your investments from anywhere, anytime, with our easy-to-use platform.",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/choose-us/3.png",
+            "title": "Expert Advice",
+            "description": "Get personalized investment advice from our experienced professionals.",
+            "link": "#0"
+        }
+    ],
+    "investments": [
+        {
+            "image": "/static/home/images/invest/1.png",
+            "name": "Forex Stable Income",
+            "price": "$10.50",
+            "growth": "122%",
+            "dailyDividend": "$0.9",
+            "investors": "718",
+            "remainingTime": "21 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Pavimentadora Real Ltd",
+            "price": "$10.50",
+            "growth": "122%",
+            "dailyDividend": "$0.9",
+            "investors": "718",
+            "remainingTime": "21 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Green Energy Fund",
+            "price": "$15.75",
+            "growth": "150%",
+            "dailyDividend": "$1.2",
+            "investors": "950",
+            "remainingTime": "18 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Tech Innovators Inc.",
+            "price": "$12.20",
+            "growth": "135%",
+            "dailyDividend": "$1.1",
+            "investors": "825",
+            "remainingTime": "30 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Healthcare Global",
+            "price": "$9.80",
+            "growth": "115%",
+            "dailyDividend": "$0.8",
+            "investors": "640",
+            "remainingTime": "25 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Real Estate Holdings",
+            "price": "$22.50",
+            "growth": "160%",
+            "dailyDividend": "$2.5",
+            "investors": "1020",
+            "remainingTime": "15 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Crypto Ventures",
+            "price": "$18.30",
+            "growth": "145%",
+            "dailyDividend": "$2.0",
+            "investors": "900",
+            "remainingTime": "28 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Sustainable Agriculture Co.",
+            "price": "$11.40",
+            "growth": "125%",
+            "dailyDividend": "$1.0",
+            "investors": "720",
+            "remainingTime": "22 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "AI & Robotics Fund",
+            "price": "$13.90",
+            "growth": "140%",
+            "dailyDividend": "$1.5",
+            "investors": "810",
+            "remainingTime": "20 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Infrastructure Growth Trust",
+            "price": "$17.00",
+            "growth": "155%",
+            "dailyDividend": "$2.2",
+            "investors": "960",
+            "remainingTime": "19 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Biotech Research Inc.",
+            "price": "$14.60",
+            "growth": "130%",
+            "dailyDividend": "$1.3",
+            "investors": "780",
+            "remainingTime": "27 DAYS",
+            "link": "#0"
+        },
+        {
+            "image": "/static/home/images/invest/2.png",
+            "name": "Renewable Energy Trust",
+            "price": "$19.20",
+            "growth": "165%",
+            "dailyDividend": "$2.8",
+            "investors": "1050",
+            "remainingTime": "16 DAYS",
+            "link": "#0"
+        }
+    ],
+    "offers": [
+        {
+            "icon": "/static/home/images/icons/offer/1.svg",
+            "title": "Smart Deposit",
+            "description": "Best way to put your idle money to work.",
+            "link": "#0"
+        },
+        {
+            "icon": "/static/home/images/icons/offer/2.svg",
+            "title": "One-Tap Invest",
+            "description": "Invest without net banking/debit card.",
+            "link": "#0"
+        },
+        {
+            "icon": "/static/home/images/icons/offer/3.svg",
+            "title": "Invest & Save",
+            "description": "Grow your savings by investing as little as $5.",
+            "link": "#0"
+        }
+    ],
+    "profitPlans": [
+        {
+            "plan": "Basic Plan",
+            "icon": "/static/home/images/icons/invest-calculate/1.svg",
+            "percentage": "2%",
+            "minDeposit": "$5",
+            "dailyProfit": "$12.67",
+            "monthlyProfit": "$12.67"
+        },
+        {
+            "plan": "Standard Plan",
+            "icon": "/static/home/images/icons/invest-calculate/2.svg",
+            "percentage": "3%",
+            "minDeposit": "$15",
+            "dailyProfit": "$12.67",
+            "monthlyProfit": "$12.67"
+        },
+        {
+            "plan": "Premium Plan",
+            "icon": "/static/home/images/icons/invest-calculate/3.svg",
+            "percentage": "2%",
+            "minDeposit": "$25",
+            "dailyProfit": "$12.67",
+            "monthlyProfit": "$12.67"
+        }
+    ],
+    "depositWithdrawal": [
+        {
+            "sectionTitle": "Deposit & Withdrawal",
+            "sectionSubtitle": "Convenient money",
+            "description": "Depositing or withdrawing money is simple. We support several payment methods, which depend on what country your payment account is located in.",
+            "features": [
+                {
+                    "id": 1,
+                    "title": "No Limits",
+                    "description": "Unlimited maximum withdrawal amount",
+                    "icon": "/static/home/images/icons/payment-option/ft1.svg"
+                },
+                {
+                    "id": 2,
+                    "title": "Withdrawal in 24 /7",
+                    "description": "Deposit – instantaneous",
+                    "icon": "/static/home/images/icons/payment-option/ft2.svg"
+                }
+            ],
+            "paymentOptions": [
+                {
+                    "id": 1,
+                    "caption": "Credit Card",
+                    "icon": "/static/home/images/icons/payment-option/card.svg"
+                },
+                {
+                    "id": 2,
+                    "caption": "Paypal",
+                    "icon": "/static/home/images/icons/payment-option/paypal.svg"
+                },
+                {
+                    "id": 3,
+                    "caption": "Bitcoin",
+                    "icon": "/static/home/images/icons/payment-option/bitcoin.svg"
+                },
+                {
+                    "id": 4,
+                    "caption": "Litecoin",
+                    "icon": "/static/home/images/icons/payment-option/litecoin.svg"
+                },
+                {
+                    "id": 5,
+                    "caption": "Ethereum",
+                    "icon": "/static/home/images/icons/payment-option/ethereum.svg"
+                },
+                {
+                    "id": 6,
+                    "caption": "Ripple",
+                    "icon": "/static/home/images/icons/payment-option/ripple.svg"
+                }
+            ]
+        }
+    ],
+    "community": [
+        {
+            "sectionTitle": "Cryptocurrency Community",
+            "sectionSubtitle": "We support",
+            "description": "Access a world of dynamic investment opportunities, buy into businesses you believe in and share in their success. You may make additional deposits at any time. All our payments are instant payments.",
+            "items": [
+                {
+                    "id": 1,
+                    "title": "Simplicity",
+                    "description": "We’re eliminating complex user experiences.",
+                    "icon": "/static/home/images/icons/community/1.svg"
+                },
+                {
+                    "id": 2,
+                    "title": "Security",
+                    "description": "Enhanced security features like multi-factor.",
+                    "icon": "/static/home/images/icons/community/2.svg"
+                },
+                {
+                    "id": 3,
+                    "title": "Support",
+                    "description": "Get all the support you need for your investment.",
+                    "icon": "/static/home/images/icons/community/3.svg"
+                }
+            ]
+        }
+    ],
+    "transactions": [
+        {
+            "sectionTitle": "Withdrawals",
+            "sectionSubtitle": "Latest Transaction",
+            "description": "Our goal is to simplify investing so that anyone can be an investor. With this in mind, we hand-pick the investments we offer on our platform.",
+            "transactions": {
+                "daily": [
+                    {
+                        "id": 1,
+                        "name": "Jim Adams",
+                        "price": "$10.50",
+                        "dailyDividend": "$10.50",
+                        "amounts": "$0.9",
+                        "depositBy": "21 days",
+                        "currencyIcon": "/static/home/images/icons/withdraw/bitcoin.png",
+                        "image": "/static/home/images/withdraw/t-1.png"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Willie Barton",
+                        "price": "$10.50",
+                        "dailyDividend": "$10.50",
+                        "amounts": "$0.9",
+                        "depositBy": "21 days",
+                        "currencyIcon": "/static/home/images/icons/withdraw/fire.png",
+                        "image": "/static/home/images/withdraw/t-2.png"
+                    }
+                ],
+                "monthly": [
+                    {
+                        "id": 1,
+                        "name": "Jim Adams",
+                        "price": "$10.50",
+                        "dailyDividend": "$10.50",
+                        "amounts": "$0.9",
+                        "depositBy": "21 days",
+                        "currencyIcon": "/static/home/images/icons/withdraw/bitcoin.png",
+                        "image": "/static/home/images/withdraw/t-1.png"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Willie Barton",
+                        "price": "$10.50",
+                        "dailyDividend": "$10.50",
+                        "amounts": "$0.9",
+                        "depositBy": "21 days",
+                        "currencyIcon": "/static/home/images/icons/withdraw/fire.png",
+                        "image": "/static/home/images/withdraw/t-2.png"
+                    }
+                ]
+            }
+        }
+    ],
+    "affiliatePrograms": [
+        {
+            "sesctionTitle": "Earn The Big Money",
+            "sectionSubTitle": "Affiliate Program",
+            "bannerImage": "/static/home/images/elements/affiliate-shape.png",
+            "features": [
+                {
+                    "svg": "/static/home/images/icons/affiliate-features/1.svg",
+                    "title": "Enjoy unlimited",
+                    "subTitle": "Commissions",
+                    "description": "The more User you refer, the more commissions we’ll pay you. Plain and simple."
+                },
+                {
+                    "svg": "/static/home/images/icons/affiliate-features/2.svg",
+                    "title": "Extra Bonus and",
+                    "subTitle": "Promotions",
+                    "description": "Boost your monthly earnings with additional promotional opportunities."
+                },
+                {
+                    "svg": "/static/home/images/icons/affiliate-features/3.svg",
+                    "title": "Get top notch",
+                    "subTitle": "Support",
+                    "description": "Maximize your earning potential with our popular amazing support center."
+                }
+            ]
+        }
+    ],
+    "testimonials": [
+        {
+            "id": 1,
+            "name": "Joy Kelley",
+            "designation": "Investor",
+            "image": "/static/home/images/testimonial/1.png",
+            "feedback": "Great service! I have been worried about investing. But when I came here, I don't have to worry anymore.",
+            "date": "United Kingdom, 28th April, 2019"
+        },
+        {
+            "id": 2,
+            "name": "Kevin Ohashi",
+            "designation": "Award winning blogger",
+            "image": "/static/home/images/testimonial/2.png",
+            "feedback": "Behoof has one of the friendliest affiliate programs. They’re definitely one of the best investment websites in the world.",
+            "date": "United Kingdom, 29th April, 2019"
+        }
+    ],
+    "contestWinners": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "amount": "$1,000.00",
+            "date": "Feb 2019",
+            "image": "/static/home/images/contest-winner/1.png",
+            "icon": "/static/home/images/icons/contest-winner/trophy.svg"
+        },
+        {
+            "id": 2,
+            "name": "Jane Smith",
+            "amount": "$1,000.00",
+            "date": "Mar 2019",
+            "image": "/static/home/images/contest-winner/1.png",
+            "icon": "/static/home/images/icons/contest-winner/trophy.svg"
+        },
+        {
+            "id": 3,
+            "name": "John Doe",
+            "amount": "$1,000.00",
+            "date": "Feb 2019",
+            "image": "/static/home/images/contest-winner/1.png",
+            "icon": "/static/home/images/icons/contest-winner/trophy.svg"
+        },
+        {
+            "id": 4,
+            "name": "Jane Smith",
+            "amount": "$1,000.00",
+            "date": "Mar 2019",
+            "image": "/static/home/images/contest-winner/1.png",
+            "icon": "/static/home/images/icons/contest-winner/trophy.svg"
+        }
+    ],
+    "partners": [
+        {
+            "id": 1,
+            "image": "/static/home/images/partners/1.png"
+        },
+        {
+            "id": 2,
+            "image": "/static/home/images/partners/2.png"
+        },
+        {
+            "id": 3,
+            "image": "/static/home/images/partners/3.png"
+        },
+        {
+            "id": 4,
+            "image": "/static/home/images/partners/4.png"
+        },
+        {
+            "id": 5,
+            "image": "/static/home/images/partners/5.png"
+        }
+    ],
+    "affiliate": {
+        "sectionTitle": "Take a look at our latest",
+        "sectionSubTitle": "Affiliate Bonus",
+        "sectionDescription": "Our partners always get the best cost-effective transparent solutions and we are always ready to help on any issue.",
+        "bonuses": [
+            {
+                "affiliateId": "10****45",
+                "bonus": "$3200.00"
+            },
+            {
+                "affiliateId": "10****46",
+                "bonus": "$1500.00"
+            },
+            {
+                "affiliateId": "10****47",
+                "bonus": "$2200.00"
+            }
+        ],
+        "membershipLevelAndCommission": {
+            "sectionTitle": "Referral commission and",
+            "sectionSubTitle": "Membership Level",
+            "sectionDescription": "Refferal Commission and Membership Levels are of 3 levels as below",
+            "levels": [
+                {
+                    "id": 1,
+                    "badgeStatus": "newbie",
+                    "level": "1st Level",
+                    "percentage": "5%",
+                    "icon": "/static/home/images/icons/membership/1.png"
+                },
+                {
+                    "id": 2,
+                    "badgeStatus": "great",
+                    "level": "2nd Level",
+                    "percentage": "10%",
+                    "icon": "/static/home/images/icons/membership/2.png"
+                },
+                {
+                    "id": 3,
+                    "badgeStatus": "master",
+                    "level": "3rd Level",
+                    "percentage": "25%",
+                    "icon": "/static/home/images/icons/membership/3.png"
+                }
+            ]
+        },
+        "howItWorks": {
+            "sectionTitle": "Here's How it Works",
+            "sectionSubTitle": "Getting Started?It's Simple",
+            "sectionDescription": "The affiliate program is our special feature for loyal Investors.Invite users and earn 40% of the fee on their exchange transactions!",
+            "icon": "/static/home/images/how-work-bg.png",
+            "steps": [
+                {
+                    "id": 1,
+                    "title": "Join Program",
+                    "description": "Once you sign up, you’ll get a personalized link to send to your friends. Click Join Now below and start EARNING in just a few clicks.",
+                    "buttonText": "join now",
+                    "icon": "/static/home/images/icons/how-work/1.png",
+                    "link": "#0"
+                },
+                {
+                    "id": 2,
+                    "title": "Promote",
+                    "description": "Share your referral link wherever, whenever (don’t be selfish). Monetize your traffic with a Tracking Link.",
+                    "buttonText": "Tracking Link",
+                    "icon": "/static/home/images/icons/how-work/2.png",
+                    "link": "#0"
+                },
+                {
+                    "id": 3,
+                    "title": "Earn",
+                    "description": "Get up to 50% commission. Earn from ALL products with your 30-day cookie, not just those you advertise.",
+                    "buttonText": "Commission Model",
+                    "icon": "/static/home/images/icons/how-work/3.png",
+                    "link": "#0"
+                }
+            ]
+        },
+        "testimonial": {
+            "sectionTitle": "Testimonials",
+            "sectionSubTitle": "Already Earning With Us",
+            "sectionDescription": "We pay 24% on each purchase from your referrals. Our average user makes purchases for $48.39 per month, meaning you can receive $11.61 monthly from each referral.",
+            "testimonials": [
+                {
+                    "id": 1,
+                    "name": "Kevin Ohashi",
+                    "designation": "Award winning blogger",
+                    "feedback": "behoof has one of the friendliest affiliate programs. They’re definitely one of the best investment websites in the world. I’ve been using them for a long time and have never had any problems.",
+                    "image": "/static/home/images/testimonial/2.png"
+                },
+                {
+                    "id": 2,
+                    "name": "Kevin Ohashi",
+                    "designation": "Award winning blogger",
+                    "feedback": "behoof has one of the friendliest affiliate programs. They’re definitely one of the best investment websites in the world. I’ve been using them for a long time and have never had any problems.",
+                    "image": "/static/home/images/testimonial/3.png"
+                }
+            ]
+        }
+    },
+    "promotion": {
+        "items": [
+            {
+                "id": 1,
+                "title": "YOUR REFERRAL GIFT",
+                "subTitle": "Be rewarded when you spread the word",
+                "description": "Invite your family and friends, our exclusive referral program for those important to you. Invite them for a complimentary financial consultation. You can look forward to a generous cash bonus.",
+                "icon": "/static/home/images/promotion/1.png",
+                "link": "#0"
+            },
+            {
+                "id": 2,
+                "title": "NEW FUNDS TOP-UP BONUS",
+                "subTitle": "Get rewarded for any additional new funds",
+                "description": "Receive an attractive cash bonus whenever you bring in new funds and build your wealth with us.",
+                "icon": "/static/home/images/promotion/2.png",
+                "link": "#0"
+            },
+            {
+                "id": 3,
+                "title": "Relationship BONUS",
+                "subTitle": "Be rewarded for your Relationship with us",
+                "description": "Earn up to 30% more annual Relationship Bonus based on your relationship with us.",
+                "icon": "/static/home/images/promotion/3.png",
+                "link": "#0"
+            }
+        ]
+    },
+    "howItWorks": {
+        "videoView": {
+            "bgImageUrl": "/static/home/images/video-bg.jpg",
+            "videoUrl": "https://www.youtube.com/embed/aFYlAzQHnY4",
+            "title": "How to invest",
+            "description": "Risk-free secure investment anywhere, anytime."
+        },
+        "sectionA": {
+            "sectionTitle": "How you can invest your",
+            "sectionSubTitle": "Money More Smartly",
+            "sectionDescription": "It’s a simple way to start invest.You don’t need a deep wallet to start behoof. Pick an amount you can afford, and build your behoof over time",
+            "steps": [
+                {
+                    "id": 1,
+                    "title": "Sign up",
+                    "description": "To start investing using the behoof Invest platform, you need to register. Registration is incredibly simple; it should take you no more than 5 min",
+                    "icon": "/static/home/images/icons/how-work/4.png",
+                    "link": "#0",
+                    "link_title": "sign up"
+                },
+                {
+                    "id": 2,
+                    "title": "Invest",
+                    "description": "After you have created your account, your identity has been verified & you have added funds, you can start searching for the invest",
+                    "icon": "/static/home/images/icons/how-work/5.png",
+                    "link": "#0",
+                    "link_title": "Invest Now"
+                },
+                {
+                    "id": 3,
+                    "title": "Grow your Income",
+                    "description": "After you have created your account, your identity has been verified & you have added funds, you can start searching for the invest",
+                    "icon": "/static/home/images/icons/how-work/6.png",
+                    "link": "#0",
+                    "link_title": "Read more"
+                }
+            ]
+        },
+        "sectionB": {
+            "bannerImage": "/static/home/images/elements/about.png",
+            "sectionTitle": "OUR SMART APP",
+            "sectionSubTitle": "Manage your money more easily",
+            "sectionDescriptions": [
+                "Invest with us, and you'll be making the most of your money. We'll help you understand the risks and rewards of investing, and we'll guide you through the process of finding the right investments for your needs.",
+                "Intuitively designed for newcomers and experts alike, behoof gives you a clear picture of your portfolio’s performance over time, so you can adjust your positions and learn by doing.Stay up to date on Your account balance, details and request withdrawals / make deposits."
+            ],
+            "appItems": [
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/3.png",
+                    "caption": "Keep track of your moneymore simply"
+                },
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/4.png",
+                    "caption": "Get a personalised budget,automatically"
+                },
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/1.png",
+                    "caption": "See all your money in one place"
+                },
+                {
+                    "icon": "/static/home/images/icons/app-item-icon/2.png",
+                    "caption": "Invest your money more smartly"
+                }
+            ]
+        }
+    },
+    "championshipContest": {
+        "icon": "/static/home/images/elements/contest.png",
+        "content": {
+            "title": "Championship 2024",
+            "contestName": "Global Championship",
+            "registrationLink": "0#",
+            "startDate": "2024-11-01",
+            "totalRegistrations": "2500"
+        },
+        "duration": "3 months",
+        "withdrawablePrice": {
+            "title": "Withdrawable Prizes",
+            "prices": [
+                {
+                    "position": "1ST",
+                    "amount": "5000"
+                },
+                {
+                    "position": "2ND",
+                    "amount": "3000"
+                },
+                {
+                    "position": "3RD",
+                    "amount": "2000"
+                },
+                {
+                    "position": "4TH",
+                    "amount": "1000"
+                }
+            ]
+        },
+        "platForm": {
+            "title": "Platform",
+            "platforms": [
+                {
+                    "item": "PC",
+                    "logo": "/images/platforms/pc-logo.png"
+                },
+                {
+                    "item": "Xbox",
+                    "logo": "/images/platforms/xbox-logo.png"
+                },
+                {
+                    "item": "PlayStation",
+                    "logo": "/images/platforms/playstation-logo.png"
+                }
+            ]
+        },
+        "contestAchievement": {
+            "icon": "/static/home/images/elements/common-shape.png",
+            "roundLeaders": {
+                "sectionTitle": "Take a Look Current",
+                "sectionSubTitle": "Top Performers",
+                "sectionDescription": "These are the leading contestants in the current round.",
+                "leaders": [
+                    {
+                        "name": "John Doe",
+                        "image": "/static/home/images/withdraw/t-1.png",
+                        "position": "1ST",
+                        "rank": "1"
+                    },
+                    {
+                        "name": "Jane Smith",
+                        "image": "/static/home/images/withdraw/t-1.png",
+                        "position": "2ND",
+                        "rank": "2"
+                    },
+                    {
+                        "name": "Alice Johnson",
+                        "image": "/static/home/images/withdraw/t-1.png",
+                        "position": "3RD",
+                        "rank": "3"
+                    }
+                ]
+            },
+            "latestContestWinners": {
+                "sectionTitle": "Winners",
+                "sectionSubTitle": "Latest contest!",
+                "sectionDescription": "These are the latest winners from our contests.",
+                "winners": [
+                    {
+                        "image": "/static/home/images/contest-winner/1.png",
+                        "amount": "$5,000",
+                        "date": "2024-10-01"
+                    },
+                    {
+                        "image": "/static/home/images/contest-winner/1.png",
+                        "amount": "$3,000",
+                        "date": "2024-10-10"
+                    },
+                    {
+                        "image": "/static/home/images/contest-winner/1.png",
+                        "amount": "$1,000",
+                        "date": "2024-10-15"
+                    }
+                ]
+            }
+        }
+    },
+    "FAQPage": {
+        "sectionTitle": "We've Got Answers",
+        "sectionSubTitle": "got any questions",
+        "faqs": [
+            {
+                "question": "Why is my withdrawal pending?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How do I deposit funds?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How do I deposit Euro?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How do I verify my account?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "Why is my deposit pending?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            },
+            {
+                "question": "How are the fees structured?",
+                "answer": [
+                    {
+                        "answer": ""
+                    }
+                ]
+            }
+        ]
+    }
+}

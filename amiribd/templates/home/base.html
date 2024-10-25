@@ -1,0 +1,45 @@
+{% extends "home/layout.html" %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+<!-- handle authentication
+
+
+-->
+{% block javascript %}
+
+<script>
+    // Your JavaScript code here
+    loadHiddenJavascript('{% static "home/js/auth.js" %}', function () {
+        console.log('Script loaded at the end of body!');
+    }, 'body');
+</script>
+
+{% endblock javascript %}
+
+
+
+{% block reactJs %}
+
+
+
+<script>
+    // Initialize the Owl Carousel
+        $('.offer-slider').owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 10,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+        });
+</script>
+
+{% block sectionalComponent %}
+{% endblock sectionalComponent %}
+
+{% endblock reactJs %}

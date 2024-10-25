@@ -1,0 +1,108 @@
+{% load static %}
+
+<!-- signing-area start -->
+<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bdr-radius">
+            <div class="signin-wrapper">
+                <div class="signin-wrapper-header text-center">
+                    <div class="logo">
+                        <img style="transform: translateY(-15px);" src="{% static 'img/earnkraftfull2.png' %}" alt="logo" width="100" height="23" />
+                    </div>
+                    <h3 class="title">Login with</h3>
+                    <p>Welcome back, please sign in below</p>
+                    <div class="w-full" style="display: flex; justify-content: center; margin-top: 20px;">
+                        <div class="col-12" style="text-align: center;">
+                            <small id="login-email-lookup-result"></small>
+                        </div>
+                    </div>
+                </div>
+                <form method="post" class="signin-form" id="signin-form" style="transform: translateY(-10px);" action="{% url 'users:login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="signinEmail">Email*</label>
+                        {{login_form.email}}
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" name="id-1" id="id-1" checked="">
+                            <label for="id-1">Remember me</label>
+                            <span class="checkbox"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-hover" style="padding: 0.89rem 0;">Log In</button>
+                </form>
+                <div class="signin-wrapper-footer">
+                    <p class="bottom-text">Don’t have an account? <a href="#0" data-toggle="modal" data-target="#signUpModal" data-dismiss="modal" aria-label="Close">Sign Up Now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- signing-area end -->
+
+<!-- signup-area start -->
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bdr-radius">
+            <div class="signin-wrapper">
+                <div class="signin-wrapper-header text-center">
+                    <div class="logo">
+                        <img style="transform: translateY(-15px);" src="{% static 'img/earnkraftfull2.png' %}" alt="logo" width="100" height="23" />
+                    </div>
+                    <h3 class="title">Register Today</h3>
+                    <div class="w-full" style="display: flex; justify-content: center; margin-top: 20px;">
+                        <div class="col-12" style="text-align: center;">
+                            <small id="signup-email-lookup-result"></small>
+                        </div>
+                    </div>
+                </div>
+                <form class="signin-form" id="signup-form" style="transform: translateY(-10px);" action="{% url 'users:signup' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{register_form.username.id_for_label}}">Username</label>
+                        <div class="form-control-wrap">
+                            {{register_form.username}}
+                            {% if form.username.errors %}
+                            <ul class="errorlist">
+                                {% for error in register_form.username.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{register_form.email.id_for_label}}">Email Address</label>
+                        <div class="form-control-wrap">
+                            {{register_form.email}}
+                            {% if register_form.email.errors %}
+                            <ul class="errorlist">
+                                {% for error in register_form.email.errors %}
+                                <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-checkbox">
+                            <input type="checkbox" name="id-2" id="id-2" checked="">
+                            <label for="id-2">I do not want to be kept up to date about relevant investment opportunities, features, and events</label>
+                            <span class="checkbox"></span>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="w-full btn btn-primary btn-hover" style="padding: 0.89rem 0;">create account</button>
+                </form>
+                <div class="signin-wrapper-footer">
+                    <p class="bottom-text">Already have an account?<a href="#0" data-toggle="modal" data-target="#signInModal" data-dismiss="modal" aria-label="Close">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- signup-area end -->

@@ -8,11 +8,13 @@ from .views import ReferralSignupView
 from .views import SignupView
 from .views import SuccessAuthenticationView
 from .views import TokenExpiredSignupView
+from .views import UserView
 from .views import ValidatedEmailAddressView
 
 app_name = "users"
 urlpatterns = [
     path("login/", view=LoginView.as_view(), name="login"),
+    path("auth/user/", view=UserView.as_view(), name="user_view"),
     path("login/<uid>/<token>/", view=LinkAuthenticationView.as_view(), name="login_with_link"),
     path("logout/", view=LogoutView.as_view(), name="logout"),
     path("signup/", view=SignupView.as_view(), name="signup"),

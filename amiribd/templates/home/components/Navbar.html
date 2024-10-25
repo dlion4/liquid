@@ -1,0 +1,71 @@
+{% load static %}
+
+<!--  header-section start  -->
+<header class="header-section">
+    <div class="header-bottom">
+        <div class="container">
+            <nav class="navbar navbar-expand-xl">
+                <a class="site-logo site-title" href="home-one.html">
+                    <img src="{% static 'img/earnkraftfull2.png' %}" alt="logo" width="134" height="23" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="menu-toggle"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav main-menu ml-auto">
+                        <li class="active menu_has_children"><a href="#0">Home</a>
+                            <ul class="sub-menu">
+                                <li><a href="home-one.html">Home One</a></li>
+                                <li><a href="home-two.html">Home Two</a></li>
+                                <li><a href="home-three.html">Home Three</a></li>
+                                <li><a href="home-four.html">Home Four</a></li>
+                                <li><a href="home-five.html">Home Five</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="about.html">about</a></li>
+                        <li class="menu_has_children"><a href="#0">Investment</a>
+                            <ul class="sub-menu">
+                                <li><a href="investment.html">Investment One</a></li>
+                                <li><a href="investment-two.html">Investment Two</a></li>
+                                <li><a href="investment-single.html">Investment Single</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu_has_children"><a href="#0">Pages</a>
+                            <ul class="sub-menu">
+                                <li><a href="affiliate.html">Affiliate</a></li>
+                                <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="contest.html">Contest</a></li>
+                                <li><a href="error-404.html">404 page</a></li>
+                                <li><a href="help.html">Help Page</a></li>
+                                <li><a href="how-work.html">How Work</a></li>
+                                <li><a href="promotion.html">Promotion</a></li>
+                                <li><a href="security.html">Security</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu_has_children"><a href="#0">blog</a>
+                            <ul class="sub-menu">
+                                <li><a href="blog-grid.html">Blog Grid</a></li>
+                                <li><a href="blog-list.html">Blog List</a></li>
+                                <li><a href="blog-single.html">Blog Single</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact.html">contact us</a></li>
+                    </ul>
+
+                    <div class="header-join-part">
+                        {% if request.user.is_authenticated %}
+                        <a style="margin-left: 1rem;" href='{% url "dashboard:home" %}' type="button" class="btn btn-primary btn-hover">
+                            Hi,{{request.user.username|title}}!
+                        </a>
+                        {% else %}
+                        <button type="button" class="btn btn-primary btn-hover" data-toggle="modal" data-target="#signInModal">
+                            join us
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div><!-- header-bottom end -->
+</header>
+<!--  header-section end  -->

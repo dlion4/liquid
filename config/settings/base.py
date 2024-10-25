@@ -143,6 +143,9 @@ THIRD_PARTY_APPS = [
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
+    
+    #  ... html minification tools
+    "htmlmin",
 ]
 
 
@@ -298,16 +301,17 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
-    
+    # ...
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
-    # cahcing
+    # caching
     # "django.middleware.cache.UpdateCacheMiddleware",
-    # "django.middleware.common.CommonMiddleware",
+    # "htmlmin.middleware.HtmlMinifyMiddleware",
+    # other middleware classes
     # "django.middleware.cache.FetchFromCacheMiddleware",
+    # "htmlmin.middleware.MarkRequestMiddleware",
     # to check authentication status
     "amiribd.users.middleware.AuthenticationStateCheckMiddleware",
     "amiribd.users.middleware.BasicAuthMiddleware", # for the silk popup authentication
@@ -320,16 +324,18 @@ MIDDLEWARE = [
 ]
 
 # CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
-# CACHE_MIDDLEWARE_SECONDS = (
-#     60 * 60 * 60
-# )  # The number of seconds each page should be cached.
+# CACHE_MIDDLEWARE_SECONDS = (60 * 60)
 
+# HTML_MINIFY = True
+# EXCLUDE_FROM_MINIFYING = ("^admin/",)
+# KEEP_COMMENTS_ON_MINIFYING = True
+CONSERVATIVE_WHITESPACE_ON_MINIFYING = False
 
 COMPRESS_ENABLED = True
 COMPRESS_CSS_HASHING_METHOD = "content"
 
-HTML_MINIFY = True
-KEEP_COMMENTS_ON_MINIFYING = True
+# HTML_MINIFY = True
+# KEEP_COMMENTS_ON_MINIFYING = True
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root

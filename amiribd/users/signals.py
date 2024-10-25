@@ -10,10 +10,10 @@ from .models import User
 # from .models import ValidatedEmailAddress
 
 
-@receiver(post_save, sender=User)
-def create_validated_email_on_signup(sender, instance, created, **kwargs):
-    if created:
-        threading.Thread(target=create_validated_email_address, args=(instance.email)).start()
+# @receiver(post_save, sender=User)
+# def create_validated_email_on_signup(sender, instance, created, **kwargs):
+#     if created:
+#         threading.Thread(target=create_validated_email_address, args=(instance.email)).start()
 
 
 
