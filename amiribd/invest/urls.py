@@ -17,7 +17,8 @@ from .views import (
 )
 from .views import invest
 from .views import modified_academic_view  # modified_invest_view,
-from .views import modified_advertise_view
+from .views import modified_upgrade_view
+
 from .views import modified_bonus_view
 from .views import modified_comingsoon_view
 from .views import modified_investorder_view
@@ -157,7 +158,7 @@ urlpatterns = [
     # paystack callback urls
     path("qinfo/", modified_qinfo_view, name="qinfo"),
     path("comingsoon/", modified_comingsoon_view, name="comingsoon"),
-    path("advertise/", modified_advertise_view, name="advertise"),
+    path("upgrade/", modified_upgrade_view, name="upgrade"),
     path("monetize/", modified_monetize_view, name="monetize"),
     
     

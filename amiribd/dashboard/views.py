@@ -448,3 +448,8 @@ support = SupportView.as_view()
 class AssistanceView(SupportView):
     template_name = "account/dashboard/v1/assistance.html"
 assistance = AssistanceView.as_view()
+
+class AdminAssistanceView(SupportView):
+    template_name = "account/dashboard/v1/admin_assistance.html"
+
+admin_assistance = AdminAssistanceView.as_view()

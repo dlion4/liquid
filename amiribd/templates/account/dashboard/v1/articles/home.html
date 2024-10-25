@@ -7,7 +7,7 @@
       <div class="card card-bordered">
         <div class="card-inner">
           <div class="card-title mb-4">
-            <h3 class="title">Welcome to AI Dashboard!</h3>
+            <h3 class="title">Articles and Blogging</h3>
           </div>
           <div class="row g-gs">
             <div class="col-xxl-3">
@@ -16,27 +16,39 @@
                 <div class="nk-block-des text-soft">
                   <p>You can start earning with the power of AI</p>
                 </div>
+
+
+                <a href="{% url 'dashboard:articles:editor:new-article' %}" class="btn btn-primary btn-lg mt-4">
+                  Content Generator
+                </a>
+                
                 <a href="{% url 'dashboard:articles:editor:youtube-summarizer' %}" class="btn btn-primary btn-lg mt-4">
                   Youtube Summarizer
+                </a>
+                <a href="#" class="btn btn-primary btn-lg mt-4">
+                  AI Detector & Remover
+                </a>
+                <a href="#" class="btn btn-primary btn-lg mt-4">
+                  Video-to-Text
                 </a>
               </div>
             </div>
             <div class="col-sm-6 col-md-4 col-xxl-3">
               <div class="fake-class">
-                <h5 class="title">Next Steps</h5>
+                <h5 class="title">Start Here</h5>
                 <ul class="link-list is-compact pb-0">
-                  <li>
-                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article' %}">
+                  <li style="margin-bottom: 10px;">
+                    <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" hx-get="{% url 'dashboard:articles:editor:new-article' %}" class="btn btn-dim btn-primary">
                       <em class="icon ni ni-file-text"></em>
-                      <span>Write a blog post</span></a>
+                      <span>Write article post</span></a>
                   </li>
-                  <li>
-                    <a href="/about/">
+                  <li style="margin-bottom: 10px;">
+                    <a href="/about/" class="btn btn-dim btn-primary">
                       <em class="icon ni ni-property-add"></em>
-                      <span>Add an about page</span></a>
+                      <span>Saved Articles</span></a>
                   </li>
-                  <li>
-                    <a href="#">
+                  <li style="margin-bottom: 10px;">
+                    <a href="#" class="btn btn-dim btn-primary">
                       <em class="icon ni ni-laptop"></em>
                       <span>View your articles</span></a>
                   </li>
@@ -45,45 +57,48 @@
             </div>
             <div class="col-sm-6 col-md-4 col-xxl-3">
               <div class="fake-class">
-                <h5 class="title">At a Glance</h5>
+                <h5 class="title">Your Stats</h5>
                 <ul class="link-list is-compact pb-0">
-                  <li>
+                  <li style="margin-bottom: 10px;">  <!-- Adjust the value as needed -->
                     <a href="/posts/">
                       <em class="icon ni ni-edit-fill"></em>
-                      <span>{{articles.count}}
-                        Post{{articles.count|pluralize}}</span></a>
+                      <span class="btn btn-dim btn-secondary">Published Post{{articles.count|pluralize}}</span><span class="btn btn-dim btn-warning"> {{articles.count}}</span>
+                    </a>
                   </li>
-                  <li>
+                  <li style="margin-bottom: 10px;">  <!-- Adjust the value as needed -->
                     <a href="/pages/">
                       <em class="icon ni ni-files"></em>
-                      <span>0 Pages</span></a>
+                      <span class="btn btn-dim btn-secondary">Views </span><span class="btn btn-dim btn-warning"> 0</span>
+                    </a>
                   </li>
-                  <li>
+                  <li style="margin-bottom: 10px;">  <!-- Adjust the value as needed -->
                     <a href="/comments/">
                       <em class="icon ni ni-comments"></em>
-                      <span>0 Comments</span></a>
+                      <span class="btn btn-dim btn-secondary">Comments</span><span class="btn btn-dim btn-warning"> 0</span>
+                    </a>
                   </li>
                 </ul>
+                
               </div>
             </div>
             <div class="col-sm-6 col-md-4 col-xxl-3">
               <div class="fake-class">
-                <h5 class="title">More Actions</h5>
+                <h5 class="title">Our Stats</h5>
                 <ul class="link-list is-compact pb-0">
-                  <li>
-                    <a href="#">
+                  <li style="margin-bottom: 10px;">
+                    <a href="#" >
                       <em class="icon ni ni-grid-fill"></em>
-                      <span>Manage widgets or menu</span></a>
+                      <span class="btn btn-dim btn-success">Active Article writers </span><span class="btn btn-dim btn-warning"><b>  133+</b></span></a>
                   </li>
-                  <li>
-                    <a href="#">
+                  <li style="margin-bottom: 10px;">
+                    <a href="#" >
                       <em class="icon ni ni-comments"></em>
-                      <span>Trun comments off or on</span></a>
+                      <span class="btn btn-dim btn-success">Total Articles Published </span><span class="btn btn-dim btn-warning"> 20,489+</span></a>
                   </li>
-                  <li>
+                  <li style="margin-bottom: 10px;">
                     <a href="#">
                       <em class="icon ni ni-more-h"></em>
-                      <span>More about content generation</span></a>
+                      <span class="btn btn-dim btn-success">Total Earnings Paid </span><span class="btn btn-dim btn-warning"> $40,000+</span></a>
                   </li>
                 </ul>
               </div>

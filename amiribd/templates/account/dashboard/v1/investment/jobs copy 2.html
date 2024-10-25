@@ -91,9 +91,6 @@ Job Board Listing
     </div>
   </div>
 </div>
-
-
-
 {% endblock heading %}
 
 {% block main %}
@@ -251,47 +248,6 @@ Job Board Listing
   </div>
 </div>
 <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-
-
-<ul class="filter-button-group mb-4 pb-1 d-flex g-3">
-  <li>
-    <button class="filter-button active" type="button" data-filter="all">All</button>
-  </li>
-  <li>
-    <button class="filter-button" type="button" data-filter="online">Online/Remote</button>
-  </li>
-  <li>
-    <button class="filter-button" type="button" data-filter="physical">Physical/local</button>
-  </li>
-  <li>
-    <button class="filter-button" type="button" data-filter="abroad">Abroad</button>
-  </li>
-</ul>
-
-<style>
-  /* Base styles for the loading placeholder */
-
-
-  /* Pulse animation */
-  @keyframes pulse {
-    0% {
-      background-color: #f0f0f0df;
-    }
-
-    50% {
-      background-color: #e0e0e0d9;
-    }
-
-    100% {
-      background-color: #f0f0f0c0;
-    }
-  }
-
-  /* Apply the pulse animation to the skeleton */
-  .skeleton {
-    animation: pulse 1.5s infinite;
-  }
-</style>
 <style>
   /* Existing styles for cards and tags */
 
@@ -438,19 +394,50 @@ Job Board Listing
     color: white;
   }
 </style>
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+
+<ul class="filter-button-group mb-4 pb-1 d-flex g-3">
+  <li>
+    <button class="filter-button active" type="button" data-filter="all">All</button>
+  </li>
+  <li>
+    <button class="filter-button" type="button" data-filter="online">Online/Remote</button>
+  </li>
+  <li>
+    <button class="filter-button" type="button" data-filter="physical">Physical/local</button>
+  </li>
+  <li>
+    <button class="filter-button" type="button" data-filter="abroad">Abroad</button>
+  </li>
+</ul>
+
+<style>
+  /* Base styles for the loading placeholder */
+
+
+  /* Pulse animation */
+  @keyframes pulse {
+    0% {
+      background-color: #f0f0f0df;
+    }
+
+    50% {
+      background-color: #e0e0e0d9;
+    }
+
+    100% {
+      background-color: #f0f0f0c0;
+    }
+  }
+
+  /* Apply the pulse animation to the skeleton */
+  .skeleton {
+    animation: pulse 1.5s infinite;
+  }
+</style>
 
 
 
-
-
-
-
-
-
-
-
-<div class="container" >
-  
 {% if messages %}
 <div>
   {% for message in messages %}
@@ -462,28 +449,20 @@ Job Board Listing
 </div>
 {% endif %}
 
-  <main class="grid" id="jobsFiltration">
-    <div class="row">
-      <div class="col-12 col-md-6 mb-3"> 
-        <div class="skeleton"></div> 
-       </div> 
-        <div class="col-12 col-md-6 mb-3"> 
-        <div class="skeleton"></div> 
-       </div> 
-    </div>
-
-    
-  </main>
-
-  <div class="text-center mt-3">
-    <button type="button" id="loadMoreBtn" class="btn btn-primary" style="display:none;">
-      Load More
-    </button>
+<div class="row" data-animation="true" id="jobsFiltration">
+  <div class="col-12 col-md-6 mb-3">
+    <div class="skeleton"></div>
+  </div>
+  <div class="col-12 col-md-6 mb-3">
+    <div class="skeleton"></div>
   </div>
 </div>
 
-
-
+<div class="text-center mt-3">
+  <button type="button" id="loadMoreBtn" class="btn btn-primary" style="display:none;">
+    Load More
+  </button>
+</div>
 
 
 
@@ -494,7 +473,7 @@ Job Board Listing
 <script>
   $(document).ready(function () {
     let currentPage = 0;
-    const jobsPerPage = 6;
+    const jobsPerPage = 4;
     let currentFilter = "all";
 
     const filterButtons = $('.filter-button');
@@ -515,7 +494,7 @@ Job Board Listing
           } else { $("#loadMoreBtn").show(); }
 
           if (currentPage === 0) { responseContainer.html(response) }
-          else { responseContainer.html(response) }
+          else { responseContainer.append(response) }
 
           const filterItems = $('.filter-item');
           $(itemCount).text($(filterItems).length);
@@ -547,6 +526,7 @@ Job Board Listing
 
 </script>
 {% endblock extendedJs %}
+
 
 
 <script>
@@ -617,6 +597,10 @@ Job Board Listing
     });
   })
 </script>
+
+
+
+<!--xxxxxxxx-->
 
 
 {% endblock main %}

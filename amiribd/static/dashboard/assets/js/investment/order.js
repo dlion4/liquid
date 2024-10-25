@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const investmentRate = parseFloat("2.00");
+    const investmentRate = parseFloat("0.025");
     $("#daily-rate").html(`(${investmentRate}%)`);
     const investmentPriceSlider = $("#amount-step");
     const investmentAmount = $("#custom-amount");
@@ -70,20 +70,20 @@ $(document).ready(function () {
     savingsDuration.hide();
 
     const savingsDurationObject = {
-        "1D": "1-day",
-        "1W": "1-week",
-        "2W": "2-weeks",
+        "5D": "5-days",
+        "10D": "10-days",
+        "15D": "15-days",
         "1M": "1-month",
         "3M": "3-months",
         "C": "custom",
     };
 
     const savingsPricing = {
-        "1D": { min: 100, max: 1000 },
-        "1W": { min: 500, max: 1500 },
-        "2W": { min: 1000, max: 3000 },
-        "1M": { min: 2000, max: 6000 },
-        "3M": { min: 6000, max: 12000 }
+        "5D": { min: 500, max: 1000 },
+        "10D": { min: 1000, max: 5000 },
+        "15D": { min: 5000, max: 10000 },
+        "1M": { min: 10000, max: 20000 },
+        "3M": { min: 20000, max: 40000 }
     };
 
     investTypeOptions.each(function () {
@@ -233,16 +233,16 @@ $(document).ready(function () {
                                     }
 
                                     switch ($(this).val()) {
-                                        case "1-day":
-                                            updateTheValueAndText('1D');
+                                        case "5-days":
+                                            updateTheValueAndText('5D');
                                             updateSaveDurationValue($(this).val());
                                             break;
-                                        case "1-week":
-                                            updateTheValueAndText('1W');
+                                        case "10-days":
+                                            updateTheValueAndText('10D');
                                             updateSaveDurationValue($(this).val());
                                             break;
-                                        case "2-weeks":
-                                            updateTheValueAndText('2W');
+                                        case "15-days":
+                                            updateTheValueAndText('15D');
                                             updateSaveDurationValue($(this).val());
                                             break;
                                         case "1-month":
@@ -265,8 +265,8 @@ $(document).ready(function () {
                     amountLabel.html("Principal Investment");
                     amountSummaryLabel.html("to Investment");
 
-                    formNoteHelpSliderId.html("invest 1000 ksh and upto 10,000 ksh");
-                    floatingMaxAmountLabel.html("Max Amout 10,000 KSH");
+                    formNoteHelpSliderId.html("invest 1000 ksh and upto 40,000 ksh");
+                    floatingMaxAmountLabel.html("Max Amout 40,000 KSH");
 
                     investmentPriceSlider.show();
                     investmentAmount.attr("disabled", "disabled");

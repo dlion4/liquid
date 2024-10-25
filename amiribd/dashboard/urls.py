@@ -11,6 +11,7 @@ urlpatterns = [
     path("invest/", include("amiribd.invest.urls", namespace="invest")),
     path("support/", views.support, name="support"),
     path("assistance/", views.assistance, name="assistance"),
+    path("admin-assistance/", views.admin_assistance, name="admin_assistance"),
     path("streams/", include("amiribd.streams.urls", namespace="streams")),
     path("blogging/", include("amiribd.articles.urls", namespace="articles")),
 ]

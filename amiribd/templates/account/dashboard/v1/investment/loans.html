@@ -1,0 +1,125 @@
+{% extends "account/dashboard/v1/base.html" %}
+{% load static humanize %}
+{% block heading %}
+
+{% endblock heading %}
+
+{% block main %}
+<div class="container-xl wide-lg">
+  <div class="nk-content-body">
+    <div class="nk-block-head">
+      <div class="nk-block-head-sub"><span>Loans</span></div>
+      <div class="nk-block-between-md g-4">
+        <div class="nk-block-head-content">
+          <h2 class="nk-block-title fw-normal">Loan Details</h2>
+          <div class="nk-block-des">
+            <p>At a glance summary of your loans!</p>
+          </div>
+        </div>
+        <div class="nk-block-head nk-block-head-sm nk-block-between">
+          <div class="btn-group"><button type="button" class="btn btn-primary"
+              data-bs-toggle="dropdown"><span>Request Loan</span> </button>
+           
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nk-block">
+      <div class="card card-bordered">
+        <div class="card-aside-wrap">
+          <div class="card-content">
+            <div class="card-inner">
+              <div class="nk-block">
+                <div class="nk-block-head nk-block-head-sm nk-block-between">
+                  <h5 class="title">Loan Details</h5>
+                </div>
+                <div class="row gy-5">
+                  <div class="col-md-3 col-lg-2 col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Loan Amount</span><span> KES 0.0
+                      </span></div>
+                  </div>
+                  <div class="col-md-3 col-lg-2 col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Loan Interest</span><span> 0.0 %
+                      </span></div>
+                  </div>
+                  <div class="col-md-3 col-lg-2  col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Total Payable Amount</span><span>KES 0.0</span></div>
+                  </div>
+                  <div class="col-md-3 col-lg-2  col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Duration</span><span>0 days</span></div>
+                  </div>
+                  <div class="col-md-3 col-lg-2  col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Start Date</span><span>dd/mm/yyyy</span>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-2  col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">End Date</span><span>dd/mm/yyyy</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="nk-divider divider md"></div>
+              <div class="nk-block">
+                <div class="nk-block-head nk-block-head-sm nk-block-between">
+                  <h5 class="title">Qualification</h5>
+                </div>
+                <div class="row gy-5">
+                  <div class="col-md-2 col-sm-4 col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Active Plan</span><span class="text-primary">Silver Plan</span></div>
+                  </div>
+                  <div class="col-md-2 col-sm-4 col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Documents</span><span
+                        class="text-success">Verified</span></div>
+                  </div>
+                  <div class="col-md-2 col-sm-4 col-12">
+                    <div class="profile-stats"><span class="profile-ud-label">Referals</span><span
+                        class="text-warning">{{profile.referrals|intword}}</span></div>
+                  </div>
+                  <div class="col-md-3 col-sm-4 col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Savings Amount</span><span>KES 0.0</span></div>
+                  </div>
+                  <div class="col-md-3 col-sm-4 col-6">
+                    <div class="profile-stats"><span class="profile-ud-label">Savings Status</span><span>-</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="nk-divider divider md"></div>
+              <div class="nk-block">
+                <div class="nk-block-head nk-block-head-sm nk-block-between">
+                  <h5 class="title">Loan Status</h5>
+                </div>
+                <div class="row gy-5">
+                  <div class="col-12 col-md-12 col-lg-12">
+                    <div class="profile-stats">
+                      <div class="progress progress-lg">
+                        <div class="progress-bar progress-bar-striped bg-success" data-progress="0"
+                          style="width: 100%;">100%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="nk-divider divider md"></div>
+              <div class="nk-block">
+                <div class="nk-block-head nk-block-head-sm nk-block-between">
+                  <h5 class="title"><code>Notice</code></h5>
+                </div>
+                <div class="row gy-5">
+                  <div class="col-12">
+                    <dt>For you to qualify for higher loan limits, you need to have an active package, refer members, be an active user of our other services, and ensure your documents are authentic. If you encounter any issues, please contact admin for assistance.</dt>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock main %}

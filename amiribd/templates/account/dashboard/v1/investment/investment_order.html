@@ -1,18 +1,38 @@
 {% extends "account/dashboard/v1/base.html" %} {% load static %} {% block heading %}
-<div class="nk-block-head nk-block-head-lg">
-    <div class="nk-block-head-content">
-        <div class="nk-block-head-sub">
-            <a href="" class="back-to">
-                <em class="icon ni ni-arrow-left"></em>
-                <span>Back to plan</span></a>
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+      <div class="nk-block-head-content">
+        <h3 class="nk-block-title page-title">Invest & Save</h3>
+        <div class="nk-block-des text-soft">
+          <p>
+            You can invest or save with us
+          </p>
         </div>
-        <div class="nk-block-head-content">
-            <h2 class="nk-block-title fw-normal">Ready to get started?</h2>
+      </div>
+      <div class="nk-block-head-content">
+        <div class="toggle-wrap nk-block-tools-toggle">
+          <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+            <em class="icon ni ni-menu-alt-r"></em>
+          </a>
+          <div class="toggle-expand-content" data-content="pageMenu">
+            <ul class="nk-block-tools g-3">
+  
+  
+  
+  
+              <li class="preview-item"><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTabs">Guide & Info</button></li>
+              
+              
+    
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
 {% endblock heading %}
+
 
 
 <style>
@@ -96,14 +116,87 @@
 
 <!--styles-->
 {% block main %}
-
+<!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalTabs">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+        <div class="modal-body modal-body-md">
+          <h4 class="title">Remote Task Guidelines</h4>
+          <ul class="nk-nav nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabItem1">Investiment</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem2">Savings</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabItem3">Loans</a></li>
+         
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tabItem1">
+                <h6 class="title">Investment</h6>
+                <p>We offer small but consistent investment opportunities with us.</p>
+                <p>We provide low ROI because we focus on low risk, ensuring the safety of your funds.</p>
+                <p>When you invest each day, you will earn interest on your principal up to the last day, after which the principal will be returned to you.</p>
+                <p>Investing regularly helps you build a solid financial foundation while minimizing risk.</p>
+                <p><strong>Upgrade</strong> to increase your investment limit and grow your portfolio more effectively.</p>
+                <p>For online investments and other financial tasks, follow the given guidelines to maximize your returns.</p>
+            </div>
+            
+            <div class="tab-pane" id="tabItem2">
+                <h6 class="title">Savings</h6>
+                <p>When you save any amount for your desired duration, you will not earn interest, but that will qualify you for a loan of the same amount.</p>
+                <p>For example, if you save 10,000 for 10 days, upon completion of your saving plan, you will qualify to borrow 10,000 from us, payable in 10,000 with zero interest.</p>
+                <p>Those who qualify are based on activities they carry out on our platform, the active plan, and the KYC documents submitted during sign-up. All these factors ensure we provide qualified individuals with higher loans at zero interest, payable within the same duration after saving with us.</p>
+                <p>This model builds trust and encourages consistent engagement with our services.</p>
+                <p>If you fail to secure a loan after your first saving, please contact admin for further assistance.</p>
+                <p>Our saving package helps us maintain our services and supports you in case you can't secure loans from other outlets.</p>
+            </div>
+            
+            <div class="tab-pane" id="tabItem3">
+                <h6 class="title">Loans</h6>
+            
+                <p>We offer loans exclusively to our members who have an active package and are constantly engaging with our various services.</p>
+            
+                <p>The loan amounts are limited to what you save for your desired period.</p>
+            
+                <p>Members who have saved with us but left their accounts dormant will qualify for smaller loan limits compared to active users.</p>
+            
+                <p>Our loans are payable with zero interest, making them a beneficial option for our members.</p>
+            
+                <p>We evaluate qualified borrowers based on various metrics such as account activity, active package status, platform engagement, and submitted documents.</p>
+            
+                <p>If we need additional documentation, we will contact you to ensure seamless loan services.</p>
+            
+                <p><strong>Bonus Tip:</strong> The more you refer users, the more you qualify for even higher loan limits than the saving limit.</p>
+            </div>
+            
+            <div class="tab-pane" id="tabItem4">
+              <h6 class="title">Payments</h6>
+              <p>We will credit you for quality tasks completed, and the amount will be available in your account balance.</p>
+  
+                <p>For other tasks you submit, some might be returned for revision, while others could be canceled. However, for articles, we will publish those that are not sold to our publishers on our site.</p>
+  
+                <p>We will grant you bonuses from earnings we get from AdSense, ensuring you still earn even if the articles are not sold.</p>
+  
+                <p>For example, if you write 10 articles, each with a cost per page of $1, and we successfully sell 8 to our third-party publishers, we will credit 8 payments to your account balance. The earnings from the remaining 2 articles will be credited into your bonus section.</p>
+  
+                <p>You can request a withdrawal for your earnings twice a week. We process withdrawals every Monday and Friday.</p>
+  
+                <p>Upgrade your package to earn more; the key to earning more is consistency and choosing the highest effective package.</p>
+  
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
 
 <div class="modal-overlay" id="modalOverlay"></div>
 
 
 <div class="nk-block invest-block" style="position: relative;">
     <div class="row g-gs gx-3">
-        <div class="col-lg-8" style="position: relative;">
+        <div class="col-lg-6" style="position: relative;">
             <form action="#" class="invest-form">
                 <div class="col-lg-12 col-sm-12">
                     <div class="invest-field form-group">
@@ -112,8 +205,8 @@
                             <a role="button" id="selected-plan-type" class="invest-cc-chosen" data-bs-toggle="dropdown" aria-expanded="false" style="content: ''">
                                 <div class="coin-item">
                                     <div class="coin-icon"><em class="fs-20px far fa-hand-scissors"></em></div>
-                                    <div class="coin-info"><span class="coin-name">Select Investment Plan</span>
-                                        <span class="coin-text">Invest for 21 days and get daily profit 4.76%</span>
+                                    <div class="coin-info"><span class="coin-name">Select Plan</span>
+                                        <span class="coin-text">Invest or save to acquire loans</span>
                                     </div>
                                 </div>
                             </a>
@@ -124,9 +217,10 @@
                                             <div class="coin-item">
                                                 <div class="coin-icon"><em class="fs-20px fa-brands fa-hackerrank"></em>
                                                 </div>
-                                                <div class="coin-info"><span class="coin-name">Investment</span>
+                                                <div class="coin-info"><span class="coin-name">Savings</span>
                                                     <span class="coin-text">
-                                                        Invest and earn from the returns invested
+                                                        Save for 10 days and get a loan limit worth the amount you have saved
+                                                        
                                                     </span>
                                                 </div>
                                             </div>
@@ -139,10 +233,9 @@
                                                 <div class="coin-icon">
                                                     <em class="fs-20px far fa-solid fa-piggy-bank"></em>
                                                 </div>
-                                                <div class="coin-info"><span class="coin-name">Savings</span>
+                                                <div class="coin-info"><span class="coin-name">Invest</span>
                                                     <span class="coin-text">
-                                                        Save for 21 days and get daily profit
-                                                        4.76%
+                                                        Invest and earn from the returns invested daily for 10 days
                                                     </span>
                                                 </div>
                                             </div>
@@ -161,15 +254,15 @@
                         <div class="invest-amount-group g-2">
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="1-day" id="iv-amount-1">
-                                <label class="invest-amount-label" for="iv-amount-1">1 Day</label>
+                                <label class="invest-amount-label" for="iv-amount-1">5 Days</label>
                             </div>
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="1-week" id="iv-amount-2">
-                                <label class="invest-amount-label" for="iv-amount-2">1 Week</label>
+                                <label class="invest-amount-label" for="iv-amount-2">10 days</label>
                             </div>
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="2-weeks" id="iv-amount-3">
-                                <label class="invest-amount-label" for="iv-amount-3">2 Weeks</label>
+                                <label class="invest-amount-label" for="iv-amount-3">15 days</label>
                             </div>
                             <div class="invest-amount-item">
                                 <input type="radio" class="invest-amount-control" name="save-duration" value="1-month" id="iv-amount-4">
@@ -246,7 +339,7 @@
                                                     <em class="icon ni ni-money"></em>
                                                 </div>
                                                 <div class="coin-info">
-                                                    <span class="coin-name" data-bs-pay-text="coin-pay-select">Manual</span>
+                                                    <span class="coin-name" data-bs-pay-text="coin-pay-select">Manual Payment</span>
                                                     <span class="coin-text">Current</span>
                                                 </div>
                                             </div>
@@ -259,7 +352,7 @@
                     </div>
                     <div class="invest-field form-group">
                         <div class="custom-control custom-control-xs custom-checkbox"><input type="checkbox" class="custom-control-input" id="checkbox">
-                            <label class="custom-control-label" for="checkbox">I agree the
+                            <label class="custom-control-label" for="checkbox">I agree with the
                                 <a href="#">terms and &amp; conditions.</a>
                             </label>
                         </div>
@@ -287,18 +380,21 @@
                                 </li>
                             </ul>
                         </div>
+                        <br>
                         <div class="nk-iv-wg4-sub">
                             <ul class="nk-iv-wg4-list">
                                 <li>
                                     <div class="sub-text">Amount <span id="amount-summary-label"></span></div>
                                     <div class="lead-text">ksh <span id="select-cc-price-summary"></span></div>
                                 </li>
+                                <br>
                                 <li>
                                     <div class="sub-text">Daily Return <span id="daily-rate">(0.5%)</span></div>
                                     <div class="lead-text">ksh <span id="select-cc-price-summary-cost-fee"></span></div>
                                 </li>
                             </ul>
                         </div>
+                        
                         <div class="nk-iv-wg4-sub" id="savings-duration-sumary" style="display: none;">
                             <ul class="nk-iv-wg4-list">
                                 <li>
@@ -307,6 +403,7 @@
                                 </li>
                             </ul>
                         </div>
+                        <br>
                         <div class="nk-iv-wg4-sub">
                             <ul class="nk-iv-wg4-list">
                                 <li>
@@ -315,6 +412,16 @@
                                 </li>
                             </ul>
                         </div>
+                        <br>
+                        <div class="nk-iv-wg4-sub">
+                            <ul class="nk-iv-wg4-list">
+                                <li>
+                                    <div class="lead-text">Loan Amount Qualified</div>
+                                    <div class="caption-text text-primary">ksh <span id="total-investment"></span></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
                     </div>
                     <div class="m-1 nk-iv-wg4-sub text-center bg-primary d-flex align-items-center justify-center mt-2" style="border-radius: 2rem;">
                         <button type="submit" id="submit-saving-button" class="btn btn-lg btn-primary ttu text-center py-2" style="text-align: center;" href="" style="width: 100%;">

@@ -126,16 +126,27 @@
                             </a>
                         </div>
                         <ul class="user-account-data">
+                            
+                            
+                            <li>
+                                <div class="user-account-label">
+                                    <span class="sub-text">Remote Tasks</span>
+                                </div>
+                                <div class="user-account-value">
+                                    <span class="lead-text">$ 
+                                        <span class="currency-btc">{{ remote_jobs_income|floatformat:2|intcomma }}</span></span>
+                                </div>
+                            </li>
                             <li>
                                 <div class="user-account-label">
                                     <span class="sub-text">Profits</span>
                                 </div>
                                 <div class="user-account-value">
-                                    <span class="lead-text">+ 0.0526
-                                        <span class="currency currency-btc">KES</span></span><span class="text-success ms-2">3.1%
-                                        <em class="icon ni ni-arrow-long-up"></em></span>
+                                    <span class="lead-text">0.0
+                                        <span class="currency currency-btc">KES</span></span>
                                 </div>
                             </li>
+
                             <li>
                                 <div class="user-account-label">
                                     <span class="sub-text">Deposits</span>
@@ -217,23 +228,7 @@
                                 <span class="nk-menu-text">Transactions</span>
                             </a>
                         </li>
-                        {% comment %}
-                        <li class="nk-menu-item">
-                            <a role="button" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-coins"></em>
-                                </span><span class="nk-menu-text">Buy / Sell</span>
-                            </a>
-                        </li>
-                        {% endcomment %} {% comment %}
-
-                        <li class="nk-menu-item">
-                            <a role="button" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-article"></em>
-                                </span><span class="nk-menu-text">Articles</span>
-                            </a>
-                        </li> {% endcomment %}
+                        
 
                         <li class="nk-menu-item">
                             <a  style="cursor:pointer"  href="{% url 'dashboard:invest:referals' %}" class="nk-menu-link">
@@ -265,7 +260,7 @@
                         <li class="nk-menu-item">
                             <a  style="cursor:pointer"  href="{% url 'dashboard:invest:academic_writing_accounts' %}" class="nk-menu-link">
                                 <Span class="nk-menu-icon"><em class="icon ni ni-edit"></em></Span>
-                                <span class="nk-menu-text">Online Writing</span>
+                                <span class="nk-menu-text"> Accounts</span>
                             </a>
                         </li>
                         <li class="nk-menu-item">
@@ -274,22 +269,7 @@
                                 <span class="nk-menu-text">VIP Role</span>
                             </a>
                         </li>
-                        {% comment %} <li class="nk-menu-item">
-                            <a role="button" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-repeat"></em>
-                                </span><span class="nk-menu-text">Investiments</span>
-                            </a>
-                        </li>
-                        <li class="nk-menu-item">
-                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-chart-bar"></em></span>
-                                <span class="nk-menu-text">Investment plans
-
-                                </span>
-                            </a>
-                        </li>
-                        {% endcomment %}
+                       
                         {% if plans %}
                         <li class="nk-menu-item">
                             <a  style="cursor:pointer"  href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
@@ -297,55 +277,84 @@
                                 <span class="nk-menu-text">Invest and Save</span>
                             </a>
                         </li>
-                        {% endif %}
                         <li class="nk-menu-item">
-                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:advertise' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-bulb"></em>
-                                </span>
-                                <span class="nk-menu-text">Advertise
-                                </span>
+                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:loans' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span>
+                                <span class="nk-menu-text">Loans</span>
                             </a>
                         </li>
+                        {% endif %}
                         
-                        <!-- <li class="nk-menu-item">
-                            <a href="{% url 'dashboard:invest:monetize' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
-
-                                <span class="nk-menu-text">Hookups
-                                </span>
-                            </a>
-                        </li> -->
-
-
-
-                        <!-- <li class="nk-menu-item">
-                            <a role="button" class="nk-menu-link" href="#">
-                                <span class="nk-menu-icon"><em class="icon ni ni-check"></em></span>
-                                <span class="nk-menu-text">Micro Tasks</span>
-                            </a>
-                        </li> -->
-                        <!-- <li class="nk-menu-item">
-                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:comingsoon' %}" class="nk-menu-link">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-notify"></em>
-                                </span>
-                                <span class="nk-menu-text">Comming Soon
-                                </span>
-                            </a>
-                        </li> -->
+                        
                         <li class="nk-menu-item">
-                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:qinfo' %}" class="nk-menu-link">
+                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:jobs:job_board_view' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon">
-                                    <em class="icon ni ni-question-alt"></em>
-                                </span>
-                                <span class="nk-menu-text">Quick Info</span>
+                                    <em class="icon ni ni-upload"></em>
+
+                                </span><span class="nk-menu-text">Uploads</span>
                             </a>
+                        </li>
+                       
+                    </ul>
+                    
+                </div>
+                
+                <div class="nk-sidebar-menu">
+                    {% if plans %}
+                    <ul class="nk-menu">
+                        <li class="nk-menu-heading mb-3">
+                            <h6 class="overline-title">AI & Content Creation</h6>
+                        </li>
+
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-files"></em>
+                                </span><span class="nk-menu-text">Blogging & Article Writing</span>
+                            </a>
+
+                            <ul class="nk-menu-sub">
+                                <li class="nk-menu-item">
+                                    <a  style="cursor:pointer"  href="{% url 'dashboard:articles:blogging-home' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">My Content
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a  style="cursor:pointer"  href="{% url 'dashboard:invest:upgrade' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">Upgrade
+                                        </span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-cloud"></em>
+                                </span><span class="nk-menu-text">AI Services</span>
+                            </a>
+
+                            <ul class="nk-menu-sub">
+                                <li class="nk-menu-item">
+                                    <a  style="cursor:pointer"  href="{% url 'dashboard:articles:blogging-home' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">AI Tools
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a  style="cursor:pointer"  href="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">Pricing
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
-                    <hr />
+                    {% endif %}
                 </div>
-
+                <!--  -->
 
                 <div class="nk-sidebar-widget" style="padding:10px 20px 0px 20px;">
                     {% if plans %}
@@ -388,95 +397,30 @@
 
 
                 <!--  -->
-                <!-- TODO: set permission is_premium -->
-                <hr />
-                <div class="nk-sidebar-menu">
-                    {% if plans %}
-                    <ul class="nk-menu">
-                        <li class="nk-menu-heading mb-3">
-                            <h6 class="overline-title">AI & Content Creation</h6>
-                        </li>
-
-                        <li class="nk-menu-item has-sub">
-                            <a href="#" class="nk-menu-link nk-menu-toggle">
-                                <span class="nk-menu-icon">
-                                    <em class="icon ni ni-files"></em>
-                                </span><span class="nk-menu-text">Blogging</span>
-                            </a>
-
-                            <ul class="nk-menu-sub">
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="{% url 'dashboard:articles:blogging-home' %}" class="nk-menu-link">
-                                        <span class="nk-menu-text">My content
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="#" class="nk-menu-link">
-                                        <span class="nk-menu-text">AI Detector
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="#" class="nk-menu-link">
-                                        <span class="nk-menu-text">AI Remover
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="#" class="nk-menu-link">
-                                        <span class="nk-menu-text">Podcasts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="#" class="nk-menu-link">
-                                        <span class="nk-menu-text">Text To Video
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="#" class="nk-menu-link">
-                                        <span class="nk-menu-text">Video To Text
-                                        </span>
-                                    </a>
-                                </li>
-
-
-                                <li class="nk-menu-item">
-                                    <a  style="cursor:pointer"  href="{% url 'dashboard:articles:blogging-with-ai-pricing-plan' %}" class="nk-menu-link">
-                                        <span class="nk-menu-text">Pricing
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    {% endif %}
-                </div>
-                <!--  -->
-
-                <hr />
+               
 
                 <div class="nk-sidebar-menu ">
 
                     <ul class="nk-menu">
+                        <li class="nk-menu-heading mb-3">
+                            <h6 class="overline-title">For You</h6>
+                        </li>
                         <li class="nk-menu-item">
-                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:jobs:job_board_view' %}" class="nk-menu-link">
+                            <a  style="cursor:pointer"  href="{% url 'dashboard:invest:qinfo' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon">
-                                    <em class="icon ni ni-upload"></em>
-
-                                </span><span class="nk-menu-text">Uploads</span>
+                                    <em class="icon ni ni-question-alt"></em>
+                                </span>
+                                <span class="nk-menu-text">Quick Info</span>
                             </a>
                         </li>
                     
-                        <li class="nk-menu-item">
+                        <!-- <li class="nk-menu-item">
                             <a  style="cursor:pointer"  href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-chat-circle"></em>
                                 </span><span class="nk-menu-text">Chats</span>
                             </a>
-                        </li>
+                        </li> -->
 
                         <li class="nk-menu-item">
                             <a  style="cursor:pointer"  href="{% url 'profile:profile' %}" class="nk-menu-link">
@@ -497,7 +441,14 @@
                             <a  style="cursor:pointer"  href="{% url 'dashboard:assistance' %}" class="nk-menu-link">
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-headphone"></em>
-                                </span><span class="nk-menu-text">Assistant</span>
+                                </span><span class="nk-menu-text">Support</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
+                            <a  style="cursor:pointer"  href="{% url 'dashboard:admin_assistance' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon">
+                                    <em class="icon ni ni-shield"></em>
+                                </span><span class="nk-menu-text">Admin</span>
                             </a>
                         </li>
                     </ul>
@@ -513,7 +464,7 @@
                             </a>
                         </li>
                         <li class="nk-menu-item">
-                            <div class="dropup">
+                            <div>
                                 {% include "account/dashboard/v1/components/languages.html" %}
                             </div>
                         </li>
@@ -530,7 +481,7 @@
                                 <span class="nk-menu-icon">
                                     <em class="icon ni ni-info-fill"></em>
                                 </span>
-                                <span class="nk-menu-text">Earning Tips</span>
+                                <span class="nk-menu-text">Referal Tips</span>
                             </a>
                         </li>
                     </ul>
