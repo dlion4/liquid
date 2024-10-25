@@ -897,20 +897,37 @@ CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
-CORS_ALLOW_ALL_ORIGINS=True
-# Define the domains that should be allowed to make CORS requests
+CORS_ALLOW_ALL_ORIGINS = False  # Change this based on your needs
+
+# Allow specific origins
+CORS_ALLOWED_ORIGINS = [
+    "https://auth.earnkraft.com",
+    "https://dashboard.earnkraft.com",
+    "https://app.earnkraft.com",
+]
+
 # Allow sending cookies and credentials with CORS requests
 CORS_ALLOW_CREDENTIALS = True
 
-# Set the default X-Frame-Options value to SAMEORIGIN
-# X_FRAME_OPTIONS = "ALLOW-FROM https://auth.earnkraft.com"
-
-
+# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     "https://auth.earnkraft.com",
     "https://dashboard.earnkraft.com",
+    "https://app.earnkraft.com",
 ]
 
+# Allowed HTTP methods for CORS
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+# X-Frame-Options (consider using SAMEORIGIN)
+X_FRAME_OPTIONS = "SAMEORIGIN"  # or handle it differently
 
 UNFOLD = {
     "SITE_SYMBOL": "speed",
@@ -954,3 +971,6 @@ UNFOLD = {
 GOOGLE_GEMINI_API_KEY = env.str("GOOGLE_GEMINI_API_KEY", default="")
 
 ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN=env.str("ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN",  default="")
+
+
+
