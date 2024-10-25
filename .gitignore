@@ -299,5 +299,4 @@ cert.key
 
 # 
 frontend/
-
-auth/keys/*
+keys/
