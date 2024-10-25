@@ -898,24 +898,17 @@ CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
 CORS_ALLOW_ALL_ORIGINS=True
-
 # Define the domains that should be allowed to make CORS requests
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React frontend
-]
-
 # Allow sending cookies and credentials with CORS requests
 CORS_ALLOW_CREDENTIALS = True
 
 # Set the default X-Frame-Options value to SAMEORIGIN
-# X_FRAME_OPTIONS = "ALLOW-FROM http://localhost:5173"
+# X_FRAME_OPTIONS = "ALLOW-FROM https://auth.earnkraft.com"
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://earnkraft.com",
-    "https://www.earnkraft.com",
-    "http://31.220.58.182:9701",
-    "http://localhost:5173",
+    "https://auth.earnkraft.com",
+    "https://dashboard.earnkraft.com",
 ]
 
 

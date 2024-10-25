@@ -32,6 +32,9 @@ class UserLoginView(APIView):
             return Response(login_tokens, status=status.HTTP_200_OK)
         return Response({"error": "user not found"}, status=status.HTTP_400_BAD_REQUEST)
 
+    def options(self, request):
+        return Response(status=status.HTTP_200_OK)
+
 
 class UserTokenValidation(APIView, BuildMagicLink):
     permission_classes = [permissions.AllowAny]
@@ -44,6 +47,10 @@ class UserTokenValidation(APIView, BuildMagicLink):
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return  Response({"error": "Invalid token"}, status=status.HTTP_401_UNAUTHORIZED)  # noqa: E501
 
+    def options(self, request):
+        return Response(status=status.HTTP_200_OK)
+
+
 class UserValidateAccessToken(APIView):
     permission_classes = [permissions.AllowAny]
     token = JWTAuthentication()
@@ -52,6 +59,10 @@ class UserValidateAccessToken(APIView):
         if user:
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return  Response({"error": "Invalid token"},status=status.HTTP_401_UNAUTHORIZED)
+
+    def options(self, request):
+        return Response(status=status.HTTP_200_OK)
+
 
 class ValidateAuthenticatedUserView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -62,8 +73,12 @@ class ValidateAuthenticatedUserView(APIView):
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return Response({}, status.HTTP_400_BAD_REQUEST)
 
+    def options(self, request):
+        return Response(status=status.HTTP_200_OK)
+
 
 class CheckAuthenticationStatusView(View):
+
 
     @method_decorator(csrf_exempt)
     def get(self, request, *args, **kwargs):
