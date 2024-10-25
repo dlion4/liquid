@@ -108,23 +108,8 @@ class BasicAuthMiddleware:
 
 class CustomXFrameOptionsMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
-        # Get the request origin
-        origin = request.headers.get("Origin")
-        print(origin)
-
-        # # Allowed iframe embedding origins
-        # allowed_iframe_origins = [
-        #     "http://localhost:5173",  # Add any additional allowed origins here
-        # ]
-
-        # if origin in allowed_iframe_origins:
-        #     # Allow embedding for specific origin
-        #     response["X-Frame-Options"] = f"ALLOW-FROM {origin}"
-        # else:
-        #     # Default behavior: same origin only
-        #     response["X-Frame-Options"] = "SAMEORIGIN"
-
         return response
+
 
 
 class ContentSecurityPolicyMiddleware(MiddlewareMixin):
