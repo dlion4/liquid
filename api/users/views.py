@@ -35,7 +35,6 @@ class UserLoginView(APIView):
 
     def options(self, request):
         response = Response(status=status.HTTP_200_OK)
-
         # Add CORS headers
         response["Access-Control-Allow-Origin"] = "https://auth.earnkraft.com"
         response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
