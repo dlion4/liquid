@@ -3,10 +3,10 @@
 {% load static %}
 {% load i18n %}
 
-{% block inner %}
+{% block body %}
 
 
-<form action="{% url 'users:login' %}" id="loginForm" method="post" style="margin: auto; min-width: 300px">
+<!-- <form action="{% url 'users:login' %}" id="loginForm" method="post" style="margin: auto; min-width: 300px">
   {% csrf_token %}
   <div class="form-group">
     <div class="form-label-group">
@@ -23,9 +23,8 @@
   <div class="form-group">
     <button type="submit" class="btn btn-lg btn-primary btn-block" id="submitBtn">Sign in</button>
   </div>
-</form>
+</form> -->
 
-<div class="" id="errorList"></div>
 
 
 <script>
@@ -129,4 +128,4 @@
     });
 </script>
 
-{% endblock inner %}
+{% endblock body %}

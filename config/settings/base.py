@@ -303,14 +303,15 @@ MIDDLEWARE = [
     # "htmlmin.middleware.MarkRequestMiddleware",
     # to check authentication status
     "amiribd.users.middleware.AuthenticationStateCheckMiddleware",
-    "amiribd.users.middleware.BasicAuthMiddleware", # for the silk popup authentication
+    "amiribd.users.middleware.BasicAuthMiddleware",  # for the silk popup authentication
+    "amiribd.users.middleware.CustomXFrameOptionsMiddleware",  # x frame option
+    "amiribd.users.middleware.ContentSecurityPolicyMiddleware",  # x frame option
     # custom load secret variables
     "amiribd.tokens.middleware.load_secrets.LoadSecretsMiddleware",
     # account status middleware
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
     "silk.middleware.SilkyMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
-
 ]
 
 # CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
@@ -408,7 +409,7 @@ SESSION_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
 # CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = "DENY"
+# X_FRAME_OPTIONS = "DENY"
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -898,11 +899,23 @@ CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
 CORS_ALLOW_ALL_ORIGINS=True
 
+# Define the domains that should be allowed to make CORS requests
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # React frontend
+]
+
+# Allow sending cookies and credentials with CORS requests
+CORS_ALLOW_CREDENTIALS = True
+
+# Set the default X-Frame-Options value to SAMEORIGIN
+# X_FRAME_OPTIONS = "ALLOW-FROM http://localhost:5173"
+
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://earnkraft.com',
-    'https://www.earnkraft.com',
-    "http://31.220.58.182:9701"
+    "https://earnkraft.com",
+    "https://www.earnkraft.com",
+    "http://31.220.58.182:9701",
+    "http://localhost:5173",
 ]
 
 

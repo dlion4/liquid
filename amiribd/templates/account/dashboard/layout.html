@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
-
-<head>
-  <meta charset="utf-8" />
+  
+  <head>
+    <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <title>
     {% block title %}
@@ -24,18 +24,26 @@
   <link id="skin-default" rel="stylesheet" href="{% static 'dashboard/assets/css/theme.css' %}?ver=3.2.3">
 
   <link rel="stylesheet" href="{% static 'css/fontawesome.all.min.css' %}">
-  <style>.errorlist {color: red !important}</style>
+  <style>
+    .errorlist {
+      color: red !important
+    }
+  </style>
   {% endcompress css %}
 
   {% block css %}{% endblock css %}
-    <script src="{% static 'js/project.js' %}"></script>
-
+  <script src="{% static 'js/project.js' %}"></script>
+  
 </head>
 
 <body class="nk-body npc-invest bg-lighter">
+  
+  <input type="hidden" name="user" value="{{request.user}}">
+  <input type="hidden" name="earnkraft_auth_url" value="{{earnkraft_auth_url}}">
+  <input type="hidden" name="earnkraft_token" value="{{earnkraft_token}}">
+  <!-- <iframe title="react-app" src="http://localhost:5173" style="display:none" id="react-iframe"></iframe> -->
 
   {% block body %}
-
   <div class="nk-app-root">
     <div class="nk-wrap ">
       {% block navbar %}{% endblock navbar %}
@@ -45,13 +53,11 @@
       {% block footer %}{% endblock footer %}
     </div>
   </div>
-
-
-
   {% block modals %}
   {% endblock modals %}
 
-  {% comment %} {% endcomment %}
+
+
   {% endblock body %}
 
   {% block javascript %}
@@ -69,18 +75,21 @@
 
   {% endcompress %}
 
-
-
   {% endblock javascript %}
 
   {% block js %}{% endblock js %}
 
   <script type="module">
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Add your JS here
       console.log("Hello world");
     });
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="{% static 'js/auth.js' %}"></script>
+
 
 </body>
 

@@ -1,7 +1,9 @@
 import json
+import threading
 from typing import Any
 
 import after_response
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -23,6 +25,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 from django.views.generic import View
+import requests
 
 from amiribd.tokens.models import AuthToken
 from amiribd.users.models import Profile
@@ -34,7 +37,7 @@ from .forms import EmailSignupForm
 from .guard import AuthenticationGuard
 from .models import Profile as ProfileObject
 from .tasks import send_background_email
-from .utils import BuildMagicLink
+from .utils import BuildMagicLink, EventEmitterView
 from .utils import expiring_token_generator
 from .utils import generate_referral_code
 
@@ -56,8 +59,10 @@ class UserView(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     def get(self, request, *args, **kwargs):
-        user_data = {"id": 1, "username": "Jeckonia"}
+        user_data = {"id": 1, "username": "Jacksonian"}
         return JsonResponse(user_data, safe=False)
+
+
 
 class LoginView(AuthenticationGuard,BuildMagicLink,TemplateView):
     form_class = EmailLoginForm
@@ -147,9 +152,11 @@ class SuccessAuthenticationView(AuthenticationGuard, TemplateView):
 
 
 class LogoutView(View):
+    event_emitter = EventEmitterView()
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         logout(request)
+        threading.Thread(target=self.event_emitter.emit_authentication_event,args=(None,)).start()
         return redirect("home")
 
 class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
@@ -241,6 +248,7 @@ class LinkAuthenticationView(View):
     Invalid test login link:
     http://127.0.0.1:8000/users/login/Mw/ccher2-a4994fd72a57823d4609173f1fc7abbd-sixp32/
     """
+    event_emitter = EventEmitterView()
 
     def get(self, request:HttpRequest, uid:Any, token:Any) -> HttpResponse:
         try:
@@ -249,6 +257,9 @@ class LinkAuthenticationView(View):
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user and expiring_token_generator.check_token(user, token):
+            threading.Thread(
+                target=self.event_emitter.emit_authentication_event,
+                args=(user,)).start()
             login(request, user, backend="users.backends.TokenAuthenticationBackend")
             return redirect("dashboard:home")
         # the token is expired show the expired page
@@ -265,3 +276,5 @@ class ValidatedEmailAddressView(View):
         # return JsonResponse({"message": "Can't find such an account!", "is_valid": False})  # noqa: E501, ERA001
         return JsonResponse(
             {"message": "Your account exist. 🔥", "is_valid": True}, status=200)
+
+

@@ -160,7 +160,7 @@
                         <h5 class="mb-0 d-flex align-items-center gap-2">
                             Customer Support<span class="fa-solid fa-circle text-success fs-11"></span></h5>
                         <div class="btn-reveal-trigger">
-                            <button class="btn btn-link p-0 dropdown-toggle dropdown-caret-none transition-none d-flex" type="button" id="support-chat-dropdown" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h text-body"></span></button>
+                            <button title="submit" class="btn btn-link p-0 dropdown-toggle dropdown-caret-none transition-none d-flex" type="button" id="support-chat-dropdown" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h text-body"></span></button>
                             <div class="dropdown-menu dropdown-menu-end py-2" aria-labelledby="support-chat-dropdown"><a class="dropdown-item" href="">Request a callback</a><a class="dropdown-item" href="">Search in chat</a><a class="dropdown-item" href="">Show history</a><a class="dropdown-item" href="">Report to Admin</a><a class="dropdown-item btn-support-chat" href="">Close Support</a></div>
                         </div>
                     </div>
@@ -185,7 +185,7 @@
                     <div class="card-footer d-flex align-items-center gap-2 border-top border-translucent ps-3 pe-4 py-3">
                         <div class="d-flex align-items-center flex-1 gap-3 border border-translucent rounded-pill px-4">
                             <input class="form-control outline-none border-0 flex-1 fs-9 px-0" type="text" placeholder="Write message"><label class="btn btn-link d-flex p-0 text-body-quaternary fs-9 border-0" for="supportChatPhotos"><span class="fa-solid fa-image"></span></label><input class="d-none" type="file" accept="image/*" id="supportChatPhotos"><label class="btn btn-link d-flex p-0 text-body-quaternary fs-9 border-0" for="supportChatAttachment"> <span class="fa-solid fa-paperclip"></span></label><input class="d-none" type="file" id="supportChatAttachment">
-                        </div><button class="btn p-0 border-0 send-btn"><span class="fa-solid fa-paper-plane fs-9"></span></button>
+                        </div><button title="submit" class="btn p-0 border-0 send-btn"><span class="fa-solid fa-paper-plane fs-9"></span></button>
                     </div>
                 </div>
             </div><button class="btn btn-support-chat p-0 border border-translucent"><span class="fs-8 btn-text text-primary text-nowrap">
@@ -231,6 +231,31 @@
             });
         });
     </script>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function validateToken() {
+      const token = localStorage.getItem('accessToken');
+
+      $.ajax({
+        url: '/api/auth/validate-access-token',
+        type: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        success: function (response) {
+          console.log("Token is valid:", response);
+        },
+        error: function (xhr) {
+          console.error("Invalid token:", xhr.responseJSON);
+        }
+      });
+    }
+
+    // Call the function as needed, e.g., on button click
+    validateToken();
+  </script>
 
 </body>
 

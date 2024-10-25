@@ -1,5 +1,6 @@
 from base64 import b64decode
 
+from django.conf import settings
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -104,3 +105,31 @@ class BasicAuthMiddleware:
         response["WWW-Authenticate"] = 'Basic realm="Silk Access"'
         return response
 
+
+class CustomXFrameOptionsMiddleware(MiddlewareMixin):
+    def process_response(self, request, response):
+        # Get the request origin
+        origin = request.headers.get("Origin")
+        print(origin)
+
+        # # Allowed iframe embedding origins
+        # allowed_iframe_origins = [
+        #     "http://localhost:5173",  # Add any additional allowed origins here
+        # ]
+
+        # if origin in allowed_iframe_origins:
+        #     # Allow embedding for specific origin
+        #     response["X-Frame-Options"] = f"ALLOW-FROM {origin}"
+        # else:
+        #     # Default behavior: same origin only
+        #     response["X-Frame-Options"] = "SAMEORIGIN"
+
+        return response
+
+
+class ContentSecurityPolicyMiddleware(MiddlewareMixin):
+    def process_response(self, request, response):
+        response["Content-Security-Policy"] = (
+            "frame-ancestors 'self' http://localhost:5173"
+        )
+        return response

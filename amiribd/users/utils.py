@@ -1,17 +1,18 @@
 import json
+import logging
 import secrets
 import string
 import threading
-import requests
 import time
-import logging
-from typing import Any
 from urllib.parse import parse_qs
+
+import requests
 from django.conf import settings
 from django.contrib.auth.models import User as UserObject
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import models
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest
+from django.http import JsonResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import force_bytes
@@ -83,7 +84,6 @@ class ExpiringTokenGenerator(PasswordResetTokenGenerator):
         return super().check_token(user, token)
 
 expiring_token_generator = ExpiringTokenGenerator()
-
 
 
 class BuildMagicLink:
@@ -284,9 +284,6 @@ def generate_referral_code(user_pk):
     return f"{random_letters}-{user_pk}-{random_str}-{timestamp}"
 
 
-
-
-
 class PostCleanFormPostViewMixin:
     def ajax_filter_formatted_data(self, request):
         try:
@@ -302,3 +299,19 @@ class PostCleanFormPostViewMixin:
             return json.loads(request.body)
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid Post form data"})
+
+
+class EventEmitterView:
+    def emit_authentication_event(self, user):
+        if user is None:
+            user_data = {"id": "", "email": ""}
+        else:
+            user_data = {"id": user.pk, "email": user.email}
+        try:
+            response = requests.post(
+                "https://earnkraft-webhook.onrender.com/api/webhook",
+                json=user_data,timeout=5,
+            )
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            logger.exception(f"HTTPError: {e} - Response: {response.text}")  # noqa: G004, TRY401
