@@ -28,8 +28,7 @@ if READ_DOT_ENV_FILE:
 
 # resend.api_key = env.str("RESEND_EMAIL_SERVICE_API_KEY")
 
-ALLOWED_HOSTS = env.list(
-    "DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
@@ -82,7 +81,6 @@ ASGI_APPLICATION = "config.asgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-
     "unfold",  # before django.contrib.admin
     "unfold.contrib.filters",  # optional, if special filters are needed
     "unfold.contrib.forms",  # optional, if special form elements are needed
@@ -90,7 +88,6 @@ DJANGO_APPS = [
     "unfold.contrib.import_export",  # optional, if django-import-export package is used
     "unfold.contrib.guardian",  # optional, if django-guardian package is used
     "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
-
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -118,21 +115,17 @@ THIRD_PARTY_APPS = [
     "django_ckeditor_5",
     "ckeditor_uploader",  # https://pypi.org/project/django-ckeditor-uploader/#installation
     "widget_tweaks",
-
     "django_celery_beat",
     # for monitoring application healths
     "silk",
     "django_extensions",
-    
-    'allauth',
-    'allauth.account',
-
+    "allauth",
+    "allauth.account",
     # Optional -- requires install using `django-allauth[socialaccount]`.
-    'allauth.socialaccount',
+    "allauth.socialaccount",
     # ... include the providers you want to enable:
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.google',
-    
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.google",
     #  ... html minification tools
     "htmlmin",
 ]
@@ -140,37 +133,44 @@ THIRD_PARTY_APPS = [
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
+    "google": {
         # For each OAuth based provider, either add a ``SocialApp``
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
-        'APP': {
-            'client_id': env.str("GOOGLE_OAUTH_CLIENT_ID"),
-            'secret': env.str("GOOGLE_OAUTH_CLIENT_SECRET"),
+        "APP": {
+            "client_id": env.str("GOOGLE_OAUTH_CLIENT_ID"),
+            "secret": env.str("GOOGLE_OAUTH_CLIENT_SECRET"),
         },
-        'SCOPE': ['email', 'profile'],
-        'AUTH_PARAMS': {'access_type': 'online'},
-        'INIT_PARAMS': {'login_hint': 'email'},
-        'FIELDS': [
-            'id', 'email', 'name', 'first_name', 'last_name',
-            'username', 'picture', 'account_type'],
-        'EXCHANGE_TOKEN': True,
-        "METHOD": "oauth2",
-        'LOCALE_FUNC': 'django_localflavor_br.i18n.locale_name_to_python',
-        "VERIFIED_EMAIL": True,
-        'EMAIL_AUTHENTICATION': True,
-    },
-    'github': {
-        'APP': {
-            'client_id': env.str("GITHUB_OAUTH_CLIENT_ID"),
-            'secret': env.str("GITHUB_OAUTH_CLIENT_SECRET"),
-        },
-        'SCOPE': [
-            'user',
-            'repo',
-            'read:org',
+        "SCOPE": ["email", "profile"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "INIT_PARAMS": {"login_hint": "email"},
+        "FIELDS": [
+            "id",
+            "email",
+            "name",
+            "first_name",
+            "last_name",
+            "username",
+            "picture",
+            "account_type",
         ],
-    }
+        "EXCHANGE_TOKEN": True,
+        "METHOD": "oauth2",
+        "LOCALE_FUNC": "django_localflavor_br.i18n.locale_name_to_python",
+        "VERIFIED_EMAIL": True,
+        "EMAIL_AUTHENTICATION": True,
+    },
+    "github": {
+        "APP": {
+            "client_id": env.str("GITHUB_OAUTH_CLIENT_ID"),
+            "secret": env.str("GITHUB_OAUTH_CLIENT_SECRET"),
+        },
+        "SCOPE": [
+            "user",
+            "repo",
+            "read:org",
+        ],
+    },
 }
 
 
@@ -179,12 +179,12 @@ SOCIALACCOUNT_PROVIDERS = {
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
 SOCIALACCOUNT_ADAPTER = "amiribd.users.adapters.SocialAccountAdapter"
 # Disable automatic redirect to signup when user exists
-ACCOUNT_ALLOW_REGISTRATION=env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
-SOCIALACCOUNT_AUTO_SIGNUP=True
-SOCIALACCOUNT_LOGIN_ON_GET=True
-SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT=True
+ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
-SOCIALACCOUNT_ONLY =True
+SOCIALACCOUNT_ONLY = True
 ACCOUNT_EMAIL_VERIFICATION = "none"  # or "none"
 
 LOCAL_APPS = [
@@ -249,7 +249,7 @@ MIGRATION_MODULES = {"sites": "amiribd.contrib.sites.migrations"}
 AUTHENTICATION_BACKENDS = [
     "users.backends.TokenAuthenticationBackend",
     # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
@@ -378,7 +378,6 @@ TEMPLATES = [
                 "amiribd.invest.context_processors.withdrawal_form_action",
                 "amiribd.htmx.context_processors.display_add_plan_form",
                 "amiribd.payments.context_processors.payment_context_data",
-
                 # secret template processor from. the secrets
                 "amiribd.tokens.context_processors.load_secrets",
                 "amiribd.transactions.context_processors.deposit_form_action",
@@ -428,7 +427,7 @@ EMAIL_TIMEOUT = 5
 ADMIN_URL = "admin/"
 # STUFF ADMIN
 # ------------------------------------------------------------------------------
-STUFF_ADMIN_URL="earnkraft/"
+STUFF_ADMIN_URL = "earnkraft/"
 # ------------------------------------------------------------------------------
 # Django CLIENT Dashboard URL
 DASHBOARD_URL = env.str("DJANGO_DASHBOARD_URL", default="dashboard:home")
@@ -897,26 +896,21 @@ CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
-CORS_ALLOW_ALL_ORIGINS = False  # Change this based on your needs
+CORS_ALLOW_ALL_ORIGINS = False
 
-# Allow specific origins
 CORS_ALLOWED_ORIGINS = [
     "https://auth.earnkraft.com",
     "https://dashboard.earnkraft.com",
     "https://app.earnkraft.com",
 ]
 
-# Allow sending cookies and credentials with CORS requests
 CORS_ALLOW_CREDENTIALS = True
 
-# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     "https://auth.earnkraft.com",
     "https://dashboard.earnkraft.com",
     "https://app.earnkraft.com",
 ]
-
-# Allowed HTTP methods for CORS
 CORS_ALLOW_METHODS = [
     "GET",
     "POST",
@@ -926,14 +920,13 @@ CORS_ALLOW_METHODS = [
     "OPTIONS",
 ]
 
-# X-Frame-Options (consider using SAMEORIGIN)
-X_FRAME_OPTIONS = "SAMEORIGIN"  # or handle it differently
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 UNFOLD = {
     "SITE_SYMBOL": "speed",
-    "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
+    "SHOW_VIEW_ON_SITE": True,  # show/hide "View on site" button, default: True
     "ENVIRONMENT": "core.environment_callback",
-    "DASHBOARD_CALLBACK": "core.dashboard_callback", # show/hide "View on site" button, default: True
+    "DASHBOARD_CALLBACK": "core.dashboard_callback",  # show/hide "View on site" button, default: True
     "EXTENSIONS": {
         "modeltranslation": {
             "flags": {
@@ -948,7 +941,6 @@ UNFOLD = {
         "show_all_applications": True,  # Dropdown with all applications and models
         "navigation": DJANGO_UNFOLD_SIDEBAR_NAVIGATION,
     },
-
     "TABS": [
         {
             "models": [
@@ -970,7 +962,6 @@ UNFOLD = {
 
 GOOGLE_GEMINI_API_KEY = env.str("GOOGLE_GEMINI_API_KEY", default="")
 
-ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN=env.str("ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN",  default="")
-
-
-
+ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN = env.str(
+    "ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN", default=""
+)
