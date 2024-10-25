@@ -47,9 +47,7 @@ def send_background_email(
     if context is None:
         context = {}
     if context is not None:
-        context.update({
-                "team": "Earnkraft",
-            })
+        context.update({"team": "Earnkraft"})
 
     try:
         html_message = render_to_string(template_name, context)

@@ -32,3 +32,5 @@ google-generativeai
 markdown
 channels-redis
 django-htmlmin
+pyJwt
+cryptography

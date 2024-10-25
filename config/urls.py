@@ -9,6 +9,8 @@ from sesame.views import LoginView
 from amiribd.articles.editor import views as ck_editor_views
 from amiribd.core.admin import earnkraft_site
 
+from api import urls as api_urls
+
 urlpatterns = [
     # root urls
     path(
@@ -75,6 +77,7 @@ urlpatterns = [
             namespace="apis",
         ),
     ),
+    path("api/", include(api_urls)),
     path("profiles/", include("amiribd.profiles.urls", namespace="profiles")),
     path(
         "subscriptions/",

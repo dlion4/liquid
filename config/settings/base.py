@@ -62,20 +62,8 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": env.db("DATABASE_URL"),
-    # # 'email_validation': { 
-    #     'ENGINE': "django.db.backends.sqlite3",
-    #     'NAME': BASE_DIR /  "db" / "email_validation_db.sqlite3",
-    # },
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-# DATABASES["email_validation"]["ATOMIC_REQUESTS"] = True
-# ROUTERS
-# The above code in Python is setting the `DATABASE_ROUTERS` variable to a list containing the string
-# `'config.settings.db_routers.EmailValidationRouter'`. This is typically used in Django settings to
-# specify a list of router classes to use for database routing. In this case, it seems to be
-# specifying a custom database router called `EmailValidationRouter` located in the `db_routers`
-# module within the `config.settings` package.
-DATABASE_ROUTERS = ['config.settings.db_routers.EmailValidationRouter']
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -83,6 +71,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "config.urls"
+ROOT_API_URLCONF = "api.urls"
 # INVEST,ENT UR;LS
 # ------------------------------------------------------------------------------
 FIRST_INVESTMENT_URL = "dashboard:invest:invest"
@@ -321,6 +310,7 @@ MIDDLEWARE = [
     "amiribd.dashboard.middleware.AccountStatusMiddleware",
     "silk.middleware.SilkyMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
+
 ]
 
 # CACHE_MIDDLEWARE_ALIAS = "default"  # The cache alias to use for storage.
@@ -333,6 +323,9 @@ CONSERVATIVE_WHITESPACE_ON_MINIFYING = False
 
 COMPRESS_ENABLED = True
 COMPRESS_CSS_HASHING_METHOD = "content"
+
+JWT_ISSUER = env.str("JWT_ISSUER", "")
+JWT_AUDIENCE = env.str("JWT_AUDIENCE", "")
 
 # HTML_MINIFY = True
 # KEEP_COMMENTS_ON_MINIFYING = True

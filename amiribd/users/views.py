@@ -250,7 +250,7 @@ class LinkAuthenticationView(View):
             user = None
         if user and expiring_token_generator.check_token(user, token):
             login(request, user, backend="users.backends.TokenAuthenticationBackend")
-            return redirect("home")
+            return redirect("dashboard:home")
         # the token is expired show the expired page
         # http://localhost:8000/users/login/Mjk/cazzis-d2df588655e11a203503afe323bf63a9-shg9us/
         messages.error(request, "Your login link is expired!")
@@ -263,4 +263,5 @@ class ValidatedEmailAddressView(View):
         # validated = ValidatedEmailAddress.objects.using("email_validation").filter(email_address=email)  # noqa: E501, ERA001
         # if validated.exists():
         # return JsonResponse({"message": "Can't find such an account!", "is_valid": False})  # noqa: E501, ERA001
-        return JsonResponse({"message": "Your account exist. 🔥", "is_valid": True}, status=200)
+        return JsonResponse(
+            {"message": "Your account exist. 🔥", "is_valid": True}, status=200)

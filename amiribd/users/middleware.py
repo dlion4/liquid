@@ -1,5 +1,10 @@
+from base64 import b64decode
 
+from django.http import Http404
+from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.urls import Resolver404
+from django.urls import resolve
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 
@@ -67,39 +72,35 @@ class AuthenticationStateCheckMiddleware(MiddlewareMixin):
         return self.get_response(request)
 
 
-
-
-from django.http import HttpResponse
-from base64 import b64decode
-
 class BasicAuthMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
         # Apply the middleware only to /silk/ URL
-        if not request.path.startswith('/silk/'):
+        if not request.path.startswith("/silk/"):
             return self.get_response(request)  # Allow access to non-/silk/ requests
         # Check if Authorization header is present
-        if 'HTTP_AUTHORIZATION' not in request.META:
+        if "HTTP_AUTHORIZATION" not in request.META:
             return self._request_authentication()
 
         # Extract and decode the Authorization header
-        auth_type, credentials = request.META['HTTP_AUTHORIZATION'].split(' ', 1)
-        if auth_type.lower() != 'basic':
+        auth_type, credentials = request.META["HTTP_AUTHORIZATION"].split(" ", 1)
+        if auth_type.lower() != "basic":
             return self._request_authentication()
 
-        decoded_credentials = b64decode(credentials).decode('utf-8')
-        username, password = decoded_credentials.split(':', 1)
+        decoded_credentials = b64decode(credentials).decode("utf-8")
+        username, password = decoded_credentials.split(":", 1)
 
         # Replace 'your_username' and 'your_password' with your actual credentials
-        if username == 'earnkraft_silk_username' and password == 'earnkraft_silk_password':
+        if username == "earnkraft_silk_username" and password == "earnkraft_silk_password":
             return self.get_response(request)  # Allow access if credentials match
 
         return self._request_authentication()
 
     def _request_authentication(self):
         # Return 401 Unauthorized response to prompt for credentials
-        response = HttpResponse('Unauthorized', status=401)
-        response['WWW-Authenticate'] = 'Basic realm="Silk Access"'
+        response = HttpResponse("Unauthorized", status=401)
+        response["WWW-Authenticate"] = 'Basic realm="Silk Access"'
         return response
+
