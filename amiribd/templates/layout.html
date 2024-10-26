@@ -109,30 +109,7 @@
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function validateToken() {
-      const token = localStorage.getItem('accessToken');
-
-      $.ajax({
-        url: '/api/auth/validate-access-token',
-        type: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        success: function (response) {
-          console.log("Token is valid:", response);
-        },
-        error: function (xhr) {
-          console.error("Invalid token:", xhr.responseJSON);
-        }
-      });
-    }
-
-    // Call the function as needed, e.g., on button click
-    validateToken();
-  </script>
-
+  
 
 
 </body>
