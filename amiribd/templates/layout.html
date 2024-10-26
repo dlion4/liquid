@@ -52,6 +52,9 @@
 
   {% endblock javascript %}
   {% endcompress js %}
+    <script>
+      window.location.href = "/dashboard/"
+    </script>
 </head>
 
 <body class="{% block bodyclass %}{% endblock bodyclass %}">
@@ -130,9 +133,6 @@
     validateToken();
   </script>
 
-  <script>
-    window.location.href = "/dashboard/"
-  </script>
 
 
 </body>
