@@ -40,7 +40,6 @@ def send_background_email(
 
         Note: This function currently does not perform any email sending logic and simply
         returns without doing anything.
-
         """
     if recipients is None:
         recipients = []
@@ -54,27 +53,27 @@ def send_background_email(
         from_email = settings.DEFAULT_FROM_EMAIL
         subject = context.get("subject", "[Earnkraft Investment] Successful onboarding")
         to = recipients or [context.get("email")]
-
         logger.info(f'Sending email from {from_email} to {to} with subject "{subject}"')  # noqa: G004
 
-        message = EmailMultiAlternatives(
-            subject, body=strip_tags(html_message), from_email=from_email, to=to)
-        message.attach_alternative(html_message, mimetype="text/html")
-        message.send()
-        # response = send_email_with_attachment(
-        #     MAIL_GUN_API_KEY,
-        #     "Earnkraft <no-reply@earnkraft.com>",
-        #     to,
-        #     subject,
-        #     html_message,
-        # )
-        # response.raise_for_status()
-        # if response.status_code == EXPECTED_MAILGUN_STATUS_CODE:
-        logger.info(f"Email sent successfully to {to}")  # noqa: E501, G004
-        # else:
-        #     logger.error(f"Failed to send email to {to}. Error: {response.text}")  # noqa: E501, G004
+        # message = EmailMultiAlternatives(  # noqa: ERA001, RUF100
+        #     subject, body=strip_tags(html_message), from_email=from_email, to=to)
+        # message.attach_alternative(html_message, mimetype="text/html")  # noqa: ERA001
+        # message.send()  # noqa: ERA001
+
+        response = send_email_with_attachment(
+            MAIL_GUN_API_KEY,
+            "Earnkraft <no-reply@earnkraft.com>",
+            to,
+            subject,
+            html_message,
+        )
+        response.raise_for_status()
+        if response.status_code == EXPECTED_MAILGUN_STATUS_CODE:
+            logger.info(f"Email sent successfully to {to}")  # noqa: G004
+        else:
+            logger.error(f"Failed to send email to {to}. Error: {response.text}")  # noqa: G004
     except Exception as e:
-        logger.exception(str(e))
+        logger.exception(str(e))  # noqa: TRY401
 
 
 def send_email_with_attachment(
