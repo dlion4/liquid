@@ -33,14 +33,6 @@ class UserLoginView(APIView):
         return Response({"error": "user not found"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-    def options(self, request):
-        response = Response(status=status.HTTP_200_OK)
-        # Add CORS headers
-        response["Access-Control-Allow-Origin"] = "https://auth.earnkraft.com"
-        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-        response["Access-Control-Allow-Headers"] = "Content-Type"
-        print(response)
-        return response
 
 
 class UserTokenValidation(APIView, BuildMagicLink):
@@ -54,15 +46,7 @@ class UserTokenValidation(APIView, BuildMagicLink):
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return  Response({"error": "Invalid token"}, status=status.HTTP_401_UNAUTHORIZED)  # noqa: E501
 
-    def options(self, request):
-        response = Response(status=status.HTTP_200_OK)
 
-        # Add CORS headers
-        response["Access-Control-Allow-Origin"] = "https://auth.earnkraft.com"
-        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-        response["Access-Control-Allow-Headers"] = "Content-Type"
-
-        return response
 
 
 class UserValidateAccessToken(APIView):
@@ -74,15 +58,6 @@ class UserValidateAccessToken(APIView):
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return  Response({"error": "Invalid token"},status=status.HTTP_401_UNAUTHORIZED)
 
-    def options(self, request):
-        response = Response(status=status.HTTP_200_OK)
-
-        # Add CORS headers
-        response["Access-Control-Allow-Origin"] = "https://auth.earnkraft.com"
-        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-        response["Access-Control-Allow-Headers"] = "Content-Type"
-
-        return response
 
 
 class ValidateAuthenticatedUserView(APIView):
@@ -94,15 +69,6 @@ class ValidateAuthenticatedUserView(APIView):
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return Response({}, status.HTTP_400_BAD_REQUEST)
 
-    def options(self, request):
-        response = Response(status=status.HTTP_200_OK)
-
-        # Add CORS headers
-        response["Access-Control-Allow-Origin"] = "https://auth.earnkraft.com"
-        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-        response["Access-Control-Allow-Headers"] = "Content-Type"
-
-        return response
 
 
 class CheckAuthenticationStatusView(View):
@@ -123,11 +89,3 @@ class CheckAuthenticationStatusView(View):
         except User.DoesNotExist:
             return JsonResponse({}, status=404)
 
-    def options(self, request):
-        response = Response(status=status.HTTP_200_OK)
-        # Add CORS headers
-        response["Access-Control-Allow-Origin"] = "https://auth.earnkraft.com"
-        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-        response["Access-Control-Allow-Headers"] = "Content-Type"
-
-        return response

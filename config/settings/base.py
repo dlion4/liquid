@@ -128,6 +128,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount.providers.google",
     #  ... html minification tools
     "htmlmin",
+    "corsheaders",
 ]
 
 
@@ -286,6 +287,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -896,7 +898,14 @@ CKEDITOR_5_FILE_STORAGE = "config.settings.storage.CKEditorFileStorage"
 
 CK_EDITOR_5_UPLOAD_FILE_VIEW_NAME = "image_upload"
 
-CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "x-csrftoken",
+    "x-requested-with",
+]
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://auth.earnkraft.com",
@@ -904,13 +913,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://app.earnkraft.com",
 ]
 
-CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://auth.earnkraft.com",
-    "https://dashboard.earnkraft.com",
-    "https://app.earnkraft.com",
-]
 CORS_ALLOW_METHODS = [
     "GET",
     "POST",
@@ -920,7 +923,9 @@ CORS_ALLOW_METHODS = [
     "OPTIONS",
 ]
 
-X_FRAME_OPTIONS = "SAMEORIGIN"
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+
 
 UNFOLD = {
     "SITE_SYMBOL": "speed",
@@ -963,5 +968,5 @@ UNFOLD = {
 GOOGLE_GEMINI_API_KEY = env.str("GOOGLE_GEMINI_API_KEY", default="")
 
 ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN = env.str(
-    "ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN", default=""
+    "ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN", default="",
 )
