@@ -3,9 +3,8 @@
 {% load static %}
 {% load i18n %}
 
-{% block inner %}
+{% block body %}
 
-<!-- <form action="{% url 'users:signup' %}" method="post" class="signupform" style="margin: auto; min-width: 300px;">
 
   {% csrf_token %}
   <div class="form-group">
@@ -64,118 +63,4 @@
   </div>
 </form> -->
 
-<script>
-
-  $(document).ready(function () {
-    // call the verify email first before the signup url
-
-    // Function to submit signup form
-    function submitSignupForm(email, username) {
-      const formData = new FormData();
-      formData.append("username", username);
-      formData.append("email", email);
-      $("#submitBtn").prop("disabled", true)
-
-      $("#submitBtn").text("submitting...");
-
-      $.ajax({
-        type: "POST",
-        url: $(".signupform").attr("action"),
-        headers: {
-          "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
-        },
-        data: formData,
-        processData: false, // Prevent jQuery from automatically processing the data
-        contentType: false, // Prevent jQuery from overriding the content type
-        success: function (response) {
-          console.log("Form submitted successfully.");
-          console.log(response)
-          $("#email-lookup-result").fadeIn(1000, function(){
-            $(this).text(response.message).addClass("text-danger")
-          })
-          setTimeout(()=>{window.location.href = response.url}, 3000)
-        },
-        error: function (xhr, status, error) {
-          $("#email-lookup-result").fadeIn(500, function(){
-            $(this).text(JSON.parse(xhr.responseText).message).addClass("text-danger")
-          }).fadeOut(4000)
-        },
-        complete: function(){
-          $("#submitBtn").prop("disabled", false)
-          $("#submitBtn").text("Register");
-        }
-      });
-    }
-
-    // Function to validate email
-    /*   function validateEmail(email, apiKey) {
-         $("#submitBtn").text("Validating email...");
-         $("#submitBtn").prop("disabled", true);
-         $.ajax({
-           type: "POST",
-           url: apiUrl,
-           headers: {
-             "X-Mail-API-KEY": apiKey,
-             "Content-Type": "application/json"
-           },
-           data: JSON.stringify({  email }),
-           success:handleEmailValidation,
-           error: function (xhr, status, error) {
-             console.error("Error: " + error);
-             console.error("Response: " + xhr.responseText);
-           }
-         });
-       }
- 
- */
-    // Form submission handler
-    // When the form is submitted, call the validateEmail function with the email and API Key provided in the form fields.
-    // If the email is valid and the SMTP server is accessible, the signup form will be submitted. Otherwise, the error message will be displayed.
-    // Note: Replace "ZERO_BOUNCE_TOKEN" with the actual ZeroBounce API Key. This can be found in your ZeroBounce account settings.
-    $(".signupform").submit(function (event) {
-      event.preventDefault(); // Prevent traditional form submission
-
-      const email = $("#id_email").val();
-      const username = $("#id_username").val();
-      submitSignupForm(email, username)
-
-    });
-  })
-
-  $("#loginBtn").click(function(){
-    const loginUlr = "{% url 'users:login' %}"
-    window.location.href = loginUlr
-  })
-
-  document
-    .body
-    .addEventListener("htmx:afterSwap", function (event) {
-      console.log(event.detail.target)
-
-      const swappedElement = event.detail.target
-      try {
-        const emailResponseBox = document.getElementById('email-lookup-result');
-        const responseBox = emailResponseBox.getAttribute("data-bt-state")
-
-        let submitButton = document.getElementById('submitBtn');
-        if (responseBox === "disabled") {
-          submitButton.setAttribute("disabled", "disabled")
-        } else {
-          if (submitButton.getAttribute("disabled")) {
-            submitButton.removeAttribute("disabled")
-          }
-        }
-      } catch (e) {
-        console.log(e)
-      }
-
-    })
-
-  document
-    .body
-    .removeEventListener("htmx:afterSwap", function (event) {
-      console.log(event.detail.target)
-    })
-</script>
-
-{% endblock inner %}
+{% endblock body %}
