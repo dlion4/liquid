@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3" />
   <link rel="stylesheet" href="{% static 'v1/assets/css/fontawesome.css' %}" />
   <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}" />
-  
+
 
   <style>
     .errorlist {
@@ -77,20 +77,20 @@
   <script src="{% static 'dashboard/assets/js/demo-settings.js' %}?ver=3.2.3"></script>
   <script src="{% static 'v1/assets/js/charts/chart-crypto.js' %}?ver=3.2.3"></script>
   <script src="{% static 'v1/assets/js/apps/messages.js' %}?ver=3.2.3"></script>
-  
-  
-  
+
+
+
   {% endblock javascript %}
   {% endcompress %}
-  
+
   <script src="{% static 'js/project.js' %}"></script>
 
   <script src="{% static 'v1/assets/js/main.js' %}"></script>
 
 
-    {% block extendedJs %}
-  
-    {% endblock extendedJs %}
+  {% block extendedJs %}
+
+  {% endblock extendedJs %}
 
 
   <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script>
@@ -376,8 +376,8 @@
 
 
   <script>
-    $(document).ready(function(){
-      $(".pmo-lv-close").click(function(){
+    $(document).ready(function () {
+      $(".pmo-lv-close").click(function () {
         $(this).closest(".pmo-lv").removeClass("active");
       });
 
@@ -386,16 +386,16 @@
       function checkUserPlan() {
         $.ajax({
           type: "GET",
-          url: "/dashboard/invest/profile/check-subscription-status", 
+          url: "/dashboard/invest/profile/check-subscription-status",
           success: function (response) {
             if (response.is_subscribed) {
-              $(".pmo-lv").fadeOut(3000, function(){
+              $(".pmo-lv").fadeOut(3000, function () {
                 $(this).removeClass("active");
                 subscriptionStatus = true;
                 clearInterval(planCheckInterval);
               })
             } else {
-              $(".pmo-lv").fadeIn(3000, function(){
+              $(".pmo-lv").fadeIn(3000, function () {
                 $(this).addClass("active");
                 $(".pmo-pmo-text").text(`Hello, ${response.first_name.charAt(0).toUpperCase() + response.first_name.slice(1).toLowerCase()}! You have no plan yet. Activate Now!`);
               });
@@ -411,20 +411,20 @@
       checkUserPlan();
       const planCheckInterval = setInterval(checkUserPlan, 300000);
 
-      $(".plan-activation-status").each(function(){
-      if(subscriptionStatus){
+      $(".plan-activation-status").each(function () {
+        if (subscriptionStatus) {
           $(this).text("You hav a plan but it has not yet been verified.")
         }
-        else{
+        else {
           $(this).html(`
           <small style="text-align:center;">You do not have a plan yet.
-           <a
-           style='font-size: 20px; padding: 10px 15px; border: 2px solid #ccc; text-align: center; border-radius: 40px;transform:translateY(-20px);' 
-           href='{% url 'dashboard:invest:invest' %}'>Activate</a>
+          <a
+          style='font-size: 20px; padding: 10px 15px; border: 2px solid #ccc; text-align: center; border-radius: 40px;transform:translateY(-20px);' 
+          href='{% url 'dashboard:invest:invest' %}'>Activate</a>
           </small>`)
         }
       })
-      
+
     })
   </script>
 </body>

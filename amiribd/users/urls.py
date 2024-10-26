@@ -15,10 +15,13 @@ app_name = "users"
 urlpatterns = [
     path("login/", view=LoginView.as_view(), name="login"),
     path("auth/user/", view=UserView.as_view(), name="user_view"),
-    path("login/<uid>/<token>/", view=LinkAuthenticationView.as_view(), name="login_with_link"),
+    path("login/<uid>/<token>/", view=LinkAuthenticationView.as_view(),
+        name="login_with_link"),
     path("logout/", view=LogoutView.as_view(), name="logout"),
     path("signup/", view=SignupView.as_view(), name="signup"),
-    path("login/validate-email-address", view=ValidatedEmailAddressView.as_view(), name="validate_email_address"),
+    path(
+        "login/validate-email-address", view=ValidatedEmailAddressView.as_view(),
+        name="validate_email_address"),
     path(
         "signup/<str:referral_code>/",
         view=ReferralSignupView.as_view(),

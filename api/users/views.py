@@ -1,5 +1,6 @@
 import json
 
+from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -14,7 +15,7 @@ from amiribd.users.models import User
 from amiribd.users.services import JWTAuthentication
 from amiribd.users.utils import BuildMagicLink
 
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, UserRegistrationSerializer
 
 
 class UserLoginView(APIView):
@@ -33,6 +34,25 @@ class UserLoginView(APIView):
         return Response({"error": "user not found"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserRegisterView(APIView, BuildMagicLink):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = UserRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                user = serializer.save()
+                self.send_welcome_email(email=user.email)
+                return Response(
+                    {"message": "User registered successfully."},
+                    status=status.HTTP_201_CREATED,
+                )
+            except IntegrityError:
+                return Response(
+                    {"message": "A user with this email already exists."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserTokenValidation(APIView, BuildMagicLink):
@@ -47,19 +67,6 @@ class UserTokenValidation(APIView, BuildMagicLink):
         return  Response({"error": "Invalid token"}, status=status.HTTP_401_UNAUTHORIZED)  # noqa: E501
 
 
-
-
-class UserValidateAccessToken(APIView):
-    permission_classes = [permissions.AllowAny]
-    token = JWTAuthentication()
-    def post(self, request, *args, **kwargs):
-        user, _ = self.token.authenticate(request)
-        if user:
-            return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
-        return  Response({"error": "Invalid token"},status=status.HTTP_401_UNAUTHORIZED)
-
-
-
 class ValidateAuthenticatedUserView(APIView):
     permission_classes = [permissions.AllowAny]
     token = JWTAuthentication()
@@ -68,7 +75,6 @@ class ValidateAuthenticatedUserView(APIView):
         if user:
             return Response({"message": "Token is valid", "success": True},status=status.HTTP_200_OK)  # noqa: E501
         return Response({}, status.HTTP_400_BAD_REQUEST)
-
 
 
 class CheckAuthenticationStatusView(View):
@@ -88,4 +94,3 @@ class CheckAuthenticationStatusView(View):
             )
         except User.DoesNotExist:
             return JsonResponse({}, status=404)
-

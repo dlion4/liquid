@@ -911,8 +911,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://auth.earnkraft.com",
     "https://dashboard.earnkraft.com",
     "https://app.earnkraft.com",
+    # "http://localhost:5173", For localhost testing
 ]
-
 
 CORS_ALLOW_METHODS = [
     "GET",
@@ -922,7 +922,6 @@ CORS_ALLOW_METHODS = [
     "DELETE",
     "OPTIONS",
 ]
-
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 

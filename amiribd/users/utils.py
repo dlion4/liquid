@@ -182,14 +182,14 @@ class BuildMagicLink:
         thread.start()
 
     def send_welcome_email(
-        self, email,email_template:str="accounts/mails/welcome/index.html", context:dict={},  # noqa: B006, E501
+        self, email,email_template:str="account/mails/welcome/index.html", context:dict={},  # noqa: B006, E501
     )->None:
         """This is the welcome email sent wen a new user just register can be both for
         the
         Referred and the un referred users
         """
         thread = threading.Thread(target=send_background_email, args=(
-            None, 
+            None,
             email_template,
             {
                 "email": email,
