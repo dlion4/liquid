@@ -22,8 +22,6 @@
   <link rel="stylesheet" href="{% static 'v1/assets/css/theme.css' %}?ver=3.2.3" />
   <link rel="stylesheet" href="{% static 'v1/assets/css/fontawesome.css' %}" />
   <link rel="stylesheet" href="{% static 'v1/uicons/css/uicons.css' %}" />
-
-
   <style>
     .errorlist {
       color: red !important;
@@ -33,10 +31,7 @@
   {% block css %}{% endblock css %}
   {% endcompress css %}
 
-  <!-- <link rel="stylesheet" href="https://dashlite.net/demo2/assets/css/dashlite.css?ver=3.2.3"> -->
-
   {% block editorcss %}{% endblock editorcss %}
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
 
 </head>
 
@@ -356,10 +351,9 @@
   <input type="hidden" name="currencyRate" class="currencyRate" value="1.03">
   <input type="hidden" name="country" class="client-country-name" id="client-country-name" />
   <input type="hidden" name="currecny" class="currency-code" id="currency-code" />
+  <input type="hidden" name="LoggedInProfile" value="{{profile.has_plan}}">
 
   {% block morejs %}{% endblock morejs %}
-
-
 
 
   <div class="pmo-lv pmo-dark">
@@ -382,6 +376,7 @@
       });
 
       let subscriptionStatus = false;
+      let paidPlanWaitingVerification = Boolean("{{request.user.profile_user.is_waiting_plan_verification}}")
 
       function checkUserPlan() {
         $.ajax({
@@ -394,6 +389,7 @@
                 subscriptionStatus = true;
                 clearInterval(planCheckInterval);
               })
+            paidPlanWaitingVerification = response.is_waiting_plan_verification
             } else {
               $(".pmo-lv").fadeIn(3000, function () {
                 $(this).addClass("active");
@@ -412,8 +408,8 @@
       const planCheckInterval = setInterval(checkUserPlan, 300000);
 
       $(".plan-activation-status").each(function () {
-        if (subscriptionStatus) {
-          $(this).text("You hav a plan but it has not yet been verified.")
+        if (paidPlanWaitingVerification) {
+          $(this).text("You have a plan but it has not yet been verified.")
         }
         else {
           $(this).html(`

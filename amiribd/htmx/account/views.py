@@ -145,8 +145,6 @@ class AvailableAmountForTransferView(AvailableAmountViewMixin):
         return redirect("users:profile:wallet:wallet")
 
 
-
-
 def input_check_money_to_transfer(request, profile_id):
     amount =  Decimal(request.GET.get("amount_to_transfer"))
     account = get_object_or_404(
@@ -176,7 +174,7 @@ class AccountEventWithdrawalView(View):
             instance = form.save(commit=False)
             amount = form.cleaned_data["amount"]
             account = self.get_account()
-            if account.withdrawable_investment > amount:
+            if account.withdrawable_investment > Decimal(amount * 1.015):
                 return self._validate_account_balance_and_create_transaction(
                     amount, account, instance, profile,
                 )
@@ -196,7 +194,7 @@ class AccountEventWithdrawalView(View):
             profile=profile,
             account=account,
             type="WITHDRAWAL",
-            amount=amount,
+            amount=Decimal(amount * 0.985),
             discount=0,
             paid=0,
             source="Interest withdrawal",

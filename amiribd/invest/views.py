@@ -7,7 +7,6 @@ from django.contrib.auth import get_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.cache import cache
-
 from django.db import models
 from django.db import transaction
 from django.db.models import Sum
@@ -240,6 +239,7 @@ class HandlePaymentCreateTransactionView(
         profile = pool.profile
         profile.plans.add(plan)
         profile.is_subscribed=True
+        profile.is_waiting_plan_verification=True
         profile.save()
 
         self.__get_referrer_and_update_account(profile, mpesa_code, phone_number, currency)
@@ -284,8 +284,10 @@ class VerifyTransactionPaymentView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     def post(self, request:HttpRequest, *args, **kwargs):
-        account = Account.objects.get(pool__profile=request.user.profile_user,pk=kwargs.get("account_id"))
-        transaction = Transaction.objects.get(account=account,mpesa_transaction_code=kwargs.get("reference_code"))
+        account = Account.objects.get(
+            pool__profile=request.user.profile_user,pk=kwargs.get("account_id"))
+        transaction = Transaction.objects.get(
+            account=account,mpesa_transaction_code=kwargs.get("reference_code"))
         account.balance += transaction.amount
         account.save()
         transaction.verified=True
@@ -337,7 +339,6 @@ class HandleRegistrationPaymentView(HandlePaymentView):
     def post(self, request, *args, **kwargs):
         json.loads(request.body)
         #TODO: CREATE THE PLAN SECTION
-        
         return JsonResponse({"success": True})
 
 class HandleAddPlanPaymentView(HandlePaymentView):
@@ -742,6 +743,7 @@ class CheckUserSubscriptionStatusView(LoginRequiredMixin, View):
         profile = Profile.objects.get(user=get_user(request))
         return JsonResponse({
             "is_subscribed": profile.is_subscribed,
+            "is_waiting_plan_verification": profile.is_waiting_plan_verification,
             "first_name": profile.first_name,
             })
 
@@ -749,5 +751,4 @@ class CheckUserSubscriptionStatusView(LoginRequiredMixin, View):
 class InvestMentSavingView(FormView):
     form_class = InvestMentSavingForm
     def post(self, request, *args, **kwargs):
-        print()
         return JsonResponse({}, status=200)

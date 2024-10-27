@@ -18,7 +18,7 @@ $("#depositMoneyForm").submit(function (event) {
     // Parse the amount to a floating-point number
     const amount = parseFloat($("#id_amount").val());
 
-    if (amount <= 50) {
+    if (amount <= 49) {
         $("#id_error_amount").text("Please enter an amount greater than 50");
         return false;
     }

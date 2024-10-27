@@ -31,7 +31,7 @@ class Transaction(models.Model):
         Account, on_delete=models.CASCADE, related_name="transaction_account"
     )
     type = models.CharField(
-        max_length=22, choices=TransactionType.choices, verbose_name="Transaction"
+        max_length=22, choices=TransactionType.choices, verbose_name="Transaction",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -124,7 +124,7 @@ class PaymentMethod(models.Model):
 
 class AccountDeposit(models.Model):
     profile = models.ForeignKey(
-        Profile, on_delete=models.SET_NULL, null=True, blank=True
+        Profile, on_delete=models.SET_NULL, null=True, blank=True,
     )
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="account_account_deposit",
@@ -132,6 +132,6 @@ class AccountDeposit(models.Model):
     amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     paid_at = models.DateTimeField(auto_now_add=True)
     reason = models.TextField(max_length=500, default="To access more features")
-    
+
     def __str__(self):
         return f"{self.profile.first_name} Account Topup"

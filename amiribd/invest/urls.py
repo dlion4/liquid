@@ -17,8 +17,6 @@ from .views import (
 )
 from .views import invest
 from .views import modified_academic_view  # modified_invest_view,
-from .views import modified_upgrade_view
-
 from .views import modified_bonus_view
 from .views import modified_comingsoon_view
 from .views import modified_investorder_view
@@ -28,6 +26,7 @@ from .views import modified_loans_view
 from .views import modified_monetize_view
 from .views import modified_qinfo_view
 from .views import modified_referal_view
+from .views import modified_upgrade_view
 from .views import modified_vip_view
 from .views import modified_wallet_view
 from .views import modified_whatsapp_view

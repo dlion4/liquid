@@ -23,9 +23,10 @@ from amiribd.streams.models import Room
 from amiribd.streams.models import RoomMessage
 from amiribd.transactions.models import Transaction
 from amiribd.users.actions import build_signup_referral_link
-from amiribd.users.utils import BuildMagicLink, generate_referral_code
-from .guard import DashboardGuard
+from amiribd.users.utils import BuildMagicLink
+from amiribd.users.utils import generate_referral_code
 
+from .guard import DashboardGuard
 
 magic_link = BuildMagicLink()
 
@@ -123,12 +124,12 @@ class DashboardViewMixin(TemplateView):
                 If the account does not exist or an error occurs, it returns 0.00.
         """
         try:
-            return self.queryset.objects.get(
+            balance = self.queryset.objects.get(
                 pool__profile=self.__get_user().profile_user,
             ).balance
+            return Decimal(balance * 0.5)
         except Exception:  # noqa: BLE001
             return Decimal("0.00")
-
 
     def get_monthly_site_investments(self):
         """
@@ -170,7 +171,6 @@ class DashboardViewMixin(TemplateView):
             "profile").prefetch_related(
                 "account").aggregate(
                     total_deposits=Sum("paid"))["total_deposits"] or 0
-
 
     def get_account_locked_amount(self, **kwargs):
         try:
@@ -298,8 +298,6 @@ class DashboardViewMixin(TemplateView):
         # Calculate total sum of plans
         total_sum_plans = sum(item["total_plans"] for item in plan_counts)
 
-
-
         # Calculate percentage of total for each PlanType
         for plan in plan_counts:
             plan["percentage_of_total"] = (
@@ -308,7 +306,6 @@ class DashboardViewMixin(TemplateView):
             )
 
         return plan_counts
-
 
     def get_context_data(self, **kwargs)->dict[str,Any]:
         """
