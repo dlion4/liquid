@@ -480,15 +480,15 @@
             }
         ],
         "membershipLevelAndCommission": {
-            "sectionTitle": "Referral commission and",
+            "sectionTitle": "Articles Limits and",
             "sectionSubTitle": "Membership Level",
-            "sectionDescription": "Refferal Commission and Membership Levels are of 3 levels as below",
+            "sectionDescription": "Articles Commission and Membership Levels are of various levels as below",
             "levels": [
                 {
                     "id": 1,
                     "badgeStatus": "newbie",
                     "level": "1st Level",
-                    "percentage": "5%",
+                    "percentage": "5,000",
                     "icon": "/static/home/images/icons/membership/1.png"
                 },
                 {

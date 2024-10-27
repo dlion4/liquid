@@ -845,7 +845,7 @@ span.is-active:after {
 }
 
 .counter-content span:not(.caption) {
-  font-size: 50px;
+  font-size: 44px;
   font-family: var(--heading-font);
   font-weight: 700;
   line-height: 1;
