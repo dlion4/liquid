@@ -1,5 +1,5 @@
-
 from django.contrib import admin
+from django.contrib import messages
 
 # Register your models here.
 from django.db import models
@@ -29,8 +29,17 @@ updated_at
 @admin.register(Article, site=earnkraft_site)
 class ArticleAdmin(ModelAdmin):
     list_display = [
-        "title", "views", "archived", "reads",
-        "trending", "popular", "editorsPick", "sponsored"]
+        "title",
+        "views",
+        "archived",
+        "reads",
+        "revenue",
+        "trending",
+        "popular",
+        "editorsPick",
+        "sponsored",
+    ]
+    list_editable = ["revenue"]
     # Display fields in changeform in compressed mode
     compressed_fields = True  # Default: False
     formfield_overrides = {
@@ -44,6 +53,7 @@ class ArticleAdmin(ModelAdmin):
             "widget": UnfoldBooleanSwitchWidget,
         },
     }
+
 
 
 @admin.register(Template, site=earnkraft_site)

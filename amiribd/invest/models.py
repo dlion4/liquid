@@ -1,7 +1,10 @@
-from datetime import date, timedelta
-import string
-from decimal import Decimal
+import contextlib
 import random
+import string
+from datetime import date
+from datetime import timedelta
+from decimal import Decimal
+
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import F
@@ -119,7 +122,6 @@ class Account(models.Model):
     # interest = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # noqa: E501, ERA001
     account_ssid = models.CharField(max_length=200, blank=True)
 
-
     class Meta:
         verbose_name = _("Account")
         verbose_name_plural = _("Accounts")
@@ -132,6 +134,11 @@ class Account(models.Model):
         if not self.account_ssid:
             self.account_ssid = generate_ssid(self, 18)
         super().save(*args, **kwargs)
+
+    @cached_property
+    def locked_balance_account(self):
+        return self.obtain_total_investment
+
 
     @property
     def account_owner(self):

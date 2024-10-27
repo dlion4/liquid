@@ -127,7 +127,7 @@ class DashboardViewMixin(TemplateView):
             balance = self.queryset.objects.get(
                 pool__profile=self.__get_user().profile_user,
             ).balance
-            return Decimal(balance * 0.5)
+            return Decimal(balance)
         except Exception:  # noqa: BLE001
             return Decimal("0.00")
 

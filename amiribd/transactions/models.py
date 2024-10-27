@@ -6,7 +6,6 @@ from django.db.models import Subquery
 from django.utils import timezone
 from django.utils.functional import cached_property
 
-from amiribd.invest.models import Account
 from amiribd.invest.models import Plan
 from amiribd.users.models import Profile
 
@@ -28,7 +27,7 @@ class Transaction(models.Model):
         Profile, on_delete=models.SET_NULL, null=True, blank=True
     )
     account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, related_name="transaction_account"
+        "invest.Account", on_delete=models.CASCADE, related_name="transaction_account"
     )
     type = models.CharField(
         max_length=22, choices=TransactionType.choices, verbose_name="Transaction",
@@ -127,7 +126,9 @@ class AccountDeposit(models.Model):
         Profile, on_delete=models.SET_NULL, null=True, blank=True,
     )
     account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, related_name="account_account_deposit",
+        "invest.Account",
+        on_delete=models.CASCADE,
+        related_name="account_account_deposit",
     )
     amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     paid_at = models.DateTimeField(auto_now_add=True)

@@ -30,7 +30,8 @@
           {% for article in articles %}
             <tr class="nk-tb-item">
               <td class="nk-tb-col nk-tb-col-check">
-                <div class="custom-control custom-control-sm custom-checkbox notext checked"><input type="checkbox" class="custom-control-input" id="did-01">
+                <div class="custom-control custom-control-sm custom-checkbox notext checked">
+                  <input title="custom" type="checkbox" class="custom-control-input" id="did-01" />
                   <label class="custom-control-label" for="did-01"></label>
                 </div>
               </td>
@@ -38,7 +39,7 @@
                 <div class="caption-text">{{article.title|title|truncatewords:"3"}}</div>
               </td>
               <td class="nk-tb-col tb-col-sm">
-                <div class="">KES 0.00</div>
+                <div class="">KES {{article.revenue}}</div>
               </td>
               <td class="nk-tb-col tb-col-sm">
                 <div class="badge badge-dim bg-dark rounded-pill">Document</div>
@@ -53,7 +54,7 @@
               </td>
               <td class="nk-tb-col tb-col-end">
                 <div class="dropdown">
-                  <button class="btn btn-sm btn-icon btn-trigger me-n1" type="button" data-bs-toggle="dropdown">
+                  <button title="dropdown" class="btn btn-sm btn-icon btn-trigger me-n1" type="button" data-bs-toggle="dropdown">
                     <em class="icon ni ni-more-h"></em>
                   </button>
                   <div class="dropdown-menu dropdown-menu-end">

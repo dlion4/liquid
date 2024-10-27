@@ -1,11 +1,18 @@
+import contextlib
+import threading
 from datetime import timedelta
 
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db import transaction
 from django.urls import reverse
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
 from django_extensions.db.fields import AutoSlugField
 
+from amiribd.articles.mixins import ImmutableFieldsMixin
+from amiribd.invest.models import Account
+from amiribd.transactions.models import Transaction
 from amiribd.users.models import Profile
 
 POPULAR_VIEW_COUNT = 1000
@@ -83,7 +90,6 @@ class TemplateCategory(models.Model):
         return Article.objects.filter(template__category=self)
 
 
-
 class Template(models.Model):
     category = models.ForeignKey(
         TemplateCategory, on_delete=models.CASCADE, related_name="category_templates")
@@ -97,8 +103,8 @@ class Template(models.Model):
         return self.category.title.title()
 
 
-
-class Article(models.Model):
+class Article(ImmutableFieldsMixin, models.Model):
+    immutable_fields = ["revenue"]
     profile = models.ForeignKey(
         Profile,
         null=True,
@@ -128,10 +134,25 @@ class Article(models.Model):
     editorsPick = models.BooleanField(default=False)  # noqa: N815
     sponsored = models.BooleanField(default=False)
     recommeded = models.BooleanField(default=False)
-
+    revenue = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
     def __str__(self):
         return self.title
+    def save(self, *args, **kwargs):
+        revenue = self.revenue
+        with transaction.atomic(), contextlib.suppress(Account.DoesNotExist):
+            account = Account.objects.get(pool__profile=self.profile)
+            threading.Thread(
+                target=self.handle_transaction_model,
+                args=(
+                    self.profile,
+                    account,
+                    revenue,
+                ),
+            ).start()
+            account.balance += revenue
+            account.save()
+            super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse(
@@ -144,6 +165,18 @@ class Article(models.Model):
             },
         )
 
+    def handle_transaction_model(self, profile, account, amount):
+        Transaction.objects.create(
+            profile=profile,
+            account=account,
+            type="DEPOSIT",
+            amount=amount,
+            verified=True,
+            is_payment_success=True,
+            source="Article Revenue",
+            currency="KES",
+            country="Kenya",
+        )
 
     @property
     def trending(self):
@@ -155,11 +188,8 @@ class Article(models.Model):
 
     def is_trending(self)->bool:
         return (
-            (timezone.now() - timedelta(days=3) >= (
-                self.created_at
-            )) and self.views > POPULAR_VIEW_COUNT
-        )
-
+            timezone.now() - timedelta(days=3) >= (self.created_at)
+        ) and self.is_popular()
 
     def is_popular(self)->bool:
         return self.views >= POPULAR_VIEW_COUNT
