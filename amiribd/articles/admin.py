@@ -31,7 +31,6 @@ class ArticleAdmin(ModelAdmin):
     list_display = [
         "title", "views", "archived", "reads",
         "trending", "popular", "editorsPick", "sponsored"]
-    prepopulated_fields = {"slug": ("title",)}
     # Display fields in changeform in compressed mode
     compressed_fields = True  # Default: False
     formfield_overrides = {

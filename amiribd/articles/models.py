@@ -147,7 +147,7 @@ class Article(models.Model):
 
     @property
     def trending(self):
-        return self.is_trending()
+        return bool(self.is_trending())
 
     @property
     def popular(self):
@@ -155,9 +155,9 @@ class Article(models.Model):
 
     def is_trending(self)->bool:
         return (
-            timezone.now() - timedelta(days=3) >= (
-                self.created_at and self.views > POPULAR_VIEW_COUNT
-            )
+            (timezone.now() - timedelta(days=3) >= (
+                self.created_at
+            )) and self.views > POPULAR_VIEW_COUNT
         )
 
 
