@@ -131,7 +131,7 @@
     font-size: 24px;
   }
   .banner-title {
-    font-size: 62px;
+    font-size: 42px;
   }
   .banner-content-area {
     padding-top: 250px;
@@ -163,7 +163,7 @@
      font-size: 20px;
    }
    h2, h2>a {
-     font-size: 48px;
+     font-size: 28px;
    }
    .invest-section .section-header p {
      width: 80%;
@@ -570,7 +570,7 @@
 }
 @media (max-width:767px) {
   h2, h2>a {
-    font-size: 36px;
+    font-size: 26px;
   }
   .plan-amount-calculate .item {
     flex: 0 0 calc(100% /2);
@@ -1187,7 +1187,7 @@
     width: 200px;
   }
   h2, h2>a {
-    font-size: 30px;
+    font-size: 20px;
   }
   .choose-item {
     margin: 150px 0 45px 0;
