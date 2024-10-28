@@ -157,16 +157,15 @@ class Account(models.Model):
 
     @property
     def obtain_total_investment(self):
-        total = Decimal(
+        total_investment = (
             self.transaction_account.filter(
-                Q(account__pool__profile=self.pool.profile)
-                & Q(source="Account Registration"),
-            ).aggregate(total=Sum("paid"))["total"],
+                account__pool__profile=self.pool.profile,
+                source="Account Registration",
+            )
+            .aggregate(total=Sum("paid"))
+            .get("total", 0.00)
         )
-
-        if total:
-            return total
-        return Decimal("0.00")
+        return Decimal(total_investment or "0.00")
 
     @property
     def withdrawable_investment(self):
