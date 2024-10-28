@@ -242,7 +242,8 @@ class HandlePaymentCreateTransactionView(
         profile.is_waiting_plan_verification=True
         profile.save()
 
-        self.__get_referrer_and_update_account(profile, mpesa_code, phone_number, currency)
+        self.__get_referrer_and_update_account(
+            profile, mpesa_code, phone_number, currency)
 
         return JsonResponse(
             {"success": True, "url": reverse_lazy("subscriptions:list")},
@@ -260,7 +261,7 @@ class HandlePaymentCreateTransactionView(
             transaction = Transaction.objects.create(
                 profile=Profile.objects.get(referred_by=referrer),
             )
-            interest_earned = Decimal(Decimal("0.25") * Decimal(transaction.paid))
+            interest_earned = Decimal(Decimal("0.4") * Decimal(transaction.paid))
 
             transaction = Transaction.objects.create(
                 profile=referrer_profile,
