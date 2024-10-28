@@ -1,11 +1,10 @@
-import time
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from amiribd.users.actions import generate_referral_code
 from amiribd.users.models import Profile
+from amiribd.users.utils import generate_referral_code
 
 
 @csrf_exempt

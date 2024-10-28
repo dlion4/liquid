@@ -81,9 +81,13 @@
     $(document).ready(function () {
       const isUserAuthenticated = $("input[type=hidden][name=user]").val();
       const authenticationUrl = $("input[type=hidden][name=earnkraft_auth_url]").val();
-      if (isUserAuthenticated === "AnonymousUser") { window.location.href = authenticationUrl }
+       if (isUserAuthenticated === "AnonymousUser") { window.location.href = authenticationUrl }
     })
   </script>
 </body>
+
+<!-- 
+http://localhost:9000/users/signup/us-11-dyoinlmshzl1e7pdhtg2qd5c2aqzksu7s2ksl1wsv5n5p-1728486202/
+-->
 
 </html>

@@ -4,6 +4,8 @@ import secrets
 import string
 import threading
 import time
+from datetime import timedelta
+from datetime import timezone
 from urllib.parse import parse_qs
 
 import requests
@@ -15,6 +17,7 @@ from django.http import HttpRequest
 from django.http import JsonResponse
 from django.urls import reverse
 from django.utils import timezone
+from django.utils import timezone as django_timezone
 from django.utils.encoding import force_bytes
 from django.utils.http import base36_to_int
 from django.utils.http import int_to_base36
@@ -231,27 +234,28 @@ class BuildMagicLink:
 
     def validate_referral_code(self, code:str)->bool:
         """
-        Validates a referral code.
+            Validates a referral code.
 
-        Args:
-            code (str): The referral code to be validated.
+            Args:
+                code (str): The referral code to be validated.
 
-        Returns:
-            bool: True if the code is valid and not older than 7 days, False otherwise.
+            Returns:
+                bool: True if the code is valid and not older than 7 days, False otherwise.
 
-        Raises:
-            ValueError: If the code does not have the expected format.
+            Raises:
+                ValueError: If the code does not have the expected format.
 
-        This function splits the code into its components using the '-' delimiter.
-        It checks if the prefix has the expected length. It then converts the timestamp
-        to an integer and calculates the age of the code. Finally, it returns True if
-        the code is valid and not older than 7 days, and False otherwise.
+            This function splits the code into its components using the '-' delimiter.
+            It checks if the prefix has the expected length. It then converts the timestamp
+            to an integer and calculates the age of the code. Finally, it returns True if
+            the code is valid and not older than 7 days, and False otherwise.
 
-        Example:
-            >>> validate_referral_code('cd-123-mk4567890123456789012345678901234567890123456789012345-1641343377')
-            True
-    """
-        prefix_len:int = 2
+            Example:
+                >>> validate_referral_code(
+                    'cd-123-mk4567890123456789012345678901234567890123456789012345-1641343377')
+                True
+        """
+        prefix_len: int = 2
         try:
             prefix, user_pk, random_str, timestamp = code.rsplit("-", 3)
             if len(prefix) != prefix_len:
@@ -259,9 +263,15 @@ class BuildMagicLink:
             timestamp = int(timestamp)
         except ValueError:
             return False
-        code_age = timezone.now() - timezone.datetime.fromtimestamp(
-            timestamp, tz=timezone.utc)
-        return not code_age > timedelta(days=7)
+
+        # Make the datetime aware using the current timezone
+        code_time = django_timezone.make_aware(
+            django_timezone.datetime.fromtimestamp(timestamp),
+            timezone=django_timezone.get_current_timezone(),
+        )
+        code_age = django_timezone.now() - code_time
+
+        return code_age <= timedelta(days=7)
 
 def generate_referral_code(user_pk):
     """

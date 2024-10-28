@@ -1,7 +1,7 @@
 import random
 import string
 
-from django.urls import reverse
+from django.conf import settings
 
 
 def generate_referral_code(user_pk):
@@ -10,9 +10,6 @@ def generate_referral_code(user_pk):
 
 
 def build_signup_referral_link(request, profile):
-    return request.build_absolute_uri(
-        reverse(
-            "users:referred-signup",
-            kwargs={"referral_code": profile.referral_code},
-        ),
-    )
+    return f"{settings.EARNKRAFT_AUTH_SERVICE_URL}/register/{profile.referral_code}"
+
+# http://localhost:5173/register/yy-11-fz0sz2oj1q5a8b7ra8o8v2phg67r5n9oyie8yt11m0qg4-1730107669
