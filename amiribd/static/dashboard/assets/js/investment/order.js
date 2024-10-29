@@ -139,7 +139,7 @@ $(document).ready(function () {
                                             $("#upload-custom-save-button-close").click();
                                         });
 
-                                        $("input[name=custom_amount_to_save]").on("input", function(event){
+                                        $("input[name=custom_amount_to_save]").on("input", function (event) {
                                             const duration = $("input[name=duration_in_days]").val()
                                             const amount = parseFloat(event.target.value)
                                             $(savingDurationSummaryValue).text(`${duration} Day${duration >= 2 ? 's' : ''}`);
@@ -303,12 +303,12 @@ class InvestmentOrder {
         this.initObserver();
     }
 
-    init =()=> {
+    init = () => {
         this.checkFields();
-        
+
         $(this.submitButton).click(function (event) {
             event.preventDefault();
-            
+
             // Update the class properties
             this.principal = $("#select-cc-price-summary").text();
             this.duration = $("#selected-cc-saving-duration").text();
@@ -328,12 +328,12 @@ class InvestmentOrder {
         this.processPayment()
     }
 
-     processPayment (){
+    processPayment() {
         let paystackBtn = document.getElementById('paystackbtn');
         const paystackKey = $("input[name=active_paystack_key]").val()
         paystackBtn.addEventListener('click', async function (event) {
             event.preventDefault();
-            const payAmount = $("#pay-amount").val();
+            const payAmount = Number.parseFloat($("#pay-amount").val());
             const duration = $("#selected-cc-saving-duration").text();
             const interestAmount = $("#select-cc-price-summary-cost-fee").text();
             const expectedDailyInterestPlusAmount = parseFloat(payAmount) + parseFloat(interestAmount);
@@ -349,15 +349,16 @@ class InvestmentOrder {
             ${$("#id_instruction").val()}
             `
             const dataToSubmit = {
-                principal_amount:payAmount,
-                duration_of_saving_investment:duration,
+                principal_amount: payAmount,
+                duration_of_saving_investment: duration,
                 interest_amount: interestAmount,
                 expected_daily_interest_plus_amount: expectedDailyInterestPlusAmount,
                 instruction: instructionToSubmit,
-                reason: "savings_investment"
+                reason: "save_invest"
             }
             const profileUserId = event.target.dataset.bsProfile;
             const emailAddress = event.target.dataset.bsEmail;
+
 
 
             const handleProcessTransactionForSaveInvestPayment = (url, dataToSubmit) => {
@@ -367,55 +368,48 @@ class InvestmentOrder {
                     data: JSON.stringify(dataToSubmit),
                     success: function (data) {
                         if (data.success) {
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 window.location.href = data.url
                             }, 1000)
                         }
                     },
-                    error: function(xhr, status, error){
+                    error: function (xhr, status, error) {
                         console.log(xhr)
                         alert(error)
                     }
                 })
             }
 
-            let handler = PaystackPop.setup({
-                key: paystackKey,
-                email: emailAddress,
-                amount: parseFloat($("#pay-amount").val()).toFixed(2) * 100,
-                currency: "KES", 
-                ref: '',
-                callback: function (response) {
-                    var reference = response.reference;
-                    alert('Payment complete! Reference: ' + reference);
-                    const url = `/payments/paystack/payment-status/?reference=${reference}`
-                    const newUrl = `/payments/paystack/payment-status/?reference=${reference}&principal_amount=${encodeURIComponent(dataToSubmit.principal_amount)}&duration_of_saving_investment=${encodeURIComponent(dataToSubmit.duration_of_saving_investment)}&interest_amount=${encodeURIComponent(dataToSubmit.interest_amount)}&expected_daily_interest_plus_amount=${encodeURIComponent(dataToSubmit.expected_daily_interest_plus_amount)}&instruction=${encodeURIComponent(dataToSubmit.instruction)}&reason=${encodeURIComponent(dataToSubmit.reason)}`;
-                    $.ajax({
-                        url: newUrl,
-                        method: 'GET',
-                        success: function (data) {
-                            alert('Payment successful! Your transaction has been processed.');
-                            if (data.success && data.reason=="save_invest") {
-                                const url = data.update_transaction_url
-                                $("a#closeAddPlanPopupForm-subscribe").click();
-                                handleProcessTransactionForSaveInvestPayment(url, {
-                                    amount: parseFloat($("#pay-amount").val()).toFixed(2),
-                                    reference: reference,
-                                });
-                            }
-                        },
-                        error: function(xhr, status, error){
-                            console.log(xhr)
-                            alert(error)
+            $("input[name=pay_amount]#pay-amount").val(`KSH ${dataToSubmit.principal_amount}`);
+            $('#modalZoomInvestPayment').addClass('show').css("display", "block");
+
+            $('form#mpesa-payment-from-paystack-conversion').submit(async function (event) {
+                event.preventDefault()
+                const reference = $(this).find("input[name=mpesa-reference-code]").val()
+                const phone_number = $(this).find("input[name=phone_no]").val()
+
+                $.ajax({
+                    url: "/payments/paystack/payment-status/",
+                    method: "POST",
+                    data: JSON.stringify(dataToSubmit),
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("Payment successful! Your transaction has been processed.");
+                        console.log(data)
+                        const url = data.update_transaction_url;
+                        if (data.success && data.reason === "save_invest") {
+                            $("form#mpesa-payment-from-paystack-conversion").find("button[name=mpesa-payment-from-paystack-conversion]").text("payment information sent! waiting verification")
+                            setTimeout(() => { window.location.reload() }, 3000)
                         }
-                    })
-                },
-                onClose: function (error) {
-                    alert('Transaction was not completed, window closed.');
-                    console.log(error);
-                }
-            });
-            handler.openIframe();
+                        console.log(dataToSubmit);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", xhr.responseText, status, error);
+                    }
+                });
+
+            })
 
         })
     }

@@ -269,11 +269,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- automated payment -->
-                    <!-- <div class="tab-pane" id="automated-payment">
-                        <input type="hidden" name="currency" value="UGH" class="country-currency">
-                        <button class="btn btn-lg px-3 py-2 btn-primary" id="paystackbtn-base-file">click to pay</button>
-                    </div> -->
                 </div>
             </div>
             <div class="modal-footer bg-light"></div>
@@ -286,7 +281,7 @@
 
 <script defer="defer">
 
-    currencyCode = geoData?.currency?.currency_code || ""
+    currencyCode = geoData?.currency?.currency_code || "KES"
 
     let conversionRateData = localStorage.getItem('conversionStorageKey') ?? '1';
 
@@ -416,86 +411,6 @@
             })
 
             // paystack button
-
-
-
-            if (document.getElementById('paystackbtn-base-file')) {
-
-                let paystackBtn = document.getElementById('paystackbtn-base-file');
-                paystackBtn.addEventListener('click',
-                    function (event) {
-                        event.preventDefault();
-                        const paystackKey = $("input[name=active_paystack_key]").val()
-                        // the amount to be paid generated from the pool, account, and plan
-                        // const amountToBePaid = document.querySelector(".currencyRate").value
-
-                        // amount dispaly to the user for payment tothe paystack
-                        // const amountToBePaidAfterConversion = parseFloat(amountToBePaid) * parseFloat(ammountToBePaidBeforeConversion)
-                        // amount recived in our server in KShs
-                        let actualAmountInKenyaShillings = parseFloat(parseFloat(addPlanAmountToBePaid.value) / parseFloat(countryRate)).toFixed(2)
-
-                        // country currecny type
-                        const countryCurrencyCode = document.querySelector(".currency-code").value
-                        console.log(countryCurrencyCode)
-                        // country name 
-                        const countryName = document.querySelector(".client-country-name").value
-
-                        let handler = PaystackPop.setup({
-                            key: paystackKey, // Replace with your public key
-                            email: '{{request.user.email}}',
-                            amount: actualAmountInKenyaShillings * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
-                            // amount: parseInt(amountToBePaidAfterConversion) * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
-                            currency: "KES", // Use GHS for Ghana Cedis or USD for US Dollars
-                            ref: '', // Replace with a reference you generated
-                            callback: function (response) {
-                                //this happens after the payment is completed successfully
-                                var reference = response.reference;
-                                // alert('Payment complete! Reference:'+ reference);
-                                alert('Payment complete! Reference: ' + reference);
-                                // Make an AJAX call to your server with the reference to verify the transaction
-                                // console.log('{{payment_webhook_status_url}}')
-                                //`{{payment_webhook_status_url}}?reference=${reference}`
-                                // const url = `/payments/paystack/payment-status?reference=${reference}`
-                                // ~/payments/paystack/payment-status/?reference=${reference} || 'payments:paystack:paystack-webhook-status'
-                                const url = `{{payment_webhook_status_url}}?reference=${reference}`
-
-
-
-                                fetch(url, { method: 'GET', }).then((response) => response.json()).then(data => {
-                                    if (data.success) {
-
-                                        const payloadData = {
-                                            pay_amount: addPlanAmountToBePaid.value,
-                                            transactioncode: reference,
-                                            phone_no: phoneNo.value,
-                                            profile: '{{profile.id}}',
-                                            plan: planSelectionId.value,
-                                            currency: currencyCode,
-                                            country: geoData.country,
-                                            actualAmount: actualAmountInKenyaShillings
-                                        }
-                                        addPlanPaymentFn(payloadData);
-
-                                    } else {
-                                        console.log(data)
-                                    }
-                                });
-                            },
-                            onClose: function (error) {
-                                alert('Transaction was not completed, window closed.');
-                                console.log(error);
-                            },
-                        });
-                        handler.openIframe();
-                    }
-
-                )
-            };
-
-
-
-
-
 
 
             function addPlanPaymentFn(data) {

@@ -72,7 +72,7 @@ $("#depositMoneyForm").submit(function (event) {
             console.log("Payment successful:", response);
             submitButton.text(`Transaction completed successfully. Waiting verification`);
             setTimeout(()=>{
-              window.location.href = response.url
+              window.location.reload()
             }, 3000)
           },
           error: function (jxh, jQ, error) {

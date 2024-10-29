@@ -1,16 +1,18 @@
 import json
 from typing import Any
-
-from django.urls import reverse
+from urllib.parse import unquote
+from decimal import Decimal
 import requests
 from django.contrib.auth import get_user
 from django.http import HttpRequest
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+from django.core.exceptions import ValidationError
 
 from amiribd.invest.forms import InvestMentSavingForm
 from amiribd.invest.mixins import CustomTransactionCreationView
@@ -23,7 +25,6 @@ class PayStackPaymentCallbackView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         return super().dispatch(request, *args, **kwargs)
-
 
     def post(self, request, *args, **kwargs):
         # data = json.loads(request.body)
@@ -43,64 +44,107 @@ class PayStackPaymentCallbackView(View):
         #     amount=paystack_reference_data.get('amount')/100
         # )
 
-        return JsonResponse({
-            "reference": "reference",
-            "status":"paystack_reference_data.get('status')",
-        })
+        return JsonResponse(
+            {
+                "reference": "reference",
+                "status": "paystack_reference_data.get('status')",
+            }
+        )
 
 
 class PayStackPaymentStatusView(View):
-    invest_saving_form = InvestMentSavingForm
+    invest_saving_form = InvestMentSavingForm  # Assume this is your form class
+
     @method_decorator(csrf_exempt)
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+    def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
     def _get_profile(self):
+        """Helper method to retrieve the user's profile."""
         return get_user(self.request).profile_user
 
     def get(self, request, *args, **kwargs):
         data_context = {}
-        if request.GET.get("principal_amount"):
-            principal_amount = request.GET.get("principal_amount")
-            duration_of_saving_investment = request.GET.get(
-                "duration_of_saving_investment")
-            interest_amount = request.GET.get("interest_amount")
-            expected_daily_interest_plus_amount = request.GET.get(
-                "expected_daily_interest_plus_amount",
+
+        try:
+            # Decode and ensure values are not tuples
+            principal_amount = Decimal(str(request.GET.get("principal_amount", "0")))
+            duration_of_saving_investment = unquote(
+                request.GET.get("duration_of_saving_investment", "")
             )
-            instruction = request.GET.get("instruction")
+            interest_amount = Decimal(str(request.GET.get("interest_amount", "0")))
+            expected_daily_interest_plus_amount = Decimal(
+                str(request.GET.get("expected_daily_interest_plus_amount", "0"))
+            )
+            instruction = unquote(request.GET.get("instruction", ""))
+
+            # Assign values to data context ensuring no tuple conversion
             data_context["principal_amount"] = principal_amount
             data_context["duration_of_saving_investment"] = (
-                duration_of_saving_investment)
+                duration_of_saving_investment
+            )
             data_context["interest_amount"] = interest_amount
             data_context["expected_daily_interest_plus_amount"] = (
-                expected_daily_interest_plus_amount)
+                expected_daily_interest_plus_amount
+            )
             data_context["instruction"] = instruction
+            # Populate data context with validated decimal values
+            data_context["principal_amount"] = principal_amount
+            data_context["duration_of_saving_investment"] = (
+                duration_of_saving_investment
+            )
+            data_context["interest_amount"] = interest_amount
+            data_context["expected_daily_interest_plus_amount"] = (
+                expected_daily_interest_plus_amount
+            )
+            data_context["instruction"] = instruction
+
+            # Validate and save the form data
             form = self.invest_saving_form(data=data_context)
             if form.is_valid():
                 instance = form.save(commit=False)
                 instance.profile = self._get_profile()
                 instance.save()
-                form.save()
                 return JsonResponse(
                     {
                         "update_transaction_url": reverse(
-                            "payments:paystack:paystack_saving_investment_payment_complete_create_transaction",
+                            "payments:paystack:paystack_saving_investment_payment_complete_create_transaction"
                         ),
                         "reason": "save_invest",
                         "success": True,
                     },
                     status=200,
                 )
-        return JsonResponse({"data":"data", "success": True}, safe=False)
+
+            return JsonResponse({"errors": form.errors.as_json()}, status=400)
+
+        except (ValueError, ValidationError) as e:
+            # Handle decimal conversion errors or validation errors
+            return JsonResponse({"error": str(e)}, status=400)
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body)
+            print(data)
+            return JsonResponse({
+                "update_transaction_url": reverse(
+                    "payments:paystack:paystack_saving_investment_payment_complete_create_transaction"
+                ),
+                "reason": data.get("reason", ""),
+                "success": True,
+            }, status=200)
+        except (ValueError, ValidationError) as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
 
 class TransactionSavingsInvestmentPaymentView(CustomTransactionCreationView):
     def _get_profile(self):
         return get_user(self.request).profile_user
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         return super().dispatch(request, *args, **kwargs)
-    def post(self,  request, *args, **kwargs):
+
+    def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         account: Account = Account.objects.filter(
             pool__profile=self._get_profile(),
@@ -109,7 +153,7 @@ class TransactionSavingsInvestmentPaymentView(CustomTransactionCreationView):
             profile=self._get_profile(),
             account=account,
             amount=data.get("amount"),
-            source = "Savings & Investment",
+            source="Savings & Investment",
             payment_phone=self._get_profile().user.email,
             mpesa_transaction_code=data.get("reference"),
             payment_phone_number=self._get_profile().user.email,
