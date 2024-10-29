@@ -23,9 +23,9 @@
             Whatsapp Total Earnings
           </div>
         </div>
-        <h5 class=" fs-1 text-white">
+        <h5 class=" fs-3 text-white">
           {{ earnings|floatformat:2|intcomma|default:'0.00' }}
-          <span class="currency">ksh</span>
+          <span class="currency fs-6">ksh</span>
         </h5>
         <div class="fs-7 text-white text-opacity-75 mt-1">
           The bigger the package, the bigger the income
@@ -35,25 +35,25 @@
   </div>
 
   <div class="col-sm-3 col-xxl-3">
-    <div class="card card-full bg-grey is-dark">
+    <div class="card card-full bg-success">
       <div class="card-inner">
         <div class="d-flex align-items-center justify-content-between mb-1">
           <div class="fs-6 text-white text-opacity-75 mb-0">
-            Total Bonus Earnings
+            Total Income 
           </div>
         </div>
-        <h5 class="fs-1 text-white">
+        <h5 class="fs-3 text-white">
           {{ available_amount|floatformat:2|intcomma|default:'0.00' }}
-          <small class="fs-3">Ksh</small>
+          <small class="fs-6">Ksh</small>
         </h5>
         <div class="fs-7 text-white text-opacity-75 mt-1">
-          The amount is withdrawable from your wallet
+          Anytime withdrawals from your wallet
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-6 col-xxl-6">
-    <div class="card card-full bg-grey is-dark">
+    <div class="card card-full bg-secondary">
       <div class="card-inner">
         <div class="d-flex align-items-center justify-content-between mb-1">
           <div class="fs-6 text-white text-opacity-75 mb-0">
@@ -61,16 +61,17 @@
           </div>
         </div>
         
-        
+      
         <!-- Tips Section -->
         <div class="fs-9 text-white text-opacity-75 mt-3">
           <ul class="mb-0">
-            <li> ✅Earn once a week for Bronze package</li>
-            <li> ✅Earn 5 times a week for Silver package</li>
-            <li> ✅1000 WhatsApp views give you 500 KES</li>
-            <li> ✅Anytime withdrawals</li>
-            <li> ✅Post positive network marketing captions related to our platform with your referral link attached</li>
-            <li> ✅Take a screen shot and  submit to get paid instantly</li>
+            <li> 🟢Earn once a week for <b>Bronze</b> package</li>
+            <li> 2 WhatsApp views give you 1 KES</li>
+            <li> 🟢Earn 7 times a week for <b>Silver</b> package</li>
+            <li> 1 WhatsApp view give you 1 KES</li>
+            <li> 🟢Anytime withdrawals</li>
+            <li> 🟢Post positive network marketing captions related to our platform with your referral link or Platform link attached</li>
+            <li> 🟢Take a screen shot and  submit to get paid instantly</li>
           </ul>
         </div>
       </div>
@@ -151,8 +152,8 @@
                 Purchase Plan
               </a>
               {% else %}
-              <button type="button" role="link" disabled="disabled" class="btn btn-lg btn-primary">
-                Inactive Plan.... Activate to proceed
+              <button type="button" disabled="disabled" class="btn btn-lg btn-Success-dim">
+                Bronze | Silver Plan 
               </button>
               {% endif %}
             </div>
@@ -172,13 +173,12 @@
     <div class="nk-tb-list nk-tb-ulist is-compact">
       <div class="nk-tb-item nk-tb-head">
         <div class="nk-tb-col nk-tb-col-check"></div>
-        <div class="nk-tb-col">
-          <span class="sub-text">Post Date</span>
-        </div>
         <div class="nk-tb-col tb-col-md">
           <span class="sub-text">No of Views</span>
         </div>
-
+        <div class="nk-tb-col">
+          <span class="sub-text">Post Date</span>
+        </div>
         <div class="nk-tb-col tb-col-md">
           <span class="sub-text">Earnings</span>
         </div>
@@ -195,6 +195,10 @@
       {% for earn in whatsappschemestate %}
       <div class="nk-tb-item">
         <div class="nk-tb-col nk-tb-col-check"></div>
+        
+        <div class="nk-tb-col tb-col-md">
+          <span>{{earn.views}}</span>
+        </div>
         <div class="nk-tb-col">
           <div class="user-card">
             <div class="user-name">
@@ -202,10 +206,6 @@
             </div>
           </div>
         </div>
-        <div class="nk-tb-col tb-col-md">
-          <span>{{earn.views}}</span>
-        </div>
-
         <div class="nk-tb-col tb-col-md">
           <span>
             {{earn.views}}
