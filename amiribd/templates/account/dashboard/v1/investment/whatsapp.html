@@ -23,9 +23,9 @@
             Whatsapp Total Earnings
           </div>
         </div>
-        <h5 class=" fs-1 text-white">
+        <h5 class=" fs-3 text-white">
           {{ earnings|floatformat:2|intcomma|default:'0.00' }}
-          <span class="currency">ksh</span>
+          <span class="currency fs-6">ksh</span>
         </h5>
         <div class="fs-7 text-white text-opacity-75 mt-1">
           The bigger the package, the bigger the income
@@ -39,15 +39,15 @@
       <div class="card-inner">
         <div class="d-flex align-items-center justify-content-between mb-1">
           <div class="fs-6 text-white text-opacity-75 mb-0">
-            Total Bonus Earnings
+            Total Income 
           </div>
         </div>
-        <h5 class="fs-1 text-white">
+        <h5 class="fs-3 text-white">
           {{ available_amount|floatformat:2|intcomma|default:'0.00' }}
-          <small class="fs-3">Ksh</small>
+          <small class="fs-6">Ksh</small>
         </h5>
         <div class="fs-7 text-white text-opacity-75 mt-1">
-          The amount is withdrawable from your wallet
+          Anytime withdrawals from your wallet
         </div>
       </div>
     </div>
