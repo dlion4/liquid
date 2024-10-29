@@ -61,16 +61,49 @@
           </div>
         </div>
         
-        
+        <style>
+          .check {
+            -webkit-appearance: none; /*hides the default checkbox*/
+            height: 20px;
+            width: 20px;
+            position: relative;
+            top: 20px;
+            left: 20px;
+            transition: 0.10s;
+            background-color: #0E9700;
+            text-align: center;
+            font-weight: 600;
+            color: white;
+            border-radius: 3px;
+            outline: none;
+          }
+          
+          .check:checked {
+            background-color: #0E9700;
+          }
+          
+          .check:before {
+            content: "✔";
+          }
+          .check:checked:before {
+            content: "✔";
+          }
+          
+          .check:hover {
+            cursor: pointer; 
+            opacity: 0.8;
+          }
+        </style>
         <!-- Tips Section -->
         <div class="fs-9 text-white text-opacity-75 mt-3">
           <ul class="mb-0">
-            <li> ✅Earn once a week for Bronze package</li>
-            <li> ✅Earn 5 times a week for Silver package</li>
-            <li> ✅1000 WhatsApp views give you 500 KES</li>
-            <li> ✅Anytime withdrawals</li>
-            <li> ✅Post positive network marketing captions related to our platform with your referral link attached</li>
-            <li> ✅Take a screen shot and  submit to get paid instantly</li>
+            <li> <input type="checkbox" name="switch" class="check">Earn once a week for <b>Bronze</b> package</li>
+            <li> <input type="checkbox" name="switch" class="check">2 WhatsApp views give you 1 KES</li>
+            <li> <input type="checkbox" name="switch" class="check">Earn 7 times a week for <b>Silver</b> package</li>
+            <li> <input type="checkbox" name="switch" class="check">1 WhatsApp view give you 1 KES</li>
+            <li> <input type="checkbox" name="switch" class="check">Anytime withdrawals</li>
+            <li> <input type="checkbox" name="switch" class="check">Post positive network marketing captions related to our platform with your referral link or Platform link attached</li>
+            <li> <input type="checkbox" name="switch" class="check">Take a screen shot and  submit to get paid instantly</li>
           </ul>
         </div>
       </div>
