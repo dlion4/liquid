@@ -40,12 +40,12 @@
               <span>Manual Payment</span>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" href="#automated-payment">
               <em class="icon ni ni-link"></em>
               <span>Automated Payment</span>
             </a>
-          </li>
+          </li> -->
         </ul>
         <!-- payment option tabs -->
         <div class="tab-content">
@@ -97,11 +97,16 @@
             </form>
           </div>
           <!-- automated payment -->
-          <div class="tab-pane" id="automated-payment">
+          <!-- <div class="tab-pane" id="automated-payment">
             <input type="hidden" name="currency" value="UGH" class="country-currency">
             <button data-bs-profile="{{request.user.profile_user.id}}" class="btn btn-lg px-3 py-2 btn-primary" 
             id="paystackbtn">click to pay</button>
-          </div>
+          </div> -->
+
+          <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
+            <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            <span id="payment-text">Confirm to pay</span>
+          </button>
         </div>
       </div>
       <div class="modal-footer bg-light"></div>

@@ -27,10 +27,7 @@
                                         KES
                                     </span>
                                 </div>
-                                <div class="user-balance-alt">{{locked_amount|floatformat:2|intcomma}}
-                                    <!-- amount -->
-                                    <span class="currency currency-btc">KES</span>
-                                </div>
+                              
                             </div>
                             <a href="#" class="btn btn-white btn-icon btn-light">
                                 <em class="icon ni ni-line-chart"></em>
@@ -38,6 +35,15 @@
                         </div>
                         <ul class="user-account-data gy-1">
                             
+                            <li>
+                                <div class="user-account-label">
+                                    <span class="sub-text">Package</span>
+                                </div>
+                                <div class="user-account-value">
+                                    <span class="sub-text">{{locked_amount|floatformat:2|intcomma}}
+                                        <span class="currency currency-btc">KES</span></span>
+                                </div>
+                            </li>
                             <li>
                                 <div class="user-account-label">
                                     <span class="sub-text">Deposits</span>
@@ -133,7 +139,7 @@
                                     <span class="sub-text">Remote Tasks</span>
                                 </div>
                                 <div class="user-account-value">
-                                    <span class="lead-text">$ 
+                                    <span class="lead-text">KES 
                                         <span class="currency-btc">{{ remote_jobs_income|floatformat:2|intcomma }}</span></span>
                                 </div>
                             </li>

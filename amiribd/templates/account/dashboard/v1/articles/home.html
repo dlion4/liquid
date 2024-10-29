@@ -10,7 +10,7 @@
             <h3 class="title">Articles and Blogging</h3>
           </div>
           <div class="row g-gs">
-            <div class="col-xxl-3">
+            <div class="col-xxl-12">
               <div class="fake-class">
                 <h5 class="title">Get Started</h5>
                 <div class="nk-block-des text-soft">
@@ -18,22 +18,22 @@
                 </div>
 
 
-                <a href="{% url 'dashboard:articles:editor:new-article' %}" class="btn btn-primary btn-lg mt-4">
+                <a href="{% url 'dashboard:articles:editor:new-article' %}" class="btn btn-primary btn-lg mt-3">
                   Content Generator
                 </a>
                 
-                <a href="{% url 'dashboard:articles:editor:youtube-summarizer' %}" class="btn btn-primary btn-lg mt-4">
+                <a href="{% url 'dashboard:articles:editor:youtube-summarizer' %}" class="btn btn-primary btn-lg mt-3">
                   Youtube Summarizer
                 </a>
-                <a href="#" class="btn btn-primary btn-lg mt-4">
+                <a href="#" class="btn btn-primary btn-lg mt-3">
                   AI Detector & Remover
                 </a>
-                <a href="#" class="btn btn-primary btn-lg mt-4">
+                <a href="#" class="btn btn-primary btn-lg mt-3">
                   Video-to-Text
                 </a>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-xxl-3">
+            <div class="col-sm-4 col-md-4 col-xxl-3">
               <div class="fake-class">
                 <h5 class="title">Start Here</h5>
                 <ul class="link-list is-compact pb-0">
@@ -55,7 +55,7 @@
                 </ul>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-xxl-3">
+            <div class="col-sm-4 col-md-4 col-xxl-3">
               <div class="fake-class">
                 <h5 class="title">Your Stats</h5>
                 <ul class="link-list is-compact pb-0">
@@ -81,7 +81,7 @@
                 
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-xxl-3">
+            <div class="col-sm-4 col-md-4 col-xxl-3">
               <div class="fake-class">
                 <h5 class="title">Our Stats</h5>
                 <ul class="link-list is-compact pb-0">
@@ -116,7 +116,7 @@
   <div class="nk-block-head">
     <div class="nk-block-between">
       <div class="nk-block-head-content">
-        <h4 class="nk-block-title">Popular Templates</h4>
+        <h4 class="nk-block-title">Popular Topics & Niches</h4>
       </div>
       <div class="nk-block-head-content">
         <a hx-on::after-request="window.location.reload()" hx-get="{% url 'dashboard:articles:blogging-templates' %}" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" class="link">Explore All</a>
@@ -132,7 +132,7 @@
   <div class="nk-block-head">
     <div class="nk-block-between">
       <div class="nk-block-head-content">
-        <h4 class="nk-block-title">Recent Writings</h4>
+        <h4 class="nk-block-title">Recent Articles & Blogs</h4>
       </div>
       <div class="nk-block-head-content">
         <a hx-on::after-request="window.location.reload()" hx-get="{% url 'dashboard:articles:blogging-posts-history' %}" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" class="link">

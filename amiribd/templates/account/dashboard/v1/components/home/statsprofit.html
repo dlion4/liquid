@@ -125,25 +125,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
-            <div class="card bg-light">
-              <div class="nk-wgw sm">
-                <a class="nk-wgw-inner" href="">
-                  <div class="nk-wgw-name">
-                    <div class="nk-wgw-icon">
-                      <em class="icon ni ni-building"></em>
-                    </div>
-                    <h5 class="nk-wgw-title title">Articles Written</h5>
-                  </div>
-                  <div class="nk-wgw-balance">
-                    <div class="1">{{investments|floatformat|intcomma|default:"0"}}
-                      <span class="currency-btc"></span>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
+    
           <div class="col-sm-4">
             <div class="card bg-light">
               <div class="nk-wgw sm">
@@ -350,6 +332,63 @@
           <div class="card-inner">
             <div class="card-title-group">
               <div class="card-title">
+                <h6 class="title">Account Balance</h6>
+              </div>
+            </div>
+            <div class="data">
+              <div class="data-group">
+                <div class="">
+                  {{available_amount|floatformat:2|intcomma}} KES
+                </div>
+                <div class="nk-ecwg6-ck"><canvas class="ecommerce-line-chart-s3" id="opdIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
+              </div>
+              <div class="info">
+                <span id="percentage-change" class="change down text-danger">
+                  <em class="icon ni ni-arrow-long-down"></em>
+                  0.00%
+                </span>
+                <span> vs. last week</span>
+              </div>
+              
+             
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card">
+        <div class="nk-ecwg nk-ecwg6">
+          <div class="card-inner">
+            <div class="card-title-group">
+              <div class="card-title ">
+                <h6 class="title">Active Package</h6>
+              </div>
+            </div>
+            <div class="data">
+              <div class="data-group">
+                {% for plan in plans %}
+                <div class=""> {{plan.type.price}} <span class="currency currency-nio f-12">KES</span></div>
+                {% endfor %}
+                <div class="nk-ecwg6-ck"><canvas class="ecommerce-line-chart-s3" id="labIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
+              </div>
+              <div class="info">
+                {% for plan in plans %}
+                <span class="down text-success" style="font-size: smaller;"> {{plan.type}}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card">
+        <div class="nk-ecwg nk-ecwg6">
+          <div class="card-inner">
+            <div class="card-title-group">
+              <div class="card-title">
                 <h6 class="title">Remote Tasks Income</h6>
               </div>
             </div>
@@ -360,7 +399,13 @@
                 </div>
                 <div class="nk-ecwg6-ck"><canvas class="ecommerce-line-chart-s3" id="opdIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
               </div>
-              <div class="info"><span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>2.34%</span><span> vs. last week</span></div>
+              <div class="info">
+                <span id="percentage-change" class="change down text-danger">
+                  <em class="icon ni ni-arrow-long-down"></em>
+                  0.00%
+                </span>
+                <span> vs. last week</span>
+              </div>
             </div>
           </div>
         </div>
@@ -380,7 +425,13 @@
                 <div class=""> {{referral_earnings}} <span class="currency currency-nio f-12">KES</span></div>
                 <div class="nk-ecwg6-ck"><canvas class="ecommerce-line-chart-s3" id="labIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
               </div>
-              <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>0%</span><span> vs. last week</span></div>
+              <div class="info">
+                <span id="percentage-change" class="change down text-danger">
+                  <em class="icon ni ni-arrow-long-down"></em>
+                  0.00%
+                </span>
+                <span> vs. last week</span>
+              </div>
             </div>
           </div>
         </div>
@@ -405,7 +456,13 @@
                   <canvas class="ecommerce-line-chart-s3" id="ipdIncome" width="100" height="40" style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas>
                 </div>
               </div>
-              <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><span> vs. last week</span></div>
+              <div class="info">
+                <span id="percentage-change" class="change down text-danger">
+                  <em class="icon ni ni-arrow-long-down"></em>
+                  0.00%
+                </span>
+                <span> vs. last week</span>
+              </div>
             </div>
           </div>
         </div>
@@ -427,7 +484,13 @@
                   <canvas class="ecommerce-line-chart-s3" id="todayExpense" width="100" height="40" 
                   style="display: block; box-sizing: border-box; height: 40px; width: 100px;"></canvas></div>
               </div>
-              <div class="info"><span class="change up text-primary"><em class="icon ni ni-arrow-long-up"></em>1.34%</span><span> vs. last week</span></div>
+              <div class="info">
+                <span id="percentage-change" class="change down text-danger">
+                  <em class="icon ni ni-arrow-long-down"></em>
+                  0.00%
+                </span>
+                <span> vs. last week</span>
+              </div>
             </div>
           </div>
         </div>
@@ -440,7 +503,7 @@
         <div class="card-inner">
           <div class="card-title-group mb-2">
             <div class="card-title">
-              <h6 class="title">Actions Statistics</h6>
+              <h6 class="title">User Statistics</h6>
             </div>
           </div>
           <ul class="nk-store-statistics">
@@ -451,6 +514,13 @@
                   0
                 </div>
               </div><em class="icon ni bg-blue-dim ni-list-index-fill"></em>
+            </li class="item">
+              <div class="info">
+                <div class="title">Remote Tasks Done</div>
+                <div class="count">
+                  {{ remote_jobs_done.count }}
+                </div>
+              </div>
             </li>
             <li class="item">
               <div class="info">
@@ -459,17 +529,28 @@
                   {{investments|floatformat|intcomma|default:"0.00"}}
                   <span class="currency-btc f-12">KES</span>
                 </div>
-              </div><em class="icon bg-primary-dim ni ni-plus-medi"></em>
+              </div><em class="icon  bg-info-dim ni ni-wallet-fill"></em>
+
+            </li>
+            <li class="item">
+              <div class="info">
+                <div class="title">Loans</div>
+                <div class="count">
+                  {{investments|floatformat|intcomma|default:"0.00"}}
+                  <span class="currency-btc f-12">KES</span>
+                </div>
+              </div><em class="icon bg-success-dim ni ni-wallet-fill"></em>
+
             </li>
             <li class="item">
               <div class="info">
                 <div class="title">All Jobs</div>
-                <div class="count">300+</div>
+                <div class="count">500+</div>
               </div><em class="icon bg-info-dim ni ni-users"></em>
             </li>
             <li class="item">
               <div class="info">
-                <div class="title">Products</div>
+                <div class="title">Accounts & Products</div>
                 <div class="count">78+</div>
               </div><em class="icon bg-pink-dim ni ni ni-plus-fill-c"></em>
             </li>
@@ -537,3 +618,27 @@
 
   </div>
 </div>
+<script>
+  function updatePercentage() {
+    // Generate a random percentage between -5% and 5%
+    const randomPercentage = (Math.random() * 10 - 5).toFixed(2); // Range: -5 to 5
+
+    const percentageChangeElement = document.getElementById("percentage-change");
+    percentageChangeElement.textContent = `${Math.abs(randomPercentage)}%`;
+
+    // Update the icon and color based on positive/negative value
+    if (randomPercentage < 0) {
+      percentageChangeElement.classList.remove("text-success");
+      percentageChangeElement.classList.add("text-danger", "down");
+      percentageChangeElement.innerHTML = `<em class="icon ni ni-arrow-long-down"></em>${Math.abs(randomPercentage)}%`;
+    } else {
+      percentageChangeElement.classList.remove("text-danger", "down");
+      percentageChangeElement.classList.add("text-success", "up");
+      percentageChangeElement.innerHTML = `<em class="icon ni ni-arrow-long-up"></em>${randomPercentage}%`;
+    }
+  }
+
+  // Initial call to set the percentage, then update every 30 seconds
+  updatePercentage();
+  setInterval(updatePercentage, 30000);
+</script>
