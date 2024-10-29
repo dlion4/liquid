@@ -1,100 +1,105 @@
 {% load static %}
 {% load widget_tweaks %}
-<form action="{% url 'transactions:deposit-account' %}" id="depositMoneyForm"
- class="form-validate is-alter" method="post">
-    {% csrf_token %}
-    <div class="row gx-4 gy-3">
-        <div class="col-12">
-            <div class="form-group">
-                <div style="margin-top:10px!important">
-                    <label class="form-label">Destination Account</label>
-                    <div class="form-control-wrap">
-                        {{deposit_money_form.account}}
-                        <small id="id_destination_account" style="padding-top:10px!important"></small>
-                    </div>
-                </div>
-            </div>
+<form action="{% url 'transactions:deposit-account' %}" id="depositMoneyForm" class="form-validate is-alter" method="post">
+  {% csrf_token %}
+  <div class="row gx-4 gy-3">
+    <div class="col-12">
+      <div class="form-group">
+        <div style="margin-top:10px!important">
+          <label class="form-label">Destination Account</label>
+          <div class="form-control-wrap">
+            {{deposit_money_form.account}}
+            <small id="id_destination_account" style="padding-top:10px!important"></small>
+          </div>
         </div>
-
-        <div class="col-12">
-            <div class="form-group">
-                <label class="form-label">Amount to transfer</label>
-                <div class="form-control-wrap">
-                    {{deposit_money_form.amount}}
-                    <small id="id_error_amount" style="padding-top:10px!important"></small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="form-group">
-                <label class="form-label">Reason for the deposit</label>
-                <div class="form-control-wrap">
-                    {{deposit_money_form.reason}}
-                    <small id="id_error_reason" style="padding-top:10px!important"></small>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <ul class="d-flex justify-content-between gx-4 mt-1">
-                <li>
-                    <button id="submitBtnDeposit" type="submit" class="btn btn-primary">Confirm and Proceed</button>
-                </li>
-                <li>
-                    <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Payment</button>
-                </li>
-            </ul>
-        </div>
+      </div>
     </div>
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Amount to transfer</label>
+        <div class="form-control-wrap">
+          {{deposit_money_form.amount}}
+          <small id="id_error_amount" style="padding-top:10px!important"></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Reason for the deposit</label>
+        <div class="form-control-wrap">
+          {{deposit_money_form.reason}}
+          <small id="id_error_reason" style="padding-top:10px!important"></small>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <ul class="d-flex justify-content-between gx-4 mt-1">
+        <li>
+          <button id="submitBtnDeposit" type="submit" class="btn btn-primary">Confirm and Proceed</button>
+        </li>
+        <li>
+          <button onclick="window.location.reload()" type="button" class="btn btn-danger btn-dim">Cancel Payment</button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </form>
 
 
 
 <div class="modal fade zoom" id="modalZoom" aria-modal="true" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Customer Info</h5>
-          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
-            <em class="icon ni ni-cross"></em>
-          </a>
-        </div>
-        <div class="modal-body">
-          <form action="#" class="form-validate is-alter" novalidate="novalidate">
-            <div class="form-group">
-              <label class="form-label" for="phone-no">Phone No</label>
-              <div class="form-control-wrap">
-                <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no"
-                  name="phone_no" />
-              </div>
-              <span id="phone-error" class="errorlist"></span>
-            </div>
-  
-            <div class="form-group">
-              <label class="form-label" for="pay-amount">Amount</label>
-              <div class="form-control-wrap">
-                <input type="text" class="form-control" id="pay-amount" name="pay_amount" disabled />
-              </div>
-            </div>
-            <div class="form-group">
-              <button type="button" name="mpesa-payment-from-paystack-conversion" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
-                <span id="payment-btn-spinner"  class="spinner-grow spinner-grow-sm" role="status"
-                  aria-hidden="true"></span>
-                <span id="payment-text">Confirm to pay</span>
-              </button>
-              <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
-  
-              <style>
-                .center-justify {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                }
-              </style>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer bg-light"></div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Customer Info</h5>
+        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+          <em class="icon ni ni-cross"></em>
+        </a>
       </div>
+      <div class="modal-body">
+        <form class="form-validate is-alter" novalidate="novalidate" id="mpesa-payment-from-paystack-conversion">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="form-label" for="phone-no">Phone No</label>
+            <div class="form-control-wrap">
+              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" required name="phone_no" />
+            </div>
+            <span id="phone-error" class="errorlist"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone-no">Mpesa <Code></Code></label>
+            <div class="form-control-wrap">
+              <input type="text" name="mpesa-reference-code" placeholder="Mpesa Code" class="form-control" id="id-mpesa-reference-code" required />
+            </div>
+            <span id="phone-error" class="errorlist"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pay-amount">Amount</label>
+            <div class="form-control-wrap">
+              <input type="text" class="form-control" id="pay-amount" name="pay_amount" disabled />
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" name="mpesa-payment-from-paystack-conversion" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
+              <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display: none;"></span>
+              <span id="payment-text">Confirm to pay</span>
+            </button>
+            <small id="payment-btn-help-text" style="padding-top: 10px!important;" class="text-muted"></small>
+
+            <style>
+              .center-justify {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+            </style>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light"></div>
     </div>
   </div>
+</div>
