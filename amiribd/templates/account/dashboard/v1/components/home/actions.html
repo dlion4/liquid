@@ -1,8 +1,8 @@
 {% load humanize %}
 
-<div class="nk-block mb-3">
+<div class="nk-block my-3">
   <div class="card card-bordered">
-    <div class="nk-refwg row gx-2">
+    <div class="">
 
       <div class="col-sm-6 nk-refwg-invite card-inner">
         <div class="nk-refwg-head g-3">
@@ -17,9 +17,15 @@
             </div>
           </div>
 
+          
 
-          <div class="nk-refwg-url">
-            <div class="form-control-wrap">
+        </div>
+      </div>
+      <div class="row gx-1 d-flex align-items-center justify-content-between">
+        <div class="col-sm-6">
+        <div class="row gx-2 " style="transform: translateY(-2rem);">
+          <div class="nk-refwg-url col-sm-12 col-md-8">
+            <div class="form-control-wrap ps-2">
               <div class="form-clip clipboard-init" {% if plans %} data-clipboard-target="#refUrl" 
               data-success="Copied" data-text="Copy Link" {% endif %}>
                 {% if plans %}
@@ -34,72 +40,65 @@
               value="{{link}}" {% else %} {% endif %} />
             </div>
           </div>
-
-          <div class="nk-refwg-action">
+  
+          <div class="nk-refwg-action col-sm-12 col-md-4">
             <button type="button" role="button" {% if plans %} hx-post="{% url 'htmx:generate_referral_code' profile.id %}"
              hx-trigger="click" hx-target="#referral-code" hx-swap="innerHTML" hx-on::after-request="handleHtmxAfterRequest()" 
              id="generateBtn" {% else %} disabled="disabled" {% endif %} class="btn btn-primary">
               Generate
             </button>
-
+  
             <button class="btn btn-primary" type="button" disabled="disabled" id="loadingBtn" title="handle spinner">
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
           </div>
         </div>
       </div>
-
-      <script>
-        // handle the referal link 
-        document.addEventListener('DOMContentLoaded', async function() {
-          var userProfilePk = ""
-          const response = await fetch(``)
-        })
-      </script>
-
-      <div class="col-sm-6 nk-refwg-invite card-inner bg-lighter">
-        <div class="nk-refwg-group g-3">
-          <div class="nk-refwg-name">
-            <h6 class="title">
-              My Referral
-              <em class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" title="Referral Informations"></em>
-            </h6>
-          </div>
-          <div style="display: flex;">
-            <div class="nk-refwg-info g-3" style="display:flex">
-              <div class="nk-refwg-sub">
-                <div class="title">{{profile.referrals|intword}}</div>
-                <div class="sub-text">Total Joined</div>
-              </div>
-              <div class="nk-refwg-sub">
-                <div class="title">
-                  {{referral_earnings|floatformat:2|intcomma}}
-                  <span class="currency">KES</span>
-                </div>
-                <div class="sub-text">Referral Earn</div>
-              </div>
+        <div class="col-sm-6 card-inner" style="transform:translateY(-1.8rem)" >
+          <div class="nk-refwg-group g-3">
+            <div class="nk-refwg-name">
+              <h6 class="title">
+                My Referral
+                <em class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" title="Referral Informations"></em>
+              </h6>
             </div>
-            <div class="nk-refwg-more dropdown mt-n1 me-n1">
-              <a href="#" class="btn btn-icon btn-trigger" data-bs-toggle="dropdown">
-                <em class="icon ni ni-more-h"></em>
-              </a>
-              <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
-                <ul class="link-list-plain sm">
-                  <li>
-                    <a href="#">7 days</a>
-                  </li>
-                  <li>
-                    <a href="#">15 Days</a>
-                  </li>
-                  <li>
-                    <a href="#">30 Days</a>
-                  </li>
-                </ul>
+            <div style="display: flex;">
+              <div class="nk-refwg-info g-3" style="display:flex">
+                <div class="nk-refwg-sub">
+                  <div class="title">{{profile.referrals|intword}}</div>
+                  <div class="sub-text">Total Joined</div>
+                </div>
+                <div class="nk-refwg-sub">
+                  <div class="title">
+                    {{referral_earnings|floatformat:2|intcomma}}
+                    <span class="currency">KES</span>
+                  </div>
+                  <div class="sub-text">Referral Earn</div>
+                </div>
+              </div>
+              <div class="nk-refwg-more dropdown mt-n1 me-n1">
+                <a href="#" class="btn btn-icon btn-trigger" data-bs-toggle="dropdown">
+                  <em class="icon ni ni-more-h"></em>
+                </a>
+                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
+                  <ul class="link-list-plain sm">
+                    <li>
+                      <a href="#">7 days</a>
+                    </li>
+                    <li>
+                      <a href="#">15 Days</a>
+                    </li>
+                    <li>
+                      <a href="#">30 Days</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
 
     </div>
   </div>

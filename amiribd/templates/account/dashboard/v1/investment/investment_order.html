@@ -538,14 +538,18 @@
                 <!-- payment option tabs -->
                 <div class="tab-content">
                     <!-- manua payment -->
+                    <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup">
+                        <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        <span id="payment-text">Confirm to pay</span>
+                      </button>
                   
                     <!-- automated payment -->
-                    <div class="tab-pane active" id="automated-payment">
+                    <!-- <div class="tab-pane active" id="automated-payment">
                         <input type="hidden" name="currency" value="UGH" class="country-currency">
                         <button data-bs-profile="{{request.user.profile_user.id}}" style="width: 170px; text-align:center"
                         data-bs-email="{{request.user.email}}"
                         class="btn btn-lg px-3 py-3 btn-primary" id="paystackbtn">click to pay</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="modal-footer bg-light"></div>

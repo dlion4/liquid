@@ -3,10 +3,10 @@ from django.db import models
 
 class PoolTypeObjects(models.TextChoices):
     INDIVIDUAL = "INDIVIDUAL", "Individual"
-    FREELANCE = "FREELANCE", "Freelance"
+    FREELANCER = "FREELANCER", "Freelancer"
     MERCHANT = "MERCHANT", "Merchant"
     JOINT = "JOINT", "Joint"
-
+    
 
 class AccountTypeObjects(models.TextChoices):
     BASIC = "BASIC", "Basic"

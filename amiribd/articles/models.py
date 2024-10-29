@@ -14,6 +14,7 @@ from amiribd.articles.mixins import ImmutableFieldsMixin
 from amiribd.invest.models import Account
 from amiribd.transactions.models import Transaction
 from amiribd.users.models import Profile
+from decimal import Decimal
 
 POPULAR_VIEW_COUNT = 1000
 
@@ -139,7 +140,7 @@ class Article(ImmutableFieldsMixin, models.Model):
     def __str__(self):
         return self.title
     def save(self, *args, **kwargs):
-        revenue = self.revenue
+        revenue = Decimal(self.revenue)
         with transaction.atomic(), contextlib.suppress(Account.DoesNotExist):
             account = Account.objects.get(pool__profile=self.profile)
             threading.Thread(

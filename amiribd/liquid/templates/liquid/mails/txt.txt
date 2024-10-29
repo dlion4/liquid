@@ -1,0 +1,21 @@
+We are pleased to inform you that a confirmed payment has been made for the articles you submitted under your freelance contract with us. We value the quality and dedication you bring to your work, and we’re happy to support your growth on our platform.
+<p></p>
+Here is a summary of the payment details:
+<p></p>
+<strong>Total Articles:</strong> <b style="color: #35a100;">[Total Articles]</b>
+<p></p>
+<strong>Articles Written On:</strong> <b style="color: #35a100;">[Date(s)]</b>
+<p></p>
+<strong>Paid Articles:</strong> <b style="color: #35a100;">[Paid Articles]</b>
+<p></p>
+<strong>Article Balance Credited to Account Balance:</strong> <b style="color: #35a100;">[Amount Credited]</b>
+<p></p>
+As always, we continue to provide you with unlimited opportunities to expand your skills and earn more. To access even more articles and higher earning potential, consider upgrading your package for enhanced access to premium tasks.
+<p></p>
+Thank you for being a valued part of our team. We look forward to your continued success!
+<p></p>
+Best regards,  
+[Your Name]  
+[Your Position]  
+[Your Company]
+<p></p>

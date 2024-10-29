@@ -18,7 +18,7 @@
             <h6 class="overline-title">Type</h6>
           </th>
           <th class="nk-tb-col tb-col-md">
-            <h6 class="overline-title">Last Modified</h6>
+            <h6 class="overline-title">Date</h6>
           </th>
           <th class="nk-tb-col tb-col-end">
             <h6 class="overline-title">Actions</h6>
@@ -42,7 +42,7 @@
                 <div class="">KES {{article.revenue}}</div>
               </td>
               <td class="nk-tb-col tb-col-sm">
-                <div class="badge badge-dim bg-dark rounded-pill">Document</div>
+                <div class="badge badge-dim bg-dark rounded-pill">Article</div>
               </td>
               <td class="nk-tb-col tb-col-md">
                 <div class="sub-text d-inline-flex flex-wrap gx-2">
@@ -63,7 +63,7 @@
                         <li>
                           <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{{article.get_absolute_url}}">
                             <em class="icon ni ni-eye"></em>
-                            <span>View Document</span></a>
+                            <span>View Article</span></a>
                         </li>
                         <li>
                           <a hx-on::after-request="window.location.reload()" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" href="{{article.get_update_url}}">
@@ -73,7 +73,7 @@
                         <li>
                           <a href="#">
                             <em class="icon ni ni-trash"></em>
-                            <span>Move to Trash</span></a>
+                            <span>Delete</span></a>
                         </li>
                       </ul>
                     </div>
