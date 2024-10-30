@@ -12,13 +12,13 @@ from amiribd.invest.models import Plan
 from amiribd.invest.models import PlanType
 from amiribd.invest.views import InvestmentSetupView
 from amiribd.transactions.models import Transaction
+import contextlib
 
 # Create your views here.
 
 
 class SubscriptionViewMixin(LoginRequiredMixin, DashboardViewMixin):
     queryset = Account
-
 
 
 class SubscriptionAccountView(SubscriptionViewMixin):
@@ -41,7 +41,7 @@ class SubscriptionPlanView(InvestmentSetupView, SubscriptionViewMixin):
             profile=self._get_user().profile_user
         ).order_by("-id")
 
-    def get_object(self)->Plan:
+    def get_object(self) -> Plan:
         """
         This function is obverriden as it requires plan slug and id
 
@@ -81,11 +81,19 @@ class SubscriptionPlanView(InvestmentSetupView, SubscriptionViewMixin):
         return super().get(request, *args, **kwargs)
 
 
-
 class PlanPricingView(SubscriptionViewMixin):
     template_name = "account/dashboard/v1/subscriptions/plans.html"
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["plans_available"] = PlanType.objects.all()
+        profile = self.request.user.profile_user  # Assuming the user is authenticated
+        # Get the plan types associated with the plans in the user's profile
+        profile_plans = list(profile.plans.values_list("type__type", flat=True))
+        # Get available plan types excluding those already in the user's profile
+        available_plan_types = PlanType.objects.exclude(type__in=profile_plans)
+        # Add the available plan types to the context
+        context["plans_available"] = available_plan_types
+        context["profile"] = profile  # Pass the profile if needed in the template
+
         return context

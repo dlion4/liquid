@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.db.models import OuterRef
+from django.db.models import Q
 from django.db.models import Subquery
 from django.utils import timezone
 from django.utils.functional import cached_property
@@ -10,6 +11,13 @@ from amiribd.invest.models import Plan
 from amiribd.users.models import Profile
 
 from .types import TransactionType
+
+
+class TransactionQuerySet(models.Manager):
+    def get_queryset(self):
+        return (
+            super().get_queryset().filter(Q(verified=True) & Q(is_payment_success=True))
+        )
 
 
 def generate_receipt_number():
@@ -27,10 +35,14 @@ class Transaction(models.Model):
         Profile, on_delete=models.SET_NULL, null=True, blank=True
     )
     account = models.ForeignKey(
-        "invest.Account", on_delete=models.CASCADE, related_name="transaction_account"
+        "invest.Account",
+        on_delete=models.CASCADE,
+        related_name="transaction_account",
     )
     type = models.CharField(
-        max_length=22, choices=TransactionType.choices, verbose_name="Transaction",
+        max_length=22,
+        choices=TransactionType.choices,
+        verbose_name="Transaction",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -51,12 +63,13 @@ class Transaction(models.Model):
     currency = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
 
+    objects = TransactionQuerySet
+
     class Meta:
         get_latest_by = ["created_at"]
 
     def __str__(self):
         return f"{self.type} Transaction"
-
 
     def save(self, *args, **kwargs):
         self.receipt_number = generate_receipt_number()
@@ -77,12 +90,11 @@ class Transaction(models.Model):
             created_at__month=timezone.now().month,
         )
 
-
     def plan_transaction(self) -> Plan:
         """
         Get the first plan related to the account in the transaction.
 
-        To bypass errors due to nested queries, we use the OuterRef and Coalesce 
+        To bypass errors due to nested queries, we use the OuterRef and Coalesce
         functions to work around this error.
 
         Returns the plan associated with the account of this transaction.
@@ -102,15 +114,53 @@ class Transaction(models.Model):
         # plan = Plan.objects.filter(id=Subquery(plan_subquery)).first()  # noqa: ERA001
 
         # return plan  # noqa: ERA001
-            # Subquery to find the first plan related to the account
-        subquery = Plan.objects.filter(
-            account=OuterRef("account"),
-        ).order_by("created_at").values("id")[:1]
+        # Subquery to find the first plan related to the account
+        subquery = (
+            Plan.objects.filter(
+                account=OuterRef("account"),
+            )
+            .order_by("created_at")
+            .values("id")[:1]
+        )
 
         return Transaction.objects.annotate(
             first_plan_id=Subquery(subquery),
         ).filter(account=self.account)
 
+
+    def verify_transaction(self):
+        """
+        Verifies the transaction and updates the account balance based on the
+        transaction type.
+        """
+        self.verified = True
+        self.is_payment_success = True
+        # Update account balance based on transaction type
+        if self.type == "DEPOSIT":
+            self._deposit_to_account()
+        elif self.type == "WITHDRAWAL":
+            self._withdraw_from_account()
+        else:
+            msg = f"Unsupported transaction type: {self.type}"
+            raise ValueError(msg)
+
+        self.save()
+
+
+    def _deposit_to_account(self):
+        """Handles balance update for deposit transactions."""
+        self.account.balance += self.paid
+        self.account.save()
+
+
+    def _withdraw_from_account(self):
+        """Handles balance update for withdrawal transactions, with balance check."""
+        if self.account.balance >= self.paid:
+            self.account.balance -= self.paid
+            self.account.save()
+        else:
+            msg = "Insufficient balance for withdrawal."
+            raise ValueError(msg)
 
 
 class PaymentMethod(models.Model):
@@ -123,7 +173,10 @@ class PaymentMethod(models.Model):
 
 class AccountDeposit(models.Model):
     profile = models.ForeignKey(
-        Profile, on_delete=models.SET_NULL, null=True, blank=True,
+        Profile,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
     account = models.ForeignKey(
         "invest.Account",

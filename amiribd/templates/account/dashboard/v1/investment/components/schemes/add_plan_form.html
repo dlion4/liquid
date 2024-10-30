@@ -40,11 +40,11 @@
       </div>
       <div class="modal-body">
         <form action="#" class="form-validate is-alter" novalidate="novalidate">
-          <input type="hidden" id="profileId" value="{{request.user.profile_user.id}}"/>
+          <input type="hidden" id="profileId" value="{{request.user.profile_user.id}}" />
           <div class="form-group">
             <label class="form-label" for="phone-no">Phone No</label>
             <div class="form-control-wrap">
-              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no"/>
+              <input type="text" placeholder="Phone No (e.g 2547987654321)" class="form-control" id="phone-no" name="phone_no" />
             </div>
             <span id="phone-error" class="errorlist"></span>
           </div>
@@ -52,7 +52,7 @@
           <div class="form-group">
             <label class="form-label" for="pay-amount">Amount</label>
             <div class="form-control-wrap">
-              <input type="text" class="form-control" id="pay-amount" name="pay_amount"/>
+              <input type="text" class="form-control" id="pay-amount" name="pay_amount" />
             </div>
           </div>
           <div class="form-group">
@@ -81,7 +81,7 @@
 
   let currencyCode = geoData
     ?.currency
-      ?.currency_code || "";
+    ?.currency_code || "KES";
 
   const planTypeResponse = document.getElementById("plan-type-response");
 
@@ -149,7 +149,7 @@
         console.error(error)
         alert("You already subscribed to the selected plan")
       })
-    })
+  })
 
   try {
     const typeSelection = document.getElementById("plan-type-choice")
@@ -296,7 +296,7 @@
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({profile_id: profileId, plan_id: plan_id})
+      body: JSON.stringify({ profile_id: profileId, plan_id: plan_id })
     })
 
     const data = await response.json();
@@ -313,7 +313,7 @@
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({profile_id: profileId, plan_id, payment_phone})
+      body: JSON.stringify({ profile_id: profileId, plan_id, payment_phone })
     })
 
     const data = await response.json();

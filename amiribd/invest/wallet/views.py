@@ -1,7 +1,11 @@
+from django.http import JsonResponse
 from django.views.generic import TemplateView
 
 from amiribd.dashboard.views import DashboardViewMixin
 from amiribd.invest.models import Account
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 from .forms import TransferMoneyForm
 
@@ -32,3 +36,8 @@ class WalletDepositMoneyView(WalletViewMixin, TemplateView):
     template_name = "account/dashboard/v1/investment/wallet/deposit.html"
 
 
+@login_required
+@csrf_exempt
+@require_http_methods(["POST"])
+def upgrade_plan_account(request, *args, **kwargs):
+    return JsonResponse({}, status=200)

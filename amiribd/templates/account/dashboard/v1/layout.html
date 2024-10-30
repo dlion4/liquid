@@ -88,7 +88,7 @@
   {% endblock extendedJs %}
 
 
-  <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- <script defer="defer" src="https://js.paystack.co/v1/inline.js"></script> -->
   {% block js %}{% endblock js %}
 
   <script defer="defer">
@@ -245,7 +245,7 @@
         console.log(dataArray)
         // locate the value input
         const currencyCode = "KES"
-        // const currencyCode = location.currency.currency_code
+        // const currencyCode = location?.currency?.currency_code || "KES"
 
         if (document.querySelector(".currency-code") && document.getElementById("client-country-name")) {
 
@@ -285,7 +285,7 @@
         let countryRate = 1;
 
         for (const country of iterableConvRate) {
-          if (country.currency_code === geoData?.currency?.currency_code) {
+          if (country?.currency_code === geoData?.currency?.currency_code || "KES") {
             // amount = parseFloat(parseFloat(ActualAmountToBePaid) * parseFloat(country.amount)).toFixed(2)
             countryRate = country.amount;
           } else {
@@ -389,7 +389,7 @@
                 subscriptionStatus = true;
                 clearInterval(planCheckInterval);
               })
-            paidPlanWaitingVerification = response.is_waiting_plan_verification
+              paidPlanWaitingVerification = response.is_waiting_plan_verification
             } else {
               $(".pmo-lv").fadeIn(3000, function () {
                 $(this).addClass("active");

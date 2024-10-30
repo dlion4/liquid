@@ -56,7 +56,9 @@ class PoolType(models.Model):
 # Create your models here.
 class Pool(models.Model):
     profile = models.OneToOneField(
-        Profile, on_delete=models.CASCADE, related_name="pool_account_profile",
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="pool_account_profile",
     )
     type = models.ForeignKey(
         PoolType,
@@ -66,7 +68,6 @@ class Pool(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
     class Meta:
         verbose_name = _("Pool")
@@ -86,7 +87,9 @@ class Pool(models.Model):
 
 class PoolFeature(models.Model):
     pool = models.OneToOneField(
-        Pool, on_delete=models.CASCADE, related_name="pool_feature",
+        Pool,
+        on_delete=models.CASCADE,
+        related_name="pool_feature",
     )
     feature = models.TextField(blank=True)
 
@@ -108,7 +111,9 @@ class AccountType(models.Model):
 
 class Account(models.Model):
     pool = models.OneToOneField(
-        Pool, on_delete=models.CASCADE, related_name="account_pool",
+        Pool,
+        on_delete=models.CASCADE,
+        related_name="account_pool",
     )
     type = models.ForeignKey(
         AccountType,
@@ -139,7 +144,6 @@ class Account(models.Model):
     def locked_balance_account(self):
         return self.obtain_total_investment
 
-
     @property
     def account_owner(self):
         return self.pool.profile.user
@@ -159,8 +163,10 @@ class Account(models.Model):
     def obtain_total_investment(self):
         total_investment = (
             self.transaction_account.filter(
-                account__pool__profile=self.pool.profile,
-                source="Account Registration",
+                Q(account__pool__profile=self.pool.profile)
+                & Q(source="Account Registration")
+                & Q(verified=True)
+                & Q(is_payment_success=True),
             )
             .aggregate(total=Sum("paid"))
             .get("total", 0.00)
@@ -191,7 +197,9 @@ class Account(models.Model):
 
 class PlanType(models.Model):
     type = models.CharField(
-        max_length=15, choices=PlanTypeObjects.choices, default=PlanTypeObjects.BRONZE,
+        max_length=15,
+        choices=PlanTypeObjects.choices,
+        default=PlanTypeObjects.BRONZE,
     )
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     percentage_return = models.FloatField(default=0)
@@ -209,17 +217,21 @@ class PlanType(models.Model):
         max_length=500,
         default="Unlimited access with priority support, 99.95% uptime, powerful features and more...",  # noqa: E501
     )
-    theme = models.CharField(max_length=100, default="orange",choices=(
-        ("primary", "primary"),
-        ("secondary", "secondary"),
-        ("danger", "danger"),
-        ("info", "info"),
-        ("success", "success"),
-        ("orange", "orange"),
-        ("teal", "teal"),
-        ("pink", "pink"),
-        ("azure", "azure"),
-    ))
+    theme = models.CharField(
+        max_length=100,
+        default="orange",
+        choices=(
+            ("primary", "primary"),
+            ("secondary", "secondary"),
+            ("danger", "danger"),
+            ("info", "info"),
+            ("success", "success"),
+            ("orange", "orange"),
+            ("teal", "teal"),
+            ("pink", "pink"),
+            ("azure", "azure"),
+        ),
+    )
 
     def __str__(self):
         return f"{self.type}"
@@ -227,7 +239,9 @@ class PlanType(models.Model):
 
 class Plan(models.Model):
     account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, related_name="account_plan",
+        Account,
+        on_delete=models.CASCADE,
+        related_name="account_plan",
     )
     type = models.ForeignKey(
         PlanType,
@@ -244,7 +258,9 @@ class Plan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(
-        max_length=20, choices=PlanStatus.choices, default=PlanStatus.RUNNING,
+        max_length=20,
+        choices=PlanStatus.choices,
+        default=PlanStatus.RUNNING,
     )
     payment_method = models.CharField(max_length=100, blank=True, default="MPESA")
     sku = models.CharField(max_length=100, blank=True)
@@ -263,7 +279,6 @@ class Plan(models.Model):
             self.sku = self._generate_sku()
         super().save(*args, **kwargs)
 
-
     def get_absolute_url(self):
         return reverse(
             "subscriptions:subscription",
@@ -278,7 +293,6 @@ class Plan(models.Model):
         )  # Generate 7 random digits
         # Combine PK and random digits to form an 8-character SKU
         return f"{self.pk}{random_part}"
-
 
     def _calculate_fee(self):
         # Subquery to fetch related Account's fee
@@ -295,6 +309,7 @@ class Plan(models.Model):
     @property
     def percentage_return(self):
         return self.type.percentage_return
+
     @property
     def plan_profile_email(self):
         return self.plan_profile.user.email
@@ -306,7 +321,9 @@ class Plan(models.Model):
 
 class AccountWithdrawalAction(models.Model):
     account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, related_name="account_event_action",
+        Account,
+        on_delete=models.CASCADE,
+        related_name="account_event_action",
     )
     action = models.CharField(
         max_length=100,
@@ -344,7 +361,9 @@ class AccountWithdrawalAction(models.Model):
         message="Phone number must start with a digit and be 9 to 15 digits in total.",
     )
     payment_phone_number = models.CharField(
-        max_length=20, blank=True, validators=[phone_regex],
+        max_length=20,
+        blank=True,
+        validators=[phone_regex],
     )
     paid = models.BooleanField(default=False)
 
@@ -356,16 +375,21 @@ class AccountEventDeposit(models.Model):
     def __str__(self):
         return ""
 
+
 class SavingPlan(models.Model):
     title = models.CharField(max_length=100)
     interest = models.FloatField(default=1, help_text="The interest rate charged daily")
     term = models.IntegerField(
-        default=1, help_text="Maturation term. Example value 3 days")
+        default=1, help_text="Maturation term. Example value 3 days"
+    )
     principal = models.DecimalField(
-        max_digits=15, decimal_places=2, default=0.00, help_text="Investment amount")
+        max_digits=15, decimal_places=2, default=0.00, help_text="Investment amount"
+    )
     description = models.CharField(
-        max_length=300, blank=True,
-        default="Choose your investment plan and start earning.")
+        max_length=300,
+        blank=True,
+        default="Choose your investment plan and start earning.",
+    )
     # amount = models.GeneratedField(  # noqa: ERA001 RUF100
     #     expression=models.ExpressionWrapper(  # noqa: ERA001 RUF100
     #         F("principal") +  (F("principal") * (1 + F("interest"))) * (F("term") / 7),  # noqa: E501, ERA001, RUF100
@@ -375,7 +399,7 @@ class SavingPlan(models.Model):
     #     output_field=models.DecimalField(max_digits=15, decimal_places=2, default=0.00),  # noqa: E501, ERA001, RUF100
     #     db_persist=True,  # noqa: ERA001
     # )  # noqa: ERA001, RUF100
-    is_active=models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -384,18 +408,19 @@ class SavingPlan(models.Model):
     def amount(self):
         return f"{(self.principal + Decimal(self.earned_interest)):.2f}"
 
-
     @property
     def percentage_rate(self):
         return self.interest / 100
 
     @property
     def earned_interest(self):
-        return (f"{(self.principal *Decimal(self.percentage_rate) *Decimal(self.term/7)):.2f}")
+        return f"{(self.principal *Decimal(self.percentage_rate) *Decimal(self.term/7)):.2f}"
+
 
 class SavingInvestmentPlan(models.Model):
     scheme = models.ForeignKey(
-        SavingPlan, on_delete=models.SET_NULL, blank=True, null=True)
+        SavingPlan, on_delete=models.SET_NULL, blank=True, null=True
+    )
     status = models.CharField(
         max_length=100,
         choices=(
@@ -413,24 +438,33 @@ class SavingInvestmentPlan(models.Model):
 
 class InvestMentSaving(models.Model):
     profile = models.ForeignKey(
-        Profile, on_delete=models.SET_NULL,
-        blank=True, null=True)
-    principal_amount = models.DecimalField(
-        max_digits=12, decimal_places=2, default=0.00)
+        Profile,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    principal_amount = models.CharField(
+        max_length=300,
+        default="0.00",
+    )
     duration_of_saving_investment = models.CharField(max_length=300, blank=True)
-    interest_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    expected_daily_interest_plus_amount = models.DecimalField(
-        max_digits=12, decimal_places=2, default=0.00)
-    instruction = models.TextField(blank=True,max_length=500)
+    interest_amount = models.CharField(max_length=300, default="0.00")
+    expected_daily_interest_plus_amount = models.CharField(
+        max_length=300,
+        default="0.00",
+    )
+    instruction = models.TextField(blank=True, max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return f"{self.profile} - {self.principal_amount}"
+
     def save(self, *args, **kwargs):
         self.interest_amount = Decimal(self.interest_amount) * Decimal(
             self.extract_days().days,
         )
         self.expected_daily_interest_plus_amount = (
-            self.principal_amount + self.interest_amount,
+            Decimal(self.principal_amount) + self.interest_amount,
         )
         super().save(*args, **kwargs)
 
@@ -440,7 +474,7 @@ class InvestMentSaving(models.Model):
         For example, if the duration is '2 weeks', this will return 14 days.
         """
         duration_parts = self.duration_of_saving_investment.split()
-        if len(duration_parts) >= 2:
+        if len(duration_parts) >= 2:  # noqa: PLR2004
             number = int(duration_parts[0])  # Extracts the numerical part (e.g., 2)
             unit = duration_parts[
                 1

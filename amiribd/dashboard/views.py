@@ -24,11 +24,11 @@ from amiribd.streams.models import RoomMessage
 from amiribd.transactions.models import Transaction
 from amiribd.users.actions import build_signup_referral_link
 from amiribd.users.utils import BuildMagicLink
-from amiribd.users.utils import generate_referral_code
 
 from .guard import DashboardGuard
 
 magic_link = BuildMagicLink()
+
 
 # Create your views here.
 class DashboardViewMixin(TemplateView):
@@ -76,7 +76,9 @@ class DashboardViewMixin(TemplateView):
                 pool__profile=self.__get_user().profile_user,
             )
             __referral_profit = account.transaction_account.filter(
-                Q(source__icontains="Referral Earnings"),
+                Q(source__icontains="Referral Earnings")
+                & Q(verified=True)
+                & Q(is_payment_success=True),
             ).aggregate(total_paid=Sum("paid"))["total_paid"]
         except Exception as e:  # noqa: BLE001, F841
             __referral_profit = Decimal("0.00")
@@ -88,12 +90,12 @@ class DashboardViewMixin(TemplateView):
 
     def __current_month_transactions(self):
         """
-         - Rename this here and in `
-         __current_date_transaction_profit` and `__current_month_transactions`
+        - Rename this here and in `
+        __current_date_transaction_profit` and `__current_month_transactions`
         """
         return self.__extracted_from___current_month_transactions_2(30)
 
-    def __extracted_from___current_month_transactions_2(self, days)->Decimal:
+    def __extracted_from___current_month_transactions_2(self, days) -> Decimal:
         __current_date_profit: Decimal = Decimal("0.00")
         try:
             __current_date = timezone.now() - timedelta(days=days)
@@ -101,8 +103,10 @@ class DashboardViewMixin(TemplateView):
                 pool__profile=self.__get_user().profile_user,
             )
             __current_date_profit = account.transaction_account.filter(
-                    Q(source__icontains="Referral Earnings")
-                    & Q(created_at__gte=__current_date),
+                Q(source__icontains="Referral Earnings")
+                & Q(created_at__gte=__current_date)
+                & Q(verified=True)
+                & Q(is_payment_success=True),
             ).aggregate(total_paid=Sum("paid"))["total_paid"]
         except Exception as e:  # noqa: BLE001, F841
             __current_date_profit = Decimal("0.00")
@@ -112,16 +116,16 @@ class DashboardViewMixin(TemplateView):
             else Decimal("0.00")
         )
 
-    def get_account_total(self, **kwargs)->Decimal:
+    def get_account_total(self, **kwargs) -> Decimal:
         """
-            This function retrieves the total balance of the user's account.
+        This function retrieves the total balance of the user's account.
 
-            ### Parameters:
-                - kwargs (dict): Additional keyword arguments that
-                may be used in future extensions.
-            ###   Returns:
-                - Decimal: The total balance of the user's account.
-                If the account does not exist or an error occurs, it returns 0.00.
+        ### Parameters:
+            - kwargs (dict): Additional keyword arguments that
+            may be used in future extensions.
+        ###   Returns:
+            - Decimal: The total balance of the user's account.
+            If the account does not exist or an error occurs, it returns 0.00.
         """
         try:
             balance = self.queryset.objects.get(
@@ -143,12 +147,13 @@ class DashboardViewMixin(TemplateView):
 
         current_month_deposits = self._get_monthly_deposits(current_month_start)
         previous_month_deposits = self._get_monthly_deposits(
-            previous_month_start, previous_month_end)
+            previous_month_start, previous_month_end
+        )
 
         if previous_month_deposits == 0:
             percentage_change = 0
         else:
-            percentage_change = (f"{(((current_month_deposits - previous_month_deposits)/ previous_month_deposits) * 100):.2f}")
+            percentage_change = f"{(((current_month_deposits - previous_month_deposits)/ previous_month_deposits) * 100):.2f}"
         return {
             "current_month_deposits": current_month_deposits,
             "previous_month_deposits": previous_month_deposits,
@@ -163,22 +168,30 @@ class DashboardViewMixin(TemplateView):
         """
         if end_date is None:
             end_date = datetime.now(tz=None)
-        return Transaction.objects.filter(
-            type="DEPOSIT",
-            created_at__gte=start_date,
-            created_at__lt=end_date,
-        ).prefetch_related(
-            "profile").prefetch_related(
-                "account").aggregate(
-                    total_deposits=Sum("paid"))["total_deposits"] or 0
+        return (
+            Transaction.objects.filter(
+                type="DEPOSIT",
+                created_at__gte=start_date,
+                created_at__lt=end_date,
+            )
+            .prefetch_related("profile")
+            .prefetch_related("account")
+            .aggregate(total_deposits=Sum("paid"))["total_deposits"]
+            or 0
+        )
 
     def get_account_locked_amount(self, **kwargs):
         try:
-            if transaction := Transaction.objects.filter(
-                profile=self.__get_user().profile_user,
-                type="DEPOSIT",
-                source="Account Registration",
-            ).aggregate(total=Sum("paid")):
+            if (
+                transaction := Transaction.objects.filter(
+                    profile=self.__get_user().profile_user,
+                    type="DEPOSIT",
+                )
+                .filter(
+                    Q(source="Account Registration") | Q(source="Account Plan Upgrade"),
+                )
+                .aggregate(total=Sum("paid"))
+            ):
                 if transaction["total"] is not None:
                     return Decimal(transaction["total"])
             return Decimal("0.00")
@@ -208,6 +221,7 @@ class DashboardViewMixin(TemplateView):
             .all()
             .first()
         )
+
     def _get_remote_jobs(self, **kwargs):
         """
         return RemoteJob.objects.filter(
@@ -215,24 +229,29 @@ class DashboardViewMixin(TemplateView):
         ).all()
         """
         profile = self.__get_user().profile_user
-        salary = profile.job_applications.filter(is_completed=True).aggregate(salary=Sum("salary_offer"))["salary"]  # noqa: E501
+        salary = profile.job_applications.filter(is_completed=True).aggregate(
+            salary=Sum("salary_offer")
+        )[
+            "salary"
+        ]  # noqa: E501
         return {
             "all_remote_jobs": Job.objects.online_jobs(),
-            "remote_jobs_done":profile.job_applications.filter(is_completed=True ),
+            "remote_jobs_done": profile.job_applications.filter(is_completed=True),
             "remote_jobs_rejected": profile.job_applications.filter(is_rejected=True),
-            "remote_jobs_done_completed":  profile.job_applications.filter(is_completed=True),
-            "remote_jobs_income":  salary or Decimal("0.00"),
+            "remote_jobs_done_completed": profile.job_applications.filter(
+                is_completed=True
+            ),
+            "remote_jobs_income": salary or Decimal("0.00"),
         }
 
-    def get_account_transactions(self)->Transaction:
+    def get_account_transactions(self) -> Transaction:
         """
         Return the transactions
         made by the logged in user
         """
-        return Transaction.objects.filter(
-            profile=self.__get_user().profile_user).all()
+        return Transaction.objects.filter(profile=self.__get_user().profile_user).all()
 
-    def get_total_site_investment(self)->Decimal:
+    def get_total_site_investment(self) -> Decimal:
         """
         This function will help in the retrieval of the total amount
         deposited into this site
@@ -251,14 +270,16 @@ class DashboardViewMixin(TemplateView):
                 -> Decimal(0.00) + Decimal(self.get_total_whatsapp_earnings())
                 -> Decimal(0.00) + Decimal(self.get_total_site_investment())
         """
-        investments =  Transaction.objects.filter(
-            type="DEPOSIT").prefetch_related(
-                "profile").aggregate(investments=Sum("paid"))["investments"]
+        investments = (
+            Transaction.objects.filter(type="DEPOSIT")
+            .prefetch_related("profile")
+            .aggregate(investments=Sum("paid"))["investments"]
+        )
         if investments is None:
             return Decimal("0.00")
         return Decimal(investments)
 
-    def get_total_paid_profit(self)->Decimal:
+    def get_total_paid_profit(self) -> Decimal:
         """
         This function will help in the retrieval of the total paid profit
         from the referral earnings
@@ -268,9 +289,12 @@ class DashboardViewMixin(TemplateView):
 
         For now just use the account |Transaction
         """
-        profits =  Transaction.objects.filter(
-            source__icontains="Referral Earnings").prefetch_related(
-                "profile").prefetch_related("account").aggregate(profits=Sum("paid"))["profits"]
+        profits = (
+            Transaction.objects.filter(source__icontains="Referral Earnings")
+            .prefetch_related("profile")
+            .prefetch_related("account")
+            .aggregate(profits=Sum("paid"))["profits"]
+        )
         return Decimal(profits) if profits is not None else Decimal("0.00")
 
     def __premium_user(self):
@@ -293,8 +317,9 @@ class DashboardViewMixin(TemplateView):
          -  total_profile_in_the_website = Profile.objects.all()
         """
 
-        plan_counts = Plan.objects.values(
-            "type__type").annotate(total_plans=Count("id", distinct=True))
+        plan_counts = Plan.objects.values("type__type").annotate(
+            total_plans=Count("id", distinct=True)
+        )
         # Calculate total sum of plans
         total_sum_plans = sum(item["total_plans"] for item in plan_counts)
 
@@ -302,12 +327,13 @@ class DashboardViewMixin(TemplateView):
         for plan in plan_counts:
             plan["percentage_of_total"] = (
                 f"{((plan['total_plans'] / total_sum_plans) * 100):.0f}"
-                if total_sum_plans != 0 else 0
+                if total_sum_plans != 0
+                else 0
             )
 
         return plan_counts
 
-    def get_context_data(self, **kwargs)->dict[str,Any]:
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
         """
         Calls super().get_context_data(**kwargs) to get the base context.
         Updates the context with data from the helper methods:
@@ -325,12 +351,12 @@ class DashboardViewMixin(TemplateView):
         context["monthly_site_investments"] = self.get_monthly_site_investments()
         return context
 
-    def get_profile_context(self)->dict[str, Any]:
+    def get_profile_context(self) -> dict[str, Any]:
         """
-            Gathers profile-related data such as the user profile,
-            referral link, account, and premium status.
-            :return: A dictionary with profile-related data.
-            :rtype: dict
+        Gathers profile-related data such as the user profile,
+        referral link, account, and premium status.
+        :return: A dictionary with profile-related data.
+        :rtype: dict
         """
         profile = self.__get_user().profile_user
         return {
@@ -341,7 +367,7 @@ class DashboardViewMixin(TemplateView):
         }
 
     def get_account_context(self, **kwargs):
-        """"
+        """ "
         Gathers account-related data such as balance, locked amount,
         available amount, total site deposit, and total paid profits.
         :return: A dictionary with account-related data.
@@ -362,11 +388,11 @@ class DashboardViewMixin(TemplateView):
             "plans": self.get_profile_plans(**kwargs),
             "active_plans": self._get_profile_active_plans(**kwargs),
             "inactive_plans": self._get_profile_inactive_plans(**kwargs),
-            "plans_popularity":self.site_plan_population(),
+            "plans_popularity": self.site_plan_population(),
         }
 
     def get_transactions_context(self):
-        """"
+        """ "
         Gathers transaction-related data such as transactions,
         monthly profit, and daily profit.
         """
@@ -381,10 +407,12 @@ class DashboardViewMixin(TemplateView):
             "referral_earnings": self.__pure_referral_earnings(),
             "earnings": self.get_total_whatsapp_earnings(),
         }
+
     def get_notifications_context(self):
         return {
             "notifications": NotificationPosts.objects.filter(is_active=True),
         }
+
 
 class DashboardView(DashboardViewMixin):
     template_name = "account/dashboard/home.html"
@@ -440,13 +468,19 @@ class SupportView(DashboardViewMixin):
             receiver=self.request.user.profile_user,
         ).prefetch_related("receiver")
 
+
 support = SupportView.as_view()
+
 
 class AssistanceView(SupportView):
     template_name = "account/dashboard/v1/assistance.html"
+
+
 assistance = AssistanceView.as_view()
+
 
 class AdminAssistanceView(SupportView):
     template_name = "account/dashboard/v1/admin_assistance.html"
+
 
 admin_assistance = AdminAssistanceView.as_view()

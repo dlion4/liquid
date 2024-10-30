@@ -54,6 +54,10 @@ $("#depositMoneyForm").submit(function (event) {
         console.log(reference)
 
         const url = `/dashboard/invest/handle-payment-create-transaction/${poolId}/${accountId}/${planId}/`;
+
+        submitButton.prop("disabled", true);
+        submitButton.text("Processing...");
+
         $.ajax({
           type: "POST",
           url: url,
@@ -63,6 +67,7 @@ $("#depositMoneyForm").submit(function (event) {
             amount: amount,
             discount_price: "0.00",
             currency: "KES",
+            source: "Account Top Up",
             profile: profileUserId,
             mpesa_transaction_code: reference,
             plan_id: planId,
@@ -70,9 +75,10 @@ $("#depositMoneyForm").submit(function (event) {
           }),
           success: function (response) {
             console.log("Payment successful:", response);
-            submitButton.text(`Transaction completed successfully. Waiting verification`);
-            setTimeout(()=>{
+            submitButton.text(`Payment successful. Waiting verification`);
+            setTimeout(() => {
               window.location.reload()
+              console.log(response)
             }, 3000)
           },
           error: function (jxh, jQ, error) {

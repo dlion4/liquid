@@ -64,76 +64,21 @@ class PayStackPaymentStatusView(View):
         return get_user(self.request).profile_user
 
     def get(self, request, *args, **kwargs):
-        data_context = {}
 
-        try:
-            # Decode and ensure values are not tuples
-            principal_amount = Decimal(str(request.GET.get("principal_amount", "0")))
-            duration_of_saving_investment = unquote(
-                request.GET.get("duration_of_saving_investment", "")
-            )
-            interest_amount = Decimal(str(request.GET.get("interest_amount", "0")))
-            expected_daily_interest_plus_amount = Decimal(
-                str(request.GET.get("expected_daily_interest_plus_amount", "0"))
-            )
-            instruction = unquote(request.GET.get("instruction", ""))
-
-            # Assign values to data context ensuring no tuple conversion
-            data_context["principal_amount"] = principal_amount
-            data_context["duration_of_saving_investment"] = (
-                duration_of_saving_investment
-            )
-            data_context["interest_amount"] = interest_amount
-            data_context["expected_daily_interest_plus_amount"] = (
-                expected_daily_interest_plus_amount
-            )
-            data_context["instruction"] = instruction
-            # Populate data context with validated decimal values
-            data_context["principal_amount"] = principal_amount
-            data_context["duration_of_saving_investment"] = (
-                duration_of_saving_investment
-            )
-            data_context["interest_amount"] = interest_amount
-            data_context["expected_daily_interest_plus_amount"] = (
-                expected_daily_interest_plus_amount
-            )
-            data_context["instruction"] = instruction
-
-            # Validate and save the form data
-            form = self.invest_saving_form(data=data_context)
-            if form.is_valid():
-                instance = form.save(commit=False)
-                instance.profile = self._get_profile()
-                instance.save()
-                return JsonResponse(
-                    {
-                        "update_transaction_url": reverse(
-                            "payments:paystack:paystack_saving_investment_payment_complete_create_transaction"
-                        ),
-                        "reason": "save_invest",
-                        "success": True,
-                    },
-                    status=200,
-                )
-
-            return JsonResponse({"errors": form.errors.as_json()}, status=400)
-
-        except (ValueError, ValidationError) as e:
-            # Handle decimal conversion errors or validation errors
-            return JsonResponse({"error": str(e)}, status=400)
+        return JsonResponse({"message": "Hello there"}, status=200)
     def post(self, request, *args, **kwargs):
-        try:
-            data = json.loads(request.body)
-            print(data)
-            return JsonResponse({
-                "update_transaction_url": reverse(
-                    "payments:paystack:paystack_saving_investment_payment_complete_create_transaction"
-                ),
-                "reason": data.get("reason", ""),
-                "success": True,
-            }, status=200)
-        except (ValueError, ValidationError) as e:
-            return JsonResponse({"error": str(e)}, status=400)
+        data = json.loads(request.body)
+        print(data)
+        # try:
+        return JsonResponse({
+            "update_transaction_url": reverse(
+                "payments:paystack:paystack_saving_investment_payment_complete_create_transaction"
+            ),
+            "reason": data.get("reason", ""),
+            "success": True,
+        }, status=200)
+        # except (ValueError, ValidationError) as e:
+        #     return JsonResponse({"error": str(e)}, status=400)
 
 
 class TransactionSavingsInvestmentPaymentView(CustomTransactionCreationView):

@@ -223,6 +223,7 @@
                     <!-- manua payment -->
                     <div class="tab-pane active" id="manual-payment">
                         <form action="#" class="form-validate is-alter" novalidate="novalidate" id="addPlanForm-base-file">
+                            {% csrf_token %}
                             <div class="form-group">
                                 <div id="accordion-1" class="accordion accordion-s2" style="background-color: transparent;">
                                     {% include 'account/dashboard/v1/investment/components/payments/mpesa/steps/lipanampesasteps.html' %}
@@ -247,13 +248,11 @@
                             <div class="form-group">
                                 <label class="form-label" for="pay-amount">Amount to be paid</label>
                                 <div class="form-control-wrap">
-                                    <input title="payment_amount"
-                                     disabled type="text" class="form-control" id="add-pay-amount" name="pay_amount"
-                                      value="{{payment_amount}}" />
+                                    <input title="payment_amount" disabled type="text" class="form-control" id="add-pay-amount" name="pay_amount" value="{{payment_amount}}" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup-base-file">
+                                <button type="submit" class="btn btn-lg btn-primary center-justify" id="mpesa-payment-btn-popup-base-file">
                                     <!-- <span id="payment-btn-spinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
                                     <span id="payment-text">Confirm to pay</span>
                                 </button>
@@ -266,6 +265,7 @@
                                         align-items: center;
                                     }
                                 </style>
+
                             </div>
                         </form>
                     </div>
@@ -370,10 +370,10 @@
 
 
 
-            let countryRate;
+            let countryRate = 1;
 
 
-            for (const country of iterableConvRate) {
+            /*for (const country of iterableConvRate) {
                 if (country.currency_code === geoData.currency.currency_code) {
                     ActualAmountToBePaid = parseFloat(parseFloat(ActualAmountToBePaid) * parseFloat(country.amount)).toFixed(2)
                     countryRate = country.amount;
@@ -381,7 +381,7 @@
                     ActualAmountToBePaid = ActualAmountToBePaid;
                     countryRate = 1;
                 }
-            }
+            }*/
 
             addPlanAmountToBePaid.value = `${currencyCode}: ${parseFloat(cleanCurrency(ActualAmountToBePaid, currencyCode)).toFixed(2)}`
 
@@ -390,6 +390,11 @@
 
             addPlanAmountToBePaid.value = parseFloat(cleanCurrency(ActualAmountToBePaid, currencyCode)).toFixed(2)
             let actualAmountInKenyaShillings = parseFloat(parseFloat(addPlanAmountToBePaid.value) / parseFloat(countryRate)).toFixed(2)
+
+
+            const upgradeForm = $("#addPlanForm-base-file")
+
+            console.log("upgrade form: ", upgradeForm)
 
             paymentBtnForm.addEventListener("click", async (event) => {
                 event.preventDefault();
@@ -402,7 +407,8 @@
                     plan: planSelectionId.value,
                     currency: currencyCode,
                     country: geoData.country,
-                    actualAmount: actualAmountInKenyaShillings
+                    actualAmount: actualAmountInKenyaShillings,
+                    source:"Account Plan Upgrade"
                 }
 
                 addPlanPaymentFn(data);
@@ -762,13 +768,13 @@
         };
 
         initiateConnection = async (endpoint) => {
-            const ws = new WebSocket(`wss://${window.location.host}/ws/streams/${endpoint}`);
+            /*<!-- const ws = new WebSocket(`wss://${window.location.host}/ws/streams/${endpoint}`);
 
             ws.onmessage = async (event) => {
                 const data = JSON.parse(JSON.parse(event.data).message);
                 this.stream(this.updateRecentUpdate, data)
                 return data
-            }
+            } */
         }
 
         stream(func, data) {

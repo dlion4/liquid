@@ -1,7 +1,7 @@
 import json
 from decimal import Decimal  # Import Decimal from the decimal module
 from typing import Any
-
+from django.utils.html import strip_tags
 from django.contrib import messages
 from django.contrib.auth import get_user
 from django.contrib.auth.decorators import login_required
@@ -137,7 +137,8 @@ class HandleAccountSelectionView(LoginRequiredMixin, View):
         pool = get_object_or_404(Pool, profile=profile, pk=request.GET.get("pool_id"))
 
         account_type = get_object_or_404(
-            AccountType, pk=request.GET.get("account_type_id"),
+            AccountType,
+            pk=request.GET.get("account_type_id"),
         )
 
         account_data = None
@@ -192,7 +193,8 @@ class HandlePlanSelectionView(LoginRequiredMixin, View):
 
 
 class HandlePaymentCreateTransactionView(
-    LoginRequiredMixin, CustomTransactionCreationView,
+    LoginRequiredMixin,
+    CustomTransactionCreationView,
 ):
 
     @method_decorator(csrf_exempt)
@@ -204,17 +206,21 @@ class HandlePaymentCreateTransactionView(
         profile = request.user.profile_user
         data = json.loads(request.body)
         phone_number = data.get("phone_number", profile.user.email)
-        currency=data.get("currency", "KES")
+        currency = data.get("currency", "KES")
         country = data.get("country", "Kenya")
         pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool_id"))
         account = Account.objects.get(
-            pool=pool, pool__profile=profile, pk=kwargs.get("account_id"))
+            pool=pool, pool__profile=profile, pk=kwargs.get("account_id")
+        )
         plan = Plan.objects.get(
-            account=account, account__pool__profile=profile, pk=kwargs.get("plan_id"))
+            account=account, account__pool__profile=profile, pk=kwargs.get("plan_id")
+        )
         total_investment = data.get(
-            "amount", sum(instance.type.price for instance in [pool, account, plan]))
+            "amount", sum(instance.type.price for instance in [pool, account, plan])
+        )
         discount_price = data.get(
-            "discount_price", Decimal(Decimal("0.0") * Decimal(total_investment)))
+            "discount_price", Decimal(Decimal("0.0") * Decimal(total_investment))
+        )
         # discountPrice = Decimal(total_investment)  # noqa: ERA001
         mpesa_code = data.get("mpesa_transaction_code")
         transaction = self.create_transaction_method(
@@ -232,28 +238,42 @@ class HandlePaymentCreateTransactionView(
         plan.mpesa_transaction_code = mpesa_code
         plan.payment_phone_number = phone_number
         plan.save()
-
-        account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
+        # account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
         account.save()
         # look for the referrer
         profile = pool.profile
-        profile.plans.add(plan)
-        profile.is_subscribed=True
-        profile.is_waiting_plan_verification=True
+
+        # Only add the plan to profile if it is not already included
+        if not profile.plans.filter(pk=plan.pk).exists():
+            profile.plans.add(plan)
+        # Set subscription status
+        profile.is_subscribed = True
+
+        # Apply waiting verification only if the transaction source is
+        # "Account Registration"
+        if transaction.source == "Account Registration":
+            profile.is_waiting_plan_verification = True
         profile.save()
 
-        self.__get_referrer_and_update_account(
-            profile, mpesa_code, phone_number, currency)
+        print(data.get("source"))
+
+        if data.get("source", str(transaction.source)) == "Account Registration":
+            self.__get_referrer_and_update_account(
+                profile, mpesa_code, phone_number, currency
+            )
+        else:
+            transaction.source = data.get("source", "Account Top Up")
+        transaction.save()
 
         return JsonResponse(
             {"success": True, "url": reverse_lazy("subscriptions:list")},
         )
 
     def __get_referrer_and_update_account(
-        self, profile, mpesa_code, phone_number, currency="KES", country="Kenya"):
+        self, profile, mpesa_code, phone_number, currency="KES", country="Kenya"
+    ):
         if referrer := profile.referred_by:
             # update the referrer account
-
             referrer_profile = referrer.profile_user
             referrer_profile_account = Account.objects.get(
                 pool__profile=referrer_profile,
@@ -284,16 +304,19 @@ class VerifyTransactionPaymentView(LoginRequiredMixin, View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-    def post(self, request:HttpRequest, *args, **kwargs):
+
+    def post(self, request: HttpRequest, *args, **kwargs):
         account = Account.objects.get(
-            pool__profile=request.user.profile_user,pk=kwargs.get("account_id"))
+            pool__profile=request.user.profile_user, pk=kwargs.get("account_id")
+        )
         transaction = Transaction.objects.get(
-            account=account,mpesa_transaction_code=kwargs.get("reference_code"))
+            account=account, mpesa_transaction_code=kwargs.get("reference_code")
+        )
         account.balance += transaction.amount
         account.save()
-        transaction.verified=True
-        transaction.is_payment_success=True
-        transaction.source= "Account Top Up"
+        transaction.verified = True
+        transaction.is_payment_success = True
+        transaction.source = "Account Top Up"
         transaction.save()
         return JsonResponse({"url": reverse("transactions:transactions")}, safe=False)
 
@@ -301,20 +324,29 @@ class VerifyTransactionPaymentView(LoginRequiredMixin, View):
 @require_POST
 @csrf_exempt
 @login_required
-def delete_transaction_payment_view(request,pool_id, account_id, plan_id, reference_code):
-        account = Account.objects.get(pool__profile=request.user.profile_user,pk=account_id)
-        transaction = Transaction.objects.get(account=account,mpesa_transaction_code=reference_code)
-        account.balance -= transaction.amount
-        account.save()
-        transaction.delete()
-        return JsonResponse({"url": reverse("transactions:transactions")}, safe=False)
+def delete_transaction_payment_view(
+    request, pool_id, account_id, plan_id, reference_code
+):
+    account = Account.objects.get(
+        pool__profile=request.user.profile_user, pk=account_id
+    )
+    transaction = Transaction.objects.get(
+        account=account, mpesa_transaction_code=reference_code
+    )
+    account.balance -= transaction.amount
+    account.save()
+    transaction.delete()
+    return JsonResponse({"url": reverse("transactions:transactions")}, safe=False)
+
 
 def fetch_amount_tobe_paid_plus_discount(request):
     profile = Profile.objects.get(pk=request.GET.get("profile"))
     pool = Pool.objects.get(profile=profile)
     account = Account.objects.get(pool=pool, pool__profile=profile)
     plan = Plan.objects.get(
-        account=account, account__pool__profile=profile, pk=request.GET.get("plan_pk"),
+        account=account,
+        account__pool__profile=profile,
+        pk=request.GET.get("plan_pk"),
     )
     total_investment = sum(instance.type.price for instance in [pool, account, plan])
     discountPrice = Decimal(Decimal("0.0") * Decimal(total_investment))  # noqa: N806
@@ -324,13 +356,14 @@ def fetch_amount_tobe_paid_plus_discount(request):
 
 class HandlePaymentView(LoginRequiredMixin, View):
 
-
     @method_decorator(csrf_exempt, name="dispatch")
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        plan = Plan.objects.filter(account__pool__profile__id=request.GET.get("profile")).last()
+        plan = Plan.objects.filter(
+            account__pool__profile__id=request.GET.get("profile")
+        ).last()
         plan = PlanSerializer(plan).data
         return JsonResponse({"success": True, "plan": plan})
 
@@ -339,8 +372,9 @@ class HandleRegistrationPaymentView(HandlePaymentView):
 
     def post(self, request, *args, **kwargs):
         json.loads(request.body)
-        #TODO: CREATE THE PLAN SECTION
+        # TODO: CREATE THE PLAN SECTION
         return JsonResponse({"success": True})
+
 
 class HandleAddPlanPaymentView(HandlePaymentView):
 
@@ -366,7 +400,8 @@ class HandleAddPlanPaymentView(HandlePaymentView):
         if profile.plans.filter(id=plan.id).exists():
             return JsonResponse(
                 {"error": "Plan already exists in the profile", "success": False},
-                status=400)
+                status=400,
+            )
         profile.plans.add(plan)
 
         self.handle_transaction_creation(
@@ -378,12 +413,10 @@ class HandleAddPlanPaymentView(HandlePaymentView):
             transactioncode=transactioncode,
             currency=data.get("currency", "KES"),
             country=data.get("country", "Kenya"),
+            source=data.get("source", "Account Registration"),
         )
-        profile.is_subscribed=True
+        profile.is_subscribed = True
         profile.save()
-        account.balance += Decimal(amount)
-        account.save()
-
 
         send_welcome_email.after_response(
             profile.user,
@@ -391,7 +424,7 @@ class HandleAddPlanPaymentView(HandlePaymentView):
             {
                 "user": profile.user,
                 "plan": plan,
-                "subject": "Earnkraft Agencies [Plan purchase Successful]",
+                "subject": "Earnkraft Agencies [Plan purchase Successful] Waiting verification",
             },
         )
 
@@ -400,28 +433,30 @@ class HandleAddPlanPaymentView(HandlePaymentView):
                 "success": True,
                 "url": reverse(
                     "subscriptions:subscription",
-                    kwargs={"plan_slug":plan.slug,"plan_id":plan.pk}),
+                    kwargs={"plan_slug": plan.slug, "plan_id": plan.pk},
+                ),
             },
         )
 
     def handle_transaction_creation(  # noqa: PLR0913
-            self,
-            request,
-            profile,
-            account,
-            amount,
-            phone_number,
-            transactioncode,
-            currency="KES",
-            country="Kenya",
-        )->None:
-         Transaction.objects.create(
+        self,
+        request,
+        profile,
+        account,
+        amount,
+        phone_number,
+        transactioncode,
+        currency="KES",
+        country="Kenya",
+        source = "Account Registration",
+    ) -> None:
+        Transaction.objects.create(
             profile=profile,
             account=account,
             type="DEPOSIT",
             amount=amount,
             is_payment_success=True,
-            source="Account Registration",
+            source=source,
             payment_phone=phone_number,
             mpesa_transaction_code=transactioncode,
             payment_phone_number=phone_number,
@@ -450,6 +485,7 @@ class InvestmentSchemeView(InvestmentSetupView, DashboardViewMixin):
 
 plans = InvestmentSchemeView.as_view()
 
+
 class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
     # template_name = "account/dashboard/investment/plan.html"  # noqa: ERA001
     template_name = "account/dashboard/v1/investment/plan.html"
@@ -471,7 +507,6 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
             pk=kwargs.get("plan_id"),
         )
 
-
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["plan"] = self.get_object(**kwargs)
@@ -486,7 +521,8 @@ class InvestmentPlanView(InvestmentSetupView, DashboardViewMixin):
         if request.htmx:
             if type_of_transaction := request.GET.get("type_of_transaction"):
                 context["transactions"] = Transaction.objects.filter(
-                    type=type_of_transaction, profile=self._get_user().profile_user,
+                    type=type_of_transaction,
+                    profile=self._get_user().profile_user,
                 ).order_by("-id")
             return render(request, self.htmx_template_name, context)
         return super().get(request, *args, **kwargs)
@@ -530,20 +566,27 @@ modified_referal_view = ReferralView.as_view()
 class QinfoView(InvestmentViewMixin):
     template_name = "account/dashboard/v1/investment/qinfo.html"
 
+
 modified_qinfo_view = QinfoView.as_view()
+
 
 class ComingSoonView(InvestmentViewMixin):
     template_name = "account/dashboard/v1/investment/comingsoon.html"
 
+
 modified_comingsoon_view = ComingSoonView.as_view()
+
 
 class UpgradeView(InvestmentViewMixin):
     template_name = "account/dashboard/v1/investment/upgrade.html"
 
+
 modified_upgrade_view = UpgradeView.as_view()
+
 
 class MonetizeView(InvestmentViewMixin):
     template_name = "account/dashboard/v1/investment/monetize.html"
+
 
 modified_monetize_view = MonetizeView.as_view()
 
@@ -578,7 +621,9 @@ class WhatsappView(InvestmentViewMixin):
     def get_whatsapp_earning_schemes(self):
         return (
             WhatsAppEarningScheme.objects.prefetch_related("profile")
-            .filter(profile=self.get_profile()).order_by("-id"))
+            .filter(profile=self.get_profile())
+            .order_by("-id")
+        )
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         self.get_total_whatsapp_earnings()
@@ -595,7 +640,9 @@ class WhatsappView(InvestmentViewMixin):
             instance.profile = self.get_profile()
             instance.save()
             form.save()
-            messages.success(self.request, "Upload submitted successfully. Wait for approval!")
+            messages.success(
+                self.request, "Upload submitted successfully. Wait for approval!"
+            )
             return redirect(self.success_url)
         messages.error(self.request, "Upload failed. Please try again!")
         return redirect(self.success_url)
@@ -607,17 +654,20 @@ modified_whatsapp_view = WhatsappView.as_view()
 class JobsView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/jobs.html"  # noqa: ERA001
     template_name = "account/dashboard/v1/investment/jobs.html"
-    jobs =Job
+    jobs = Job
     job_application_form = JobApplicationForm
 
     def get_jobs(self):
         return self.jobs.objects.all().order_by("-id").order_by("?")
 
     def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["jobs"] = self.get_jobs()
-        context["job_application_form"] = self.job_application_form(job_id=1, applicant_id=1)  # noqa: E501
+        context["job_application_form"] = self.job_application_form(
+            job_id=1, applicant_id=1
+        )  # noqa: E501
         return context
+
 
 modified_jobs_view = JobsView.as_view()
 
@@ -641,10 +691,13 @@ def fetch_job_type(request, location_type, page=0, per_page=6):
     offset = page * per_page
     context = {}
     if location_type in ("all", "*"):
-        jobs = Job.objects.all().distinct().order_by("?")[offset:offset + per_page]
+        jobs = Job.objects.all().distinct().order_by("?")[offset : offset + per_page]
     else:
-        jobs = Job.objects.filter(
-            location_type__iexact=location_type).distinct().order_by("?")[offset:offset + per_page]
+        jobs = (
+            Job.objects.filter(location_type__iexact=location_type)
+            .distinct()
+            .order_by("?")[offset : offset + per_page]
+        )
     context["jobs"] = jobs
     job_application_form = JobApplicationForm(job_id=1, applicant_id=1)
     context |= {"job_application_form": job_application_form}
@@ -663,8 +716,10 @@ class InvestPlanView(InvestmentViewMixin):
         return SavingPlan.objects.filter(is_active=True)
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context =  super().get_context_data(**kwargs)
-        context["investment_schemes"] = self.retrieve_investment_schemes_options(**kwargs)  # noqa: E501
+        context = super().get_context_data(**kwargs)
+        context["investment_schemes"] = self.retrieve_investment_schemes_options(
+            **kwargs
+        )  # noqa: E501
         return context
 
 
@@ -675,6 +730,7 @@ class InvestOrderView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/investment_order.html"  # noqa: E501, ERA001
     template_name = "account/dashboard/v1/investment/investment_order.html"
     invest_save_form = InvestMentSavingForm
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["invest_save_form"] = self.invest_save_form()
@@ -720,6 +776,7 @@ class LoansView(InvestmentViewMixin):
     # template_name = "account/dashboard/investment/loans.html"  # noqa: ERA001
     template_name = "account/dashboard/v1/investment/loans.html"
 
+
 modified_loans_view = LoansView.as_view()
 
 
@@ -735,21 +792,58 @@ class VipView(DashboardGuard, InvestmentViewMixin):
         context["platform_type"] = PlantformType.objects.all()
         return context
 
-
 modified_vip_view = VipView.as_view()
 
-
 class CheckUserSubscriptionStatusView(LoginRequiredMixin, View):
-    def get(self, request:HttpRequest, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs):
         profile = Profile.objects.get(user=get_user(request))
-        return JsonResponse({
-            "is_subscribed": profile.is_subscribed,
-            "is_waiting_plan_verification": profile.is_waiting_plan_verification,
-            "first_name": profile.first_name,
-            })
+        return JsonResponse(
+            {
+                "is_subscribed": profile.is_subscribed,
+                "is_waiting_plan_verification": profile.is_waiting_plan_verification,
+                "first_name": profile.first_name,
+            },
+        )
 
 
 class InvestMentSavingView(FormView):
     form_class = InvestMentSavingForm
+
     def post(self, request, *args, **kwargs):
-        return JsonResponse({}, status=200)
+        data = json.loads(request.body)
+        profile = get_user(request).profile_user
+        instruction = strip_tags(data.pop("instruction"))
+        data["instruction"] = instruction.replace("\n", "").strip()
+
+        form_data = {
+            "principal_amount": float(data.get("principal_amount")),
+            "duration_of_saving_investment": data.get(
+                "duration_of_saving_investment",
+            ),
+            "interest_amount": float(data.get("interest_amount")),
+            "expected_daily_interest_plus_amount": float(
+                data.get("expected_daily_interest_plus_amount"),
+            ),
+            "instruction": data.get("instruction"),
+        }
+
+        form = self.form_class(data=form_data)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.profile = profile
+            instance.save()
+            form.save()
+            pool = Pool.objects.get(profile=profile)
+            account = Account.objects.get(pool=pool)
+            data_to_send = {
+                "phone_number": data.get("phone_number"),
+                "amount": form_data.get("principal_amount"),
+                "profileUserId": int(profile.pk),
+                "reference": data.get("reference"),
+                "planId": int(profile.plans.latest().pk),
+                "poolId":int(pool.pk),
+                "accountId":int(account.pk),
+            }
+            return JsonResponse(json.dumps(data_to_send), status=200, safe=False)
+        return JsonResponse(
+            {"error": str(form.errors.as_json())}, status=400, safe=False)

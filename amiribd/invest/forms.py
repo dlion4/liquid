@@ -311,10 +311,10 @@ class AdminPlanTypeForm(forms.ModelForm):
 
 
 class InvestMentSavingForm(forms.ModelForm):
-    principal_amount = forms.DecimalField(widget=forms.HiddenInput())
+    principal_amount = forms.CharField(widget=forms.HiddenInput())
     duration_of_saving_investment = forms.CharField(widget=forms.HiddenInput())
-    interest_amount = forms.DecimalField(widget=forms.HiddenInput())
-    expected_daily_interest_plus_amount = forms.DecimalField(widget=forms.HiddenInput())
+    interest_amount = forms.CharField(widget=forms.HiddenInput())
+    expected_daily_interest_plus_amount = forms.CharField(widget=forms.HiddenInput())
     instruction = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:

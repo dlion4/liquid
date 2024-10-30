@@ -361,17 +361,16 @@ class InvestmentOrder {
 
 
 
-            const handleProcessTransactionForSaveInvestPayment = (url, dataToSubmit) => {
+            const handleProcessTransactionForSaveInvestPayment = (url, dataToSubmit, button) => {
                 $.ajax({
                     url: url,
                     method: 'POST',
                     data: JSON.stringify(dataToSubmit),
-                    success: function (data) {
-                        if (data.success) {
+                    success: function (response) {
+                        $(button).text("Transaction completed. Waiting verification...");
                             setTimeout(() => {
-                                window.location.href = data.url
+                                window.location.reload()
                             }, 1000)
-                        }
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr)
@@ -383,25 +382,41 @@ class InvestmentOrder {
             $("input[name=pay_amount]#pay-amount").val(`KSH ${dataToSubmit.principal_amount}`);
             $('#modalZoomInvestPayment').addClass('show').css("display", "block");
 
-            $('form#mpesa-payment-from-paystack-conversion').submit(async function (event) {
+            $('form#mpesa-payment-from-paystack-conversion').submit(function (event) {
+                const fromButton = $("form#mpesa-payment-from-paystack-conversion").find("button[name=mpesa-payment-from-paystack-conversion]")
                 event.preventDefault()
                 const reference = $(this).find("input[name=mpesa-reference-code]").val()
                 const phone_number = $(this).find("input[name=phone_no]").val()
+                $(fromButton).prop("disabled", true)
+                $(fromButton).text("Processing payment...")
+                // const url = `/dashboard/invest/handle-payment-create-transaction/${poolId}/${accountId}/${planId}/`;
+                // const url = `/dashboard/invest/handle-investment-savings//${poolId}/${accountId}/${planId}/`;
+                dataToSubmit["reference"] = reference;
+                dataToSubmit["phone_number"] = phone_number;
 
                 $.ajax({
-                    url: "/payments/paystack/payment-status/",
+                    url: "/dashboard/invest/handle-investment-savings/",
                     method: "POST",
                     data: JSON.stringify(dataToSubmit),
                     headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                     contentType: "application/json",
                     success: function (data) {
-                        alert("Payment successful! Your transaction has been processed.");
-                        console.log(data)
-                        const url = data.update_transaction_url;
-                        if (data.success && data.reason === "save_invest") {
-                            $("form#mpesa-payment-from-paystack-conversion").find("button[name=mpesa-payment-from-paystack-conversion]").text("payment information sent! waiting verification")
-                            setTimeout(() => { window.location.reload() }, 3000)
+                        const { phone_number, amount, profileUserId, reference, planId, poolId, accountId } = JSON.parse(data);
+                        $(fromButton).text("Payment sent. Creating transaction...");
+                        console.log(JSON.parse(data))
+                        let dataToSend = {
+                            phone_number: phone_number,
+                            amount: amount,
+                            discount_price: "0.00",
+                            currency: "KES",
+                            source: "Investment Savings",
+                            profile: profileUserId,
+                            mpesa_transaction_code: reference,
+                            plan_id: planId,
+                            country: "Kenya"
                         }
+                        let url = `/dashboard/invest/handle-payment-create-transaction/${poolId}/${accountId}/${planId}/`;
+                        handleProcessTransactionForSaveInvestPayment(url, dataToSend, fromButton);
                         console.log(dataToSubmit);
                     },
                     error: function (xhr, status, error) {

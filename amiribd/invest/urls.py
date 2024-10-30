@@ -9,6 +9,7 @@ from .views import HandlePlanSelectionView
 from .views import HandlePoolSelectionView
 from .views import HandleRegistrationPaymentView
 from .views import VerifyTransactionPaymentView
+from .views import InvestMentSavingView
 from .views import check_payment_status
 from .views import delete_transaction_payment_view
 from .views import (
@@ -47,6 +48,7 @@ urlpatterns = [
     ),
     path(
         "handle-add-plan-payment/",
+        # handle-add-plan-payment
         HandleAddPlanPaymentView.as_view(),
         name="handle-add-plan-payment",
     ),
@@ -153,20 +155,20 @@ urlpatterns = [
         modified_vip_view,
         name="vip",  # vip
     ),
-
     # paystack callback urls
     path("qinfo/", modified_qinfo_view, name="qinfo"),
     path("comingsoon/", modified_comingsoon_view, name="comingsoon"),
     path("upgrade/", modified_upgrade_view, name="upgrade"),
     path("monetize/", modified_monetize_view, name="monetize"),
-    
-    
-    
-    # Custom action 
-    
+    # Custom action
     path(
         "profile/check-subscription-status",
         CheckUserSubscriptionStatusView.as_view(),
-        name="profile-is-subscribed"
+        name="profile-is-subscribed",
+    ),
+    path(
+        "handle-investment-savings/",
+        InvestMentSavingView.as_view(),
+        name="investment-savings",
     ),
 ]
