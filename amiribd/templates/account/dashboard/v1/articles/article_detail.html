@@ -36,16 +36,47 @@
   <div class="nk-block mb-5">
     <div class="row g-3">
       <div class="col-xl-8" id="scroll-column">
+        <div class="nk-block-head nk-block-head-sm">
+          <div class="nk-block-between">
+            
+            <div class="nk-block-head-content">
+              <div class="toggle-wrap nk-block-tools-toggle">
+               
+                <div class="toggle-expand-content" data-content="pageMenu">
+                  <ul class="nk-block-tools g-2">
+        
+        
+                    <li class="nk-block-tools-opt d-none d-sm-block">
+                      <a href="{{article.get_update_url}}" class="btn btn-dim btn-info">
+                        
+                        <span>Edit</span>
+                      </a>
+                    </li>
+                    <li class="nk-block-tools-opt d-none d-sm-block">
+                      <a href="{% url 'dashboard:articles:editor:new-article' %}" class="btn btn-dim btn-success">
+                       
+                        <span>New Article</span>
+                      </a>
+                    </li>     
+                    
+                    
+    
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="card card-bordered">
           <div class="card-inner card-inner-lg">
             <div class="alert-alt alert-danger alert-icon">
-              <em class="icon ni ni-help-alt"></em>
+              
               <h3>{{article.title|title|linebreaks}}</h3>
             </div>
             <div class="entry mt-5">
               {{article.content|safe}}
               <p class="sub-text mt-5">
-                Once an article has been purchased by our third part sources the writter will get paid and get featured.
+                Once an article has been purchased by our third-party sources the writter will get paid and get featured.
                 <span>(Author:{{article.profile}})</span>
               </p>
             </div>

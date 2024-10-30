@@ -102,7 +102,8 @@
                                     <span>{{profile.initials}}</span>
                                 </div>
                                 <div class="user-info">
-                                    <span class="lead-text">{{profile.full_name|truncatewords:"3"}}</span><span class="sub-text">{{profile.user.email}}</span>
+                                    <span class="lead-text">{{profile.user.username}}</span><span class="sub-text">{{ profile.user.email|slice:":5" }}****{{ profile.user.email|slice:"-10:" }}
+                                    </span>
                                 </div>
                                 <div class="user-action">
                                     <em class="icon ni ni-chevron-down"></em>
@@ -121,10 +122,7 @@
                                     <!-- amount -->
                                     <span class="currency currency-btc">KES</span>
                                 </div>
-                                <div class="user-balance-alt">{{locked_amount}}
-                                    <!-- amount -->
-                                    <span class="currency currency-btc">KES</span>
-                                </div>
+                                
                             </div>
 
                             <a href="#" class="btn btn-icon btn-light">
@@ -133,7 +131,15 @@
                         </div>
                         <ul class="user-account-data">
                             
-                            
+                            <li>
+                                <div class="user-account-label">
+                                    <span class="sub-text">Package</span>
+                                </div>
+                                <div class="user-account-value">
+                                    <span class="lead-text">{{locked_amount}}
+                                        <span class="currency currency-btc">KES</span></span>
+                                </div>
+                            </li>
                             <li>
                                 <div class="user-account-label">
                                     <span class="sub-text">Remote Tasks</span>
@@ -143,15 +149,7 @@
                                         <span class="currency-btc">{{ remote_jobs_income|floatformat:2|intcomma }}</span></span>
                                 </div>
                             </li>
-                            <li>
-                                <div class="user-account-label">
-                                    <span class="sub-text">Profits</span>
-                                </div>
-                                <div class="user-account-value">
-                                    <span class="lead-text">0.0
-                                        <span class="currency currency-btc">KES</span></span>
-                                </div>
-                            </li>
+                            
 
                             <li>
                                 <div class="user-account-label">
@@ -277,8 +275,14 @@
                         </li>
                        
                         {% if plans %}
-                        <li class="nk-menu-item">
+                        <!-- <li class="nk-menu-item">
                             <a  style="cursor:pointer"  href="{% url 'dashboard:invest:invest_plan' %}" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
+                                <span class="nk-menu-text">Invest and Save</span>
+                            </a>
+                        </li> -->
+                        <li class="nk-menu-item">
+                            <a  style="cursor:pointer"  href="#" class="nk-menu-link">
                                 <span class="nk-menu-icon"><em class="icon ni ni-repeat"></em></span>
                                 <span class="nk-menu-text">Invest and Save</span>
                             </a>
