@@ -784,7 +784,7 @@ CKEDITOR_5_CONFIGS = {
             ],
         },
         # https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-        "placeholder": "Welcome to Liquid 5!",
+        "placeholder": "Write your Article content here, edit and proofread before submitting",
         # Used by real-time collaboration
         "cloudServices": {
             # Be careful - do not use the development token endpoint on production systems!

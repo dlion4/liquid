@@ -135,10 +135,19 @@
         <h4 class="nk-block-title">Recent Articles & Blogs</h4>
       </div>
       <div class="nk-block-head-content">
-        <a hx-on::after-request="window.location.reload()" hx-get="{% url 'dashboard:articles:blogging-posts-history' %}" style="cursor:pointer" hx-swap="none" hx-push-url="true" hx-boost="true" class="link">
-          <span>See All</span>
-          <em class="icon ni ni-chevron-right"></em>
-        </a>
+        <a 
+        hx-on::after-request="window.location.reload()" 
+        hx-get="{% url 'dashboard:articles:blogging-posts-history' %}" 
+        style="cursor:pointer; color: rgb(177, 0, 0);"  
+        hx-swap="none" 
+        hx-push-url="true" 
+        hx-boost="true" 
+        class="btn btn-info bg-success-dim fs-8"
+    >
+        <span> Payrates Guide</span>
+        
+    </a>
+    
       </div>
     </div>
   </div>
