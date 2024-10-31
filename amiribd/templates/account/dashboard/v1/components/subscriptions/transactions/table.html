@@ -14,85 +14,106 @@
     </div>
 
     {% if transactions_summary %}
-      <div class="nk-tb-list">
-        <div class="nk-tb-item nk-tb-head">
-          <div class="nk-tb-col">
-            <span>Subject</span></div>
-          <div class="nk-tb-col tb-col-sm">
-            <span>User</span></div>
-          <div class="nk-tb-col tb-col-lg">
-            <span>Date</span></div>
-          <div class="nk-tb-col">
-            <span>Amount</span></div>
-          <div class="nk-tb-col tb-col-sm">
-            <span>&nbsp;</span></div>
-          <div class="nk-tb-col">
-            <span>&nbsp;</span></div>
+    <div class="nk-tb-list">
+      <div class="nk-tb-item nk-tb-head">
+        <div class="nk-tb-col">
+          <span>Subject</span>
         </div>
-        {% for transaction in transactions_summary %}
-          <div class="nk-tb-item">
-            <div class="nk-tb-col">
-              <div class="align-center">
-                <div class="user-avatar user-avatar-sm bg-light">
-                  <span>P{{forloop.counter}}</span>
-                </div>
-                <span class="tb-sub ms-2">
-                  {{transaction.source|title}}
-                  <span class="d-none d-md-inline">
-                    <!-- - Daily 8.52% for 14 Days -->
-                  </span>
-                </span>
-              </div>
+        <div class="nk-tb-col tb-col-sm">
+          <span>User</span>
+        </div>
+        <div class="nk-tb-col tb-col-lg">
+          <span>Date</span>
+        </div>
+        <div class="nk-tb-col">
+          <span>Amount</span>
+        </div>
+        <div class="nk-tb-col">
+          <span>Charges</span>
+        </div>
+        <div class="nk-tb-col tb-col-sm">
+          <span>&nbsp;</span>
+        </div>
+        <div class="nk-tb-col">
+          <span>&nbsp;</span>
+        </div>
+      </div>
+      {% for transaction in transactions_summary %}
+      <div class="nk-tb-item">
+        <div class="nk-tb-col">
+          <div class="align-center">
+            <div class="user-avatar user-avatar-sm bg-light">
+              <span>P{{forloop.counter}}</span>
             </div>
-            <div class="nk-tb-col tb-col-sm">
-              <div class="user-card">
-                <div class="user-avatar user-avatar-xs bg-azure-dim">
-                  <span>{{transaction.profile.generate_initials|upper}}</span>
-                </div>
-                <div class="user-name">
-                  <span class="tb-lead">{{transaction.profile.full_name|title}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="nk-tb-col tb-col-lg">
-              <span class="tb-sub">{{transaction.created_at|date:"d/m/Y h:i A"}}</span>
-            </div>
-            <div class="nk-tb-col">
-              <span class="tb-sub tb-amount">
-                {{transaction.paid|floatformat:2|intcomma}}
-                <span class="currency">KES</span>
+            <span class="tb-sub ms-2">
+              {{transaction.source|title}}
+              <span class="d-none d-md-inline">
+                <!-- - Daily 8.52% for 14 Days -->
               </span>
+            </span>
+          </div>
+        </div>
+        <div class="nk-tb-col tb-col-sm">
+          <div class="user-card">
+            <div class="user-avatar user-avatar-xs bg-azure-dim">
+              <span>{{transaction.profile.generate_initials|upper}}</span>
             </div>
-            <div class="nk-tb-col tb-col-sm">
-              {% if transaction.verified %}
-                <span class="tb-sub text-success">Verified</span>
-              {% else %}
-                <span class="tb-sub text-warning">Pending</span>
-              {% endif %}
-            </div>
-            <div class="nk-tb-col nk-tb-col-action">
-              <div class="dropdown">
-                <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown">
-                  <em class="icon ni ni-chevron-right"></em>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                  <ul class="link-list-plain">
-                    <li>
-                      <a href="#">View</a>
-                    </li>
-                    <li>
-                      <a href="#">Invoice</a>
-                    </li>
-                    <li>
-                      <a href="#">Print</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <div class="user-name">
+              <span class="tb-lead">{{transaction.profile.full_name|title}}</span>
             </div>
           </div>
-        {% endfor %}
+        </div>
+        <div class="nk-tb-col tb-col-lg">
+          <span class="tb-sub">{{transaction.created_at|date:"d/m/Y h:i A"}}</span>
+        </div>
+        <div class="nk-tb-col">
+          <span class="tb-sub tb-amount">
+            {{transaction.paid|floatformat:2|intcomma}}
+            <span class="currency">KES</span>
+          </span>
+        </div>
+
+        <div class="nk-tb-col tb-col-lg">
+          <span class="tb-sub tb-amount">
+            {% if transaction.type == 'WITHDRAWAL' %}
+            1.5
+            <span class="">%</span>
+            {% else %}
+            0.00
+            <span class="">%</span>
+            {% endif %}
+          </span>
+        </div>
+        <div class="nk-tb-col tb-col-sm">
+          {% if transaction.verified %}
+          <span class="tb-sub text-success">Verified</span>
+          {% else %}
+          <span class="tb-sub text-warning">Pending</span>
+          {% endif %}
+        </div>
+        <div class="nk-tb-col nk-tb-col-action">
+          <div class="dropdown">
+            <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown">
+              <em class="icon ni ni-chevron-right"></em>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+              <ul class="link-list-plain">
+                <li>
+                  <a href="#">View</a>
+                </li>
+                <li>
+                  <a href="#">Invoice</a>
+                </li>
+                <li>
+                  <a href="#">Print</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
+      {% endfor %}
+    </div>
     {% endif %}
   </div>
 </div>

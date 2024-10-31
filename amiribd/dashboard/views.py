@@ -249,7 +249,8 @@ class DashboardViewMixin(TemplateView):
         Return the transactions
         made by the logged in user
         """
-        return Transaction.objects.filter(profile=self.__get_user().profile_user).all()
+        return Transaction.objects.filter(
+            profile=self.__get_user().profile_user).all().order_by("-id")
 
     def get_total_site_investment(self) -> Decimal:
         """

@@ -60,7 +60,7 @@ class SubscriptionTransactionListAccountView(SubscriptionPlanView):
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context =  super().get_context_data(**kwargs)
-        context["transactions_summary"] = self.get_account_transactions()[:6]
+        context["transactions_summary"] = self.get_account_transactions()
         return context
 
 
