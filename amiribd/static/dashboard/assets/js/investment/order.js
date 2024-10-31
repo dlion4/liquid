@@ -383,7 +383,7 @@ class InvestmentOrder {
             $('#modalZoomInvestPayment').addClass('show').css("display", "block");
 
             $('form#mpesa-payment-from-paystack-conversion').submit(function (event) {
-                const fromButton = $("form#mpesa-payment-from-paystack-conversion").find("button[name=mpesa-payment-from-paystack-conversion]")
+                const fromButton = $(this).find("button[name=mpesa-payment-from-paystack-conversion]")
                 event.preventDefault()
                 const reference = $(this).find("input[name=mpesa-reference-code]").val()
                 const phone_number = $(this).find("input[name=phone_no]").val()
