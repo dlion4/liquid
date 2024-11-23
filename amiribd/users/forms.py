@@ -38,14 +38,33 @@ class UserAdminCreationForm(admin_forms.UserCreationForm):
         }
 
 
-
-
 class EmailLoginForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
-                "class": "form-control form-control-lg",
-                "placeholder": "Email Address",
+                "class": "form-control",
+                "placeholder": "Enter your email Address",
+            },
+        ),
+    )
+    password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control fakepassword pe-6",
+                "id": "psw-input",
+                "placeholder": "Enter your password",
+            },
+        ),
+    )
+    remember_me = forms.BooleanField(
+        required=False,
+        initial=True,
+        label=_("Remember me?"),
+        widget=forms.CheckboxInput(
+            attrs={
+                "class": "form-check-input border",
+                "id": "remember-me",
             },
         ),
     )
@@ -67,17 +86,55 @@ class AuthTokenCodeForm(forms.Form):
 class EmailSignupForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
-            attrs={"class": "form-control form-control-lg", "placeholder": "Username"},
+            attrs={"class": "form-control", "placeholder": "Enter your username"},
         ),
     )
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
-                "class": "form-control form-control-lg",
-                "placeholder": "Email Address",
+                "class": "form-control",
+                "placeholder": "Enter your email address",
             },
         ),
     )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control fakepassword pe-6",
+                "id": "psw-input",
+                "placeholder": "Enter your password",
+            },
+        ),
+    )
+    password2 = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control fakepassword pe-6",
+                "id": "psw-input-2",
+                "placeholder": "Confirm your password",
+            },
+        ),
+    )
+    terms_and_conditions = forms.BooleanField(
+        required=True,
+        initial=True,
+        widget=forms.CheckboxInput(
+            attrs={"class": "form-check-input border"},
+        ),
+        label=_("I agree to all Terms & conditions and the privacy policy."),
+    )
+
+    def clean(self):
+        value = super().clean()
+        if (
+            "password" in value
+            and "password2" in value
+            and value["password"] != value["password2"]
+        ):
+            msg = "Passwords do not match"
+            raise forms.ValidationError(msg)
+        return value
 
 
 class ProfileDetailForm(forms.ModelForm):
@@ -236,6 +293,7 @@ class ProfileVerificationDocumentForm(forms.ModelForm):
                 },
             ),
         }
+
 
 class AdminProfileForm(forms.ModelForm):
 

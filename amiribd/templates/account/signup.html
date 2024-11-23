@@ -1,66 +1,71 @@
-{% extends "allauth/layouts/base.html" %}
+{% extends "allauth/layouts/layout.html" %}
 
 {% load static %}
+<!-- -->
 {% load i18n %}
 
-{% block body %}
+{% block content %}
+  <!-- -->
+  <h1 class="mb-2 h3 fw-bold">Create Account</h1>
+  <p class="mb-0">
+    Already have an account?
+    <a href="{% url 'users:login' %}" class="text-primary-grad">
+      Sign in here
+    </a>
+  </p>
+  <form class="mt-2 mt-sm-4" id="registerForm">
+    {% csrf_token %}
+    <div role="alert" id="response"></div>
 
-
-  {% csrf_token %}
-  <div class="form-group">
-    <label class="form-label" for="email">Username</label>
-    <div class="form-control-wrap">
+    <div class="mb-3">
       {{form.username}}
-      {% if form.username.errors %}
-      <ul class="errorlist">
-        {% for error in form.username.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
     </div>
-  </div>
-
-  <div class="form-group">
-    <label class="form-label" for="email">Email Address</label>
-    <div class="form-control-wrap">
+    <div class="mb-3">
       {{form.email}}
-      {% if form.email.errors %}
-      <ul class="errorlist">
-        {% for error in form.email.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      <div style="margin-top:5px !important;">
-        <small id="email-lookup-result"></small>
+    </div>
+    <div class="mb-3 position-relative">
+      <div class="mb-3 position-relative">
+        {{form.password}}
+        <span class="position-absolute top-50 end-0 translate-middle-y p-0 me-2">
+          <i class="fakepasswordicon bi bi-eye-slash-fill cursor-pointer p-2"></i>
+        </span>
       </div>
     </div>
-  </div>
-
-  <div class="form-group">
-    <div class="custom-control custom-control-xs custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="checkbox" />
-      <label class="custom-control-label" for="checkbox">I agree to Liquid
-        <a href="#">Privacy Policy</a>
-        &amp;
-        <a href="#">
-          Terms.</a>
+    <div class="mb-3 position-relative">
+      <div class="mb-3 position-relative">
+        {{form.password2}}
+        <span class="position-absolute top-50 end-0 translate-middle-y p-0 me-2">
+          <i class="fakepasswordicon bi bi-eye-slash-fill cursor-pointer p-2"></i>
+        </span>
+      </div>
+    </div>
+    <div class="mb-3 text-start form-check">
+      {{form.terms_and_conditions}}
+      <label class="form-check-label small" for="{{form.terms_and_conditions.id_for_label}}">
+        {{form.terms_and_conditions.label}}
       </label>
     </div>
-  </div>
-
-
- 
-  <div class="form-group">
-
-    <div class="form-group">
-      <div class="form-text text-muted" id="email-lookup-result">
-      </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">
+        <span class="d-sm-inline" id="registerButton">Register Today</span>
+        <div class="d-none align-items-center" id="spinner">
+          <strong role="status">registering your account...</strong>
+          <div class="spinner-border ms-auto" aria-hidden="true"></div>
+        </div>
+      </button>
     </div>
-    <button type="submit" class="btn btn-lg btn-primary btn-block" id="submitBtn">Register</button>
-    <button type="button" class="btn btn-lg btn-light btn-block mt-2" id="loginBtn">Login</button>
-  </div>
-</form> -->
-
-{% endblock body %}
+    <div class="d-flex align-items-center my-3">
+      <hr class="w-100">
+      <p class="small px-4 mb-0">Or</p>
+      <hr class="w-100">
+    </div>
+    {% block socialAuth %}
+      {{ block.super }}
+    {% endblock socialAuth %}
+    <!-- Copyright -->
+    {% block Copyright %}
+      {{ block.super }}
+    {% endblock Copyright %}
+  </form>
+  <!-- Form END -->
+{% endblock content %}

@@ -103,7 +103,6 @@ urlpatterns = [
     path("silk/", include('silk.urls', namespace="silk")),
 
     # post ai generation
-
     path("ai/assistant/", include("assistant.urls", namespace="assistant")),
 
     # streams for the notifications and other realtime chats

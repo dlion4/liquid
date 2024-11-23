@@ -1,49 +1,85 @@
 
 
 $(document).ready(function () {
-    function validateToken(data) {
+    $("form#loginForm").submit(function(event){
+        event.preventDefault();
+        const form = $(this)
+        const fd = new FormData(this);
+        const btn = form.find("button[type=submit]");
+        btn.prop("disabled", true);
+        btn.find("span#loginButton").addClass("d-none").removeClass("d-sm-inline");
+        btn.find("div#spinner").addClass("d-flex").removeClass("d-none");
+        const response = form.find("div#response");
+        const url = "/users/login/"
+        response.addClass("alert")
+
         $.ajax({
-            url: '/api/auth/validate-access-token',
-            type: 'POST',
-            headers: {
-                'Authorization': `Bearer ${data.accessToken}`,
-                'Content-Type': 'application/json',
-            },
-            success: function (response) {
-                window.location.href = "/dashboard/"
+            type: "POST",
+            data: fd,
+            url: url,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                response.removeClass("alert-danger")
+                response.addClass("alert-success").text(data.detail || "Authentication successful. Redirecting ...");
+                setTimeout(function(){
+                    window.location.href = data.url;
+                }, 2000);
 
-                console.log("Token is valid:", response);
             },
-            error: function (xhr) {
-                console.error("Invalid token:", xhr.responseJSON);
+            error: function(xhr, status, errorThrown){
+                response.removeClass("alert-success")
+                response.addClass("alert-danger").text(xhr.responseJSON.detail|| "Error authenticating the request");
+            },
+            complete: function(){
+                btn.prop("disabled", false);
+                btn.find("span#loginButton").removeClass("d-none").addClass("d-sm-inline");
+                btn.find("div#spinner").removeClass("d-flex").addClass("d-none");
             }
-        });
-    }
+        })
 
-    window.addEventListener('message', (event) => {
-        if (event.origin !== "https://auth.earnkraft.com") {
-            return;
-        }
-        const data = event.data
-        validateToken(data);
     });
 
+    $("form#registerForm").submit(function(event){
+        event.preventDefault();
+        const form = $(this)
+        const fd = new FormData(this);
+        const btn = form.find("button[type=submit]");
+        btn.prop("disabled", true);
+        btn.find("span#registerButton").addClass("d-none").removeClass("d-sm-inline");
+        btn.find("div#spinner").addClass("d-flex").removeClass("d-none");
+        const response = form.find("div#response");
+        const url = "/users/signup/"
+        response.addClass("alert")
 
-    // Retrieve the authentication status from the hidden input
-    const isUserAuthenticated = $("input[type=hidden][name=user]").val();
+        $.ajax({
+            type: "POST",
+            data: fd,
+            url: url,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                response.removeClass("alert-danger")
+                response.addClass("alert-success").text(data.detail || "Registration successful. Redirecting ...");
+                setTimeout(function(){
+                    window.location.href = data.url;
+                }, 2000);
+            },
+            error: function(xhr, status, errorThrown){
+                const {url, detail} = xhr.responseJSON;
+                if(url != undefined || null){
+                    window.location.href = url;
+                }
+                response.removeClass("alert-danger").text(detail)
+            },
+            complete: function(){
+                btn.prop("disabled", false);
+                btn.find("span#registerButton").removeClass("d-none").addClass("d-sm-inline");
+                btn.find("div#spinner").removeClass("d-flex").addClass("d-none");
+            }
+        });
 
-    // Retrieve the authentication URL from the hidden input
-    const authenticationUrl = $("input[type=hidden][name=earnkraft_auth_url]").val();
-
-    // Check if the user is not authenticated
-    if (isUserAuthenticated ==="AnonymousUser") {
-        // Redirect to the authentication URL
-        window.location.href = authenticationUrl;
-    }
-
-    console.log("User authenticated:", isUserAuthenticated);
-    console.log("Authentication URL:", authenticationUrl);
-
+    });
 
 
 })

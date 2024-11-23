@@ -1,1 +1,67 @@
-{% extends "layout.html" %}
+{% load static i18n compress %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+
+  <head>
+
+    <title>Earnkraft Authentication</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="{% static 'css/css2' %}?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/auth.css' %}">
+
+  </head>
+
+  <body>
+
+    <main>
+      <section class="bg-secondary position-relative vh-100 overflow-y-hidden">
+        <div class="container h-100 d-flex flex-column justify-content-center">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5 position-relative">
+              <div class="vert-move position-absolute top-0 start-0 ms-n5 mt-n5 z-index-9 d-none d-sm-block">
+                <img src="{% static 'images/elements/ufo.png' %}" class="h-100px rotate-343" alt="ufo image">
+              </div>
+              <div class="position-absolute bottom-0 end-0 mb-n8 me-n5 d-none d-sm-block">
+                <img src="{% static 'images/elements/grad-shape/blur-decoration.svg' %}" class="blur-8 opacity-2" alt="Grad shape">
+              </div>
+
+              <div class="card card-body bg-body bg-opacity-25 bg-blur border border-white border-opacity-10 position-relative rounded-4 shadow-primary text-center p-4 p-sm-5">
+                {% block content %}
+                  {% block socialAuth %}
+                    <div class="d-flex justify-content-center gap-3">
+                      <a title="facebook-auth" class="btn btn-icon bg-facebook" href="#">
+                        <i class="bi bi-facebook lh-base"></i>
+                      </a>
+                      <a title="google-auth" class="btn btn-icon border bg-white" href="#">
+                        <i class="bi bi-google lh-base text-google-icon"></i>
+                      </a>
+                    </div>
+                  {% endblock socialAuth %}
+
+                  {% block Copyright %}
+                    <div class="text-body small mt-3">Copyrights ©2024 Earnkraft.</div>
+                  {% endblock Copyright %}
+                {% endblock content %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="back-top"></div>
+    <script src="{% static 'js/bootstrap/5.2.3/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/functions.js' %}"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	{% block scripts %}
+	<script src="{% static 'js/auth.js' %}"></script>
+	{% endblock scripts %}
+		
+  </body>
+
+</html>
