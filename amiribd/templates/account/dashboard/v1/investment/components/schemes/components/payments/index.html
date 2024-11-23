@@ -17,19 +17,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#">
+                        <a class="nav-link" data-bs-toggle="tab" href="#visa-payment">
                             <em class="icon ni ni-link"></em>
                             <span>Visa</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#">
+                        <a class="nav-link" data-bs-toggle="tab" href="#payoneer-payment">
                             <em class="icon ni ni-link"></em>
                             <span>Payoneer</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#">
+                        <a class="nav-link" data-bs-toggle="tab" href="#paypal-payment">
                             <em class="icon ni ni-link"></em>
                             <span>Paypal</span>
                         </a>
@@ -98,6 +98,106 @@
                     </div> -->
                     
                 </div>
+
+                 <!-- other option tabs -->
+                 <div class="tab-content">
+                    <!-- Visa payment form -->
+                    <div class="tab-pane" id="visa-payment">
+                        <!-- Disabled payment message -->
+                        <div class="alert alert-warning" role="alert">
+                            The Visa payment method is currently disabled for local transactions.
+                        </div>
+                
+                        <form action="#" class="form-validate is-alter" novalidate="novalidate" id="addVisaPaymentForm">
+                            <div class="form-group">
+                                <label class="form-label" for="card-number">Card Number</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="Card Number (e.g. 4111 1111 1111 1111)" class="form-control" id="card-number" name="card-number" />
+                                </div>
+                                <span id="card-error" class="errorlist"></span>
+                            </div>
+                
+                            <div class="form-group">
+                                <label class="form-label" for="expiry-date">Expiry Date</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="MM/YY" class="form-control" id="expiry-date" name="expiry-date" />
+                                </div>
+                                <span id="expiry-error" class="errorlist"></span>
+                            </div>
+                
+                            <div class="form-group">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="CVV (e.g. 123)" class="form-control" id="cvv" name="cvv" />
+                                </div>
+                                <span id="cvv-error" class="errorlist"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--paypaall-->
+                <!--paypaall-->
+
+                <div class="tab-content">
+                    <!-- PayPal payment form -->
+                    <div class="tab-pane" id="paypal-payment">
+                        <!-- Disabled payment message -->
+                        <div class="alert alert-warning" role="alert">
+                            The PayPal payment method is currently disabled for local transactions.
+                        </div>
+                
+                        <form action="#" class="form-validate is-alter" novalidate="novalidate" id="addPayPalPaymentForm">
+                            <div class="form-group">
+                                <label class="form-label" for="paypal-email">PayPal Email</label>
+                                <div class="form-control-wrap">
+                                    <input type="email" placeholder="Enter your PayPal email" class="form-control" id="paypal-email" name="paypal-email" />
+                                </div>
+                                <span id="paypal-email-error" class="errorlist"></span>
+                            </div>
+                
+                            <div class="form-group">
+                                <label class="form-label" for="transaction-id">Transaction ID</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="Enter PayPal Transaction ID" class="form-control" id="transaction-id" name="transaction-id" />
+                                </div>
+                                <span id="transaction-id-error" class="errorlist"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!--paypaall-->
+                <!--payoneer-->
+                <div class="tab-content">
+                    <!-- Payoneer payment form -->
+                    <div class="tab-pane" id="payoneer-payment">
+                        <!-- Disabled payment message -->
+                        <div class="alert alert-warning" role="alert">
+                            The Payoneer payment method is currently disabled for local transactions.
+                        </div>
+                
+                        <form action="#" class="form-validate is-alter" novalidate="novalidate" id="addPayoneerPaymentForm">
+                            <div class="form-group">
+                                <label class="form-label" for="payoneer-email">Payoneer Email</label>
+                                <div class="form-control-wrap">
+                                    <input type="email" placeholder="Enter your Payoneer email" class="form-control" id="payoneer-email" name="payoneer-email" />
+                                </div>
+                                <span id="payoneer-email-error" class="errorlist"></span>
+                            </div>
+                
+                            <div class="form-group">
+                                <label class="form-label" for="payoneer-id">Payment Reference ID</label>
+                                <div class="form-control-wrap">
+                                    <input type="text" placeholder="Enter Payoneer Payment Reference ID" class="form-control" id="payoneer-id" name="payoneer-id" />
+                                </div>
+                                <span id="payoneer-id-error" class="errorlist"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!--payoneer-->
             </div>
             <div class="modal-footer bg-light"></div>
         </div>

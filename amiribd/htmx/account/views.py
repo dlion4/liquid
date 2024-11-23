@@ -174,7 +174,7 @@ class AccountEventWithdrawalView(View):
             instance = form.save(commit=False)
             amount = form.cleaned_data["amount"]
             account = self.get_account()
-            if account.withdrawable_investment > Decimal(amount * 1.015):
+            if account.withdrawable_investment > Decimal(Decimal(amount) * Decimal("1.015")):
                 return self._validate_account_balance_and_create_transaction(
                     amount, account, instance, profile,
                 )
@@ -194,10 +194,10 @@ class AccountEventWithdrawalView(View):
             profile=profile,
             account=account,
             type="WITHDRAWAL",
-            amount=Decimal(amount * 0.985),
+            amount=Decimal(Decimal(amount) * Decimal("0.985")),
             discount=0,
             paid=0,
-            source="Interest withdrawal",
+            source="Profits withdrawal",
         ).save()
         return JsonResponse({"success": True})
 

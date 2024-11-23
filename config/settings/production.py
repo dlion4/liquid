@@ -17,7 +17,7 @@ from .base import os
 
 # Debug mode on
 # ------------------------------------------------------------------------------
-DEBUG = True
+DEBUG = False
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key

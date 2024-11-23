@@ -1,5 +1,6 @@
 import logging
 from typing import Any
+import resend
 import requests
 from celery import shared_task
 from django.contrib.auth.models import User as UserObject
@@ -9,7 +10,7 @@ from django.utils.html import strip_tags
 from django.conf import settings
 from config.settings.base import env
 
-MAIL_GUN_API_KEY = env.str("MAIL_GUN_API_KEY", "")
+RESEND_API_KEY = env.str("RESEND_EMAIL_SERVICE_API_KEY", "")
 
 
 @shared_task()
@@ -61,14 +62,14 @@ def send_background_email(
         # message.send()  # noqa: ERA001
 
         response = send_email_with_attachment(
-            MAIL_GUN_API_KEY,
-            "Earnkraft <no-reply@earnkraft.com>",
+            
+            "Earnkraft <Admin@earnkraft.com>",
             to,
             subject,
             html_message,
         )
-        response.raise_for_status()
-        if response.status_code == EXPECTED_MAILGUN_STATUS_CODE:
+        
+        if response.get("id", None): 
             logger.info(f"Email sent successfully to {to}")  # noqa: G004
         else:
             logger.error(f"Failed to send email to {to}. Error: {response.text}")  # noqa: G004
@@ -77,20 +78,20 @@ def send_background_email(
 
 
 def send_email_with_attachment(
-    mailgun_api_key:str,
-    default_from_email:str,
-    to:list[str],
-    subject:str, html_content: str):
-    response = requests.post(
-        "https://api.mailgun.net/v3/earnkraft.com/messages",
-        auth=("api", mailgun_api_key),
-        data={
-            "from": default_from_email,
-            "to": to,
-            "subject": subject,
-            "html": html_content,
-        },
-        timeout=50,
-    )
-    response.raise_for_status()
+    
+    default_from_email:str="",
+    to:list[str]=[""],
+    subject:str="", html_content: str=""):
+
+    params: resend.Emails.SendParams = {
+        "from": default_from_email ,
+        "to": to,
+        "subject": subject,
+        "html": html_content,
+    }
+
+    resend.api_key = RESEND_API_KEY
+    response=resend.Emails.send(params)
     return response
+    
+    
