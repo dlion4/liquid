@@ -110,8 +110,7 @@ class LoginView(AuthenticationGuard, BuildMagicLink, TemplateView):
 
 
 class SignupView(AuthenticationGuard, BuildMagicLink, FormView):
-    """
-    """
+    """ """
 
     form_class = EmailSignupForm
     template_name = "account/signup.html"
@@ -180,9 +179,14 @@ class SignupView(AuthenticationGuard, BuildMagicLink, FormView):
         )
 
     def _create_user_in_background(
-        self, email: str, username: str, password: str,
+        self,
+        email: str,
+        username: str,
+        password: str,
     ) -> UserObject | None:
-        user = User.objects.create_user(email=email, username=username, password=password)
+        user = User.objects.create_user(
+            email=email, username=username, password=password
+        )
         profile: Profile = Profile.objects.get(user=user)
         profile.first_name = username
         profile.save()
@@ -240,12 +244,16 @@ class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
         form = self.form_class(request.POST)
         if form.is_valid():
             self.form_valid(form, *args, **kwargs)
-        context = {"form": form}
-        return render(request, self.template_name, context)
+        return JsonResponse(
+            {"detail": "Invalid form data. Please provide a valid"},
+            safe=False,
+            status=400,
+        )
 
     def form_valid(self, form: EmailSignupForm, *args: Any, **kwargs: Any):
         email = form.cleaned_data["email"]
         username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
         try:
             user = User.objects.get(email=email)
             return JsonResponse(
@@ -279,13 +287,20 @@ class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
                         ),
                     },
                 )
-            user = self._create_user_if_unavailable(email, username, *args, **kwargs)
+            user = self._create_user_if_unavailable(
+                email,
+                username,
+                password,
+                *args,
+                **kwargs,
+            )
             return JsonResponse({"url": str(reverse(self.success_url))})
 
     def _create_user_if_unavailable(
         self,
         email: str,
         username: str,
+        password: str,
         *args: Any,
         **kwargs: Any,
     ) -> UserObject:
@@ -294,7 +309,11 @@ class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
         Args:email (str): The email address of the user.username (str): The username of the user.
         Returns:UserObject: The newly created user object.
         """
-        user: UserObject = User.objects.create_user(email=email, username=username)
+        user: UserObject = User.objects.create_user(
+            email=email,
+            username=username,
+            password=password,
+        )
         user.save()
         profile: ProfileObject = Profile.objects.get(user=user)
         profile.referred_by = self.get_referrer(*args, **kwargs)

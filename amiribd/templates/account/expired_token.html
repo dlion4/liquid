@@ -1,13 +1,15 @@
-{% extends "allauth/layouts/base.html" %}
+{% extends "allauth/layouts/layout.html" %}
 
 {% load static %}
 {% load i18n %}
 
-{% block inner %}
-<div class="form-label-group">
-    <label class="form-label">This token is already expired or is malformed.</label>
+{% block content %}
+  <h1 class="mb-2 h3 fw-bold">Expired token</h1>
+  <p class="mb-0">The token is expired or malformed. Kindly request the person who sent you the link to resend you a new link</p>
+  <hr />
+  <div class="mb-4 text-center">
+  <a href="{% url 'users:signup' %}" class="text-primary-hover">
+    <i class="bi bi-arrow-left me-1"></i>sign up without link</a>
 </div>
-<div class="form-label-group">
-    <p>Kindly request the user who sent you the signup link to resent you a new signup link</p>
-</div>
-{% endblock inner %}
+
+{% endblock content %}
