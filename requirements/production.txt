@@ -65,3 +65,5 @@ django-ninja
 pyjwt
 pydantic-settings
 aioredis
+uvicorn
+
