@@ -1,3 +1,4 @@
+import contextlib
 from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,7 +13,6 @@ from amiribd.invest.models import Plan
 from amiribd.invest.models import PlanType
 from amiribd.invest.views import InvestmentSetupView
 from amiribd.transactions.models import Transaction
-import contextlib
 
 # Create your views here.
 

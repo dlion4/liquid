@@ -1,12 +1,14 @@
+import contextlib
 import json
 from decimal import Decimal  # Import Decimal from the decimal module
 from typing import Any
-from django.utils.html import strip_tags
+
 from django.contrib import messages
 from django.contrib.auth import get_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.cache import cache
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.db import models
 from django.db import transaction
 from django.db.models import Sum
@@ -19,6 +21,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils.html import strip_tags
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -210,16 +213,22 @@ class HandlePaymentCreateTransactionView(
         country = data.get("country", "Kenya")
         pool = Pool.objects.get(profile=profile, pk=kwargs.get("pool_id"))
         account = Account.objects.get(
-            pool=pool, pool__profile=profile, pk=kwargs.get("account_id")
+            pool=pool,
+            pool__profile=profile,
+            pk=kwargs.get("account_id"),
         )
         plan = Plan.objects.get(
-            account=account, account__pool__profile=profile, pk=kwargs.get("plan_id")
+            account=account,
+            account__pool__profile=profile,
+            pk=kwargs.get("plan_id"),
         )
         total_investment = data.get(
-            "amount", sum(instance.type.price for instance in [pool, account, plan])
+            "amount",
+            sum(instance.type.price for instance in [pool, account, plan]),
         )
         discount_price = data.get(
-            "discount_price", Decimal(Decimal("0.0") * Decimal(total_investment))
+            "discount_price",
+            Decimal(Decimal("0.0") * Decimal(total_investment)),
         )
         # discountPrice = Decimal(total_investment)  # noqa: ERA001
         mpesa_code = data.get("mpesa_transaction_code")
@@ -238,7 +247,6 @@ class HandlePaymentCreateTransactionView(
         plan.mpesa_transaction_code = mpesa_code
         plan.payment_phone_number = phone_number
         plan.save()
-        # account.balance = Decimal(Decimal(account.balance) + Decimal(transaction.paid))
         account.save()
         # look for the referrer
         profile = pool.profile
@@ -255,49 +263,56 @@ class HandlePaymentCreateTransactionView(
             profile.is_waiting_plan_verification = True
         profile.save()
 
-        print(data.get("source"))
-
-        if data.get("source", str(transaction.source)) == "Account Registration":
-            self.__get_referrer_and_update_account(
-                profile, mpesa_code, phone_number, currency
-            )
-        else:
-            transaction.source = data.get("source", "Account Top Up")
-        transaction.save()
-
+        if (
+            profile.referred_by
+            and str(transaction.source) == "Account Registration"
+        ):
+            with contextlib.suppress(Exception):
+                self.__get_referrer_and_update_account(
+                    profile,
+                    mpesa_code,
+                    phone_number,
+                    currency,
+                )
         return JsonResponse(
             {"success": True, "url": reverse_lazy("subscriptions:list")},
         )
 
     def __get_referrer_and_update_account(
-        self, profile, mpesa_code, phone_number, currency="KES", country="Kenya"
+        self,
+        profile,
+        mpesa_code,
+        phone_number,
+        currency="KES",
+        country="Kenya",
     ):
-        if referrer := profile.referred_by:
-            # update the referrer account
-            referrer_profile = referrer.profile_user
-            referrer_profile_account = Account.objects.get(
-                pool__profile=referrer_profile,
-            )
-            transaction = Transaction.objects.create(
-                profile=Profile.objects.get(referred_by=referrer),
-            )
-            interest_earned = Decimal(Decimal("0.4") * Decimal(transaction.paid))
-
-            transaction = Transaction.objects.create(
-                profile=referrer_profile,
-                account=referrer_profile_account,
-                type="DEPOSIT",
-                amount=interest_earned,
-                discount=Decimal("0.00"),
-                source="Referral Earnings",
-                mpesa_transaction_code=mpesa_code,
-                payment_phone_number=phone_number,
-                currency=currency,
-                country=country,
-            )
-            transaction.save()
-            referrer_profile_account.balance += transaction.paid
-            referrer_profile_account.save()
+        inviter = profile.referred_by
+        inviter_profile = inviter.profile_user
+        inviter_profile_account = Account.objects.get(pool__profile=inviter_profile)
+        invitee_transaction = Transaction.objects.get(profile=profile)
+        interest_earned = Decimal(
+            Decimal("0.4") * Decimal(invitee_transaction.paid),
+        )
+        transaction = Transaction.objects.create(
+            profile=inviter_profile,
+            account=inviter_profile_account,
+            type="DEPOSIT",
+            amount=interest_earned,
+            discount=Decimal("0.00"),
+            source="Referral Earnings",
+            mpesa_transaction_code=mpesa_code,
+            payment_phone_number=phone_number,
+            currency=currency,
+            country=country,
+        )
+        transaction.save()
+        inviter.save()
+        inviter_profile.save()
+        return JsonResponse(
+            {"success": True, "url": reverse_lazy("subscriptions:list")},
+            safe=False,
+            status=201,
+        )
 
 
 class VerifyTransactionPaymentView(LoginRequiredMixin, View):
@@ -307,10 +322,12 @@ class VerifyTransactionPaymentView(LoginRequiredMixin, View):
 
     def post(self, request: HttpRequest, *args, **kwargs):
         account = Account.objects.get(
-            pool__profile=request.user.profile_user, pk=kwargs.get("account_id")
+            pool__profile=request.user.profile_user,
+            pk=kwargs.get("account_id"),
         )
         transaction = Transaction.objects.get(
-            account=account, mpesa_transaction_code=kwargs.get("reference_code")
+            account=account,
+            mpesa_transaction_code=kwargs.get("reference_code"),
         )
         account.balance += transaction.amount
         account.save()
@@ -448,7 +465,7 @@ class HandleAddPlanPaymentView(HandlePaymentView):
         transactioncode,
         currency="KES",
         country="Kenya",
-        source = "Account Registration",
+        source="Account Registration",
     ) -> None:
         Transaction.objects.create(
             profile=profile,
@@ -792,7 +809,9 @@ class VipView(DashboardGuard, InvestmentViewMixin):
         context["platform_type"] = PlantformType.objects.all()
         return context
 
+
 modified_vip_view = VipView.as_view()
+
 
 class CheckUserSubscriptionStatusView(LoginRequiredMixin, View):
     def get(self, request: HttpRequest, *args, **kwargs):
@@ -829,21 +848,26 @@ class InvestMentSavingView(FormView):
 
         form = self.form_class(data=form_data)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.profile = profile
-            instance.save()
-            form.save()
-            pool = Pool.objects.get(profile=profile)
-            account = Account.objects.get(pool=pool)
-            data_to_send = {
-                "phone_number": data.get("phone_number"),
-                "amount": form_data.get("principal_amount"),
-                "profileUserId": int(profile.pk),
-                "reference": data.get("reference"),
-                "planId": int(profile.plans.latest().pk),
-                "poolId":int(pool.pk),
-                "accountId":int(account.pk),
-            }
-            return JsonResponse(json.dumps(data_to_send), status=200, safe=False)
+            return self._extracted_from_post_21(form, profile, data, form_data)
         return JsonResponse(
-            {"error": str(form.errors.as_json())}, status=400, safe=False)
+            {"error": str(form.errors.as_json())}, status=400, safe=False
+        )
+
+    # TODO Rename this here and in `post`
+    def _extracted_from_post_21(self, form, profile, data, form_data):
+        instance = form.save(commit=False)
+        instance.profile = profile
+        instance.save()
+        form.save()
+        pool = Pool.objects.get(profile=profile)
+        account = Account.objects.get(pool=pool)
+        data_to_send = {
+            "phone_number": data.get("phone_number"),
+            "amount": form_data.get("principal_amount"),
+            "profileUserId": int(profile.pk),
+            "reference": data.get("reference"),
+            "planId": int(profile.plans.latest().pk),
+            "poolId": int(pool.pk),
+            "accountId": int(account.pk),
+        }
+        return JsonResponse(json.dumps(data_to_send), status=200, safe=False)

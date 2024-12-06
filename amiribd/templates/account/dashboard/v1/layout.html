@@ -37,7 +37,43 @@
 
 <body class="nk-body npc-crypto {% block cssClass %}bg-white{% endblock cssClass %} has-sidebar">
   <!-- <input type="hidden" name="active_paystack_key" value="{{paystack_live_key}}"> -->
+
+<style>
+  /* Overlay to block user interactions */
+  .premium_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+  }
+
+  /* Notification box */
+  .premium_overlay_notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10000;
+    text-align: center;
+    display: none;
+  }
+</style>
+
   {% block body %}
+
+<div class="premium_overlay" id="premium_overlay"></div>
+<div class="premium_overlay_notification" id="premium_overlay_notification">
+  <p>You need a premium account to access this feature.</p>
+  <button class="btn btn-primary" id="close_premium_overlay_notification">Okay</button>
+</div>
 
   <div class="nk-app-root">
     <div class="nk-main">
@@ -259,7 +295,6 @@
               ?.country || ""
         }
 
-        // update the currecny display on the screeen
         countryCurrencyCode.forEach(currency => {
           currency.innerHTML = currencyCode
         })
@@ -296,45 +331,36 @@
 
         countryCurrencyRate.value = countryRate;
 
-        if (document.querySelectorAll('.amount')) {
-          document
-            .querySelectorAll('.amount')
-            .forEach(amountElement => {
-              console.log(amountElement)
-              // get the inet text data of the prices
-              // const amountElementContext = amountElement.childNodes[0].textContent.trim();
-              let amountElementContext = 10;
-              console.log(amountElementContext)
-              // create a span element to encapsulate this information
-              const amountSpanElement = document.createElement('span');
-              // asign a class name to this span element
-              amountSpanElement.className = 'amountvalue';
-              // inser the amount into the span element
-              amountSpanElement.textContent = amountElementContext;
-              // get the inner content of the amount wrapper
-              amountElementInnerHTML = amountElement.querySelector('span.currency');
+        if ($('.amount').length) {
+          $('.amount').each(function () {
+            const $amountElement = $(this);
+            console.log($amountElement);
 
-              amountElement.innerHTML = ''; //
+            let amountElementContext = 10;
+            console.log(amountElementContext);
 
-              amountSpanElement.textContent = formatNumberWithCommas(parseFloat(parseFloat(amountElementContext) * parseFloat(countryCurrencyRate?.value || 1)))
-              // parseFloat(document.querySelector(".currencyRate").value)).toFixed(2))
+            const $amountSpanElement = $('<span></span>')
+              .addClass('amountvalue')
+              .text(
+                formatNumberWithCommas(
+                  parseFloat(amountElementContext) * parseFloat(countryCurrencyRate?.value || 1)
+                )
+              );
 
-              // console.log(spanElement)
+            const $amountElementInnerHTML = $amountElement.find('span.currency').html();
 
-              if (amountSpanElement && amountElementInnerHTML) {
-                // append the span element to the amount wrapper
-                amountElement.insertAdjacentHTML('afterBegin', amountSpanElement.innerHTML);
-                // margin styling
+            // Clear the amount wrapper
+            $amountElement.empty();
+            if ($amountSpanElement.length && $amountElementInnerHTML) {
+              $amountElement.prepend($amountSpanElement);
+              const $marginSpan = $('<span></span>').css('margin', '0px 10px!important');
+              $amountElement.append($marginSpan);
+              $amountElement.append(`<span style="margin-left:5px !important;"></span>`);
+              $amountElement.append($amountElementInnerHTML);
+            }
+          });
+        }
 
-                const spanHtml = document.createElement('span');
-                spanHtml.style.margin = "0px 10px!important";
-
-                amountElement.insertAdjacentHTML('beforeend', "<span style='margin-left:5px !important;'></span>");
-                // styling the link
-                amountElement.insertAdjacentHTML("beforeEnd", amountElementInnerHTML.innerHTML)
-              }
-            })
-        };
 
         function formatNumberWithCommas(number) {
           return new Intl
@@ -358,7 +384,7 @@
 
   <div class="pmo-lv pmo-dark">
     <a class="pmo-close  pmo-lv-close" title="close" role="button"><em class="ni ni-cross"></em></a>
-    <a class="pmo-wrap" target="_blank" href="{% url 'dashboard:invest:invest' %}">
+    <a class="pmo-wrap" href="{% url 'dashboard:invest:invest' %}">
       <div class="pmo-text text-white">
         <span class="pmo-pmo-text">
           Looking for functional script for Investment Platform? Check out
@@ -378,6 +404,8 @@
       let subscriptionStatus = false;
       let paidPlanWaitingVerification = Boolean("{{request.user.profile_user.is_waiting_plan_verification}}")
 
+      console.log(paidPlanWaitingVerification)
+
       function checkUserPlan() {
         $.ajax({
           type: "GET",
@@ -393,7 +421,7 @@
             } else {
               $(".pmo-lv").fadeIn(3000, function () {
                 $(this).addClass("active");
-                $(".pmo-pmo-text").text(`Hello, ${response.first_name.charAt(0).toUpperCase() + response.first_name.slice(1).toLowerCase()}! You have no plan yet. Activate Now!`);
+                $(".pmo-pmo-text").text(`Hello, ${response.first_name.charAt(0).toUpperCase() + response.first_name.slice(1).toLowerCase()}! You have no plan yet. Purchase Now!`);
               });
               subscriptionStatus = true;
             }
@@ -406,23 +434,71 @@
 
       checkUserPlan();
       const planCheckInterval = setInterval(checkUserPlan, 300000);
+      console.log("again: ", paidPlanWaitingVerification)
 
       $(".plan-activation-status").each(function () {
-        if (false) {
+        if (!paidPlanWaitingVerification) {
           $(this).text("You have a plan but it has not yet been verified.")
         }
         else {
           $(this).html(`
           <small style="text-align:center;">You do not have a plan yet.
           <a
-          style='font-size: 20px; padding: 10px 15px; border: 2px solid #ccc; text-align: center; border-radius: 40px;transform:translateY(-20px);' 
-          href='{% url 'dashboard:invest:invest' %}'>Activate</a>
+          style='font-size: 20px; padding: 10px 15px; border: 2px solid #ccc; text-align: center; border-radius: 40px;transform:translateY(-2rem);' 
+          href='{% url 'dashboard:invest:invest' %}'>Purchase</a>
           </small>`)
         }
       })
 
     })
   </script>
+
+
+
+  {% block baseLayer %}
+  <script>
+    $(document).ready(function () {
+      const url = "/dashboard/invest/verify-profile-plans-status/"
+      $.get(url).done(function (data) {
+        console.log(data);
+        if (data.has_unpaid_plan) {
+          $("h1.plan-activation-status").each(function(){
+            $(this).html(
+              `<small style="text-align:center;">Your plan is being verified. Please wait.</small>`
+            )
+          })
+          console.log(window.location.href)
+          if(window.location.href.includes("/dashboard/invest/registration/")){
+            window.location.href = "/subscriptions/plans/";
+          }
+        } else {}
+        const restrictedEndpoints = [
+          "/dashboard/blogging/content/",
+          "/dashboard/invest/jobs/",
+          "/dashboard/invest/loans/",
+          "/dashboard/invest/jobs/shelves/board/"
+        ];
+        function restrictAccess() {
+          $('#premium_overlay').show();
+          $('#premium_overlay_notification').show();
+          $('body').css('pointer-events', 'none');
+          $('#premium_overlay_notification').css('pointer-events', 'auto');
+
+          $('#close_premium_overlay_notification').on('click', function () {
+            window.location.href = "/dashboard/"
+            $('body').css('pointer-events', 'auto');
+          });
+        }
+        if ((restrictedEndpoints.some(endpoint => window.location.pathname.includes(endpoint))) && (
+          data.profile_level == "BASIC"
+        )) {
+          restrictAccess()
+        }
+      })
+    });
+  </script>
+  {% endblock baseLayer %}
+
 </body>
 
 </html>

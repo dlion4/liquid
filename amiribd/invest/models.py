@@ -343,6 +343,7 @@ class AccountWithdrawalAction(models.Model):
             ("Cancelled", "Cancelled"),
         ),
         default="Initiated",
+        help_text="Mark this as Resolved is success payment else Cancelled",
     )
     withdrawal_date = models.DateField(blank=True, null=True)
     withdrawal_time = models.TimeField(blank=True, null=True)
@@ -365,7 +366,10 @@ class AccountWithdrawalAction(models.Model):
         blank=True,
         validators=[phone_regex],
     )
-    paid = models.BooleanField(default=False)
+    paid = models.BooleanField(
+        default=False,
+        help_text="Make as true if successful else leave it default False",
+    )
 
     def __str__(self):
         return f"{self.account} - {self.action} - {self.status}"

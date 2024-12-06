@@ -26,7 +26,7 @@ from amiribd.invest.wallet.forms import TransferMoneyForm
 from amiribd.transactions.models import Transaction
 from amiribd.users.models import Profile
 
-ALLOWABLE_WITHDRAWAL_AMOUNT=50
+ALLOWABLE_WITHDRAWAL_AMOUNT = 50
 
 
 class AvailableAmountViewMixin(View):
@@ -35,10 +35,8 @@ class AvailableAmountViewMixin(View):
     def __get_user(self):
         return get_user(self.request)
 
-
     def get_profile(self, *args, **kwargs):
         return get_object_or_404(self.profile, pk=kwargs.get("profile_id"))
-
 
     def get_account(self):
         profile = Profile.objects.get(user=self.__get_user())
@@ -55,27 +53,25 @@ class AvailableAmount(AvailableAmountViewMixin):
             "amount_to_transfer": request.GET.get("amount_to_transfer", 0),
         }
 
-        # Check if 'amount' is provided and not None or empty
-        if switch["amount"]:
-            return switch["amount"]
-
-        # Fallback to 'amount_to_transfer' if 'amount' is not provided
-        return switch["amount_to_transfer"]
+        return switch["amount"] or switch["amount_to_transfer"]
 
     def get(self, request, *args, **kwargs):
         account = self.get_account()
-        if Decimal(account.withdrawable_investment) < Decimal(
-            self.__user_withdrawable_input(),
-        ):
+        amount_to_withdraw = round(
+            (Decimal(self.__user_withdrawable_input()) * Decimal("0.85")), 2,
+        )
+        if Decimal(account.withdrawable_investment) < Decimal(amount_to_withdraw):
             return HttpResponse(
                 f"""
                 <span class='errorlist'>
-                Insufficient funds! Available amount: {account.withdrawable_investment}
+                Insufficient funds! Account balance: {account.withdrawable_investment}
                 </span>""",
             )
         return HttpResponse(
             f"""<span class='text-success'>
             Amount available for withdrawal: {account.withdrawable_investment}
+            before taxes,
+            Amount you'll receive after tax: {amount_to_withdraw}
             </span>""",
         )
 
@@ -88,26 +84,23 @@ class AvailableAmountForTransferView(AvailableAmountViewMixin):
         account = Account.objects.filter(
             pool__profile=self.get_profile(*args, **kwargs),
         )
-        if account.exists():
-            return account.first()
-        return None
+        return account.first() if account.exists() else None
 
     def get(self, request, *args, **kwargs):
-        account = self.get_account(*args, **kwargs)
-        context = {}
-        if account:
-            if account.withdrawable_investment > ALLOWABLE_WITHDRAWAL_AMOUNT:
-                context = {"success": True}
-            else:
-                context = {"success": False}
+        if account := self.get_account(*args, **kwargs):
+            context = (
+                {"success": True}
+                if account.withdrawable_investment > ALLOWABLE_WITHDRAWAL_AMOUNT
+                else {"success": False}
+            )
+        else:
+            context = {}
         return JsonResponse(context)
 
     def post(self, request, *args, **kwargs):
         profile = self.get_profile(*args, **kwargs)
-        destination_account = int(
-            request.POST.get("destination_account"))
-        amount_to_be_transferred = Decimal(
-            request.POST.get("amount_to_transfer"))
+        destination_account = int(request.POST.get("destination_account"))
+        amount_to_be_transferred = Decimal(request.POST.get("amount_to_transfer"))
         # get the transferer account
         sender_account = self.get_account(*args, **kwargs)
         receiver_account = get_object_or_404(Account, pk=destination_account)
@@ -146,9 +139,10 @@ class AvailableAmountForTransferView(AvailableAmountViewMixin):
 
 
 def input_check_money_to_transfer(request, profile_id):
-    amount =  Decimal(request.GET.get("amount_to_transfer"))
+    amount = Decimal(request.GET.get("amount_to_transfer"))
     account = get_object_or_404(
-        Account, pool__profile__pk=profile_id, pool__profile=request.user.profile_user)
+        Account, pool__profile__pk=profile_id, pool__profile=request.user.profile_user,
+    )
     if Decimal(account.withdrawable_investment) > amount:
         return JsonResponse({"success": True})
     return JsonResponse({"success": False})
@@ -171,30 +165,30 @@ class AccountEventWithdrawalView(View):
         form = AccountEventWithdrawalForm(request.POST)
         profile = self.get_profile()
         if form.is_valid():
-            instance = form.save(commit=False)
-            amount = form.cleaned_data["amount"]
-            account = self.get_account()
-            if account.withdrawable_investment > Decimal(Decimal(amount) * Decimal("1.015")):
-                return self._validate_account_balance_and_create_transaction(
-                    amount, account, instance, profile,
-                )
-            return JsonResponse(
-                {"success": False, "message": "Insufficient funds"})
+            return self._handle_withdrawal_logic_here(form, profile)
         return JsonResponse({"success": False, "message": form.errors}, status=400)
 
+    def _handle_withdrawal_logic_here(self, form, profile):
+        instance = form.save(commit=False)
+        amount = Decimal(form.cleaned_data.get("amount", 0))
+        account = self.get_account()
+        if account.withdrawable_investment > Decimal(amount):
+            return self._validate_account_balance_and_create_transaction(
+                amount, account, instance, profile)
+        return JsonResponse({"success": False, "message": "Insufficient funds"})
+
     def _validate_account_balance_and_create_transaction(
-        self, amount, account, instance, profile,
-    ):
+        self, amount, account:Account, instance, profile):
         account.balance -= amount
         account.save()
         instance.account = account
         instance.save()
-        # create a transaction record for reference purposes
+        amount_paid = amount * Decimal("0.85")
         Transaction.objects.create(
             profile=profile,
             account=account,
             type="WITHDRAWAL",
-            amount=Decimal(Decimal(amount) * Decimal("0.985")),
+            amount=amount_paid,
             discount=0,
             paid=0,
             source="Profits withdrawal",
@@ -264,7 +258,8 @@ class FilterPlanTypePriceView(HtmxDispatchView):
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         return {
             "add_plan_form": AddPlanForm(
-                self.request.POST or None, request=self.request,
+                self.request.POST or None,
+                request=self.request,
             ),
         }
 
@@ -284,7 +279,9 @@ class FilterPlanTypePriceView(HtmxDispatchView):
         if form.is_valid():
             try:
                 return self._extracted_post_instance_save_and_transaction(
-                    form, account, request,
+                    form,
+                    account,
+                    request,
                 )
             except Exception as e:  # noqa: BLE001
                 return JsonResponse({"success": False, "message": str(e)})
@@ -308,6 +305,7 @@ class FilterPlanTypePriceView(HtmxDispatchView):
         )
         return JsonResponse({"success": True, "plan": PlanSerializer(instance).data})
 
+
 class PlanPaymentView(HtmxDispatchView):
 
     def post(self, request, *args, **kwargs):
@@ -325,7 +323,9 @@ class HandlePlanPaymentFailedView(HtmxDispatchView):
         data = json.loads(request.body)
         profile = get_object_or_404(Profile, pk=data.get("profile_id"))
         plan = get_object_or_404(
-            Plan, account__pool__profile=profile, pk=data.get("plan_id"),
+            Plan,
+            account__pool__profile=profile,
+            pk=data.get("plan_id"),
         )
         account = get_object_or_404(Account, pool__profile=profile)
         account.balance -= plan.type.price
@@ -336,7 +336,10 @@ class HandlePlanPaymentFailedView(HtmxDispatchView):
 
     def __delete_transaction(self, account, profile) -> None:
         transaction = Transaction.objects.filter(
-            profile=profile, account=account, source="Plan purchase", type="DEPOSIT",
+            profile=profile,
+            account=account,
+            source="Plan purchase",
+            type="DEPOSIT",
         ).latest()
         if transaction is not None:
             transaction.delete()
@@ -350,7 +353,9 @@ class HandlePlanPaymentSuccessView(HtmxDispatchView):
         data = json.loads(request.body)
         profile = get_object_or_404(Profile, pk=data.get("profile_id"))
         plan = get_object_or_404(
-            Plan, account__pool__profile=profile, pk=data.get("plan_id"),
+            Plan,
+            account__pool__profile=profile,
+            pk=data.get("plan_id"),
         )
         account = get_object_or_404(Account, pool__profile=profile)
         plan.status = "RUNNING"
@@ -359,7 +364,10 @@ class HandlePlanPaymentSuccessView(HtmxDispatchView):
         account.save()
         plan.save()
         self.__create_transaction(
-            profile, account, plan.type.price, data.get("payment_phone"),
+            profile,
+            account,
+            plan.type.price,
+            data.get("payment_phone"),
         )
         return JsonResponse({"success": True, "url": plan.get_absolute_url()})
 
@@ -373,6 +381,7 @@ class HandlePlanPaymentSuccessView(HtmxDispatchView):
             source="Plan purchase",
             payment_phone=payment_phone,
         )
+
 
 class HandleClosePaymentFormView(HtmxDispatchView):
     def post(self, request, *args, **kwargs):

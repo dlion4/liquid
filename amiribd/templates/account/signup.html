@@ -13,10 +13,9 @@
       Sign in here
     </a>
   </p>
-  <form class="mt-2 mt-sm-4" id="registerForm">
+  <form class="mt-2 mt-sm-4" id="registerForm" action="{{request.path}}">
     {% csrf_token %}
     <div role="alert" id="response"></div>
-
     <div class="mb-3">
       {{form.username}}
     </div>
@@ -60,11 +59,15 @@
       <hr class="w-100">
     </div>
     {% block socialAuth %}
+      <!-- -->
       {{ block.super }}
+      <!-- -->
     {% endblock socialAuth %}
     <!-- Copyright -->
     {% block Copyright %}
+      <!-- -->
       {{ block.super }}
+      <!-- -->
     {% endblock Copyright %}
   </form>
   <!-- Form END -->

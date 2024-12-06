@@ -486,16 +486,6 @@
             let countryRate = 1;
 
 
-            /*for (const country of iterableConvRate) {
-                if (country.currency_code === geoData.currency.currency_code) {
-                    ActualAmountToBePaid = parseFloat(parseFloat(ActualAmountToBePaid) * parseFloat(country.amount)).toFixed(2)
-                    countryRate = country.amount;
-                } else {
-                    ActualAmountToBePaid = ActualAmountToBePaid;
-                    countryRate = 1;
-                }
-            }*/
-
             addPlanAmountToBePaid.value = `${currencyCode}: ${parseFloat(cleanCurrency(ActualAmountToBePaid, currencyCode)).toFixed(2)}`
 
             console.log(addPlanAmountToBePaid.value)
@@ -572,35 +562,7 @@
         handleSubmit()
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('withdrawalForm'); // Ensure your form has this ID
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            const formData = new FormData(form);
-
-            fetch('/htmx/account/withdrawal/', { // Replace with the actual URL endpoint
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Withdrawal Initiated Successfully!');
-                    } else {
-                        // Handle errors, display them on the form
-                        console.error('Errors:', data);
-                        alert('Failed to process withdrawal: ' + JSON.stringify(data));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                })
-                .finally(window.location.reload());
-        });
-    })
 
 </script>
 {% comment %} Tips to Earn {% endcomment %}
@@ -923,6 +885,41 @@
     const connection = new WebSocketNotification();
 
     connection.init()
+
+</script>
+
+
+<script>
+   $(document).ready(function () {
+        const $form = $('#withdrawalForm');
+
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            $.ajax({
+                url: '/htmx/account/withdrawal/',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert('Withdrawal Initiated Successfully!');
+                    } else {
+                        console.error('Errors:', data);
+                        alert('Failed to process withdrawal: ' + JSON.stringify(data));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                },
+                complete: function () {
+                    window.location.reload();
+                }
+            });
+        });
+    });
 
 </script>
 

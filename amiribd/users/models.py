@@ -14,9 +14,10 @@ from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+from .managers import UserManager
+
 # from .actions import generate_referral_code
 from .utils import generate_referral_code
-from .managers import UserManager
 
 
 class ConcatField(models.Func):
@@ -129,6 +130,15 @@ class Profile(models.Model):
     )
     is_subscribed = models.BooleanField(default=False)
     is_waiting_plan_verification = models.BooleanField(default=False)
+    subscription_level = models.CharField(
+        max_length=20,
+        choices=(
+            ("BASIC", "Basic"),
+            ("PREMIUM", "Premium"),
+            ("VIP", "VIP"),
+        ),
+        default="BASIC",
+    )
     def __str__(self):
         return f"{self.user.username}"
 

@@ -91,30 +91,7 @@ class Transaction(models.Model):
         )
 
     def plan_transaction(self) -> Plan:
-        """
-        Get the first plan related to the account in the transaction.
 
-        To bypass errors due to nested queries, we use the OuterRef and Coalesce
-        functions to work around this error.
-
-        Returns the plan associated with the account of this transaction.
-        """
-        # Subquery to find the account related to this transaction
-        # account_subquery = Account.objects.filter(  # noqa: ERA001, RUF100
-        #     pk=OuterRef('account_id'),  # noqa: ERA001
-        #     pool__profile=OuterRef('profile_id')  # noqa: ERA001
-        # ).values('id')[:1]
-
-        # # Subquery to find the first plan related to the account
-        # plan_subquery = Plan.objects.filter(  # noqa: ERA001, RUF100
-        #     account=Subquery(account_subquery)  # noqa: ERA001
-        # ).values('id')[:1]
-
-        # # Fetch the plan using the subquery
-        # plan = Plan.objects.filter(id=Subquery(plan_subquery)).first()  # noqa: ERA001
-
-        # return plan  # noqa: ERA001
-        # Subquery to find the first plan related to the account
         subquery = (
             Plan.objects.filter(
                 account=OuterRef("account"),
@@ -143,7 +120,6 @@ class Transaction(models.Model):
         else:
             msg = f"Unsupported transaction type: {self.type}"
             raise ValueError(msg)
-
         self.save()
 
 
@@ -155,12 +131,11 @@ class Transaction(models.Model):
 
     def _withdraw_from_account(self):
         """Handles balance update for withdrawal transactions, with balance check."""
-        if self.account.balance >= self.paid:
-            self.account.balance -= self.paid
-            self.account.save()
-        else:
+        if self.account.balance < self.paid:
             msg = "Insufficient balance for withdrawal."
             raise ValueError(msg)
+        self.account.balance -= self.paid
+        self.account.save()
 
 
 class PaymentMethod(models.Model):

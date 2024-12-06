@@ -1,9 +1,9 @@
 import json
 import threading
+from typing import TYPE_CHECKING
 from typing import Any
 
 import after_response
-import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
@@ -12,9 +12,7 @@ from django.contrib.auth.models import User as UserObject
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
-from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -22,7 +20,6 @@ from django.utils.decorators import method_decorator
 from django.utils.encoding import force_str
 from django.utils.html import strip_tags
 from django.utils.http import urlsafe_base64_decode
-from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
 from django.views.generic import TemplateView
@@ -36,12 +33,14 @@ from .forms import AuthTokenCodeForm
 from .forms import EmailLoginForm
 from .forms import EmailSignupForm
 from .guard import AuthenticationGuard
-from .models import Profile as ProfileObject
 from .tasks import send_background_email
 from .utils import BuildMagicLink
 from .utils import EventEmitterView
 from .utils import expiring_token_generator
 from .utils import generate_referral_code
+
+if TYPE_CHECKING:
+    from .models import Profile as ProfileObject
 
 
 @after_response.enable
@@ -214,7 +213,6 @@ class LogoutView(View):
 class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
     form_class = EmailSignupForm
     template_name = "account/signup.html"
-    success_url = reverse_lazy("users:login")
     expired_code_template_name = ""
 
     def dispatch(self, request, *args: Any, **kwargs: dict):
@@ -243,7 +241,8 @@ class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.form_valid(form, *args, **kwargs)
+            return self.form_valid(form, *args, **kwargs)
+        print(form.errors)
         return JsonResponse(
             {"detail": "Invalid form data. Please provide a valid"},
             safe=False,
@@ -294,7 +293,13 @@ class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
                 *args,
                 **kwargs,
             )
-            return JsonResponse({"url": str(reverse(self.success_url))})
+            login(self.request, user, backend="users.backends.CredentialAuthentication")
+            return JsonResponse(
+                {
+                    "url": str(reverse("dashboard:home")),
+                    "message": "Account created successfully",
+                },
+            )
 
     def _create_user_if_unavailable(
         self,
@@ -317,11 +322,11 @@ class ReferralSignupView(AuthenticationGuard, BuildMagicLink, FormView):
         user.save()
         profile: ProfileObject = Profile.objects.get(user=user)
         profile.referred_by = self.get_referrer(*args, **kwargs)
+        profile.save()
         profile.first_name = username
         profile.save()
         profile.referral_code = generate_referral_code(profile.pk)
         profile.save()
-        self.send_welcome_email(email=user.email)
         return user
 
 
@@ -338,11 +343,6 @@ class HtmxSetupView(View):
 
 
 class LinkAuthenticationView(View):
-    """
-    Invalid test login link:
-    http://127.0.0.1:8000/users/login/Mw/ccher2-a4994fd72a57823d4609173f1fc7abbd-sixp32/
-    """
-
     event_emitter = EventEmitterView()
 
     def get(self, request: HttpRequest, uid: Any, token: Any) -> HttpResponse:

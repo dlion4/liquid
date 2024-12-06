@@ -17,14 +17,18 @@ from .base import os
 
 # Debug mode on
 # ------------------------------------------------------------------------------
-DEBUG = False
+DEBUG = True
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
+ALLOWED_HOSTS = [
+    *env.list("DJANGO_ALLOWED_HOSTS"),
+    "*.ngrok-free.app",
+    "cl84rz-ip-105-163-156-128.tunnelmole.net",
+]
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
@@ -125,7 +129,7 @@ STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
-    'staticfiles':{
+    "staticfiles":{
         "BACKEND":"whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }

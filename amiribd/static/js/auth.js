@@ -29,7 +29,7 @@ $(document).ready(function () {
             },
             error: function(xhr, status, errorThrown){
                 response.removeClass("alert-success")
-                response.addClass("alert-danger").text(xhr.responseJSON.detail|| "Error authenticating the request");
+                response.addClass("alert-danger").text(xhr.responseJSON.detail || "Error authenticating the request");
             },
             complete: function(){
                 btn.prop("disabled", false);
@@ -49,7 +49,7 @@ $(document).ready(function () {
         btn.find("span#registerButton").addClass("d-none").removeClass("d-sm-inline");
         btn.find("div#spinner").addClass("d-flex").removeClass("d-none");
         const response = form.find("div#response");
-        const url = "/users/signup/"
+        const url = form.attr("action");
         response.addClass("alert")
 
         $.ajax({

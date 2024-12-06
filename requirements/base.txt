@@ -34,3 +34,4 @@ channels-redis
 django-htmlmin
 pyJwt
 cryptography
+django-cors-headers

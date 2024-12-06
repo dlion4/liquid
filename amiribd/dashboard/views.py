@@ -1,3 +1,4 @@
+import datetime as dtz
 from datetime import datetime
 from datetime import timedelta
 from decimal import Decimal
@@ -65,9 +66,7 @@ class DashboardViewMixin(TemplateView):
             .aggregate(total=Sum(models.F("views") * models.F("price")))
         )
 
-        if earnings["total"]:
-            return Decimal(earnings["total"])
-        return Decimal("0.00")
+        return Decimal(earnings["total"]) if earnings["total"] else Decimal("0.00")
 
     def __pure_referral_earnings(self):
         __referral_profit = Decimal("0.00")
@@ -141,7 +140,7 @@ class DashboardViewMixin(TemplateView):
         it with the previous month's deposit transaction
         and then calculate the percentage gain or loss and display it.
         """
-        current_month_start = datetime.now(tz=None).replace(day=1)
+        current_month_start = datetime.now(tz=dtz.UTC).replace(day=1)
         previous_month_start = (current_month_start - timedelta(days=1)).replace(day=1)
         previous_month_end = current_month_start - timedelta(days=1)
 

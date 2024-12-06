@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib import admin
 from django.db import models
 from nested_inline.admin import NestedModelAdmin
@@ -168,30 +170,29 @@ class EventActionAdmin(ModelAdmin):
         for event in queryset:
             # get the specif account related to this
             account = Account.objects.get(id=event.account.id)
-            # then updated the status
-            # create the transaction
-            if not event.paid:
-                Transaction.objects.create(
-                    profile=event.account.pool.profile,
-                    account=account,
-                    type="WITHDRAWAL",
-                    amount=event.amount,
-                    discount=0,
-                    paid=0,
-                    source="Admin Resolved Withdrawal",
-                    verified=True,
-                )
-        queryset.update(status="Resolved", paid=True)
+            # if not event.paid:
+            #     Transaction.objects.create(
+            #         profile=event.account.pool.profile,
+            #         account=account,
+            #         type="WITHDRAWAL",
+            #         amount=event.amount,
+            #         discount=0,
+            #         paid=0,
+            #         source="Admin Resolved Withdrawal",
+            #         verified=True,
+            #     )
+        queryset.update(
+            status="Resolved",
+            paid=True,
+        )
 
     @admin.action(description="Mark selected as Cancelled")
     def mark_as_cancelled(self, request, queryset):
         for event in queryset:
-            # get the specif account related to this
             if event.status != "Cancelled":
                 account = Account.objects.get(id=event.account.id)
-                account.balance += event.amount
+                account.balance += round((event.amount / Decimal("0.85")),2)
                 account.save()
-                # create a transaction
                 Transaction.objects.create(
                     profile=event.account.pool.profile,
                     account=account,
@@ -200,8 +201,8 @@ class EventActionAdmin(ModelAdmin):
                     discount=0,
                     paid=0,
                     source="Admin Cancelled Withdrawal",
+                    verified=True,
                 )
-            # then updated the status
         queryset.update(status="Cancelled", paid=False)
 
 

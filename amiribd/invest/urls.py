@@ -1,6 +1,8 @@
 from django.urls import include
 from django.urls import path
 
+from amiribd.invest.lookups.views import validate_profile_plan_purchase_status
+
 from .views import CheckUserSubscriptionStatusView
 from .views import HandleAccountSelectionView
 from .views import HandleAddPlanPaymentView
@@ -8,8 +10,8 @@ from .views import HandlePaymentCreateTransactionView
 from .views import HandlePlanSelectionView
 from .views import HandlePoolSelectionView
 from .views import HandleRegistrationPaymentView
-from .views import VerifyTransactionPaymentView
 from .views import InvestMentSavingView
+from .views import VerifyTransactionPaymentView
 from .views import check_payment_status
 from .views import delete_transaction_payment_view
 from .views import (
@@ -39,6 +41,11 @@ app_name = "invest"
 
 urlpatterns = [
     path("registration/", invest, name="invest"),
+    path(
+        "verify-profile-plans-status/",
+        validate_profile_plan_purchase_status,
+        name="verify_profile_plan_status",
+    ),
     path("plans/", plans, name="plans"),
     path("<plan_slug>/<plan_id>/", plan, name="plan"),
     path(

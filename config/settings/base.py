@@ -910,10 +910,8 @@ CORS_ALLOW_HEADERS = [
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://auth.earnkraft.com",
     "https://dashboard.earnkraft.com",
-    "https://app.earnkraft.com",
-    "http://localhost:5173", # For localhost testing
+    "https://cl84rz-ip-105-163-156-128.tunnelmole.net",
 ]
 
 CORS_ALLOW_METHODS = [
@@ -972,6 +970,3 @@ ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN = env.str(
     "ZERO_BOUNCE_EMAIL_VALIDATION_PROJECT_TOKEN", default="",
 )
 
-
-EARNKRAFT_AUTH_SERVICE_URL="https://auth.earnkraft.com"
-# EARNKRAFT_AUTH_SERVICE_URL="http://localhost:5173"

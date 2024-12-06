@@ -67,3 +67,4 @@ pydantic-settings
 aioredis
 uvicorn
 
+resend

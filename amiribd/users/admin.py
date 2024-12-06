@@ -5,18 +5,12 @@ from boto3.session import Session
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from unfold import admin as unfold_admin
 from unfold.admin import ModelAdmin
 
 from amiribd.core.admin import earnkraft_site
 from amiribd.liquid.actions import send_email_to_user
-from amiribd.liquid.forms import EmailCategoryForm
-from amiribd.liquid.models import AdminSendMail
-from amiribd.liquid.models import AdminSendMailCategory
 from amiribd.profilesettings.models import NotificationSubscription
 
 from .forms import UserAdminChangeForm
@@ -25,8 +19,6 @@ from .models import Address
 from .models import Document
 from .models import Profile
 from .models import User
-
-# from .models import ValidatedEmailAddress
 
 
 @admin.register(User)
@@ -52,7 +44,7 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
     )
     list_display = ["email", "name","is_staff", "is_superuser"]
     search_fields = ["name"]
-    ordering = ["id"]
+    ordering = ["-id"]
     add_fieldsets = (
         (
             None,
@@ -130,7 +122,7 @@ class ProfileAdmin(ModelAdmin):
         "kyc_validated",
     ]
     search_fields = ("user",)
-    ordering = ("user",)
+    ordering = ("-id",)
     inlines = [NotificationSubscriptionInline]
 
 

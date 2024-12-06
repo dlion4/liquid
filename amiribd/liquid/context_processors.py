@@ -11,6 +11,7 @@ from .models import CompanyTermsAndPolicy
 
 
 def liquid_site_data(request:HttpRequest):
+    site_domain = get_current_site(request).domain
     return {
         "site_name": "AmiriBD",
         "website_url": request.build_absolute_uri(reverse("home")),
@@ -23,7 +24,7 @@ def liquid_site_data(request:HttpRequest):
         "external_links": {
             "blogging_site": {
                 "domain": "earnkraft.com",
-                "url": "https://earnkraft.com",
+                "url": str(site_domain),
             },
         },
         "login_form": EmailLoginForm(),
