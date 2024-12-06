@@ -17,7 +17,7 @@ from .base import os
 
 # Debug mode on
 # ------------------------------------------------------------------------------
-DEBUG = True
+DEBUG = False
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -26,8 +26,6 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 ALLOWED_HOSTS = [
     *env.list("DJANGO_ALLOWED_HOSTS"),
-    "*.ngrok-free.app",
-    "cl84rz-ip-105-163-156-128.tunnelmole.net",
 ]
 # DATABASES
 # ------------------------------------------------------------------------------

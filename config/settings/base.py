@@ -911,7 +911,6 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://dashboard.earnkraft.com",
-    "https://cl84rz-ip-105-163-156-128.tunnelmole.net",
 ]
 
 CORS_ALLOW_METHODS = [
