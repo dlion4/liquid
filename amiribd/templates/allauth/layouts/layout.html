@@ -44,7 +44,7 @@
                   {% endblock socialAuth %}
 
                   {% block Copyright %}
-                    <div class="text-body small mt-3">Copyrights ©2024 Earnkraft.</div>
+                    <div class="text-body small mt-3">Copyrights ©<span id="year">2024</span> Earnkraft.</div>
                   {% endblock Copyright %}
                 {% endblock content %}
               </div>
@@ -61,6 +61,12 @@
 	{% block scripts %}
 	<script src="{% static 'js/auth.js' %}"></script>
 	{% endblock scripts %}
+
+  <script>
+    $(document).ready(function(event){
+      $("span#year").text(new Date().getUTCFullYear())
+    })
+  </script>
 		
   </body>
 

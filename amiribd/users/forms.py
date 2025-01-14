@@ -86,7 +86,7 @@ class AuthTokenCodeForm(forms.Form):
 class EmailSignupForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "Enter your username"},
+            attrs={"class": "form-control", "placeholder": "Enter your username", "autocomplete": ""},
         ),
     )
     email = forms.EmailField(
