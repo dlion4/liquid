@@ -1,4 +1,4 @@
-# amiribd
+# Amiribd
 
 ## investment app
 
