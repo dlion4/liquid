@@ -40,5 +40,3 @@ To run the tests, check your test coverage, and generate an HTML coverage report
     $ pytest
 
 
-See detailed [cookiecutter-django Heroku documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
-
